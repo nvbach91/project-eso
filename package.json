@@ -1,0 +1,39 @@
+{
+  "name": "project-eso",
+  "version": "1.0.0",
+  "description": "Enterprise Self-Ordering system",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "gulp --dev",
+    "build": "gulp build",
+    "test": "gulp test"
+  },
+  "author": "Ethereals United <etherealcz@gmail.com>",
+  "contributors": [
+    "Nguyen Viet Bach <nvbach91@outlook.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.5",
+    "gulp": "^4.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-javascript-obfuscator": "^1.1.6",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify-es": "^1.0.4",
+    "nodemon": "^1.18.11",
+    "yargs": "^13.2.2"
+  }
+}
