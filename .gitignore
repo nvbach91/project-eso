@@ -1,2 +1,5 @@
-node_modules
-public
+/node_modules
+/public
+
+/server.js
+/web.config
