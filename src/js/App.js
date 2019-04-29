@@ -1,17 +1,34 @@
-const App = {};
-window.App = App;
 
+require('./config');
 require('./utils');
 require('./components/header');
 require('./components/main');
 require('./components/footer');
 
+
 App.renderSkeleton = () => {
   const dom = `
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <header id="header"></header>
     <main id="main">
-      <div id="tabs"></div>
       <div id="products"></div>
+      <div id="tabs"></div>
     </main>
     <footer id="footer"></footer>
   `;
@@ -19,7 +36,7 @@ App.renderSkeleton = () => {
 };
 
 App.connect = () => {
-  App.settings = { name: 'Spread Eagle' };
+  App.settings = { name: 'The Elusive Camel', currency: { code: 'CZK', symbol: 'Kč'} };
   App.categories = {
     '0': { name: 'Category', img: 'bg09_hjz6no' },
     '1': { name: 'Category', img: 'bg10_coyfml' },
@@ -73,6 +90,13 @@ App.connect = () => {
     '7777': { name: 'Product', price: '62.00', img: 'bg02_komziq', category: '0' },
     '8888': { name: 'Product', price: '31.00', img: 'bg03_tdlabn', category: '1' },
     '9999': { name: 'Product', price: '19.00', img: 'bg08_hsajsa', category: '0' },
+    '22222': { name: 'Product', price: '12.00', img: 'bg07_wrsdxe', category: '2' },
+    '33333': { name: 'Product', price: '72.00', img: 'bg04_i3fq68', category: '4' },
+    '44444': { name: 'Product', price: '56.00', img: 'bg06_gmmeqj', category: '3' },
+    '55555': { name: 'Product', price: '71.00', img: 'bg01_mog1lh', category: '2' },
+    '66666': { name: 'Product', price: '81.00', img: 'bg05_osoyo0', category: '7' },
+    '77777': { name: 'Product', price: '62.00', img: 'bg02_komziq', category: '0' },
+    '88888': { name: 'Product', price: '31.00', img: 'bg03_tdlabn', category: '1' },
   };
   return $.when();
 };
@@ -91,6 +115,7 @@ App.init = () => {
   App.jTabs = $('#tabs');
   App.jProducts = $('#products');
   App.jFooter = $('#footer');
+  App.jModal = $('#modal');
   App.connect().done(() => {
     App.render();
   });

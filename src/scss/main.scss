@@ -44,7 +44,7 @@ main {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    padding-right: 10px;
+    padding-left: 10px;
 }
 .tab {
     filter: grayscale(1);
@@ -53,6 +53,7 @@ main {
     color: white;
     width: 200px;
     min-height: 100px;
+    margin-bottom: 10px;
 }
 .tab.active {
     filter: grayscale(0);
@@ -78,28 +79,61 @@ main {
     overflow: auto;
     grid-gap: 10px;
 }
-.product {
+.product-offer {
     height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.product-img {
+.po-img {
+    cursor: pointer;
     width: 100%;
     flex-grow: 1;
 }
-.product-name {
+.po-img .btn {
+    height: 100%;
+    width: 100%;
+}
+.po-name {
     padding: 10px 0;
 }
-.product-control {
+.po-control {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 5px 10px;
 }
-.product-price {
+.product-details {
+    display: flex;
+}
+.pd-img {
+    width: 50%;
+    height: 200px;
+}
+.pd-details {
+    width: 50%;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.pd-name {
+    text-transform: uppercase;
+    font-weight: 500;
+    flex-grow: 1;
+}
+.pd-price {
+    font-size: 32px;
+    font-weight: 300;
+}
+.pd-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pd-control .btn {
+    margin: 0;
 }
 footer {
     background-color: firebrick;
@@ -108,6 +142,9 @@ footer {
 @media screen and (min-width: 720px) {
     #products {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .modal-dialog {
+        max-width: 800px;
     }
 }
 @media screen and (min-width: 1024px) {
