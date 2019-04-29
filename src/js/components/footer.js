@@ -12,6 +12,9 @@ App.renderFooter = () => {
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Brought to you by Ethereals United &copy; 2019</a>
+        </li>
       </ul>
     </div>
   </div>
