@@ -3,6 +3,7 @@ const argv = require('yargs').argv;
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
+const browserify = require('gulp-browserify');
 const minify = require('gulp-clean-css');
 const nodemon = require('gulp-nodemon');
 const rename = require('gulp-rename');
@@ -24,17 +25,28 @@ const scss = () => {
 };
 
 const js = () => {
-    return gulp.src(['./src/js/**/App.js', './src/js/**/!(App)*.js'])
+    // return gulp.src(['./src/js/**/App.js', './src/js/**/!(App)*.js'])
+    //     .pipe(plumber())
+    //     .pipe(concat('build.js'))
+    //     .pipe(rename({suffix: '.min'}))
+    //     .pipe(!argv.dev ? uglify() : tap(() => {}))
+    //     .pipe(!argv.dev ? obfuscate() : tap(() => {}))
+    //     .pipe(gulp.dest('./public/js/'))
+    //     .pipe(bs.reload({ stream: true }));
+    return gulp.src('./src/js/index.js')
         .pipe(plumber())
-        .pipe(concat('build.js'))
-        .pipe(rename({suffix: '.min'}))
+        .pipe(browserify({
+            insertGlobals: true,
+            debug : argv.dev ? true : false
+        }))
+        .pipe(rename({basename: 'build', suffix: '.min', extname: '.js'}))
         .pipe(!argv.dev ? uglify() : tap(() => {}))
         .pipe(!argv.dev ? obfuscate() : tap(() => {}))
         .pipe(gulp.dest('./public/js/'))
         .pipe(bs.reload({ stream: true }));
 };
 
-const browserSync = () => {
+const browserSync = (cb) => {
     bs.init({
         proxy: 'https://app.lvh.me:3000',
         https: {
@@ -49,6 +61,7 @@ const browserSync = () => {
         online: false,
         open: false,
     });
+    cb();
 };
 
 const pug = () => {
@@ -56,10 +69,11 @@ const pug = () => {
         .pipe(bs.reload({ stream: true }));
 };
 
-const watch = () => {
+const watch = (cb) => {
     gulp.watch('./src/scss/**/*.scss', scss);
     gulp.watch('./src/js/**/*.js', js);
     gulp.watch('./views/**/*.pug', pug);
+    cb();
 };
 
 const monitor = (cb) => {
