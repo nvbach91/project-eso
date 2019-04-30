@@ -14,8 +14,16 @@ const uglify = require('gulp-uglify-es').default;
 const obfuscate = require('gulp-javascript-obfuscator');
 
 const scss = () => {
-    return gulp.src('./src/scss/**/*.scss')
+    return gulp.src([
+        './src/scss/colors.scss',
+        './src/scss/main.scss',
+        './src/scss/tabs.scss',
+        './src/scss/products.scss',
+        './src/scss/cart.scss',
+        './src/scss/mediaqueries.scss',
+    ])
         .pipe(plumber())
+        .pipe(concat('styles.scss'))
         .pipe(sass())
         .pipe(concat('styles.css'))
         .pipe(rename({suffix: '.min'}))
@@ -25,14 +33,6 @@ const scss = () => {
 };
 
 const js = () => {
-    // return gulp.src(['./src/js/**/App.js', './src/js/**/!(App)*.js'])
-    //     .pipe(plumber())
-    //     .pipe(concat('build.js'))
-    //     .pipe(rename({suffix: '.min'}))
-    //     .pipe(!argv.dev ? uglify() : tap(() => {}))
-    //     .pipe(!argv.dev ? obfuscate() : tap(() => {}))
-    //     .pipe(gulp.dest('./public/js/'))
-    //     .pipe(bs.reload({ stream: true }));
     return gulp.src('./src/js/index.js')
         .pipe(plumber())
         .pipe(browserify({
@@ -60,6 +60,7 @@ const browserSync = (cb) => {
         port: 7000,
         online: false,
         open: false,
+        notify: false,
     });
     cb();
 };

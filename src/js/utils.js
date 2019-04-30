@@ -15,7 +15,8 @@ Number.prototype.formatMoney = function (c, d, t) {
   return retval;
 };
 
-App.showInModal = (element) => {
+App.showInModal = (element, title) => {
+  App.jModal.find('.modal-title').text(title || '');
   App.jModal.find('.modal-body').empty().append(element);
   App.jModal.modal();
 };

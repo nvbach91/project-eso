@@ -2,7 +2,7 @@ App.renderTabs = () => {
   const container = $('<div>');
   Object.keys(App.categories).forEach((key) => {
     const category = App.categories[key];
-    const style = category.img ? `style="background-image: url(${App.config.imageUrlBase}${category.img})"` : ``;
+    const style = category.img ? ` style="background-image: url(${App.config.imageUrlBase}${category.img})"` : ``;
     const element = $(`
       <button class="btn btn-primary tab"${style}>
         <div class="tab-name">${category.name}</div>
