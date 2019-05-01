@@ -16,8 +16,8 @@ App.connect = () => {
     name: 'The Elusive Camel',
     carouselInterval: 20000, 
     currency: { code: 'CZK', symbol: 'Kč' }, 
-    activityTimeout: 60000, // if the app is idle for this amount of time, a activity check dialog will appear
-    activityCheckTimeout: 30000, // if the app is idle for this amount of time after the check appeared, the app will reset
+    activityTimeout: 60000, // if the app is idle for this amount of time, an activity check dialog will appear
+    activityCheckTimeout: 25000, // if the app is idle for this amount of time after the check appeared, the app will reset
   };
   App.categories = {
     '0': { name: 'Soups', img: 'bg09_hjz6no' },

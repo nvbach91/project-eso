@@ -21,7 +21,7 @@ App.renderDiningChoiceScreen = () => {
           <div class="card-body">
             <h5 class="card-title">Daily offer: special on-the-house treatment</h5>
             <p class="card-text">Order 5 get 1 free</p>
-            <button class="btn btn-primary">Let's do it!</button>
+            <button class="btn btn-primary">Show me!</button>
           </div>
         </div>
         <br>
