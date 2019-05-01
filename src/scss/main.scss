@@ -33,8 +33,11 @@ html, body, #app {
 }
 .nav-item {
     position: relative;
-    i {
-        font-size: 28px;
+    .material-icons {
+        font-size: 24px;
+    } 
+    span {
+        font-size: 20px;
     }
 }
 .navbar-brand {
@@ -64,12 +67,17 @@ main {
     display: flex;
     align-items: center;
 }
-.payment-methods, .dining-choices {
+.payment-methods, .dining-choices, .finish-screen {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+.finish-screen .card-header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 .selection {
@@ -89,9 +97,19 @@ main {
 }
 #standby-carousel {
     height: 100%;
-    div {
+    .carousel-inner, .carousel-item {
         height: 100%;
         width: 100%;
+        div {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .progress {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
     }
 }
 footer .nav-item:last-child {
@@ -100,11 +118,25 @@ footer .nav-item:last-child {
 #checkout-button {
     display: none;
     min-width: 200px;
-    padding: 16px 0;
+    padding: 16px 20px;
+    margin: 0;
+    align-items: center;
+    justify-content: space-between;
 }
-
-
-
+#back-button {
+    display: none;
+    .nav-link {
+        padding: 18px;
+    }
+}
+.ac-control {
+    text-align: right;
+}
+.go-back {
+    min-width: 130px;
+    display: flex;
+    justify-content: space-between;
+}
 .spinner-ring {
     display: flex;
     position: relative;

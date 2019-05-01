@@ -72,7 +72,7 @@ App.showProductDetail = (id) => {
       </div>
     </div>
   `);
-  element.find('.cart-quantity-indicator').click(() => {
+  element.find('.cart-quantity-indicator').click((e) => {
     App.showCart();
   });
   element.find('.add').click(() => {

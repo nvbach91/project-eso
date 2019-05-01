@@ -16,11 +16,12 @@ App.renderTabs = () => {
     element.click(() => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
+      App.activeTabPosition = element.index();
       App.renderProducts(id);
     });
     container.append(element);
   });
   App.jTabs.hide().empty().append(container.children()).fadeIn(() => {
-    App.jTabs.children().eq(0).click();
+    App.jTabs.children().eq(App.activeTabPosition).click();
   });
 };

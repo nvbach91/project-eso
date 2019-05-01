@@ -21,7 +21,7 @@ App.addToCart = (id) => {
   App.saveLocalCart();
 
   if (!App.jCartControl.is(':visible')) {
-    App.jCheckoutButton.fadeIn();
+    App.jCheckoutButton.css({ display: 'flex' }).fadeIn();
     App.jCartControl.css({ display: 'flex' }).hide().fadeIn();
   }
 };
@@ -95,7 +95,14 @@ App.calculateCart = () => {
 App.showCart = () => {
   const element = $(`<div class="cart"></div>`);
   const cartItems = $(`<div class="cart-items"></div>`);
-  Object.keys(App.cart).forEach((id) => {
+  const cartKeys = Object.keys(App.cart);
+  if (!cartKeys.length) {
+    const emptyCartButton = $('<button class="btn btn-lg"><i class="material-icons">apps</i></button>').click(() => {
+      App.closeModal();
+    });
+    cartItems.append(emptyCartButton);
+  }
+  cartKeys.forEach((id) => {
     const product = App.products[id];
     const cartItem = App.cart[id];
     const thisTotal = cartItem.quantity * product.price;
@@ -118,7 +125,7 @@ App.showCart = () => {
       el.slideUp(() => {
         el.remove();
         if (!Object.keys(App.cart).length) {
-          App.jModal.modal('toggle');
+          App.closeModal();
           App.jCheckoutButton.fadeOut();
           App.jCartControl.fadeOut();
         }
@@ -131,7 +138,7 @@ App.showCart = () => {
         el.fadeOut(() => {
           el.remove();
           if (!Object.keys(App.cart).length) {
-            App.jModal.modal('toggle');
+            App.closeModal();
             App.jCheckoutButton.fadeOut();
             App.jCartControl.fadeOut();
           }
@@ -152,8 +159,8 @@ App.showCart = () => {
     </div>
   `);
   cartSummary.find('.cs-price').click(() => {
-    App.jModal.modal('toggle');
-    App.renderPaymentChoiceScreen();
+    App.closeModal();
+    App.renderCheckoutScreen();
   });
   element.append(cartItems);
   element.append(cartSummary);
@@ -163,7 +170,7 @@ App.showCart = () => {
   `).click(() => {
     App.removeAllFromCart();
     cartItems.empty();
-    App.jModal.modal('toggle');
+    App.closeModal();
     App.jCheckoutButton.fadeOut();
     App.jCartControl.fadeOut();
   });

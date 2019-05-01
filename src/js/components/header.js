@@ -12,10 +12,16 @@ App.renderHeader = () => {
         </a>
         <ul id="cart-control" class="navbar-nav">
           <li class="nav-item active" id="payment-method">
-            <a class="nav-link" href="#"><i class="material-icons">monetization_on</i></a>
+            <a class="nav-link" href="#">
+              <span id="dining-choice"></span>&nbsp;
+              <i class="material-icons">monetization_on</i>
+            </a>
           </li>
           <li class="nav-item active" id="cart-indicator">
-            <a class="nav-link" href="#"><span id="total">${totalPrice.formatMoney()}</span> ${App.settings.currency.symbol}</a>
+            <a class="nav-link" href="#">
+              <span id="total">${totalPrice.formatMoney()}</span> 
+              ${App.settings.currency.symbol}
+            </a>
             <span id="items-count" class="badge badge-pill badge-light">${nItems} items</span>
           </li>
         </ul>
@@ -25,9 +31,8 @@ App.renderHeader = () => {
   App.jTotal = header.find('#total');
   App.jItemsCount = header.find('#items-count');
   App.jPaymentMethod = header.find('#payment-method');
-  App.jPaymentMethod.click(() => {
-    App.renderPaymentChoiceScreen();
-  });
+  App.jCartControl = header.find('#cart-control');
+  App.jDiningChoiceIndicator = header.find('#dining-choice');
   header.find('#cart-indicator').click(() => {
     App.showCart();
   });

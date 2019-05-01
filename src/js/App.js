@@ -2,15 +2,23 @@ require('./config.js');
 require('./utils.js');
 require('./components/localStorage.js');
 require('./components/standbyScreen.js');
-require('./components/paymentMethodSelectionScreen.js');
-require('./components/diningChoiceSelectionScreen.js');
+require('./components/orderScreen.js');
+require('./components/checkoutScreen.js');
+require('./components/diningChoiceScreen.js');
+require('./components/finishScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
 
 App.connect = () => {
-  App.settings = { name: 'The Elusive Camel', currency: { code: 'CZK', symbol: 'Kč' } };
+  App.settings = { 
+    name: 'The Elusive Camel',
+    carouselInterval: 20000, 
+    currency: { code: 'CZK', symbol: 'Kč' }, 
+    activityTimeout: 60000, // if the app is idle for this amount of time, a activity check dialog will appear
+    activityCheckTimeout: 30000, // if the app is idle for this amount of time after the check appeared, the app will reset
+  };
   App.categories = {
     '0': { name: 'Soups', img: 'bg09_hjz6no' },
     '1': { name: 'Beers', img: 'bg10_coyfml' },
@@ -317,6 +325,10 @@ App.render = () => {
 };
 
 App.init = () => {
+  App.activeTabPosition = 0;
+  App.currentSlidePosition = 0;
+  App.activityCheckInterval = 0;
+  App.isCheckingActivity = false;
   App.connect().done(() => {
     App.loadLocalStorage();
     App.paymentMethod = 'card';
@@ -327,6 +339,5 @@ App.init = () => {
     App.jSpinner = $('#spinner');
     App.jModal = $('#modal');
     App.render();
-    App.jCartControl = $('#cart-control');
   });
 };
