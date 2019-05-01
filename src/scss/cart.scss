@@ -1,4 +1,6 @@
-
+#cart-control {
+    display: none;
+}
 #cart-indicator {
     cursor: pointer;
     display: flex;
@@ -12,20 +14,35 @@
 .cart-item {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    &:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    &:hover {
+        background-color: #ddd;
+    }
 }
 .cart-item .btn {
     margin: 0;
-    font-weight: bold;
-    font-size: 1.5em;
+    font-weight: 500;
+    font-size: 1em;
+}
+.ci-img {
+    display: none;
+    min-width: 50px;
+    min-height: 50px;
 }
 .ci-name {
+    font-weight: 500;
+    padding-left: 10px;
     flex-grow: 1;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .ci-total, .ci-price {
-    min-width: 80px;
+    min-width: 65px;
     text-align: right;
     padding: 0 5px;
 }
@@ -33,8 +50,11 @@
     min-width: 40px;
     text-align: center;
 }
+.ci-price {
+    flex-grow: 1;
+}
 .ci-total {
-    font-weight: bold;
+    font-weight: 500;
 }
 .cart-summary {
     display: flex;
@@ -43,5 +63,4 @@
 }
 .cs-price, .cs-quantity {
     padding: 10px 20px;
-    font-size: 1.25em;
 }

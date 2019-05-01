@@ -1,5 +1,18 @@
 
 @media screen and (min-width: 720px) {
+    .selection {
+        flex-direction: row;
+        overflow: initial;
+        .card {
+            width: 45%;
+        }
+        .card-img-top {
+            height: 200px;
+        }
+    }
+    .navbar-brand span {
+        display: inline;
+    }
     #products {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -7,7 +20,28 @@
         max-width: 800px;
     }
     #cart-indicator * {
-        font-size: 24px;
+        font-size: 22px;
+    }
+    .cart-item {
+        flex-wrap: nowrap;
+    }
+    .ci-img {
+        display: block;
+    }
+    .ci-price {
+        flex-grow: 0;
+    }
+    .tab {
+        min-width: 200px;
+    }
+    .cart-item .btn {
+        font-size: 1.5em;
+    }
+    .ci-total, .ci-price {
+        min-width: 80px;
+    }
+    .cs-price, .cs-quantity {
+        font-size: 1.25em;
     }
 }
 @media screen and (min-width: 1024px) {

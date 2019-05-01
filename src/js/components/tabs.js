@@ -15,5 +15,7 @@ App.renderTabs = () => {
     });
     container.append(element);
   });
-  App.jTabs.empty().append(container.children());
+  App.jTabs.hide().empty().append(container.children()).fadeIn(() => {
+    App.jTabs.children().eq(0).click();
+  });
 };

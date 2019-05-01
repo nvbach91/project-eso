@@ -1,5 +1,5 @@
 App.renderProducts = (category) => {
-  const container = $('<div id="products" style="display: none">');
+  const container = $('<div id="products">');
   Object.keys(App.products).filter((id) => {
     return category === App.products[id].category;
   }).forEach((id) => {
@@ -40,11 +40,12 @@ App.renderProducts = (category) => {
     });
     container.append(element);
   });
-  //App.jProducts.fadeOut(() => {
-    App.jProducts.replaceWith(container);
-    App.jProducts = container;
-    App.jProducts.fadeIn();
-  //});
+  container.hide();
+  App.jProducts.replaceWith(container);
+  App.jProducts = container;
+  App.jProducts.fadeIn(() => {
+    App.hideSpinner();
+  });
 };
 
 App.showProductDetail = (id) => {

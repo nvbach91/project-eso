@@ -1,7 +1,15 @@
 App.renderDiningChoiceScreen = () => {
   const screen = $(`
-    <main id="main" style="display: none">
+    <main id="main">
       <div class="dining-choices">
+        <div class="card welcome">
+          <h5 class="card-header">Welcome!</h5>
+          <div class="card-body">
+            <h5 class="card-title">Special on-the-house treatment</h5>
+            <p class="card-text">Order 5 get 1 free</p>
+            <a href="#" class="btn btn-primary">Let's do it!</a>
+          </div>
+        </div>
         <div class="selection">
           <div class="card" data-method="eat-in">
             <div class="btn card-img-top" style="background-image: url(https://media1.s-nbcnews.com/j/streams/2014/October/141006/2D274906938828-today-cafeteria-140811-01.fit-760w.jpg)"></div>
@@ -27,9 +35,8 @@ App.renderDiningChoiceScreen = () => {
     App.isTakeOut = $(this).data('method') === 'take-out';
     App.renderOrderScreen();
   });
-  setTimeout(() => {
-    App.jMain.replaceWith(screen);
-    App.jMain = screen;
-    App.jMain.fadeIn();
-  }, 500);
+  screen.hide();
+  App.jMain.replaceWith(screen);
+  App.jMain = screen;
+  App.jMain.fadeIn();
 };

@@ -79,7 +79,7 @@ App.showCart = () => {
       App.removeAllFromCart(id);
       App.calculateCart();
       el.find('button').prop('disabled', true);
-      el.fadeOut(() => {
+      el.slideUp(() => {
         el.remove();
         if (!Object.keys(App.cart).length) {
           App.jModal.modal('toggle');

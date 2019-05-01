@@ -1,6 +1,7 @@
 require('./config.js');
 require('./utils.js');
 require('./components/localStorage.js');
+require('./components/standbyScreen.js');
 require('./components/paymentMethodSelectionScreen.js');
 require('./components/diningChoiceSelectionScreen.js');
 require('./components/header.js');
@@ -298,6 +299,8 @@ App.connect = () => {
 };
 
 App.render = () => {
+  App.renderModal();
+  App.renderSpinner();
   App.renderHeader();
   App.renderMain();
   App.renderFooter();
@@ -307,12 +310,14 @@ App.init = () => {
   App.connect().done(() => {
     App.loadLocalStorage();
     App.paymentMethod = 'card';
-
     App.jContainer = $('#app');
     App.jHeader = $('#header');
     App.jMain = $('#main');
     App.jFooter = $('#footer');
+    App.jSpinner = $('#spinner');
     App.jModal = $('#modal');
     App.render();
+    App.jCheckoutButton = $('#checkout-button');
+    App.jCartControl = $('#cart-control');
   });
 };

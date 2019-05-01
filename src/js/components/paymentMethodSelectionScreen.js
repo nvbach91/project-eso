@@ -1,13 +1,4 @@
-const welcome = `
-<div class="card welcome">
-  <h5 class="card-header">Welcome!</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special on-the-house treatment</h5>
-    <p class="card-text">Order 5 get 1 free</p>
-    <a href="#" class="btn btn-primary">Let's do it!</a>
-  </div>
-</div>
-`;
+
 const controls = `
 <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -20,7 +11,7 @@ const controls = `
 `;
 App.renderPaymentChoiceScreen = () => {
   const screen = $(`
-    <main id="main" style="display: none">
+    <main id="main">
       <div class="payment-methods">
         <div id="carousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px; width: 100%; max-width: 900px;">
           <ol class="carousel-indicators">
@@ -46,7 +37,7 @@ App.renderPaymentChoiceScreen = () => {
             <div class="card-body">
               <h5 class="card-title">Pay by card</h5>
               <p class="card-text">Simply use your credit card to pay</p>
-              <button class="btn btn-primary btn-raised">I'll pay by card</button>
+              <button class="btn btn-primary btn-raised">I'll do it myself</button>
             </div>
           </div>
           <div class="card" data-method="cash">
@@ -54,7 +45,7 @@ App.renderPaymentChoiceScreen = () => {
             <div class="card-body">
               <h5 class="card-title">Pay in cash</h5>
               <p class="card-text">Even up in person at checkout</p>
-              <button class="btn btn-primary btn-danger btn-raised">I'll pay by cash</button>
+              <button class="btn btn-primary btn-danger btn-raised">I'd like some human interactions</button>
             </div>
           </div>
         </div>
@@ -69,6 +60,6 @@ App.renderPaymentChoiceScreen = () => {
   //setTimeout(() => {
     App.jMain.replaceWith(screen);
     App.jMain = screen;
-    App.jMain.fadeIn();
+  //  App.jMain.fadeIn();
   //}, 500);
 };

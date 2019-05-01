@@ -25,28 +25,45 @@ App.renderModal = () => {
   App.jModal = modal;
 };
 
+App.renderSpinner = () => {
+  const spinner = $(`
+    <div id="spinner">
+      <div class="spinner-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  `);
+  App.jSpinner.replaceWith(spinner);
+  App.jSpinner = spinner;
+  App.jSpinner.hide();
+};
+
 App.renderOrderScreen = () => {
   const screen = $(`
-    <main id="main" style="display: none">
+    <main id="main">
       <div id="tabs"></div>
       <div id="products"></div>
     </main>
   `);
-  
-  setTimeout(() => {
-    App.jMain.replaceWith(screen);
-    App.jMain = screen;
-    App.jProducts = screen.find('#products');
-    App.jTabs = screen.find('#tabs');
+  App.showSpinner();
+  App.jProducts = screen.find('#products');
+  App.jTabs = screen.find('#tabs');
+  App.jMain.replaceWith(screen);
+  App.jMain = screen;
+  App.jCheckoutButton.hide().fadeIn();
+  App.jCartControl.css({ display: 'flex' }).hide().fadeIn(() => {
     App.renderTabs();
-    App.jTabs.children().eq(0).click();
-    App.jMain.fadeIn();
-  }, 500);
+  });
+  //setTimeout(() => {
+  //  App.jMain.fadeIn();
+  //}, 500);
 };
 
 App.renderMain = () => {
-  App.renderModal()
-  App.renderPaymentChoiceScreen();
+  App.renderStandbyScreen();
 };
 
 

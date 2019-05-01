@@ -20,3 +20,29 @@ App.showInModal = (element, title) => {
   App.jModal.find('.modal-body').empty().append(element);
   App.jModal.modal();
 };
+
+App.bindCarouselSwipe = (carousel) => {
+  carousel.on('touchstart', (event) => {
+    var xClick = event.originalEvent.touches[0].pageX;
+    carousel.one('touchmove', (event) => {
+      var xMove = event.originalEvent.touches[0].pageX;
+      if (Math.floor(xClick - xMove) > 5) {
+        carousel.carousel('next');
+      }
+      else if (Math.floor(xClick - xMove) < -5) {
+        carousel.carousel('prev');
+      }
+    });
+    carousel.on('touchend', () => {
+      carousel.off('touchmove');
+    });
+  });
+};
+
+App.showSpinner = () => {
+  App.jSpinner.show();
+};
+
+App.hideSpinner = () => {
+  App.jSpinner.hide();
+};

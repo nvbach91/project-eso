@@ -8,9 +8,9 @@ App.renderHeader = () => {
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">
           <img src="https://www.shareicon.net/download/2016/09/23/833952_food.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-          The Elusive Camel
+          <span>The Elusive Camel</span>
         </a>
-        <ul class="navbar-nav">
+        <ul id="cart-control" class="navbar-nav">
           <li class="nav-item active" id="payment-method">
             <a class="nav-link" href="#"><i class="material-icons">${App.paymentMethod === 'card' ? 'payment' : 'monetization_on'}</i></a>
           </li>
