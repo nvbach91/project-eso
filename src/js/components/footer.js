@@ -13,7 +13,10 @@ App.renderFooter = () => {
             <a class="nav-link" href="#">by Ethereals United &copy; 2019</a>
           </li>
           <li class="nav-item">
-            <button id="checkout-button" class="btn btn-primary btn-raised">Checkout</button>
+            <button id="checkout-button" class="btn btn-primary btn-raised btn-icon">
+              <span>Checkout</span>
+              <i class="material-icons">arrow_forward</i>
+            </button>
           </li>
         </ul>
       </div>
@@ -21,4 +24,10 @@ App.renderFooter = () => {
   `);
   App.jFooter.replaceWith(footer);
   App.jFooter = footer;
+  App.jCheckoutButton = footer.find('#checkout-button');
+  App.jCheckoutButton.click(() => {
+    if (Object.keys(App.cart).length) {
+      App.showCart();
+    }
+  });
 };

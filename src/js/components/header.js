@@ -12,7 +12,7 @@ App.renderHeader = () => {
         </a>
         <ul id="cart-control" class="navbar-nav">
           <li class="nav-item active" id="payment-method">
-            <a class="nav-link" href="#"><i class="material-icons">${App.paymentMethod === 'card' ? 'payment' : 'monetization_on'}</i></a>
+            <a class="nav-link" href="#"><i class="material-icons">monetization_on</i></a>
           </li>
           <li class="nav-item active" id="cart-indicator">
             <a class="nav-link" href="#"><span id="total">${totalPrice.formatMoney()}</span> ${App.settings.currency.symbol}</a>

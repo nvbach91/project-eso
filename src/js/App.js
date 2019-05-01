@@ -12,16 +12,26 @@ require('./components/cart.js');
 App.connect = () => {
   App.settings = { name: 'The Elusive Camel', currency: { code: 'CZK', symbol: 'Kč' } };
   App.categories = {
-    '0': { name: 'Category', img: 'bg09_hjz6no' },
-    '1': { name: 'Category', img: 'bg10_coyfml' },
-    '2': { name: 'Category', img: 'bg07_wrsdxe' },
-    '3': { name: 'Category', img: 'bg04_i3fq68' },
-    '4': { name: 'Category', img: 'bg06_gmmeqj' },
-    '5': { name: 'Category', img: 'bg01_mog1lh' },
-    '6': { name: 'Category', img: 'bg05_osoyo0' },
-    '7': { name: 'Category', img: 'bg02_komziq' },
-    '8': { name: 'Category', img: 'bg03_tdlabn' },
-    '9': { name: 'Category', img: 'bg08_hsajsa' },
+    '0': { name: 'Soups', img: 'bg09_hjz6no' },
+    '1': { name: 'Beers', img: 'bg10_coyfml' },
+    '2': { name: 'Beverages', img: 'bg07_wrsdxe' },
+    '3': { name: 'Coffees', img: 'bg04_i3fq68' },
+    '4': { name: 'Menus', img: 'bg06_gmmeqj' },
+    '5': { name: 'Burgers', img: 'bg01_mog1lh' },
+    '6': { name: 'Rice', img: 'bg05_osoyo0' },
+    '7': { name: 'Noodles', img: 'bg02_komziq' },
+    '8': { name: 'Wraps', img: 'bg03_tdlabn' },
+    '9': { name: 'Fasties', img: 'bg08_hsajsa' },
+    '00': { name: 'Soups', img: 'bg09_hjz6no' },
+    '11': { name: 'Beers', img: 'bg10_coyfml' },
+    '22': { name: 'Beverages', img: 'bg07_wrsdxe' },
+    '33': { name: 'Coffees', img: 'bg04_i3fq68' },
+    '44': { name: 'Menus', img: 'bg06_gmmeqj' },
+    '55': { name: 'Burgers', img: 'bg01_mog1lh' },
+    '66': { name: 'Rice', img: 'bg05_osoyo0' },
+    '77': { name: 'Noodles', img: 'bg02_komziq' },
+    '88': { name: 'Wraps', img: 'bg03_tdlabn' },
+    '99': { name: 'Fasties', img: 'bg08_hsajsa' },
   };
   App.products = {
     "0": {
@@ -317,7 +327,6 @@ App.init = () => {
     App.jSpinner = $('#spinner');
     App.jModal = $('#modal');
     App.render();
-    App.jCheckoutButton = $('#checkout-button');
     App.jCartControl = $('#cart-control');
   });
 };

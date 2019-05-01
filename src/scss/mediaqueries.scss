@@ -1,5 +1,8 @@
 
 @media screen and (min-width: 720px) {
+    .product-offer {
+        height: 250px;
+    }
     .selection {
         flex-direction: row;
         overflow: initial;
@@ -20,7 +23,7 @@
         max-width: 800px;
     }
     #cart-indicator * {
-        font-size: 22px;
+        font-size: 20px;
     }
     .cart-item {
         flex-wrap: nowrap;
@@ -42,6 +45,9 @@
     }
 }
 @media screen and (min-width: 1024px) {
+    .product-offer {
+        height: 300px;
+    }
     .product-offer .add, .product-details .add {
         min-width: 140px;
     }

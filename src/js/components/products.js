@@ -7,8 +7,7 @@ App.renderProducts = (category) => {
     const style = ` style="background-image: url(${App.config.imageUrlBase}${product.img})"`;
     const element = $(`
       <div class="product-offer">
-        <div class="po-img"${style}>
-          <div class="btn"></div>
+        <div class="btn btn-raised po-img"${style}>
           <button class="btn btn-warning btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
             <i class="material-icons">shopping_cart</i> 
             <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
@@ -80,4 +79,5 @@ App.showProductDetail = (id) => {
     App.addToCart(id);
   });
   App.showInModal(element, 'Product details');
+  App.jModal.find('.cs-cancel').remove();
 };

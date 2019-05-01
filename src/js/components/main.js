@@ -53,10 +53,14 @@ App.renderOrderScreen = () => {
   App.jTabs = screen.find('#tabs');
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jCheckoutButton.hide().fadeIn();
-  App.jCartControl.css({ display: 'flex' }).hide().fadeIn(() => {
+  if (Object.keys(App.cart).length) {
+    App.jCheckoutButton.hide().fadeIn();
+    App.jCartControl.css({ display: 'flex' }).hide().fadeIn(() => {
+      App.renderTabs();
+    });
+  } else {
     App.renderTabs();
-  });
+  }
   //setTimeout(() => {
   //  App.jMain.fadeIn();
   //}, 500);

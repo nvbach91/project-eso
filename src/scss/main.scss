@@ -19,6 +19,13 @@ body {
     word-wrap: break-word;
     border-radius: 0;
 }
+.btn-icon {
+    display: flex;
+    align-items: center;
+}
+.material-icons {
+    vertical-align: middle;
+}
 html, body, #app {
     height: 100vh;
     display: flex;
@@ -49,10 +56,9 @@ main {
     overflow: hidden;
     padding: 0;
 }
-.welcome {
+.full-width-card {
     width: 100%;
-    max-width: 900px;
-    margin-bottom: 10px;
+    max-width: 840px;
 }
 #payment-method, #payment-method a {
     display: flex;
@@ -68,7 +74,7 @@ main {
 }
 .selection {
     width: 100%;
-    max-width: 900px;
+    max-width: 840px;
     display: flex;
     align-items: center;
     justify-content: space-between;

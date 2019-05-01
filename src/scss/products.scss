@@ -9,7 +9,7 @@
     padding: 10px 10px 0 0;
 }
 .product-offer {
-    height: 300px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,6 +41,7 @@
     width: 100%;
     flex-grow: 1;
     position: relative;
+    padding: 0;
 }
 .po-img .btn {
     height: 100%;

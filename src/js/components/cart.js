@@ -10,8 +10,20 @@ App.addToCart = (id) => {
   App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
+  const categoryId = App.products[id].category;
+  if (App.cartCategoryQuantities[categoryId]) {
+    App.cartCategoryQuantities[categoryId]++;
+  } else {
+    App.cartCategoryQuantities[categoryId] = 1;
+  }
+  App.jTabs.find(`[data-id=${categoryId}]`).fadeIn().find('span').text(App.cartCategoryQuantities[categoryId]);
   App.calculateCart();
   App.saveLocalCart();
+
+  if (!App.jCartControl.is(':visible')) {
+    App.jCheckoutButton.fadeIn();
+    App.jCartControl.css({ display: 'flex' }).hide().fadeIn();
+  }
 };
 
 App.decrementFromCart = (id) => {
@@ -23,20 +35,39 @@ App.decrementFromCart = (id) => {
       delete App.cart[id];
       App.jProducts.find(`[data-id="${id}"]`).fadeOut();
     }
+    const categoryId = App.products[id].category;
+    App.cartCategoryQuantities[categoryId]--;
+    if (App.cartCategoryQuantities[categoryId] <= 0) {
+      App.jTabs.find(`[data-id=${categoryId}]`).fadeOut();
+    } else {
+      App.jTabs.find(`[data-id=${categoryId}]`).find('span').text(App.cartCategoryQuantities[categoryId]);
+    }
     App.saveLocalCart();
+    App.calculateCart();
   }
 };
 
 App.removeFromCart = (id) => {
-  delete App.cart[id];
   App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+  const categoryId = App.products[id].category;
+  App.cartCategoryQuantities[categoryId] -= App.cart[id].quantity;
+  if (App.cartCategoryQuantities[categoryId] <= 0) {
+    App.jTabs.find(`[data-id=${categoryId}]`).fadeOut();
+  } else {
+    App.jTabs.find(`[data-id=${categoryId}]`).find('span').text(App.cartCategoryQuantities[categoryId]);
+  }
+  delete App.cart[id];
   App.saveLocalCart();
+  App.calculateCart();
 };
 
 App.removeAllFromCart = () => {
   App.cart = {};
+  App.cartCategoryQuantities = {};
   App.jProducts.find('.cart-quantity-indicator').fadeOut();
+  App.jTabs.find('.cart-quantity-indicator').fadeOut()
   App.saveLocalCart();
+  App.calculateCart();
 };
 
 App.calculateCartSummaryValues = () => {
@@ -83,12 +114,13 @@ App.showCart = () => {
     `);
     el.find('.ci-remove').click(() => {
       App.removeFromCart(id);
-      App.calculateCart();
       el.find('button').prop('disabled', true);
       el.slideUp(() => {
         el.remove();
         if (!Object.keys(App.cart).length) {
           App.jModal.modal('toggle');
+          App.jCheckoutButton.fadeOut();
+          App.jCartControl.fadeOut();
         }
       });
     });
@@ -100,10 +132,11 @@ App.showCart = () => {
           el.remove();
           if (!Object.keys(App.cart).length) {
             App.jModal.modal('toggle');
+            App.jCheckoutButton.fadeOut();
+            App.jCartControl.fadeOut();
           }
         });
       }
-      App.calculateCart();
     });
     el.find('.btn-inc').click(() => {
       App.addToCart(id);
@@ -115,19 +148,28 @@ App.showCart = () => {
   const cartSummary = $(`
     <div class="cart-summary">
       <div class="btn btn-primary cs-quantity">${nItems} items</div>
-      <div>
-        <button class="btn btn-danger cs-cancel">Cancel Order</button>
-        <button class="btn btn-primary btn-raised btn-lg cs-price">Order <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
-      </div>
+      <button class="btn btn-primary btn-raised btn-lg cs-price">Order <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
     </div>
   `);
-  cartSummary.find('.cs-cancel').click(() => {
-    App.removeAllFromCart();
-    cartItems.empty();
-    App.calculateCart();
+  cartSummary.find('.cs-price').click(() => {
     App.jModal.modal('toggle');
+    App.renderPaymentChoiceScreen();
   });
   element.append(cartItems);
   element.append(cartSummary);
   App.showInModal(element, 'Your order');
+  const cancelButton = $(`
+    <button class="btn btn-danger cs-cancel">Cancel order</button>;
+  `).click(() => {
+    App.removeAllFromCart();
+    cartItems.empty();
+    App.jModal.modal('toggle');
+    App.jCheckoutButton.fadeOut();
+    App.jCartControl.fadeOut();
+  });
+  if (App.jModal.find('.cs-cancel').length) {
+    App.jModal.find('.cs-cancel').replaceWith(cancelButton);
+  } else {
+    App.jModal.find('.modal-footer').prepend(cancelButton);
+  }
 };
