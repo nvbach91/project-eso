@@ -14,7 +14,7 @@ App.addToCart = (id) => {
   App.saveLocalCart();
 };
 
-App.removeFromCart = (id) => {
+App.decrementFromCart = (id) => {
   if (App.cart[id]) {
     App.cart[id].quantity--;
     App.jProducts.find(`[data-id="${id}"]`).find('span').text(App.cart[id].quantity);
@@ -27,9 +27,15 @@ App.removeFromCart = (id) => {
   }
 };
 
-App.removeAllFromCart = (id) => {
+App.removeFromCart = (id) => {
   delete App.cart[id];
   App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+  App.saveLocalCart();
+};
+
+App.removeAllFromCart = () => {
+  App.cart = {};
+  App.jProducts.find('.cart-quantity-indicator').fadeOut();
   App.saveLocalCart();
 };
 
@@ -76,7 +82,7 @@ App.showCart = () => {
       </div>
     `);
     el.find('.ci-remove').click(() => {
-      App.removeAllFromCart(id);
+      App.removeFromCart(id);
       App.calculateCart();
       el.find('button').prop('disabled', true);
       el.slideUp(() => {
@@ -87,7 +93,7 @@ App.showCart = () => {
       });
     });
     el.find('.btn-dec').click(() => {
-      App.removeFromCart(id);
+      App.decrementFromCart(id);
       if (!App.cart[id]) {
         el.find('button').prop('disabled', true);
         el.fadeOut(() => {
@@ -109,9 +115,18 @@ App.showCart = () => {
   const cartSummary = $(`
     <div class="cart-summary">
       <div class="btn btn-primary cs-quantity">${nItems} items</div>
-      <button class="btn btn-primary btn-raised cs-price">Order <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
+      <div>
+        <button class="btn btn-danger cs-cancel">Cancel Order</button>
+        <button class="btn btn-primary btn-raised btn-lg cs-price">Order <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
+      </div>
     </div>
   `);
+  cartSummary.find('.cs-cancel').click(() => {
+    App.removeAllFromCart();
+    cartItems.empty();
+    App.calculateCart();
+    App.jModal.modal('toggle');
+  });
   element.append(cartItems);
   element.append(cartSummary);
   App.showInModal(element, 'Your order');
