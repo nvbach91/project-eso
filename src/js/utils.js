@@ -63,6 +63,7 @@ App.reset = () => {
   App.cart = {};
   App.cartCategoryQuantities = {};
   App.activeTabPosition = 0;
+  console.log('Activity session ended');
   clearInterval(App.activityCheckInterval);
   App.activityCheckInterval = 0;
   App.isCheckingActivity = false;
@@ -80,8 +81,10 @@ App.reset = () => {
 //   if the app becomes active (someone clicks on the screen) while the activity check dialog is off, the idle time is reset
 // 
 App.startActivitySession = () => {
-  //console.log('starting activity session');
-  App.activitySessionStarted = false;
+  if (App.activityCheckInterval) {
+    return false;
+  }
+  console.log('Activity session started');
   App.activityCheckInterval = setInterval(() => {
     const idleTime = new Date() - App.lastActivityTime;
     //console.log('idle time = ' + idleTime);
@@ -135,4 +138,47 @@ App.closeModal = () => {
   if (App.jModal.is(':visible')) {
     App.jModal.modal('toggle');
   }
+};
+
+App.showWarning = (msg) => {
+  const warning = $(`<p>${msg}</p>`);
+  App.jModal.find('.cs-cancel').remove();
+  App.showInModal(warning, 'Warning');
+};
+
+App.createInlineSpinner = () => {
+  return $(`
+    <div class="spinner-inline">
+      <div class="spinner-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  `);
+};
+
+App.printDirect = (txt, printer) => {
+  const destination = printer || App.settings.printer;
+  if (!destination) {
+    return false;
+  }
+  const content = txt.split(/[\r\n]+/).map((line) => {
+    var replaced = line;
+    if (/^\d{2} /.test(line)) {
+      replaced = line.replace(/ /g, '')
+    }
+    if (/^Refer/.test(line)) {
+      replaced = line.replace(/ +/g, ' ')
+    }
+    return replaced;
+  }).join('\r\n');
+  $.post({
+    url: App.localhostServerURL + '/printdirect',
+    data: {
+      printer: destination,
+      txt: content
+    }
+  });
 };

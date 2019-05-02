@@ -3,3 +3,5 @@
 
 /server.js
 /web.config
+
+*.log

@@ -15,10 +15,14 @@ App.renderOrderScreen = () => {
     App.jCheckoutButton.hide().fadeIn().css({ display: 'flex' });
     App.jCartControl.css({ display: 'flex' }).hide().fadeIn(() => {
       App.renderTabs();
-      App.jBackButton.fadeIn();
+      App.jBackButton.fadeIn().off('click').click(() => {
+        App.renderDiningChoiceScreen();
+      });
     });
   } else {
     App.renderTabs();
-    App.jBackButton.fadeIn();
+    App.jBackButton.fadeIn().off('click').click(() => {
+      App.renderDiningChoiceScreen();
+    });
   }
 };

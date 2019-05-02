@@ -4,7 +4,7 @@ App.renderProducts = (category) => {
     return category === App.products[id].category;
   }).forEach((id) => {
     const product = App.products[id];
-    const style = ` style="background-image: url(${App.config.imageUrlBase}${product.img})"`;
+    const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
     const element = $(`
       <div class="product-offer">
         <div class="btn btn-raised po-img"${style}>
@@ -49,7 +49,7 @@ App.renderProducts = (category) => {
 
 App.showProductDetail = (id) => {
   const product = App.products[id];
-  const style = ` style="background-image: url(${App.config.imageUrlBase}${product.img})"`;
+  const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
   const element = $(`
     <div class="product-details">
       <div class="pd-img"${style}></div>

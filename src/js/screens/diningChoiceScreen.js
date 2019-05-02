@@ -15,7 +15,7 @@ App.diningChoices = {
 App.renderDiningChoiceScreen = () => {
   const screen = $(`
     <main id="main">
-      <div class="dining-choices">
+      <div class="screen dining-choices">
         <div class="card full-width-card">
           <h5 class="card-header">Welcome!</h5>
           <div class="card-body">
@@ -48,7 +48,9 @@ App.renderDiningChoiceScreen = () => {
     App.jDiningChoiceIndicator.text(App.diningChoices[App.diningChoice].title);
     App.renderOrderScreen();
   });
-  App.jBackButton.fadeOut();
+  App.jBackButton.fadeIn().off('click').click(() => {
+    App.reset();
+  });
   screen.hide();
   App.jMain.replaceWith(screen);
   App.jMain = screen;

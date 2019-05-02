@@ -106,7 +106,7 @@ App.showCart = () => {
     const product = App.products[id];
     const cartItem = App.cart[id];
     const thisTotal = cartItem.quantity * product.price;
-    const style = ` style="background-image: url(${App.config.imageUrlBase}${product.img})"`;
+    const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${style}></div>

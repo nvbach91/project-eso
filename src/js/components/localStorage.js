@@ -3,11 +3,14 @@ App.saveLocalCart = () => {
   localStorage.cartCategoryQuantities = JSON.stringify(App.cartCategoryQuantities || {});
 };
 
-App.loadLocalCart = () => {
-  App.cart = JSON.parse(localStorage.cart || '{}');
-  App.cartCategoryQuantities = JSON.parse(localStorage.cartCategoryQuantities || '{}');
+App.saleLocalPreference = (key, value) => {
+  App[key] = value;
+  localStorage[key] = value;
 };
 
 App.loadLocalStorage = () => {
-  App.loadLocalCart();
+  App.cart = JSON.parse(localStorage.cart || '{}');
+  App.cartCategoryQuantities = JSON.parse(localStorage.cartCategoryQuantities || '{}');
+  
+  App.locale = localStorage.locale || 'en';
 };

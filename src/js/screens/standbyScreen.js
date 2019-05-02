@@ -27,7 +27,7 @@ App.renderStandbyScreen = () => {
           </ol>
           <div class="carousel-inner bg-info" role="listbox">
             ${slides.map(({img, btn}, index) => {
-              const style = ` style="background-image: url(${App.config.imageUrlBase}${img})"`;
+              const style = ` style="background-image: url(${App.imageUrlBase}${img})"`;
               return `
                 <div class="carousel-item${index === App.currentSlidePosition ? ' active' : ''}">
                   <div class="d-flex align-items-center justify-content-center min-vh-100"${style}>
@@ -46,6 +46,7 @@ App.renderStandbyScreen = () => {
   });
   App.bindCarousel(screen.find('#standby-carousel'));
   screen.hide();
+  App.jBackButton.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
   App.jMain.fadeIn();

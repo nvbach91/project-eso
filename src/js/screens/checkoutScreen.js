@@ -1,38 +1,8 @@
-const carousel = `
-<div id="carousel" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel" data-slide-to="1"></li>
-    <li data-target="#carousel" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="https://picsum.photos/id/1/600/150" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="https://picsum.photos/id/2/600/150" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="https://picsum.photos/id/3/600/150" alt="Third slide">
-    </div>
-  </div>
-</div>
-`;
-const controls = `
-<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-  <span class="sr-only">Previous</span>
-</a>
-<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-  <span class="sr-only">Next</span>
-</a>
-`;
 App.renderCheckoutScreen = () => {
   const { totalPrice } = App.calculateCartSummaryValues();
   const screen = $(`
     <main id="main">
-      <div class="payment-methods">
+      <div class="screen payment-methods">
         <div class="card full-width-card">
           <h5 class="card-header">How would you like to pay?</h5>
         </div>
@@ -71,11 +41,10 @@ App.renderCheckoutScreen = () => {
   screen.find('.payment-method').click(function () {
     App.paymentMethod = $(this).data('method');
     if (App.paymentMethod === 'card') {
-
+      App.renderCardPaymentScreen();
     } else {
-
+      App.payInCash();
     }
-    App.renderFinishScreen();
   });
   screen.find('.go-back').click(function () {
     App.renderOrderScreen();

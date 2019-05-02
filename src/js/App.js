@@ -1,21 +1,30 @@
 require('./config.js');
 require('./utils.js');
 require('./components/localStorage.js');
-require('./components/standbyScreen.js');
-require('./components/orderScreen.js');
-require('./components/checkoutScreen.js');
-require('./components/diningChoiceScreen.js');
-require('./components/finishScreen.js');
+require('./screens/standbyScreen.js');
+require('./screens/orderScreen.js');
+require('./screens/checkoutScreen.js');
+require('./screens/diningChoiceScreen.js');
+require('./screens/cardPaymentScreen.js')
+require('./screens/finishScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
+require('./components/receipt.js')
 
 App.connect = () => {
   App.settings = { 
     name: 'The Elusive Camel',
-    carouselInterval: 20000, 
-    currency: { code: 'CZK', symbol: 'Kč' }, 
+    carouselInterval: 20000,
+    currency: { code: 'CZK', symbol: 'Kč' },
+    printer: 'Epson TM-T20II',
+    paymentTerminal: {
+      ip: '10.0.0.42',
+      port: '2050',
+      password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP',
+      endpoint: 'https://localhost:3443/pt',
+    },
     activityTimeout: 60000, // if the app is idle for this amount of time, an activity check dialog will appear
     activityCheckTimeout: 25000, // if the app is idle for this amount of time after the check appeared, the app will reset
   };
@@ -313,6 +322,39 @@ App.connect = () => {
       "category": "2"
     }
   };
+  App.receipts = [
+    {
+      number: 19010000000,
+      date: '2019-05-03T00:34:34.000Z',
+      items: [
+        {
+          ean: '101',
+          name: 'Noodle soup 101',
+          price: '101.00',
+          quantity: 2,
+          tax: 15,
+          category: 1,
+        },
+        {
+          ean: '102',
+          name: 'Candy cake slice',
+          price: '42.00',
+          quantity: 3,
+          tax: 15,
+          category: 4,
+        }
+      ],
+      tendered: 101,
+      payment: 'card',
+      takeout: false,
+      discount: 0,
+      clerk: 'kiosk',
+      bkp: '',
+      fik: '',
+      customer: '',
+    }
+  ];
+  
   return $.when();
 };
 
@@ -320,8 +362,8 @@ App.render = () => {
   App.renderModal();
   App.renderSpinner();
   App.renderHeader();
-  App.renderMain();
   App.renderFooter();
+  App.renderMain();
 };
 
 App.init = () => {

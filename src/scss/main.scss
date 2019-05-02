@@ -67,7 +67,7 @@ main {
     display: flex;
     align-items: center;
 }
-.payment-methods, .dining-choices, .finish-screen {
+.screen {
     width: 100%;
     height: 100%;
     display: flex;
@@ -164,7 +164,7 @@ footer .nav-item:last-child {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-#spinner, .spinner {
+#spinner, .spinner-inline {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -173,4 +173,10 @@ footer .nav-item:last-child {
     left: calc(50% - 32px);
     color: #009688;
     font-weight: bold;
+    z-index: 1;
+}
+.spinner-inline {
+    position: relative;
+    top: initial;
+    left: initial;
 }

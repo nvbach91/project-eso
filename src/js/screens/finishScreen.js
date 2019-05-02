@@ -1,7 +1,7 @@
 App.renderFinishScreen = () => {
   const screen = $(`
     <main id="main">
-      <div class="finish-screen">
+      <div class="screen finish-screen">
         <div class="card full-width-card">
           <h5 class="card-header">
             <span>Thank you very much!</span>

@@ -28,9 +28,6 @@ App.renderFooter = () => {
   App.jFooter.replaceWith(footer);
   App.jFooter = footer;
   App.jBackButton = footer.find('#back-button');
-  App.jBackButton.click(() => {
-    App.renderDiningChoiceScreen();
-  });
   App.jCheckoutButton = footer.find('#checkout-button');
   App.jCheckoutButton.click(() => {
     if (Object.keys(App.cart).length) {
