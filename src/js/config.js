@@ -16,6 +16,16 @@ App.receiptWidths = {
   '58': { printWidth: 33, extraPadding: 0 },
 };
 
+App.supportedLocales = {
+  'en': 'English',
+  'cs': 'Čeština',
+  'sk': 'Slovenčina',
+  'vi': 'tiếng Việt',
+  'ko': '한국어',
+  'ja': '日本語',
+  'de': 'Deutsch',
+};
+
 App.formats = {
   dateTime: 'DD.MM.YYYY HH:mm:ss',
   dayDateTime: 'dddd DD.MM.YYYY HH:mm:ss',

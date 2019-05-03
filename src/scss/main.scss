@@ -180,3 +180,29 @@ footer .nav-item:last-child {
     top: initial;
     left: initial;
 }
+
+.nav-item .btn-group {
+    margin: 7px 1px;
+    span {
+        font-size: .875rem;
+    }
+}
+.locale-button {
+    display: flex;
+    align-items: center;
+    width: 180px;
+    margin-bottom: 0;
+    height: 50px;
+    .flag { 
+        margin-right: 10px;
+        height: 20px;
+        width: 30px;
+    }
+}
+.locale-en { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg) }
+.locale-cs { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/cz.svg) }
+.locale-sk { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/sk.svg) }
+.locale-vi { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/vn.svg) }
+.locale-ko { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/kp.svg) }
+.locale-ja { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/jp.svg) }
+.locale-de { background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/de.svg) }

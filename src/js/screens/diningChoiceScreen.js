@@ -55,6 +55,6 @@ App.renderDiningChoiceScreen = () => {
   App.jMain.replaceWith(screen);
   App.jMain = screen;
   App.jMain.fadeIn();
-
+  App.jLocaleSwitcher.fadeOut();
   App.startActivitySession();
 };

@@ -15,6 +15,28 @@ App.renderFooter = () => {
           <li class="nav-item">
             <a class="nav-link" href="#">2019 &copy; Ethereals United</a>
           </li>
+          <li class="nav-item" id="locale-switcher">
+            <div class="btn-group dropup">
+              ${Object.keys(App.supportedLocales).filter((locale) => locale === App.locale).map((locale) => {
+                return `
+                  <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="flag locale-${locale}"></div>
+                    <span>${App.supportedLocales[locale]}</span>
+                  </button>
+                `;
+              }).join('')}
+              <div class="dropdown-menu">
+                ${Object.keys(App.supportedLocales).filter((locale) => locale !== App.locale).map((locale) => {
+                  return `
+                    <button class="btn locale-button" data-locale="${locale}">
+                      <div class="flag locale-${locale}"></div>
+                      <span>${App.supportedLocales[locale]}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </li>
           <li class="nav-item">
             <button id="checkout-button" class="btn btn-primary btn-raised btn-icon">
               <span>Checkout</span>
@@ -33,5 +55,21 @@ App.renderFooter = () => {
     if (Object.keys(App.cart).length) {
       App.showCart();
     }
+  });
+  App.jLocaleSwitcher = App.jFooter.find('#locale-switcher');
+  const menu = App.jLocaleSwitcher.find('.dropdown-menu');
+  const dropdown = App.jLocaleSwitcher.children('.dropup');
+  App.jLocaleSwitcher.find('.locale-button').click(function () {
+    const t = $(this);
+    if (t.parent().hasClass('dropdown-menu')) {
+      const selectedLocale = t.data('locale');
+      App.saveLocalPreference('locale', selectedLocale);
+      App.renderStandbyScreen();
+    }
+    const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle aria-haspopup aria-expanded');
+    menu.prepend(currentLocaleButton);
+
+    t.attr({'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'});
+    dropdown.prepend(t);
   });
 };

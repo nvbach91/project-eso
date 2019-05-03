@@ -46,6 +46,7 @@ App.renderStandbyScreen = () => {
   });
   App.bindCarousel(screen.find('#standby-carousel'));
   screen.hide();
+  App.jLocaleSwitcher.fadeIn();
   App.jBackButton.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;

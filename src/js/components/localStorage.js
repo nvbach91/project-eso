@@ -3,7 +3,7 @@ App.saveLocalCart = () => {
   localStorage.cartCategoryQuantities = JSON.stringify(App.cartCategoryQuantities || {});
 };
 
-App.saleLocalPreference = (key, value) => {
+App.saveLocalPreference = (key, value) => {
   App[key] = value;
   localStorage[key] = value;
 };
