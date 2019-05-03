@@ -63,7 +63,7 @@ App.reset = () => {
   App.cart = {};
   App.cartCategoryQuantities = {};
   App.activeTabPosition = 0;
-  console.log('Activity session ended');
+  //console.log('Activity session ended');
   clearInterval(App.activityCheckInterval);
   App.activityCheckInterval = 0;
   App.isCheckingActivity = false;
@@ -84,7 +84,7 @@ App.startActivitySession = () => {
   if (App.activityCheckInterval) {
     return false;
   }
-  console.log('Activity session started');
+  //console.log('Activity session started');
   App.activityCheckInterval = setInterval(() => {
     const idleTime = new Date() - App.lastActivityTime;
     //console.log('idle time = ' + idleTime);
@@ -181,4 +181,32 @@ App.printDirect = (txt, printer) => {
       txt: content
     }
   });
+};
+
+App.calculateTaxFromPrice = (price, taxRate) => {
+  return price / (100 + taxRate) * taxRate;
+};
+
+App.getClerk = (username) => {
+  return App.settings.employees[username];
+};
+
+App.addPadding = (value, maxLength) => {
+  let v = value.toString();
+  while (v.length < maxLength) {
+    v = ' ' + v;
+  }
+  return v;
+};
+
+App.ESCPOS = {
+  bold: function (s) {
+    return '\x1b\x451' + s + '\x1b\x450';
+  },
+  bigFont: function (s) {
+    // \x1b\x21\x10 = double height
+    // \x1b\x21\x20 = double width
+    // \x1b\x2d2    = underline 
+    return '\x1b\x21\x10' + s + '\x1b\x21\x00';
+  }
 };

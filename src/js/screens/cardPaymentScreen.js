@@ -42,6 +42,7 @@ App.renderCardPaymentScreen = () => {
 
   const { totalPrice } = App.calculateCartSummaryValues();
   App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {
+    //console.log(resp);
     App.renderFinishScreen();
     App.createReceipt().done((resp) => {
       App.receipts.push(resp.msg);
