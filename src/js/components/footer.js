@@ -19,7 +19,7 @@ App.renderFooter = () => {
             <div class="btn-group dropup">
               ${Object.keys(App.supportedLocales).filter((locale) => locale === App.locale).map((locale) => {
                 return `
-                  <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown">
                     <div class="flag locale-${locale}"></div>
                     <span>${App.supportedLocales[locale]}</span>
                   </button>
@@ -64,12 +64,13 @@ App.renderFooter = () => {
     if (t.parent().hasClass('dropdown-menu')) {
       const selectedLocale = t.data('locale');
       App.saveLocalPreference('locale', selectedLocale);
+      App.renderHeader();
       App.renderStandbyScreen();
     }
-    const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle aria-haspopup aria-expanded');
+    const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
     menu.prepend(currentLocaleButton);
 
-    t.attr({'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'});
+    t.attr({'data-toggle': 'dropdown'});
     dropdown.prepend(t);
   });
 };

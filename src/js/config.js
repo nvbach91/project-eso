@@ -11,11 +11,6 @@ App.domain = 'ethereal.' + App.realm;
 App.thisYear = new Date().getFullYear();
 App.receiptCredits = App.thisYear + ' (c) ' + App.domain + ' ';
 
-App.receiptWidths = {
-  '80': { printWidth: 50, extraPadding: 4 },
-  '58': { printWidth: 33, extraPadding: 0 },
-};
-
 App.supportedLocales = {
   'en': 'English',
   'cs': 'Čeština',
@@ -43,7 +38,12 @@ App.settings = {
   taxRates: [0, 10, 15, 21],
   residence: {
     street: 'Madridská 456',
-    city: 'Praha 1',
+    city: 'ěščřžýáíéúůďťň ĚŠČŘŽÝÁÍÉÚŮĎŤŇ\n' +
+      'abcdefg{hijlkm}n opqrstuvwxyz\n' +
+      'ABCDEFGHI`JLKMN OP´QRSTUVWXYZ\n' +
+      '1234567890-=[This is small];This is big\'\\,.//*-+\n' +
+      '~!@#$%^&*()_+{}:"|<>?\n' +
+      '°ˇ§¨\n',
     zip: '11000',
     country: 'Česká republika',
   },
@@ -54,13 +54,15 @@ App.settings = {
     img: '',
     header: 'Enjoy your meal',
     footer: '\\tThank you for coming\\t\n\\telusivecamel.co.uk\\t',
-    width: 80,
+    width: 58,
+    printWidth: 35,
+    extraPadding: 0,
   },
   tin: '12345678',
   vat: 'CZ12345678',
   carouselInterval: 20000,
   currency: { code: 'CZK', symbol: 'Kč' },
-  printer: 'Epson TM-T20II',
+  printer: 'EPSON TM-T20II Receipt',
   paymentTerminal: {
     ip: '10.0.0.42',
     port: '2050',

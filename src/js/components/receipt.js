@@ -13,13 +13,12 @@ App.createReceipt = () => {
   });
 };
 
-App.printReceipt = (receipt) => {
-  const receiptText = App.renderReceiptText(receipt);
+App.printReceipt = (receipt, appendix) => {
+  const receiptText = App.renderReceiptText(receipt) + (appendix ? `\n${appendix}` : '');
   App.printDirect(receiptText);
 };
 
 App.renderReceiptText = (receipt) => {
-  const receiptWidthSettings = App.receiptWidths[App.settings.receipt.width];
   let receiptHasTax = false;
   const taxSummary = {};
   for (let i = 0; i < App.settings.taxRates.length; i++) {
@@ -38,8 +37,8 @@ App.renderReceiptText = (receipt) => {
     `\t${App.ESCPOS.bigFont(App.settings.name)}\t` +
     `\n\tTIN: ${App.settings.tin}\t` +
     `\n\tVAT: ${App.settings.vat}\t` +
-    `\nResidence: ${App.settings.residence.street}` +
-    `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
+    `\nResidence: ${App.settings.address.street}` +
+    `\n${App.settings.address.zip} ${App.settings.address.city}` +
     `\nPremise: ${App.settings.residence.street}` +
     `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
     `\n${App.getReceiptHorizontalLine()}` +
@@ -54,7 +53,7 @@ App.renderReceiptText = (receipt) => {
       taxSummary[item.tax].tax += tax;
       taxSummary[item.tax].total += itemTotal;
       const quantityPadded = App.addPadding(item.quantity, 7);
-      return `${item.name}\n${quantityPadded} x${App.addPadding(item.price, 10 + receiptWidthSettings.extraPadding)}\t${itemTotal.formatMoney()} ${App.taxMarks[item.tax]}`;
+      return `${item.name}\n${quantityPadded} x${App.addPadding(item.price, 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.taxMarks[item.tax]}`;
     }).join('\n')}` +
     `\n${App.getReceiptHorizontalLine()}`;
 
@@ -62,16 +61,17 @@ App.renderReceiptText = (receipt) => {
   const change = receipt.tendered - total;
   let payment =
     `${App.ESCPOS.bigFont(`Total:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
+    `\nPayment method:\t${App.getPaymentMethod(receipt.payment)}` +
     `\nTendered:\t${receipt.tendered.formatMoney()}` +
     `${change ? `\nChange:\t${change.formatMoney()}` : ''}`;
 
   let summary =
-    `Rates${App.addPadding(`Net`, 14 + receiptWidthSettings.extraPadding)}\tVAT` +
+    `Rates${App.addPadding(`Net`, 14 + App.settings.receipt.extraPadding)}\tVAT` +
     `\n${Object.keys(taxSummary).filter((taxRate) => {
       return taxSummary[taxRate].total !== 0;
     }).map((taxRate) => {
       const thisNet = taxSummary[taxRate].total - taxSummary[taxRate].tax;
-      return `${App.taxMarks[taxRate]} ${App.addPadding(taxRate, 2)}%${App.addPadding(thisNet.formatMoney(), 14 + receiptWidthSettings.extraPadding)}\t${taxSummary[taxRate].tax.formatMoney()}`;
+      return `${App.taxMarks[taxRate]} ${App.addPadding(taxRate, 2)}%${App.addPadding(thisNet.formatMoney(), 14 + App.settings.receipt.extraPadding)}\t${taxSummary[taxRate].tax.formatMoney()}`;
     }).join('\n')}` +
     `${receipt.bkp ?
       `\n${App.getReceiptHorizontalLine()}` +
@@ -89,29 +89,32 @@ App.renderReceiptText = (receipt) => {
     `\n\t${App.receiptCredits}\t`;
 
   let text = `${header}\n${body}\n${payment}\n${summary}\n${footer}`;
-  return App.alignReceiptText(text);
+  const result = App.alignReceiptText(text);
+  return result;
 };
 
 App.alignReceiptText = (text) => {
-  const maxWidth = App.receiptWidths[App.settings.receipt.width].printWidth;
   return text.split('\n').map((line) => {
     const tabs = line.match(/\t|\\t/g);
     if (tabs) {
       let lineLength = line.length;
-      if (line.includes('\x1b\x451') && line.includes('\x1b\x450')) {
-        lineLength -= 6;
+      if (line.includes('[') && line.includes(']')) {
+        lineLength -= 2;
       }
-      if (line.includes('\x1b\x21\x10') && line.includes('\x1b\x21\x00')) {
-        lineLength -= 6;
+      if (line.includes('{') && line.includes('}')) {
+        lineLength -= 2;
       }
-      const spaceCount = Math.floor((maxWidth - lineLength) / tabs.length) + 1;
+      if (line.includes('`') && line.includes('´')) {
+        lineLength -= 2;
+      }
+      const spaceCount = Math.floor((App.settings.receipt.printWidth - lineLength) / tabs.length) + 1;
       if (spaceCount > 0) {
         line = line.replace(/\t|\\t/g, ' '.repeat(spaceCount));
       } else {
         line = line.replace(/\t|\\t/g, '');
       }
     }
-    if (maxWidth - line.length === 1) {
+    if (App.settings.receipt.printWidth - line.length === 1) {
       line = line.replace('   ', '    ');
     }
     return line;
@@ -120,5 +123,5 @@ App.alignReceiptText = (text) => {
 
 
 App.getReceiptHorizontalLine = () => {
-  return '-'.repeat(App.receiptWidths[App.settings.receipt.width].printWidth);
+  return '-'.repeat(App.settings.receipt.printWidth);
 };

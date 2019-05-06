@@ -30,12 +30,13 @@ App.render = () => {
 };
 
 App.init = () => {
+  App.loadLocalStorage();
+  App.loadLocale();
   App.activeTabPosition = 0;
   App.currentSlidePosition = 0;
   App.activityCheckInterval = 0;
   App.isCheckingActivity = false;
   App.connect().done(() => {
-    App.loadLocalStorage();
     App.paymentMethod = 'card';
     App.jContainer = $('#app');
     App.jHeader = $('#header');

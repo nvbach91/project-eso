@@ -43,10 +43,11 @@ App.renderCardPaymentScreen = () => {
   const { totalPrice } = App.calculateCartSummaryValues();
   App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {
     //console.log(resp);
+    const appendix = '';
     App.renderFinishScreen();
     App.createReceipt().done((resp) => {
       App.receipts.push(resp.msg);
-      App.printReceipt(resp.msg);
+      App.printReceipt(resp.msg, appendix);
     }).fail((resp) => {
       App.showWarning(`<p>There was a problem in processing your request (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>Please contact staff</p>`);
     });

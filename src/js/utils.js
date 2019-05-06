@@ -159,29 +159,19 @@ App.createInlineSpinner = () => {
   `);
 };
 
-App.printDirect = (txt, printer) => {
+App.printDirect = (msg, printer) => {
   const destination = printer || App.settings.printer;
   if (!destination) {
     return false;
   }
-  const content = txt.split(/[\r\n]+/).map((line) => {
-    var replaced = line;
-    if (/^\d{2} /.test(line)) {
-      replaced = line.replace(/ /g, '')
-    }
-    if (/^Refer/.test(line)) {
-      replaced = line.replace(/ +/g, ' ')
-    }
-    return replaced;
-  }).join('\r\n');
   $.post({
     url: App.localhostServerURL + '/printdirect',
     data: {
       printer: destination,
-      txt: content
+      content: msg
     }
   });
-};
+};;
 
 App.calculateTaxFromPrice = (price, taxRate) => {
   return price / (100 + taxRate) * taxRate;
@@ -199,14 +189,21 @@ App.addPadding = (value, maxLength) => {
   return v;
 };
 
+// the actual ESCPOS commands are part of OPS Peripherals
+// where these szmbols are replaced with buffers
 App.ESCPOS = {
   bold: function (s) {
-    return '\x1b\x451' + s + '\x1b\x450';
+    return '{' + s + '}';
   },
   bigFont: function (s) {
-    // \x1b\x21\x10 = double height
-    // \x1b\x21\x20 = double width
-    // \x1b\x2d2    = underline 
-    return '\x1b\x21\x10' + s + '\x1b\x21\x00';
+    return '`' + s + '´';
   }
+};
+
+App.getPaymentMethod = (code) => {
+  return App.lang['payment_method_' + code];
+};
+
+App.loadLocale = () => {
+  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN || {};
 };
