@@ -1,4 +1,4 @@
-App.ptSend = function (ptRequest) {
+App.ptSend = (ptRequest) => {
   return $.post({
     url: App.settings.paymentTerminal.endpoint,
     dataType: 'json',
@@ -35,10 +35,12 @@ App.renderCardPaymentScreen = () => {
   `);
   const inlineSpinner = App.createInlineSpinner();
   screen.find('.card-body').append(inlineSpinner);
-  screen.hide();
+  //screen.hide();
+  screen.find('.card').hide();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jMain.fadeIn();
+  //App.jMain.fadeIn();
+  App.jMain.find('.card').slideDown();
 
   const { totalPrice } = App.calculateCartSummaryValues();
   App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {

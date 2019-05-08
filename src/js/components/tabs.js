@@ -12,7 +12,7 @@ App.renderTabs = () => {
           <span>${App.cartCategoryQuantities[id] || 0}</span>
         </div>
       </div>
-    `);
+    `).hide();
     element.click(() => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
@@ -21,7 +21,11 @@ App.renderTabs = () => {
     });
     container.append(element);
   });
-  App.jTabs.hide().empty().append(container.children()).fadeIn(() => {
-    App.jTabs.children().eq(App.activeTabPosition).click();
-  });
+  //App.jTabs.hide();
+  App.jTabs.empty();
+  App.jTabs.append(container.children());//.fadeIn(() => {
+    App.jTabs.children().slideDown(() => {
+      App.jTabs.children().eq(App.activeTabPosition).click();
+    });
+  //});
 };

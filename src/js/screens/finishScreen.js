@@ -27,10 +27,12 @@ App.renderFinishScreen = () => {
     clearTimeout(resetTimeout);
     App.reset();
   });
-  screen.hide();
+  //screen.hide();
+  screen.find('.card').hide();
   App.jCartControl.fadeOut();
   App.jCheckoutButton.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jMain.fadeIn();
+  //App.jMain.fadeIn();
+  App.jMain.find('.card').slideDown();
 };

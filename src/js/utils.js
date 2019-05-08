@@ -15,7 +15,7 @@ Number.prototype.formatMoney = function (c, d, t) {
   return retval;
 };
 
-App.round = function (value, decimals) {
+App.round = (value, decimals) => {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 };
 
@@ -42,7 +42,7 @@ App.bindCarousel = (carousel) => {
       carousel.off('touchmove');
     });
   });
-  carousel.on('slide.bs.carousel', function (e) {
+  carousel.on('slide.bs.carousel', (e) => {
     App.currentSlidePosition = e.to;
   });
 };
@@ -192,10 +192,10 @@ App.addPadding = (value, maxLength) => {
 // the actual ESCPOS commands are part of OPS Peripherals
 // where these szmbols are replaced with buffers
 App.ESCPOS = {
-  bold: function (s) {
+  bold: (s) => {
     return '{' + s + '}';
   },
-  bigFont: function (s) {
+  bigFont: (s) => {
     return '`' + s + '´';
   }
 };
@@ -206,4 +206,16 @@ App.getPaymentMethod = (code) => {
 
 App.loadLocale = () => {
   App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN || {};
+};
+
+App.printQRCode = (data) => {
+  var qrcodeContainer = $('<div>');
+  qrcodeContainer.qrcode(data.toString());
+  $.post({
+    url: 'https://localhost:2443/printdirectimage',
+    data: {
+      image: qrcodeContainer.find('canvas')[0].toDataURL(), 
+      cut: true,
+    }
+  });
 };

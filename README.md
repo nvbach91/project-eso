@@ -11,7 +11,7 @@ A cross-platform self-ordering system for browsers
 npm install
 npm run dev
 ```
-Then open `https://app.vcap.me:7000` in a browser.
+Then open `https://app.vcap.me:9000` or `https://localhost:9000` in a browser.
 
 ## Preview
 https://eso.gokasa.cz

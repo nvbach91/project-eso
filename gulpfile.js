@@ -48,7 +48,7 @@ const js = () => {
 
 const browserSync = (cb) => {
     bs.init({
-        proxy: 'https://app.lvh.me:3000',
+        proxy: 'https://app.vcap.me:3000',
         https: {
             cert: './security/vcap-me-cert.pem',
             key: './security/vcap-me-key.pem',
@@ -57,7 +57,7 @@ const browserSync = (cb) => {
             './public/js/**/*.js',
             './public/css/**/*.css'
         ],
-        port: 7000,
+        port: 9000,
         online: false,
         open: false,
         notify: false,

@@ -24,7 +24,7 @@ App.renderProducts = (category) => {
           </div>
         </div>
       </div>
-    `);
+    `).hide();
     element.find('.po-img').click(() => {
       App.showProductDetail(id);
     });
@@ -39,12 +39,13 @@ App.renderProducts = (category) => {
     });
     container.append(element);
   });
-  container.hide();
+  //container.hide();
   App.jProducts.replaceWith(container);
   App.jProducts = container;
-  App.jProducts.fadeIn(() => {
+  //App.jProducts.fadeIn(() => {
+    App.jProducts.children().slideDown();
     App.hideSpinner();
-  });
+  //});
 };
 
 App.showProductDetail = (id) => {

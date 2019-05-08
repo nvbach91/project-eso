@@ -52,9 +52,12 @@ App.renderDiningChoiceScreen = () => {
     App.reset();
   });
   screen.hide();
+  screen.find('.card').hide();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jMain.fadeIn();
+  App.jMain.fadeIn(() => {
+    screen.find('.card').slideDown();
+  });
   App.jLocaleSwitcher.fadeOut();
   App.startActivitySession();
 };

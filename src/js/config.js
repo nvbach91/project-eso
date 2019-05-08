@@ -26,6 +26,7 @@ App.formats = {
   dayDateTime: 'dddd DD.MM.YYYY HH:mm:ss',
   datePrefix: 'YYYYMMDD',
 };
+
 App.settings = {
   number: 0,
   name: 'The Elusive Camel',
@@ -81,13 +82,14 @@ App.settings = {
   activityTimeout: 60000, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: 25000, // if the app is idle for this amount of time after the check appeared, the app will reset
 };
+
 App.categories = {
   '0': { name: 'Soups', img: 'bg09_hjz6no' },
   '1': { name: 'Beers', img: 'bg10_coyfml' },
   '2': { name: 'Beverages', img: 'bg07_wrsdxe' },
   '3': { name: 'Coffees', img: 'bg04_i3fq68' },
   '4': { name: 'Menus', img: 'bg06_gmmeqj' },
-  '5': { name: 'Burgers', img: 'bg01_mog1lh' },
+  '5': { name: 'Burgers', img: 'bg01_mog1lh' },/*
   '6': { name: 'Rice', img: 'bg05_osoyo0' },
   '7': { name: 'Noodles', img: 'bg02_komziq' },
   '8': { name: 'Wraps', img: 'bg03_tdlabn' },
@@ -101,8 +103,9 @@ App.categories = {
   '66': { name: 'Rice', img: 'bg05_osoyo0' },
   '77': { name: 'Noodles', img: 'bg02_komziq' },
   '88': { name: 'Wraps', img: 'bg03_tdlabn' },
-  '99': { name: 'Fasties', img: 'bg08_hsajsa' },
+  '99': { name: 'Fasties', img: 'bg08_hsajsa' },*/
 };
+
 App.products = {
   "0": {
     "name": "swallow grass",
@@ -375,6 +378,7 @@ App.products = {
     "category": "2"
   }
 };
+
 App.receipts = [
   {
     number: 19010000000,
