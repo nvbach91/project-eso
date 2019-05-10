@@ -46,7 +46,7 @@ var inputFileName = process.argv[2];
 var lineCnt = -1;
 
 Object.keys(langContents).forEach(function(code) {
-  fs.writeFileSync(code + '.js', 'App.GLocale' + code.toUpperCase() + ' {\n', { encoding: 'utf8', flag: 'w' });
+  fs.writeFileSync(code + '.js', 'App.GLocale' + code.toUpperCase() + ' = {\n', { encoding: 'utf8', flag: 'w' });
 });
 
 var lineReader = readline.createInterface({

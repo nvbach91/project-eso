@@ -1,4 +1,4 @@
-App.GLocaleEN {
+App.GLocaleEN = {
   "entry_btn"                               : "Let\'s get started",
 
   "welcome_title"                           : "Welcome!",

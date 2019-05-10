@@ -1,4 +1,4 @@
-App.GLocaleCS {
+App.GLocaleCS = {
   "entry_btn"                               : "Začít s nákupem",
 
   "welcome_title"                           : "Vítejte!",

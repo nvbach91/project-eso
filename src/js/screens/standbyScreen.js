@@ -4,16 +4,16 @@ const progress = `
 </div>
 `;
 const slides = [
-  {img: 'bg09_hjz6no', btn: 'Let\'s get started' },
-  {img: 'bg10_coyfml', btn: 'Let\'s get started' },
-  {img: 'bg07_wrsdxe', btn: 'Let\'s get started' },
-  {img: 'bg04_i3fq68', btn: 'Let\'s get started' },
-  {img: 'bg06_gmmeqj', btn: 'Let\'s get started' },
-  {img: 'bg01_mog1lh', btn: 'Let\'s get started' },
-  {img: 'bg05_osoyo0', btn: 'Let\'s get started' },
-  {img: 'bg02_komziq', btn: 'Let\'s get started' },
-  {img: 'bg03_tdlabn', btn: 'Let\'s get started' },
-  {img: 'bg08_hsajsa', btn: 'Let\'s get started' },
+  {img: 'bg09_hjz6no', btn: App.lang.entry_btn }, // App.init() se volá později než tato funkce
+  {img: 'bg10_coyfml', btn: App.lang.entry_btn },
+  {img: 'bg07_wrsdxe', btn: App.lang.entry_btn },
+  {img: 'bg04_i3fq68', btn: App.lang.entry_btn },
+  {img: 'bg06_gmmeqj', btn: App.lang.entry_btn },
+  {img: 'bg01_mog1lh', btn: App.lang.entry_btn },
+  {img: 'bg05_osoyo0', btn: App.lang.entry_btn },
+  {img: 'bg02_komziq', btn: App.lang.entry_btn },
+  {img: 'bg03_tdlabn', btn: App.lang.entry_btn },
+  {img: 'bg08_hsajsa', btn: App.lang.entry_btn },
 ];
 App.renderStandbyScreen = () => {
   const screen = $(`
