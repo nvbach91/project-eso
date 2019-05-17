@@ -1,41 +1,46 @@
 text_id	en	cz
-entry_btn	Let\'s get started	Začít s nákupem
+dining_choice_welcome_title	Welcome!	Vítejte!
+dining_choice_special_offer_btn	Show me!	Přejít k nabídce!
+dining_choice_eat_in_title	Eat in	Na místě
+dining_choice_eat_in_text	Let's enjoy the atmosphere in our restaurant	Chtěl bych jíst v pohodlí restaurace
+dining_choice_eat_in_btn	I'll eat here	Budu jíst v restauraci
+dining_choice_take_out_title	Take out	S sebou
+dining_choice_take_out_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
+dining_choice_take_out_btn	I'll take it home	Zabalit jídlo domů
 		
-welcome_title	Welcome!	Vítejte!
-special_offer_title	Daily offer: special on-the-house treatment	
-special_offer_desc	Order 5 get 1 free	
-special_offer_btn	Show me!	Přejít k nabídce!
-eat_in_title	Eat in	Na místě
-eat_in_text	Let\'s enjoy the atmosphere in our restaurant	Chtěl bych jíst v pohodlí restaurace
-eat_in_btn	I\'ll eat here	Budu jíst v restauraci
-take_out_title	Take out	S sebou
-take_out_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
-take_out_btn	I\'ll take it home	Zabalit jídlo domů
-		
-products_order_btn	Order	Vybrat
-checkout_btn	Checkout	Přejít k objednávce
-		
-modal_product_detail	Product details	Detail produktu
-		
-modal_order_title	Your order	Vaše objednávka
-modal_cancel_order_btn	Cancel order	Zrušit objednávku
-modal_order_btn	Order   	Objednat   
-items	items	položky/ek
+order_products_order_btn	Order	Vybrat
+order_checkout_btn	Checkout	Přejít k objednávce
 		
 checkout_title	How would you like to pay?	Jakým způsobem chcete zaplatit?
 checkout_card_pay_title	Pay by card	Platba kartou
 checkout_card_pay_desc	Simply use your credit card to pay	Chci zaplatit přes kreditní kartu
-checkout_card_pay_btn	I\'ll pay by card	Zaplatím kartou
+checkout_card_pay_btn	I'll pay by card	Zaplatím kartou
 checkout_cash_pay_title	Pay in cash	Platba hotově
 checkout_cash_pay_desc	Even up in person at checkout	Zaplatím to osobně u pultu
-checkout_cash_pay_btn	I\'d like to pay in cash	Budu platit hotově
+checkout_cash_pay_btn	I'd like to pay in cash	Budu platit hotově
 checkout_return_title	Forgot something?	Zapomněli jste něco?
 checkout_return_btn	Go back	Vrátit se
 		
-modal_timeout_title	Are you still browsing?	Jste pořád tady?
+card_payment_title	Information	Informace
+card_payment_desc	Please follow instructions on the payment terminal screen	Prosíme následujte instrukce na platebním terminálu
+		
+modal_product_detail_title	Product details	Detail produktu
+		
+modal_order_title	Your order	Vaše objednávka
+modal_order_cancel_btn	Cancel order	Zrušit objednávku
+modal_order_btn	Order   	Objednat   
+		
 modal_timeout_text	Please let us know you are still here. Otherwise it will go back to the initial screen.	Prosíme Vás, dejte nám vědět, jestli jste pořád tady, jinak se aplikace vrátí na počáteční stránku.
 modal_timeout_stay_btn	Yes, gimme a minute	Ano, stále vybírám
-modal_timeout_leave_btn	No, I\'ll leave	Ne, odejdu
+modal_timeout_leave_btn	No, I'll leave	Ne, odejdu
+		
+modal_payment_failed_title	Warning	Varování
+modal_payment_failed_p1	There was a problem in processing your request	Vyskytl se problém při zpracovávání vaší žádosti
+modal_payment_failed_p2	Please contact staff	Prosíme zkontaktuje personál
+		
+misc_item	item	položka
+misc_items	items	položky
+misc_itemss	items	položek
 		
 close_btn	Close	Zavřít
 		

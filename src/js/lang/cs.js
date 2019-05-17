@@ -1,24 +1,15 @@
 App.GLocaleCS = {
-  "entry_btn"                               : "Začít s nákupem",
+  "dining_choice_welcome_title"             : "Vítejte!",
+  "dining_choice_special_offer_btn"         : "Přejít k nabídce!",
+  "dining_choice_eat_in_title"              : "Na místě",
+  "dining_choice_eat_in_text"               : "Chtěl bych jíst v pohodlí restaurace",
+  "dining_choice_eat_in_btn"                : "Budu jíst v restauraci",
+  "dining_choice_take_out_title"            : "S sebou",
+  "dining_choice_take_out_text"             : "Chtěl bych si své jídlo vzít s sebou",
+  "dining_choice_take_out_btn"              : "Zabalit jídlo domů",
 
-  "welcome_title"                           : "Vítejte!",
-  "special_offer_btn"                       : "Přejít k nabídce!",
-  "eat_in_title"                            : "Na místě",
-  "eat_in_text"                             : "Chtěl bych jíst v pohodlí restaurace",
-  "eat_in_btn"                              : "Budu jíst v restauraci",
-  "take_out_title"                          : "S sebou",
-  "take_out_text"                           : "Chtěl bych si své jídlo vzít s sebou",
-  "take_out_btn"                            : "Zabalit jídlo domů",
-
-  "products_order_btn"                      : "Vybrat",
-  "checkout_btn"                            : "Přejít k objednávce",
-
-  "modal_product_detail"                    : "Detail produktu",
-
-  "modal_order_title"                       : "Vaše objednávka",
-  "modal_cancel_order_btn"                  : "Zrušit objednávku",
-  "modal_order_btn"                         : "Objednat   ",
-  "items"                                   : "položky/ek",
+  "order_products_order_btn"                : "Vybrat",
+  "order_checkout_btn"                      : "Přejít k objednávce",
 
   "checkout_title"                          : "Jakým způsobem chcete zaplatit?",
   "checkout_card_pay_title"                 : "Platba kartou",
@@ -30,10 +21,26 @@ App.GLocaleCS = {
   "checkout_return_title"                   : "Zapomněli jste něco?",
   "checkout_return_btn"                     : "Vrátit se",
 
-  "modal_timeout_title"                     : "Jste pořád tady?",
+  "card_payment_title"                      : "Informace",
+  "card_payment_desc"                       : "Prosíme následujte instrukce na platebním terminálu",
+
+  "modal_product_detail_title"              : "Detail produktu",
+
+  "modal_order_title"                       : "Vaše objednávka",
+  "modal_order_cancel_btn"                  : "Zrušit objednávku",
+  "modal_order_btn"                         : "Objednat   ",
+
   "modal_timeout_text"                      : "Prosíme Vás, dejte nám vědět, jestli jste pořád tady, jinak se aplikace vrátí na počáteční stránku.",
   "modal_timeout_stay_btn"                  : "Ano, stále vybírám",
   "modal_timeout_leave_btn"                 : "Ne, odejdu",
+
+  "modal_payment_failed_title"              : "Varování",
+  "modal_payment_failed_p1"                 : "Vyskytl se problém při zpracovávání vaší žádosti",
+  "modal_payment_failed_p2"                 : "Prosíme zkontaktuje personál",
+
+  "misc_item"                               : "položka",
+  "misc_items"                              : "položky",
+  "misc_itemss"                             : "položek",
 
   "close_btn"                               : "Zavřít",
 

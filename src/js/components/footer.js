@@ -39,7 +39,7 @@ App.renderFooter = () => {
           </li>
           <li class="nav-item">
             <button id="checkout-button" class="btn btn-primary btn-raised btn-icon">
-              <span>Checkout</span>
+              <span>${App.orderScreen.checkout}</span>
               <i class="material-icons">arrow_forward</i>
             </button>
           </li>
