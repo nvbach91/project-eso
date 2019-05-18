@@ -24,20 +24,7 @@ App.connect = () => {
 };
 
 App.langUpdate = () => {
-  App.diningChoices = {
-    'eat-in': { 
-      title: App.lang.dining_choice_eat_in_title,
-      text: App.lang.dining_choice_eat_in_text,
-      btn: { text: App.lang.dining_choice_eat_in_btn, class: 'btn-primary' },
-      img: 'https://media1.s-nbcnews.com/j/streams/2014/October/141006/2D274906938828-today-cafeteria-140811-01.fit-760w.jpg',
-    },
-    'take-out': { 
-      title: App.lang.dining_choice_take_out_title,
-      text: App.lang.dining_choice_take_out_text,
-      btn: { text: App.lang.dining_choice_take_out_btn, class: 'btn-warning' },
-      img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
-    },
-  };
+  App.updateLangDiningChoices();
 }
 
 App.render = () => {
