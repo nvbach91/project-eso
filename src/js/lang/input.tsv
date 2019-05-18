@@ -6,7 +6,7 @@ dining_choice_eat_in_text	Let's enjoy the atmosphere in our restaurant	Chtěl by
 dining_choice_eat_in_btn	I'll eat here	Budu jíst v restauraci
 dining_choice_take_out_title	Take out	S sebou
 dining_choice_take_out_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
-dining_choice_take_out_btn	I'll take it home	Zabalit jídlo domů
+dining_choice_take_out_btn	I'll take it home	Zabalit s sebou
 		
 order_products_order_btn	Order	Vybrat
 order_checkout_btn	Checkout	Přejít k objednávce
@@ -24,24 +24,30 @@ checkout_return_btn	Go back	Vrátit se
 card_payment_title	Information	Informace
 card_payment_desc	Please follow instructions on the payment terminal screen	Prosíme následujte instrukce na platebním terminálu
 		
+finish_header_title	Thank you very much!	Děkujeme Vám mnohokrát!
+finish_header_btn	Start a new order	Začněte novou objednávku
+finish_body_title	Please take your receipt and wait for your number to be called	Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno
+finish_body_question	Did you know?	Věděli jste?
+		
 modal_product_detail_title	Product details	Detail produktu
 		
-modal_order_title	Your order	Vaše objednávka
-modal_order_cancel_btn	Cancel order	Zrušit objednávku
-modal_order_btn	Order   	Objednat   
+modal_cart_title	Your order	Vaše objednávka
+modal_cart_cancel_btn	Cancel order	Zrušit objednávku
+modal_cart_btn	Order   	Objednat   
 		
-modal_timeout_text	Please let us know you are still here. Otherwise it will go back to the initial screen.	Prosíme Vás, dejte nám vědět, jestli jste pořád tady, jinak se aplikace vrátí na počáteční stránku.
+modal_timeout_title	Are you still browsing?	Stále prohlížíte?
+modal_timeout_text	Please let us know you are still here. Otherwise it will go back to the initial screen.	Prosíme dejte nám vědět, zdali jste pořád tady, jinak se aplikace vrátí na počáteční stránku.
 modal_timeout_stay_btn	Yes, gimme a minute	Ano, stále vybírám
 modal_timeout_leave_btn	No, I'll leave	Ne, odejdu
 		
 modal_payment_failed_title	Warning	Varování
 modal_payment_failed_p1	There was a problem in processing your request	Vyskytl se problém při zpracovávání vaší žádosti
-modal_payment_failed_p2	Please contact staff	Prosíme zkontaktuje personál
+modal_payment_failed_p2	Please contact our staff	Prosíme zkontaktuje personál
 		
 misc_item	item	položka
 misc_items	items	položky
 misc_itemss	items	položek
 		
-close_btn	Close	Zavřít
+misc_close_btn	Close	Zavřít
 		
 __END_OF_FILE__		

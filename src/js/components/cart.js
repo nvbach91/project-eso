@@ -155,7 +155,7 @@ App.showCart = () => {
   const cartSummary = $(`
     <div class="cart-summary">
       <div class="btn btn-primary cs-quantity">${nItems} items</div>
-      <button class="btn btn-primary btn-raised btn-lg cs-price">Order <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
+      <button class="btn btn-primary btn-raised btn-lg cs-price">${App.lang.modal_cart_btn} <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
     </div>
   `);
   cartSummary.find('.cs-price').click(() => {
@@ -164,9 +164,9 @@ App.showCart = () => {
   });
   element.append(cartItems);
   element.append(cartSummary);
-  App.showInModal(element, 'Your order');
+  App.showInModal(element, App.lang.modal_cart_title);
   const cancelButton = $(`
-    <button class="btn btn-danger cs-cancel">Cancel order</button>;
+    <button class="btn btn-danger cs-cancel">${App.lang.modal_cart_cancel_btn}</button>;
   `).click(() => {
     App.removeAllFromCart();
     cartItems.empty();

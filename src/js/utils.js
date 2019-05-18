@@ -110,14 +110,14 @@ App.checkActivity = () => {
   App.isCheckingActivity = true;
   const check = $(`
     <div class="activity-check">
-      <p>Please let us know you are still here. Otherwise it will go back to the initial screen.</p>
+      <p>${App.lang.modal_timeout_text}</p>
       <div class="ac-control">
-        <button class="btn btn-danger">No, I'll leave</button>
-        <button class="btn btn-primary btn-raised">Yes, gimme a minute</button>
+        <button class="btn btn-danger">${App.lang.modal_timeout_leave_btn}</button>
+        <button class="btn btn-primary btn-raised">${App.lang.modal_timeout_stay_btn}</button>
       </div>
     </div>
   `);
-  App.showInModal(check, 'Are you still browsing?');
+  App.showInModal(check, App.lang.modal_timeout_title);
   App.jModal.find('.cs-cancel').remove();
   App.jModal.on('hidden.bs.modal', () => {
     App.isCheckingActivity = false;
@@ -143,7 +143,7 @@ App.closeModal = () => {
 App.showWarning = (msg) => {
   const warning = $(`<p>${msg}</p>`);
   App.jModal.find('.cs-cancel').remove();
-  App.showInModal(warning, 'Warning');
+  App.showInModal(warning, App.lang.modal_payment_failed_title);
 };
 
 App.createInlineSpinner = () => {

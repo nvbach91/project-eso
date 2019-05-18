@@ -24,24 +24,30 @@ App.GLocaleEN = {
   "card_payment_title"                      : "Information",
   "card_payment_desc"                       : "Please follow instructions on the payment terminal screen",
 
+  "finish_header_title"                     : "Thank you very much!",
+  "finish_header_btn"                       : "Start a new order",
+  "finish_body_title"                       : "Please take your receipt and wait for your number to be called",
+  "finish_body_question"                    : "Did you know?",
+
   "modal_product_detail_title"              : "Product details",
 
-  "modal_order_title"                       : "Your order",
-  "modal_order_cancel_btn"                  : "Cancel order",
-  "modal_order_btn"                         : "Order   ",
+  "modal_cart_title"                        : "Your order",
+  "modal_cart_cancel_btn"                   : "Cancel order",
+  "modal_cart_btn"                          : "Order   ",
 
+  "modal_timeout_title"                     : "Are you still browsing?",
   "modal_timeout_text"                      : "Please let us know you are still here. Otherwise it will go back to the initial screen.",
   "modal_timeout_stay_btn"                  : "Yes, gimme a minute",
   "modal_timeout_leave_btn"                 : "No, I'll leave",
 
   "modal_payment_failed_title"              : "Warning",
   "modal_payment_failed_p1"                 : "There was a problem in processing your request",
-  "modal_payment_failed_p2"                 : "Please contact staff",
+  "modal_payment_failed_p2"                 : "Please contact our staff",
 
   "misc_item"                               : "item",
   "misc_items"                              : "items",
   "misc_itemss"                             : "items",
 
-  "close_btn"                               : "Close",
+  "misc_close_btn"                          : "Close",
 
 };

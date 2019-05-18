@@ -4,34 +4,34 @@ App.renderCheckoutScreen = () => {
     <main id="main">
       <div class="screen payment-methods">
         <div class="card full-width-card">
-          <h5 class="card-header">How would you like to pay?</h5>
+          <h5 class="card-header">${App.lang.checkout_title}</h5>
         </div>
         <br>
         <div class="selection">
           <div class="card payment-method" data-method="card">
             <div class="btn card-img-top" style="background-image: url(https://www.csob.cz/portal/documents/10710/29976/promobox-debetni-karta-standard)"></div>
             <div class="card-body">
-              <h5 class="card-title">Pay by card <strong>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</strong></h5>
-              <p class="card-text">Simply use your credit card to pay</p>
-              <button class="btn btn-primary btn-raised">I'll pay by card</button>
+              <h5 class="card-title">${App.lang.checkout_card_pay_title} <strong>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</strong></h5>
+              <p class="card-text">${App.lang.checkout_card_pay_desc}</p>
+              <button class="btn btn-primary btn-raised">${App.lang.checkout_card_pay_btn}</button>
             </div>
           </div>
           <div class="card payment-method" data-method="cash">
             <div class="btn card-img-top" style="background-image: url(https://s8523.pcdn.co/wp-content/uploads/sites/4/2014/06/cash-payments.jpg)"></div>
             <div class="card-body">
-              <h5 class="card-title">Pay in cash <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
-              <p class="card-text">Even up in person at checkout</p>
-              <button class="btn btn-primary btn-danger btn-raised">I'd like to pay in cash</button>
+              <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
+              <p class="card-text">${App.lang.checkout_cash_pay_desc}</p>
+              <button class="btn btn-primary btn-danger btn-raised">${App.lang.checkout_cash_pay_btn}</button>
             </div>
           </div>
         </div>
         <br>
         <div class="card full-width-card">
-          <h5 class="card-header">Forgot something?</h5>
+          <h5 class="card-header">${App.lang.checkout_return_title}</h5>
           <div class="card-body">
             <button class="btn btn-warning go-back btn-icon">
               <i class="material-icons">arrow_back</i>
-              <span>Go back</span>
+              <span>${App.lang.checkout_return_btn}</span>
             </button>
           </div>
         </div>

@@ -24,11 +24,7 @@ App.connect = () => {
 };
 
 App.langUpdate = () => {
-  App.offerCard = {
-    'title': App.lang.dining_choice_welcome_title,  
-    'btn': App.lang.dining_choice_special_offer_btn
-  };
-  App.diningChoice = {
+  App.diningChoices = {
     'eat-in': { 
       title: App.lang.dining_choice_eat_in_title,
       text: App.lang.dining_choice_eat_in_text,
@@ -42,10 +38,6 @@ App.langUpdate = () => {
       img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
     },
   };
-  App.orderScreen = {
-    'checkout': App.lang.order_checkout_btn,
-    'order': App.lang.order_products_order_btn
-  }
 }
 
 App.render = () => {

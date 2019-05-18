@@ -6,7 +6,7 @@ App.GLocaleCS = {
   "dining_choice_eat_in_btn"                : "Budu jíst v restauraci",
   "dining_choice_take_out_title"            : "S sebou",
   "dining_choice_take_out_text"             : "Chtěl bych si své jídlo vzít s sebou",
-  "dining_choice_take_out_btn"              : "Zabalit jídlo domů",
+  "dining_choice_take_out_btn"              : "Zabalit s sebou",
 
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
@@ -24,13 +24,19 @@ App.GLocaleCS = {
   "card_payment_title"                      : "Informace",
   "card_payment_desc"                       : "Prosíme následujte instrukce na platebním terminálu",
 
+  "finish_header_title"                     : "Děkujeme Vám mnohokrát!",
+  "finish_header_btn"                       : "Začněte novou objednávku",
+  "finish_body_title"                       : "Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno",
+  "finish_body_question"                    : "Věděli jste?",
+
   "modal_product_detail_title"              : "Detail produktu",
 
-  "modal_order_title"                       : "Vaše objednávka",
-  "modal_order_cancel_btn"                  : "Zrušit objednávku",
-  "modal_order_btn"                         : "Objednat   ",
+  "modal_cart_title"                        : "Vaše objednávka",
+  "modal_cart_cancel_btn"                   : "Zrušit objednávku",
+  "modal_cart_btn"                          : "Objednat   ",
 
-  "modal_timeout_text"                      : "Prosíme Vás, dejte nám vědět, jestli jste pořád tady, jinak se aplikace vrátí na počáteční stránku.",
+  "modal_timeout_title"                     : "Stále prohlížíte?",
+  "modal_timeout_text"                      : "Prosíme dejte nám vědět, zdali jste pořád tady, jinak se aplikace vrátí na počáteční stránku.",
   "modal_timeout_stay_btn"                  : "Ano, stále vybírám",
   "modal_timeout_leave_btn"                 : "Ne, odejdu",
 
@@ -42,6 +48,6 @@ App.GLocaleCS = {
   "misc_items"                              : "položky",
   "misc_itemss"                             : "položek",
 
-  "close_btn"                               : "Zavřít",
+  "misc_close_btn"                          : "Zavřít",
 
 };

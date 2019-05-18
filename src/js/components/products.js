@@ -19,7 +19,7 @@ App.renderProducts = (category) => {
           <div class="po-control">
             <button class="btn btn-primary btn-raised add">
               <i class="material-icons">bookmark_border</i>
-              <span>${App.orderScreen.order}</span>
+              <span>${App.lang.order_products_order_btn}</span>
             </button>
           </div>
         </div>
