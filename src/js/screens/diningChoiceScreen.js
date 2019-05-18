@@ -48,9 +48,9 @@ App.renderDiningChoiceScreen = () => {
   screen.find('.selection .card').click(function () {
     App.diningChoice = $(this).data('method');
     if(App.diningChoice === "take-out") {
-      App.jDiningChoiceIndicator.text(App.GLocaleEN.dining_choice_take_out_title);
+      App.jDiningChoiceIndicator.text(App.lang.dining_choice_take_out_title);
     } else {
-      App.jDiningChoiceIndicator.text(App.GLocaleEN.dining_choice_eat_in_title);
+      App.jDiningChoiceIndicator.text(App.lang.dining_choice_eat_in_title);
     }
     App.renderOrderScreen();
   });

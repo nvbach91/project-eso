@@ -3,6 +3,7 @@ const img = 'https://amp.businessinsider.com/images/53a9d02becad04fd3af8649a-640
 //<h1 class="display-2">${App.settings.name}<h1>
 App.renderHeader = () => {
   const { nItems, totalPrice } = App.calculateCartSummaryValues();
+  const itemText = nItems == 1 ? App.lang.misc_item : nItems > 4 ? App.lang.misc_itemss : nItems == 0 ? App.lang.misc_itemss : App.lang.misc_items;
   const header = $(`
     <header id="header">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -22,7 +23,7 @@ App.renderHeader = () => {
               <span id="total">${totalPrice.formatMoney()}</span> 
               ${App.settings.currency.symbol}
             </a>
-            <span id="items-count" class="badge badge-pill badge-light">${nItems} items</span>
+            <span id="items-count" class="badge badge-pill badge-light">${nItems} ${itemText}</span>
           </li>
         </ul>
       </nav>
