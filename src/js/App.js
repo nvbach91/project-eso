@@ -32,7 +32,6 @@ App.render = () => {
 };
 
 App.init = () => {
-  App.lang = App.GLocaleEN;
   App.loadLocalStorage();
   App.loadLocale();
   App.activeTabPosition = 0;

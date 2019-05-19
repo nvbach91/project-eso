@@ -28,9 +28,9 @@ App.showInModal = (element, title) => {
 App.bindCarousel = (carousel) => {
   carousel.carousel({ interval: App.settings.carouselInterval });
   carousel.on('touchstart', (event) => {
-    var xClick = event.originalEvent.touches[0].pageX;
+    const xClick = event.originalEvent.touches[0].pageX;
     carousel.one('touchmove', (event) => {
-      var xMove = event.originalEvent.touches[0].pageX;
+      const xMove = event.originalEvent.touches[0].pageX;
       if (Math.floor(xClick - xMove) > 5) {
         carousel.carousel('next');
       }
@@ -205,11 +205,11 @@ App.getPaymentMethod = (code) => {
 };
 
 App.loadLocale = () => {
-  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN || {};
+  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN;
 };
 
 App.printQRCode = (data) => {
-  var qrcodeContainer = $('<div>');
+  const qrcodeContainer = $('<div>');
   qrcodeContainer.qrcode(data.toString());
   $.post({
     url: 'https://localhost:2443/printdirectimage',
@@ -218,4 +218,17 @@ App.printQRCode = (data) => {
       cut: true,
     }
   });
+};
+
+App.getNumeralForm = (key, n) => {
+  return n === 1 ? App.lang[key] : n > 4 || n === 0 ? App.lang[key + 'ss'] : App.lang[key + 's'];
+};
+
+App.detectBrowserLanguage = () => {
+  for (const key in App.supportedLocales) {
+    if (navigator.language === key || navigator.language.startsWith(key)) {
+      return key;
+    }
+  }
+  return 'en';
 };
