@@ -39,7 +39,7 @@ App.renderFooter = () => {
           </li>
           <li class="nav-item">
             <button id="checkout-button" class="btn btn-primary btn-raised btn-icon">
-              <span>Checkout</span>
+              <span>${App.lang.order_checkout_btn}</span>
               <i class="material-icons">arrow_forward</i>
             </button>
           </li>
@@ -64,8 +64,8 @@ App.renderFooter = () => {
     if (t.parent().hasClass('dropdown-menu')) {
       const selectedLocale = t.data('locale');
       App.saveLocalPreference('locale', selectedLocale);
-      App.renderHeader();
-      App.renderStandbyScreen();
+      App.loadLocale();
+      App.render();
     }
     const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
     menu.prepend(currentLocaleButton);

@@ -4,12 +4,12 @@ App.renderFinishScreen = () => {
       <div class="screen finish-screen">
         <div class="card full-width-card">
           <h5 class="card-header">
-            <span>Thank you very much!</span>
-            <button class="btn btn-primary btn-raised start-new">Start a new order</button>
+            <span>${App.lang.finish_header_title}</span>
+            <button class="btn btn-primary btn-raised start-new">${App.lang.finish_header_btn}</button>
           </h5>
           <div class="card-body">
-            <p>Please take your receipt and wait for your number to be called</p>
-            <h5 class="card-title">Did you know?</h5>
+            <p>${App.lang.finish_body_title}</p>
+            <h5 class="card-title">${App.lang.finish_body_question}</h5>
             <button class="btn btn-primary dyk-text">&nbsp;</button>
           </div>
         </div>

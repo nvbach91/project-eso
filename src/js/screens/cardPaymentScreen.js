@@ -25,9 +25,9 @@ App.renderCardPaymentScreen = () => {
     <main id="main">
       <div class="screen payment-methods">
         <div class="card full-width-card">
-          <h5 class="card-header">Information</h5>
+          <h5 class="card-header">${App.lang.card_payment_title}</h5>
           <div class="card-body">
-            <p>Please follow instructions on the payment terminal screen</p>
+            <p>${App.lang.card_payment_desc}</p>
           </div>
         </div>
       </div>
@@ -51,10 +51,10 @@ App.renderCardPaymentScreen = () => {
       App.receipts.push(resp.msg);
       App.printReceipt(resp.msg, appendix);
     }).fail((resp) => {
-      App.showWarning(`<p>There was a problem in processing your request (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>Please contact staff</p>`);
+      App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
     });
   }).fail((resp) => {
-    App.showWarning(`<p>There was a problem in processing your request (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>Please contact staff</p>`);
+    App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
     App.renderCheckoutScreen();
   });
 };
@@ -64,7 +64,7 @@ App.payInCash = () => {
     App.receipts.push(resp.msg);
     App.printReceipt(resp.msg);
   }).fail((resp) => {
-    App.showWarning(`<p>There was a problem in processing your request (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>Please contact staff</p>`);
+    App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
   }).always(() => {
     App.hideSpinner();
   });

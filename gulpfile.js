@@ -88,7 +88,7 @@ const monitor = (cb) => {
             'public/**/*.js', 
             'public/**/*.css', 
         ]
-    }).on('start', function () {
+    }).on('start', () => {
         if (!started) {
             cb();
             started = true;

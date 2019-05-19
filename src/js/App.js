@@ -12,6 +12,8 @@ require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
 require('./components/receipt.js');
+require('./lang/cs.js');
+require('./lang/en.js');
 
 App.connect = () => {
   App.taxMarks = {};

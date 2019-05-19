@@ -1,27 +1,27 @@
-App.diningChoices = {
-  'eat-in': { 
-    title: 'Eat in',
-    text: 'Let\'s enjoy the atmosphere in our restaurant',
-    btn: { text: 'I\'ll eat here', class: 'btn-primary' },
-    img: 'https://media1.s-nbcnews.com/j/streams/2014/October/141006/2D274906938828-today-cafeteria-140811-01.fit-760w.jpg',
-  },
-  'take-out': { 
-    title: 'Take out',
-    text: 'I want to pack my meal',
-    btn: { text: 'I\'ll take it home', class: 'btn-warning' },
-    img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
-  },
-};
 App.renderDiningChoiceScreen = () => {
+  App.diningChoices = {
+    'eat-in': { 
+      title: App.lang.dining_choice_eat_in_title,
+      text: App.lang.dining_choice_eat_in_text,
+      btn: { text: App.lang.dining_choice_eat_in_btn, class: 'btn-primary' },
+      img: 'https://media1.s-nbcnews.com/j/streams/2014/October/141006/2D274906938828-today-cafeteria-140811-01.fit-760w.jpg',
+    },
+    'take-out': { 
+      title: App.lang.dining_choice_take_out_title,
+      text: App.lang.dining_choice_take_out_text,
+      btn: { text: App.lang.dining_choice_take_out_btn, class: 'btn-warning' },
+      img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
+    },
+  };
   const screen = $(`
     <main id="main">
       <div class="screen dining-choices">
         <div class="card full-width-card">
-          <h5 class="card-header">Welcome!</h5>
+          <h5 class="card-header">${App.lang.dining_choice_welcome_title}</h5>
           <div class="card-body">
             <h5 class="card-title">Daily offer: special on-the-house treatment</h5>
             <p class="card-text">Order 5 get 1 free</p>
-            <button class="btn btn-primary">Show me!</button>
+            <button class="btn btn-primary">${App.lang.dining_choice_special_offer_btn}</button>
           </div>
         </div>
         <br>

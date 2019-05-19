@@ -14,7 +14,7 @@ App.renderModal = () => {
           </div>
           <div class="modal-body"></div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">${App.lang.misc_close_btn}</button>
           </div>
         </div>
       </div>

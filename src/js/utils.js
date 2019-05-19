@@ -28,9 +28,9 @@ App.showInModal = (element, title) => {
 App.bindCarousel = (carousel) => {
   carousel.carousel({ interval: App.settings.carouselInterval });
   carousel.on('touchstart', (event) => {
-    var xClick = event.originalEvent.touches[0].pageX;
+    const xClick = event.originalEvent.touches[0].pageX;
     carousel.one('touchmove', (event) => {
-      var xMove = event.originalEvent.touches[0].pageX;
+      const xMove = event.originalEvent.touches[0].pageX;
       if (Math.floor(xClick - xMove) > 5) {
         carousel.carousel('next');
       }
@@ -110,14 +110,14 @@ App.checkActivity = () => {
   App.isCheckingActivity = true;
   const check = $(`
     <div class="activity-check">
-      <p>Please let us know you are still here. Otherwise it will go back to the initial screen.</p>
+      <p>${App.lang.modal_timeout_text}</p>
       <div class="ac-control">
-        <button class="btn btn-danger">No, I'll leave</button>
-        <button class="btn btn-primary btn-raised">Yes, gimme a minute</button>
+        <button class="btn btn-danger">${App.lang.modal_timeout_leave_btn}</button>
+        <button class="btn btn-primary btn-raised">${App.lang.modal_timeout_stay_btn}</button>
       </div>
     </div>
   `);
-  App.showInModal(check, 'Are you still browsing?');
+  App.showInModal(check, App.lang.modal_timeout_title);
   App.jModal.find('.cs-cancel').remove();
   App.jModal.on('hidden.bs.modal', () => {
     App.isCheckingActivity = false;
@@ -143,7 +143,7 @@ App.closeModal = () => {
 App.showWarning = (msg) => {
   const warning = $(`<p>${msg}</p>`);
   App.jModal.find('.cs-cancel').remove();
-  App.showInModal(warning, 'Warning');
+  App.showInModal(warning, App.lang.modal_payment_failed_title);
 };
 
 App.createInlineSpinner = () => {
@@ -205,11 +205,11 @@ App.getPaymentMethod = (code) => {
 };
 
 App.loadLocale = () => {
-  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN || {};
+  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN;
 };
 
 App.printQRCode = (data) => {
-  var qrcodeContainer = $('<div>');
+  const qrcodeContainer = $('<div>');
   qrcodeContainer.qrcode(data.toString());
   $.post({
     url: 'https://localhost:2443/printdirectimage',
@@ -218,4 +218,17 @@ App.printQRCode = (data) => {
       cut: true,
     }
   });
+};
+
+App.getNumeralForm = (key, n) => {
+  return n === 1 ? App.lang[key] : n > 4 || n === 0 ? App.lang[key + 'ss'] : App.lang[key + 's'];
+};
+
+App.detectBrowserLanguage = () => {
+  for (const key in App.supportedLocales) {
+    if (navigator.language === key || navigator.language.startsWith(key)) {
+      return key;
+    }
+  }
+  return 'en';
 };
