@@ -1,4 +1,4 @@
-App.updateLangDiningChoices = () => {
+App.renderDiningChoiceScreen = () => {
   App.diningChoices = {
     'eat-in': { 
       title: App.lang.dining_choice_eat_in_title,
@@ -13,8 +13,6 @@ App.updateLangDiningChoices = () => {
       img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
     },
   };
-};
-App.renderDiningChoiceScreen = () => {
   const screen = $(`
     <main id="main">
       <div class="screen dining-choices">
@@ -47,11 +45,7 @@ App.renderDiningChoiceScreen = () => {
   `);
   screen.find('.selection .card').click(function () {
     App.diningChoice = $(this).data('method');
-    if(App.diningChoice === "take-out") {
-      App.jDiningChoiceIndicator.text(App.lang.dining_choice_take_out_title);
-    } else {
-      App.jDiningChoiceIndicator.text(App.lang.dining_choice_eat_in_title);
-    }
+    App.jDiningChoiceIndicator.text(App.diningChoices[App.diningChoice].title);
     App.renderOrderScreen();
   });
   App.jBackButton.fadeIn().off('click').click(() => {

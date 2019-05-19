@@ -86,7 +86,8 @@ App.calculateCartSummaryValues = () => {
 
 App.calculateCart = () => {
   const { nItems, totalPrice } = App.calculateCartSummaryValues();
-  const itemText = nItems == 1 ? App.lang.misc_item : nItems < 5 ? App.lang.misc_items : App.lang.misc_itemss;
+  const itemText = nItems == 1 ? App.lang.misc_item : nItems > 4 || nItems == 0 ? App.lang.misc_itemss : App.lang.misc_items;
+  App.jModal.find('.cs-quantity').text(`${nItems} ${itemText}`);
   App.jModal.find('.cs-price').find('span').text(`${totalPrice.formatMoney()} ${App.settings.currency.symbol}`);
   App.jItemsCount.text(`${nItems} ${itemText}`);
   App.jTotal.text(totalPrice.formatMoney());
@@ -152,7 +153,7 @@ App.showCart = () => {
     cartItems.append(el);
   });
   const { nItems, totalPrice } = App.calculateCartSummaryValues();
-  const itemText = nItems == 1 ? App.lang.misc_item : nItems < 5 ? App.lang.misc_items : App.lang.misc_itemss;
+  const itemText = nItems == 1 ? App.lang.misc_item : nItems > 4 || nItems == 0 ? App.lang.misc_itemss : App.lang.misc_items;
   const cartSummary = $(`
     <div class="cart-summary">
       <div class="btn btn-primary cs-quantity">${nItems} ${itemText}</div>

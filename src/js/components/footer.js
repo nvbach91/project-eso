@@ -63,9 +63,9 @@ App.renderFooter = () => {
     const t = $(this);
     if (t.parent().hasClass('dropdown-menu')) {
       const selectedLocale = t.data('locale');
+      App.lang = App['GLocale' + selectedLocale.toUpperCase()];
       App.saveLocalPreference('locale', selectedLocale);
-      App.renderHeader();
-      App.renderStandbyScreen();
+      App.render();
     }
     const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
     menu.prepend(currentLocaleButton);

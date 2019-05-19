@@ -23,10 +23,6 @@ App.connect = () => {
   return $.when();
 };
 
-App.langUpdate = () => {
-  App.updateLangDiningChoices();
-}
-
 App.render = () => {
   App.renderModal();
   App.renderSpinner();
@@ -37,7 +33,6 @@ App.render = () => {
 
 App.init = () => {
   App.lang = App.GLocaleEN;
-  App.langUpdate();
   App.loadLocalStorage();
   App.loadLocale();
   App.activeTabPosition = 0;
