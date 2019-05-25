@@ -46,6 +46,9 @@ App.init = () => {
     App.jFooter = $('#footer');
     App.jSpinner = $('#spinner');
     App.jModal = $('#modal');
+    App.jOrderPreview = $('<div>');
+    App.jTotal = $('<div>');
+    App.jItemsCount = $('<div>');
     App.render();
     moment.locale(App.locale);
   });

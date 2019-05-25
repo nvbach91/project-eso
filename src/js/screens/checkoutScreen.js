@@ -1,4 +1,5 @@
 App.renderCheckoutScreen = () => {
+  App.jOrderPreview.remove();
   const { totalPrice } = App.calculateCartSummaryValues();
   const screen = $(`
     <main id="main">

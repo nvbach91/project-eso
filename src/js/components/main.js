@@ -41,6 +41,7 @@ App.renderSpinner = () => {
 };
 
 App.renderMain = () => {
+  //App.renderOrderScreen();
   App.renderStandbyScreen();
 };
 

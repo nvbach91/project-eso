@@ -53,7 +53,11 @@ html, body, #app {
 .navbar-nav {
     flex-direction: row;
 }
+#dining-choice {
+    display: none;
+}
 main {
+    background-color: #eee;
     flex-grow: 1;
     display: flex;
     overflow: hidden;
@@ -152,10 +156,10 @@ footer .nav-item:last-child {
     width: 50px;
     height: 50px;
     margin: 0;
-    border: 5px solid #009688;
+    border: 5px solid $themeColor;
     border-radius: 50%;
     animation: spinner-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #009688 transparent transparent transparent;
+    border-color: $themeColor transparent transparent transparent;
 }
 .spinner-ring div:nth-child(1) { animation-delay: -0.45s; }
 .spinner-ring div:nth-child(2) { animation-delay: -0.3s; }

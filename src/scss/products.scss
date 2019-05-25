@@ -4,11 +4,20 @@
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     overflow: auto;
-    grid-gap: 10px;
+    grid-gap: 20px;
     grid-auto-rows: min-content;
-    padding: 10px 10px 0 0;
+    padding: 20px 20px 0 0;
+    &:after {
+        content: "";
+        display: block;
+        height: 500px;
+        width: 100%;
+    }
 }
 .product-offer {
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 10px 10px 0 10px;
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -16,8 +25,12 @@
     justify-content: center;
     overflow: auto;
 }
+.product-offer.highlight {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
 .product-offer .add, .product-details .add {
-    min-width: 100px;
+    /*min-width: 100px;*/
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -58,17 +71,20 @@
     padding: 10px 0;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-weight: bold;
+    width: 100%;
 }
 .po-price {
     font-weight: 500;
     font-size: 1.25em;
+    color: $themeColor;
 }
 .po-row {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 10px;
+    padding: 5px 0;
 }
 .po-control {
     display: flex;

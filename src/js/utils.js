@@ -70,7 +70,7 @@ App.reset = () => {
   App.saveLocalCart();
   App.calculateCart();
   App.jCheckoutButton.fadeOut();
-  App.jCartControl.fadeOut();
+  App.jOrderPreview.remove();
   App.renderStandbyScreen();
 };
 
@@ -231,4 +231,14 @@ App.detectBrowserLanguage = () => {
     }
   }
   return 'en';
+};
+
+App.nextTab = () => {
+  const nextTab = App.jTabs.children().eq(App.activeTabPosition + 1);
+  if (nextTab.length) {
+    nextTab.click();
+    App.jTabs.animate({
+      scrollTop: nextTab.offset().top
+    }, 1000);
+  }
 };

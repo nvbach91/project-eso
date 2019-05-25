@@ -1,4 +1,6 @@
 App.renderDiningChoiceScreen = () => {
+  App.jOrderPreview.remove();
+  App.jDiningChoiceIndicator.fadeOut();
   App.diningChoices = {
     'eat-in': { 
       title: App.lang.dining_choice_eat_in_title,
@@ -45,7 +47,7 @@ App.renderDiningChoiceScreen = () => {
   `);
   screen.find('.selection .card').click(function () {
     App.diningChoice = $(this).data('method');
-    App.jDiningChoiceIndicator.text(App.diningChoices[App.diningChoice].title);
+    App.jDiningChoiceIndicator.find('span').text(App.diningChoices[App.diningChoice].title);
     App.renderOrderScreen();
   });
   App.jBackButton.fadeIn().off('click').click(() => {

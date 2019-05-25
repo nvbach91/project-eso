@@ -6,7 +6,11 @@ App.addToCart = (id) => {
     App.cart[id] = {
       quantity: 1
     };
+    const orderPreviewItem = App.createOrderPreviewItem(id);
+    App.jOrderPreviewList.append(orderPreviewItem.hide().fadeIn());
   }
+  App.jOrderPreview.fadeIn();
+  App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
@@ -20,20 +24,28 @@ App.addToCart = (id) => {
   App.calculateCart();
   App.saveLocalCart();
 
-  if (!App.jCartControl.is(':visible')) {
+  if (!App.jCheckoutButton.is(':visible')) {
     App.jCheckoutButton.css({ display: 'flex' }).fadeIn();
-    App.jCartControl.css({ display: 'flex' }).hide().fadeIn();
   }
+  App.nextTab();
 };
 
 App.decrementFromCart = (id) => {
   if (App.cart[id]) {
     App.cart[id].quantity--;
+    App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
     App.jProducts.find(`[data-id="${id}"]`).find('span').text(App.cart[id].quantity);
     App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
     if (App.cart[id].quantity <= 0) {
       delete App.cart[id];
       App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+      App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
+        $(this).remove();
+        if (!Object.keys(App.cart).length) {
+          App.jCheckoutButton.fadeOut();
+          App.jOrderPreview.fadeOut();
+        }
+      });
     }
     const categoryId = App.products[id].category;
     App.cartCategoryQuantities[categoryId]--;
@@ -49,6 +61,9 @@ App.decrementFromCart = (id) => {
 
 App.removeFromCart = (id) => {
   App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+  App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
+    $(this).remove();
+  });
   const categoryId = App.products[id].category;
   App.cartCategoryQuantities[categoryId] -= App.cart[id].quantity;
   if (App.cartCategoryQuantities[categoryId] <= 0) {
@@ -66,6 +81,10 @@ App.removeAllFromCart = () => {
   App.cartCategoryQuantities = {};
   App.jProducts.find('.cart-quantity-indicator').fadeOut();
   App.jTabs.find('.cart-quantity-indicator').fadeOut()
+  App.jOrderPreviewList.children().fadeOut(function () {
+    $(this).remove();
+    App.jOrderPreview.fadeOut();
+  });
   App.saveLocalCart();
   App.calculateCart();
 };
@@ -128,7 +147,7 @@ App.showCart = () => {
         if (!Object.keys(App.cart).length) {
           App.closeModal();
           App.jCheckoutButton.fadeOut();
-          App.jCartControl.fadeOut();
+          App.jOrderPreview.fadeOut();
         }
       });
     });
@@ -141,7 +160,7 @@ App.showCart = () => {
           if (!Object.keys(App.cart).length) {
             App.closeModal();
             App.jCheckoutButton.fadeOut();
-            App.jCartControl.fadeOut();
+            App.jOrderPreview.fadeOut();
           }
         });
       }
@@ -173,7 +192,6 @@ App.showCart = () => {
     cartItems.empty();
     App.closeModal();
     App.jCheckoutButton.fadeOut();
-    App.jCartControl.fadeOut();
   });
   if (App.jModal.find('.cs-cancel').length) {
     App.jModal.find('.cs-cancel').replaceWith(cancelButton);

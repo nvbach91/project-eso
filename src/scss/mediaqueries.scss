@@ -1,7 +1,10 @@
 
 @media screen and (min-width: 720px) {
     .product-offer {
-        height: 250px;
+        height: 270px;
+    }
+    .product-offer.highlight {
+        grid-column-end: 3;
     }
     .selection {
         flex-direction: row;
@@ -22,9 +25,6 @@
     .modal-dialog {
         max-width: 800px;
     }
-    #cart-indicator * {
-        font-size: 20px;
-    }
     .cart-item {
         flex-wrap: nowrap;
     }
@@ -36,6 +36,7 @@
     }
     .tab {
         min-width: 200px;
+        min-height: 200px;
     }
     .cart-item .btn {
         font-size: 1.5em;
@@ -48,8 +49,14 @@
     .product-offer {
         height: 300px;
     }
+    .product-offer.highlight {
+        grid-column-end: 4;
+    }
     .product-offer .add, .product-details .add {
-        min-width: 140px;
+        /*min-width: 140px;*/
+    }
+    .add i.material-icons {
+        font-size: 28px;
     }
     #products {
         grid-template-columns: repeat(3, minmax(0, 1fr));

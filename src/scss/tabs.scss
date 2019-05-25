@@ -1,21 +1,19 @@
 
 #tabs {
-    display: flex;
-    flex-direction: column;
     overflow: auto;
-    padding: 10px 10px 0 10px;
+    padding: 20px 20px 0 20px;
+    scroll-padding: 50px 0 0 50px;
 }
 .tab {
+    border-radius: 5px;
     display: flex;
     color: white;
     min-width: 100px;
     min-height: 100px;
-    margin-bottom: 10px;
-    opacity: 0.7;
+    margin-bottom: 20px;
+    opacity: 0.5;
     padding: 0;
-}
-.tab.active {
-    opacity: 1;
+    background-color: white !important;
 }
 .tab-overlay {
     width: 100%;
@@ -27,13 +25,21 @@
     align-items: center;
     justify-content: center;
     z-index: -2;
+    background-size: 75%;
 }
 .tab-name {
-    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    background-color: $themeColor;
     color: white;
     width: 100%;
     bottom: 0;
     position: absolute;
+}
+.tab.active {
+    opacity: 1;
+    .tab-name {
+        display: initial;
+    }
 }
 .tab-overlay {
     filter: grayscale(1);

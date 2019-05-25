@@ -1,9 +1,7 @@
 
-const footerText = 'footerText';
-
 App.renderFooter = () => {
   const footer = $(`
-    <footer id="footer" class="card text-center">
+    <footer id="footer" class="text-center">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item" id="back-button">
@@ -38,7 +36,7 @@ App.renderFooter = () => {
             </div>
           </li>
           <li class="nav-item">
-            <button id="checkout-button" class="btn btn-primary btn-raised btn-icon">
+            <button id="checkout-button" class="btn btn-primary btn-icon">
               <span>${App.lang.order_checkout_btn}</span>
               <i class="material-icons">arrow_forward</i>
             </button>

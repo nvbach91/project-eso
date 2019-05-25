@@ -83,12 +83,12 @@ App.settings = {
 };
 
 App.categories = {
-  '0': { name: 'Soups', img: 'bg09_hjz6no' },
-  '1': { name: 'Beers', img: 'bg10_coyfml' },
-  '2': { name: 'Beverages', img: 'bg07_wrsdxe' },
-  '3': { name: 'Coffees', img: 'bg04_i3fq68' },
-  '4': { name: 'Menus', img: 'bg06_gmmeqj' },
-  '5': { name: 'Burgers', img: 'bg01_mog1lh' },/*
+  '0': { name: 'Starters', img: 'https://image.flaticon.com/icons/svg/193/193552.svg' },
+  '1': { name: 'Main course', img: 'https://image.flaticon.com/icons/svg/985/985505.svg' },
+  '2': { name: 'Beverages', img: 'https://image.flaticon.com/icons/svg/130/130973.svg' },
+  '3': { name: 'Alcohol', img: 'https://image.flaticon.com/icons/svg/113/113224.svg' },
+  '4': { name: 'Deserts', img: 'https://image.flaticon.com/icons/svg/1588/1588999.svg' },/*
+  '5': { name: 'Burgers', img: 'bg01_mog1lh' },
   '6': { name: 'Rice', img: 'bg05_osoyo0' },
   '7': { name: 'Noodles', img: 'bg02_komziq' },
   '8': { name: 'Wraps', img: 'bg03_tdlabn' },
@@ -110,7 +110,8 @@ App.products = {
     "name": "swallow grass",
     "price": "142.00",
     "img": "bg09_hjz6no",
-    "category": "2"
+    "category": "2",
+    "highlight": true
   },
   "1": {
     "name": "freight dream",
@@ -146,7 +147,8 @@ App.products = {
     "name": "scandal shark",
     "price": "181.00",
     "img": "bg05_osoyo0",
-    "category": "0"
+    "category": "0",
+    "highlight": true
   },
   "7": {
     "name": "primary die",

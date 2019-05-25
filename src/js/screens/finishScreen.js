@@ -29,7 +29,6 @@ App.renderFinishScreen = () => {
   });
   //screen.hide();
   screen.find('.card').hide();
-  App.jCartControl.fadeOut();
   App.jCheckoutButton.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;

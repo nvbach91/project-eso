@@ -1,6 +1,3 @@
-#cart-control {
-    display: none;
-}
 #cart-indicator {
     cursor: pointer;
     display: flex;
@@ -69,4 +66,47 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+#order-preview {
+    display: none;
+    background-color: #eee;
+    padding-bottom: 10px;
+}
+#op-list {
+    display: flex;
+    overflow: auto;
+}
+.op-item {
+    cursor: pointer;
+    height: 100%;
+    max-width: 230px;
+    display: flex;
+    padding: 20px;
+    background-color: #fff;
+    margin-right: 10px;
+}
+.op-img {
+    height: 120px;
+    width: 120px;
+    flex-grow: 1;
+    position: relative;
+    margin-right: 10px;
+}
+.op-img .cart-quantity-indicator {
+    position: absolute;
+    height: auto;
+    width: auto;
+    bottom: 0;
+    right: 0;
+}
+.op-control {
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+}
+.op-inc, .op-dec {
+    margin: 0;
+    height: 50%;
+    width: 100%;
 }

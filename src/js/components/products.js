@@ -6,9 +6,9 @@ App.renderProducts = (category) => {
     const product = App.products[id];
     const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
     const element = $(`
-      <div class="product-offer">
+      <div class="product-offer${product.highlight ? ' highlight' : ''}">
         <div class="btn btn-raised po-img"${style}>
-          <button class="btn btn-warning btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
+          <button class="btn btn-primary btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
             <i class="material-icons">shopping_cart</i> 
             <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
           </button>
@@ -17,14 +17,14 @@ App.renderProducts = (category) => {
         <div class="po-row">
           <div class="po-price">${product.price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
-            <button class="btn btn-primary btn-raised add">
-              <i class="material-icons">bookmark_border</i>
-              <span>${App.lang.order_products_order_btn}</span>
+            <button class="btn btn-primary add">
+              <i class="material-icons">playlist_add</i>
             </button>
           </div>
         </div>
       </div>
-    `).hide();
+    `);
+    //element.hide();
     element.find('.po-img').click(() => {
       App.showProductDetail(id);
     });
@@ -43,7 +43,7 @@ App.renderProducts = (category) => {
   App.jProducts.replaceWith(container);
   App.jProducts = container;
   //App.jProducts.fadeIn(() => {
-    App.jProducts.children().slideDown();
+    //App.jProducts.children().slideDown();
     App.hideSpinner();
   //});
 };
@@ -60,13 +60,12 @@ App.showProductDetail = (id) => {
         <div class="pd-row">
           <div class="pd-price">${product.price} ${App.settings.currency.symbol}</div>
           <div class="pd-control">
-            <button class="btn btn-warning btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
+            <button class="btn btn-primary ${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
               <i class="material-icons">shopping_cart</i> 
               <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
             </button>
-            <button class="btn btn-primary btn-raised add">
-              <i class="material-icons">bookmark_border</i>
-              <span>${App.lang.order_products_order_btn}</span>
+            <button class="btn btn-raised btn-primary add">
+              <i class="material-icons">playlist_add</i>
             </button>
           </div>
         </div>
