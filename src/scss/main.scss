@@ -6,8 +6,7 @@
     background-size: cover;
 }
 ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+    display: none;
 }
 body {
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
@@ -118,6 +117,9 @@ main {
 }
 footer .nav-item:last-child {
     margin-left: auto;
+}
+footer .card-header {
+    height: 85px;
 }
 #checkout-button {
     display: none;

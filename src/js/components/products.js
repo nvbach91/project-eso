@@ -49,7 +49,7 @@ App.renderProducts = (category) => {
   App.jProducts.replaceWith(container);
   App.jProducts = container;
   App.jProducts.children().each(function (i) {
-    $(this).delay(i * 100).slideDown(300);
+    $(this).delay(i * (App.getAnimationTime() ? 100 : 0)).slideDown(App.getAnimationTime());
   });
   App.hideSpinner();
 };
@@ -61,19 +61,20 @@ App.showProductDetail = (id) => {
     <div class="product-details">
       <div class="pd-img"${style}></div>
       <div class="pd-details">
-        <div class="pd-name">${product.name}</div>
-        ${product.description ? `<div class="pd-description">${product.description}</div>` : ''}
         <div class="pd-row">
+          <div class="pd-name">${product.name}</div>
+          ${product.description ? `<div class="pd-description">${product.description}</div>` : ''}
           <div class="pd-price">${product.price} ${App.settings.currency.symbol}</div>
-          <div class="pd-control">
-            <button class="btn btn-primary ${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
-              <i class="material-icons">shopping_cart</i> 
-              <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
-            </button>
-            <button class="btn btn-raised btn-primary add">
-              <i class="material-icons">playlist_add</i>
-            </button>
-          </div>
+        </div>
+        <div class="pd-control">
+          <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove"><i class="material-icons">remove</i></button>
+          <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
+            <i class="material-icons">shopping_cart</i> 
+            <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
+          </button>
+          <button class="btn btn-raised btn-primary add">
+            <i class="material-icons">playlist_add</i>
+          </button>
         </div>
       </div>
     </div>
@@ -81,8 +82,17 @@ App.showProductDetail = (id) => {
   element.find('.cart-quantity-indicator').click((e) => {
     App.showCart();
   });
+  element.find('.remove').click(() => {
+    App.decrementFromCart(id);
+    if (!App.cart[id]) {
+      setTimeout(() => {
+        App.closeModal();
+      }, App.getAnimationTime());
+    }
+  });
   element.find('.add').click(() => {
     App.addToCart(id);
+    element.find('.remove').removeClass('hidden');
   });
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();

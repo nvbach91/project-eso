@@ -1,5 +1,6 @@
 
 App.addToCart = (id) => {
+  App.jOrderPreviewList.children().removeClass('last');
   if (App.cart[id]) {
     App.cart[id].quantity++;
   } else {
@@ -7,10 +8,18 @@ App.addToCart = (id) => {
       quantity: 1
     };
     const orderPreviewItem = App.createOrderPreviewItem(id);
-    App.jOrderPreviewList.append(orderPreviewItem.hide().fadeIn());
+    App.jOrderPreviewList.append(orderPreviewItem.addClass('last').hide().fadeIn());
+    
+    App.jOrderPreviewList.animate({
+      scrollLeft: orderPreviewItem.offset().left
+    }, App.getAnimationTime());
   }
   App.jOrderPreview.fadeIn();
-  App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
+  const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
+  /*App.jOrderPreviewList.animate({
+    scrollLeft: existingOrderPreviewItem.offset().left
+  }, App.getAnimationTime());*/
+  existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
   App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
@@ -25,16 +34,24 @@ App.addToCart = (id) => {
   App.saveLocalCart();
 
   if (!App.jCheckoutButton.is(':visible')) {
-    App.jCheckoutButton.css({ display: 'flex' }).fadeIn();
+    App.jCheckoutButton.fadeIn(() => {
+      App.jCheckoutButton.css({ display: 'flex' });
+    });
   }
 };
 
 App.decrementFromCart = (id) => {
+  App.jOrderPreviewList.children().removeClass('last');
   if (App.cart[id]) {
     App.cart[id].quantity--;
-    App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
+    const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
+    /*App.jOrderPreviewList.animate({
+      scrollLeft: existingOrderPreviewItem.offset().left
+    }, App.getAnimationTime());*/
+    existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
     App.jProducts.find(`[data-id="${id}"]`).find('span').text(App.cart[id].quantity);
     App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
+    App.jModal.find(`.cart-quantity-indicator[data-id="${id}"] span`).text(App.cart[id].quantity);
     if (App.cart[id].quantity <= 0) {
       delete App.cart[id];
       App.jProducts.find(`[data-id="${id}"]`).fadeOut();
@@ -141,7 +158,7 @@ App.showCart = () => {
     el.find('.ci-remove').click(() => {
       App.removeFromCart(id);
       el.find('button').prop('disabled', true);
-      el.slideUp(() => {
+      el.slideUp(App.getAnimationTime(), () => {
         el.remove();
         if (!Object.keys(App.cart).length) {
           App.closeModal();

@@ -4,16 +4,16 @@ const progress = `
 </div>
 `;
 const slides = [
-  {img: 'bg09_hjz6no', btn: "Let's get started" }, 
-  {img: 'bg10_coyfml', btn: "Let's get started" },
-  {img: 'bg07_wrsdxe', btn: "Let's get started" },
-  {img: 'bg04_i3fq68', btn: "Let's get started" },
-  {img: 'bg06_gmmeqj', btn: "Let's get started" },
-  {img: 'bg01_mog1lh', btn: "Let's get started" },
-  {img: 'bg05_osoyo0', btn: "Let's get started" },
-  {img: 'bg02_komziq', btn: "Let's get started" },
-  {img: 'bg03_tdlabn', btn: "Let's get started" },
-  {img: 'bg08_hsajsa', btn: "Let's get started" },
+  {img: 'bg09_hjz6no', btn: "Touch to start" }, 
+  {img: 'bg10_coyfml', btn: "Touch to start" },
+  {img: 'bg07_wrsdxe', btn: "Touch to start" },
+  {img: 'bg04_i3fq68', btn: "Touch to start" },
+  {img: 'bg06_gmmeqj', btn: "Touch to start" },
+  {img: 'bg01_mog1lh', btn: "Touch to start" },
+  {img: 'bg05_osoyo0', btn: "Touch to start" },
+  {img: 'bg02_komziq', btn: "Touch to start" },
+  {img: 'bg03_tdlabn', btn: "Touch to start" },
+  {img: 'bg08_hsajsa', btn: "Touch to start" },
 ];
 App.renderStandbyScreen = () => {
   const screen = $(`
@@ -41,7 +41,7 @@ App.renderStandbyScreen = () => {
       </div>
     </main>
   `);
-  screen.find('button').click(() => {
+  screen.find('.carousel-item').click(() => {
     App.renderDiningChoiceScreen();
   });
   App.bindCarousel(screen.find('#standby-carousel'));

@@ -15,7 +15,7 @@ const obfuscate = require('gulp-javascript-obfuscator');
 
 const scss = () => {
     return gulp.src([
-        './src/scss/colors.scss',
+        './src/scss/variables.scss',
         './src/scss/main.scss',
         './src/scss/tabs.scss',
         './src/scss/products.scss',

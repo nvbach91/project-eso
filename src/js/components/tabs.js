@@ -4,7 +4,7 @@ App.renderTabs = () => {
     const category = App.categories[id];
     const style = category.img ? ` style="background-image: url(${category.img.startsWith('http') ? '' : App.imageUrlBase}${category.img})"` : ``;
     const element = $(`
-      <button class="btn btn-primary tab">
+      <div class="btn btn-primary tab">
         <div class="tab-overlay"${style}></div>
         <div class="tab-name">${category.name}</div>
         <div class="btn btn-primary btn-raised${App.cartCategoryQuantities[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
@@ -17,15 +17,18 @@ App.renderTabs = () => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
       App.activeTabPosition = element.index();
-      App.renderProducts(id);
+      App.jProducts.slideUp(() => {
+        App.renderProducts(id);
+      });
     });
     container.append(element);
   });
-  //App.jTabs.hide();
   App.jTabs.empty();
-  App.jTabs.append(container.children());//.fadeIn(() => {
-    App.jTabs.children().slideDown(() => {
-      App.jTabs.children().eq(App.activeTabPosition).click();
-    });
-  //});
+  App.jTabs.append(container.children());
+  App.jTabs.children().each(function (i) {
+    $(this).delay(i * (App.getAnimationTime() ? 100 : 0)).slideDown(App.getAnimationTime());
+  });
+  setTimeout(() => {
+    App.jTabs.children().eq(App.activeTabPosition).click();
+  }, Object.keys(App.categories).length * (App.getAnimationTime() ? 100 : 0));
 };

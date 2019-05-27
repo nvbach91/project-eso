@@ -240,13 +240,17 @@ App.nextTab = () => {
       nextTab.click();
       App.jTabs.animate({
         scrollTop: nextTab.offset().top
-      }, 1000);
+      }, App.getAnimationTime());
     }
-  }, 500);
+  }, App.getAnimationTime());
 };
 
 App.preloadImages = (images) => {
   Array.from(new Set(images)).forEach((image) => {
     new Image().src = App.imageUrlBase + image;
   });
+};
+
+App.getAnimationTime = () => {
+  return window.innerWidth >= 720 ? 300 : 0;
 };

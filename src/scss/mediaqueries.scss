@@ -1,4 +1,9 @@
 
+@media screen and (min-width: 540px) {
+    #products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
 @media screen and (min-width: 720px) {
     .product-offer {
         height: 270px;
@@ -19,9 +24,6 @@
     .navbar-brand span {
         display: inline;
     }
-    #products {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
     .modal-dialog {
         max-width: 800px;
     }
@@ -35,8 +37,8 @@
         flex-grow: 0;
     }
     .tab {
-        min-width: 200px;
-        min-height: 200px;
+        width: 140px;
+        height: 140px;
     }
     .cart-item .btn {
         font-size: 1.5em;
@@ -46,6 +48,10 @@
     }
 }
 @media screen and (min-width: 1024px) {
+    .tab {
+        width: 180px;
+        height: 180px;
+    }
     .product-offer {
         height: 300px;
     }

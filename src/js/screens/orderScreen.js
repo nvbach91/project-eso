@@ -11,19 +11,16 @@ App.renderOrderScreen = () => {
   App.jTabs = screen.find('#tabs');
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jDiningChoiceIndicator.css({ display: 'flex' }).hide().fadeIn();
+  App.jDiningChoiceIndicator.hide().fadeIn();
   if (Object.keys(App.cart).length) {
-    App.jCheckoutButton.hide().fadeIn().css({ display: 'flex' });
-    App.renderTabs();
-    App.jBackButton.fadeIn().off('click').click(() => {
-      App.renderDiningChoiceScreen();
-    });
-  } else {
-    App.renderTabs();
-    App.jBackButton.fadeIn().off('click').click(() => {
-      App.renderDiningChoiceScreen();
+    App.jCheckoutButton.fadeIn(() => {
+      App.jCheckoutButton.css({ display: 'flex' });
     });
   }
+  App.renderTabs();
+  App.jBackButton.fadeIn().off('click').click(() => {
+    App.renderDiningChoiceScreen();
+  });
   App.renderOrderPreview();
 };
 

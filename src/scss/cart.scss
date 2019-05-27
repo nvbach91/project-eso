@@ -5,11 +5,13 @@
     a {
         min-width: 140px;
         text-align: right;
+        text-transform: initial;
     }
 }
 #items-count {
     min-width: 110px;
     font-weight: 500;
+    color: $themeColor;
 }
 .cart-items {
     min-height: 160px;
@@ -74,8 +76,10 @@
     padding-bottom: 10px;
 }
 #op-list {
+    margin-top: 10px;
     display: flex;
     overflow: auto;
+    padding: 0 10px;
 }
 .op-item {
     cursor: pointer;
@@ -85,6 +89,11 @@
     padding: 20px;
     background-color: #fff;
     margin-right: 10px;
+    border-radius: $borderRadius;
+    transition: background-color ease .3s;
+}
+.op-item.last {
+    background-color: #fcd76a;
 }
 .op-img {
     height: 120px;

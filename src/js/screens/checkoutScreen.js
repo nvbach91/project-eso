@@ -51,12 +51,10 @@ App.renderCheckoutScreen = () => {
     App.renderOrderScreen();
     App.showCart();
   });
-  //screen.hide();
   screen.find('.card').hide();
   App.jBackButton.fadeOut();
   App.jCheckoutButton.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  //App.jMain.fadeIn();
-  screen.find('.card').slideDown();
+  screen.find('.card').slideDown(App.getAnimationTime());
 };

@@ -1,6 +1,7 @@
 App.renderDiningChoiceScreen = () => {
   App.jOrderPreview.remove();
   App.jDiningChoiceIndicator.fadeOut();
+  App.jCheckoutButton.fadeOut();
   App.diningChoices = {
     'eat-in': { 
       title: App.lang.dining_choice_eat_in_title,
@@ -58,7 +59,7 @@ App.renderDiningChoiceScreen = () => {
   App.jMain.replaceWith(screen);
   App.jMain = screen;
   App.jMain.fadeIn(() => {
-    screen.find('.card').slideDown();
+    screen.find('.card').slideDown(App.getAnimationTime());
   });
   App.jLocaleSwitcher.fadeOut();
   App.startActivitySession();

@@ -1,7 +1,7 @@
 
 App.renderFooter = () => {
   const footer = $(`
-    <footer id="footer" class="text-center">
+    <footer id="footer">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item" id="back-button">

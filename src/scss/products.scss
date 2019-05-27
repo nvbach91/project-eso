@@ -10,7 +10,7 @@
     &:after {
         content: "";
         display: block;
-        height: 500px;
+        height: 1366px;
         width: 100%;
     }
 }
@@ -23,7 +23,7 @@
     span, i { padding: 10px 0; }
 }
 .product-offer {
-    border-radius: 5px;
+    border-radius: $borderRadius;
     background-color: #fff;
     padding: 10px 10px 0 10px;
     height: 200px;
@@ -36,6 +36,9 @@
 .product-offer.highlight {
     grid-column-start: 1;
     grid-column-end: 2;
+}
+.product-details .remove.hidden {
+    visibility: hidden;
 }
 .product-offer .add, .product-details .add {
     /*min-width: 100px;*/
@@ -110,7 +113,7 @@
     padding-left: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .pd-name {
     text-transform: uppercase;
@@ -119,16 +122,14 @@
 .pd-price {
     font-size: 32px;
     font-weight: 500;
+    color: $themeColor;
 }
 .pd-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 }
 .pd-control {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: space-between;
 }
 .pd-control .btn {
     margin: 5px;
