@@ -234,11 +234,19 @@ App.detectBrowserLanguage = () => {
 };
 
 App.nextTab = () => {
-  const nextTab = App.jTabs.children().eq(App.activeTabPosition + 1);
-  if (nextTab.length) {
-    nextTab.click();
-    App.jTabs.animate({
-      scrollTop: nextTab.offset().top
-    }, 1000);
-  }
+  setTimeout(() => {
+    const nextTab = App.jTabs.children().eq(App.activeTabPosition + 1);
+    if (nextTab.length) {
+      nextTab.click();
+      App.jTabs.animate({
+        scrollTop: nextTab.offset().top
+      }, 1000);
+    }
+  }, 500);
+};
+
+App.preloadImages = (images) => {
+  Array.from(new Set(images)).forEach((image) => {
+    new Image().src = App.imageUrlBase + image;
+  });
 };

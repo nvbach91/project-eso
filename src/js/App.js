@@ -49,6 +49,7 @@ App.init = () => {
     App.jOrderPreview = $('<div>');
     App.jTotal = $('<div>');
     App.jItemsCount = $('<div>');
+    App.preloadImages(Object.values(App.products).map(p => p.img));
     App.render();
     moment.locale(App.locale);
   });

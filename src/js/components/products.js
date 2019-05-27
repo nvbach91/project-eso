@@ -1,5 +1,11 @@
 App.renderProducts = (category) => {
-  const container = $('<div id="products">');
+  const container = $(`<div id="products">`);
+  const header = $(`
+    <div class="btn btn-primary btn-raised btn-lg products-header">
+      <span>${App.categories[category].name}</span>
+      <i class="material-icons">menu</i>
+    </div>
+  `).hide().appendTo(container);
   Object.keys(App.products).filter((id) => {
     return category === App.products[id].category;
   }).forEach((id) => {
@@ -24,13 +30,14 @@ App.renderProducts = (category) => {
         </div>
       </div>
     `);
-    //element.hide();
+    element.hide();
     element.find('.po-img').click(() => {
       App.showProductDetail(id);
     });
     element.find('.add').click((e) => {
       e.stopPropagation();
       App.addToCart(id);
+      App.nextTab();
     });
     const cartQuantityIndicator = element.find('.cart-quantity-indicator');
     cartQuantityIndicator.click((e) => {
@@ -39,13 +46,12 @@ App.renderProducts = (category) => {
     });
     container.append(element);
   });
-  //container.hide();
   App.jProducts.replaceWith(container);
   App.jProducts = container;
-  //App.jProducts.fadeIn(() => {
-    //App.jProducts.children().slideDown();
-    App.hideSpinner();
-  //});
+  App.jProducts.children().each(function (i) {
+    $(this).delay(i * 100).slideDown(300);
+  });
+  App.hideSpinner();
 };
 
 App.showProductDetail = (id) => {

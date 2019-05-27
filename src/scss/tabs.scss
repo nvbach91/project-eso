@@ -28,17 +28,18 @@
     background-size: 75%;
 }
 .tab-name {
-    display: none;
+    opacity: 0;
     background-color: $themeColor;
     color: white;
     width: 100%;
     bottom: 0;
     position: absolute;
+    transition: opacity ease .3s;
 }
 .tab.active {
     opacity: 1;
     .tab-name {
-        display: initial;
+        opacity: 1;
     }
 }
 .tab-overlay {

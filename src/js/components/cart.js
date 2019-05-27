@@ -27,7 +27,6 @@ App.addToCart = (id) => {
   if (!App.jCheckoutButton.is(':visible')) {
     App.jCheckoutButton.css({ display: 'flex' }).fadeIn();
   }
-  App.nextTab();
 };
 
 App.decrementFromCart = (id) => {
@@ -192,6 +191,7 @@ App.showCart = () => {
     cartItems.empty();
     App.closeModal();
     App.jCheckoutButton.fadeOut();
+    App.jTabs.children().eq(0).click();
   });
   if (App.jModal.find('.cs-cancel').length) {
     App.jModal.find('.cs-cancel').replaceWith(cancelButton);

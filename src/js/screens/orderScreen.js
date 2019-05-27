@@ -36,10 +36,11 @@ App.renderOrderPreview = () => {
         <span class="navbar-brand">${App.lang.modal_cart_title}</span>
         <ul id="cart-control" class="navbar-nav">
           <li class="nav-item active" id="cart-indicator">
+            <span id="items-count" class="badge badge-pill badge-light">${nItems} ${App.getNumeralForm('misc_item', nItems)}</span>
             <a class="nav-link" href="#">
+              <span>Σ</span>&nbsp;
               <span id="total">${totalPrice.formatMoney()}</span> ${App.settings.currency.symbol}
             </a>
-            <span id="items-count" class="badge badge-pill badge-light">${nItems} ${App.getNumeralForm('misc_item', nItems)}</span>
           </li>
         </ul>
       </nav>
