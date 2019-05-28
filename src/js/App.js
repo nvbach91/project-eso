@@ -1,5 +1,6 @@
 require('./config.js');
 require('./utils.js');
+require('./components/network.js');
 require('./components/localStorage.js');
 require('./screens/standbyScreen.js');
 require('./screens/orderScreen.js');
@@ -14,14 +15,6 @@ require('./components/cart.js');
 require('./components/receipt.js');
 require('./lang/cs.js');
 require('./lang/en.js');
-
-App.connect = () => {
-  App.taxMarks = {};
-  App.settings.taxRates.forEach((taxRate, index) => {
-    App.taxMarks[taxRate] = String.fromCharCode(index + 65);
-  });
-  return $.when();
-};
 
 App.render = () => {
   App.renderModal();

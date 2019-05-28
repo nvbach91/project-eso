@@ -68,11 +68,15 @@ App.showProductDetail = (id) => {
         </div>
         <div class="pd-control">
           <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove"><i class="material-icons">remove</i></button>
-          <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
+          <button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
             <i class="material-icons">shopping_cart</i> 
             <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
           </button>
-          <button class="btn btn-raised btn-primary add">
+          <button class="btn btn-primary add">
+            <i class="material-icons">add</i>
+          </button>
+          <button class="btn btn-raised btn-primary order">
+            <span>${App.lang.order_products_order_btn}</span>&nbsp;
             <i class="material-icons">playlist_add</i>
           </button>
         </div>
@@ -93,6 +97,13 @@ App.showProductDetail = (id) => {
   element.find('.add').click(() => {
     App.addToCart(id);
     element.find('.remove').removeClass('hidden');
+  });
+  element.find('.order').click(() => {
+    if (!App.cart[id]) {
+      App.addToCart(id);
+    }
+    App.closeModal();
+    App.nextTab();
   });
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();

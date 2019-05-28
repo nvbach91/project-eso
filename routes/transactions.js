@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-router.post('/', (req, res) => {
+router.get('/transactions', (req, res) => {
   console.log(req.body);
   const receipt = {
     number: 19010000000,
