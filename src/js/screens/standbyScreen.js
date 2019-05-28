@@ -48,6 +48,7 @@ App.renderStandbyScreen = () => {
   screen.hide();
   App.jLocaleSwitcher.fadeIn();
   App.jBackButton.fadeOut();
+  App.jDiningChoiceIndicator.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
   App.jMain.fadeIn();

@@ -55,6 +55,8 @@ App.renderCardPaymentScreen = () => {
     App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
     App.renderCheckoutScreen();
   });
+  
+  App.hideSpinner();
 };
 
 App.payInCash = () => {
@@ -63,7 +65,5 @@ App.payInCash = () => {
     App.printReceipt(resp.msg);
   }).fail((resp) => {
     App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
-  }).always(() => {
-    App.hideSpinner();
   });
 };

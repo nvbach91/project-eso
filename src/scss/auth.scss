@@ -9,11 +9,27 @@
 }
 .form-signin {
     box-shadow: none;
-    min-width: 320px;
+    width: 320px;
     padding: 40px;
     margin: auto;
     border-radius: $borderRadius;
-    input {
-        padding: 10px;
-    }
+    transition: width ease .3s;
+}
+.form-signin > * {
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+}
+.form-signin {
+    color: $themeColor;
+}
+.form-signin input {
+    color: $themeColor;
+    padding: 10px;
+}
+.form-signin.full-width {
+    width: 100%;
+}
+.form-signin .input-group-prepend {
+    max-width: 60px;
 }

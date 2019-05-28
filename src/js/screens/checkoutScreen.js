@@ -47,7 +47,7 @@ App.renderCheckoutScreen = () => {
       App.payInCash();
     }
   });
-  screen.find('.go-back').click(function () {
+  screen.find('.go-back').click(() => {
     App.renderOrderScreen();
     App.showCart();
   });
