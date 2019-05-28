@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index.js'));
+app.use('/api/v1', require('./routes/auth.js'));
 app.use('/api/v1', require('./routes/settings.js'));
 app.use('/api/v1', require('./routes/transactions.js'));
 app.use('/api/v1', require('./routes/products.js'));

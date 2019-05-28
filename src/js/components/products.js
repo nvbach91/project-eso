@@ -61,20 +61,20 @@ App.showProductDetail = (id) => {
     <div class="product-details">
       <div class="pd-img"${style}></div>
       <div class="pd-details">
-        <div class="pd-row">
+        <div class="text-left">
           <div class="pd-name">${product.name}</div>
           ${product.description ? `<div class="pd-description">${product.description}</div>` : ''}
           <div class="pd-price">${product.price} ${App.settings.currency.symbol}</div>
         </div>
-        <div class="pd-control">
-          <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove"><i class="material-icons">remove</i></button>
-          <button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
-            <i class="material-icons">shopping_cart</i> 
-            <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
-          </button>
-          <button class="btn btn-primary add">
-            <i class="material-icons">add</i>
-          </button>
+        <div class="pd-control text-left">
+          <div class="pd-row justify-content-start">
+            <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove"><i class="material-icons">remove</i></button>
+            <button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
+              <i class="material-icons">shopping_cart</i> 
+              <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
+            </button>
+            <button class="btn btn-primary add"><i class="material-icons">add</i></button>
+          </div>
           <button class="btn btn-raised btn-primary order">
             <span>${App.lang.order_products_order_btn}</span>&nbsp;
             <i class="material-icons">playlist_add</i>

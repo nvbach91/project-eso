@@ -5,10 +5,15 @@ App.imageUrlBase = 'https://res.cloudinary.com/ceny24/image/upload/';
 App.localhostServerURL = window.location.protocol + '//localhost:2443';
 App.tableSyncServerURL = window.location.protocol + '//sync.vcap.me:2443';
 
-App.realm = 'cz';
-App.domain = 'ethereal.' + App.realm;
+const [ subdomain, domain, realm ] = location.hostname.split('.');
+App.subdomain = subdomain;
+App.domain = domain;
+App.realm = realm;
+
+App.provider = 'Ethereals United';
+
 App.thisYear = new Date().getFullYear();
-App.receiptCredits = App.thisYear + ' (c) ' + App.domain + ' ';
+App.credits = App.thisYear + ' © ' + App.provider;
 
 App.supportedLocales = {
   'en': 'English',

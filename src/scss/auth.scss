@@ -1,0 +1,19 @@
+.container-signin {
+    height: 100%;
+    display: flex;
+}
+.signin-aside {
+    flex-grow: 1;
+    background-image: url(https://image.freepik.com/free-photo/kitchen-background-cooking-food-concept-onion-table-vegetables-table-cooking-process-toning_1220-1146.jpg);
+    background-position: center;
+}
+.form-signin {
+    box-shadow: none;
+    min-width: 320px;
+    padding: 40px;
+    margin: auto;
+    border-radius: $borderRadius;
+    input {
+        padding: 10px;
+    }
+}

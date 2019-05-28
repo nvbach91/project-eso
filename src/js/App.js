@@ -1,5 +1,6 @@
 require('./config.js');
 require('./utils.js');
+require('./components/auth.js');
 require('./components/network.js');
 require('./components/localStorage.js');
 require('./screens/standbyScreen.js');
@@ -16,9 +17,15 @@ require('./components/receipt.js');
 require('./lang/cs.js');
 require('./lang/en.js');
 
+$(document).ajaxStop(() => {
+  App.hideSpinner();
+});
+
+$(document).ajaxStart(() => {
+  App.showSpinner();
+});
+
 App.render = () => {
-  App.renderModal();
-  App.renderSpinner();
   App.renderHeader();
   App.renderFooter();
   App.renderMain();
@@ -31,14 +38,20 @@ App.init = () => {
   App.currentSlidePosition = 0;
   App.activityCheckInterval = 0;
   App.isCheckingActivity = false;
+  App.jContainer = $('#app');
+  App.jSpinner = $('#spinner');
+  App.jModal = $('#modal');
+  App.renderSpinner();
+  App.renderModal();
+  App.renderLoginForm();
+};
+
+App.start = () => {
   App.connect().done(() => {
     App.paymentMethod = 'card';
-    App.jContainer = $('#app');
-    App.jHeader = $('#header');
-    App.jMain = $('#main');
-    App.jFooter = $('#footer');
-    App.jSpinner = $('#spinner');
-    App.jModal = $('#modal');
+    App.jHeader = $('<header id="header">').appendTo(App.jContainer);
+    App.jMain = $('<main id="main">').appendTo(App.jContainer);
+    App.jFooter = $('<footer id="footer">').appendTo(App.jContainer);
     App.jOrderPreview = $('<div>');
     App.jTotal = $('<div>');
     App.jItemsCount = $('<div>');
