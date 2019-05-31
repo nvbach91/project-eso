@@ -29,6 +29,25 @@ finish_header_btn	Start a new order	Začněte novou objednávku
 finish_body_title	Please take your receipt and wait for your number to be called	Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno
 finish_body_question	Did you know?	Věděli jste?
 		
+receipt_header_tin	TIN	IČO
+receipt_header_vat	VAT	DIČ
+receipt_header_residence	Residence	Adresa
+receipt_header_premise	Premises	Prostory
+receipt_body_vat_invoice	VAT Invoice	Daňový doklad č.
+receipt_body_invoice	Invoice	Doklad č.
+receipt_payment_total	Total	Celkem
+receipt_payment_method	Payment method	Způsob úhrady
+receipt_payment_tendered	Tendered	Přijato
+receipt_payment_change	Change	Vráceno
+receipt_summary_rates	Rates	Kurzy
+receipt_summary_net	Net	Netto
+receipt_summary_vat	VAT	DPH
+receipt_summary_pre	PRE	Provozovna
+receipt_summary_pos	POS	POS
+receipt_summary_bkp	BKP	BKP
+receipt_summary_fik	FIK	FIK
+receipt_footer_clerk	Clerk	Vydal
+		
 modal_product_detail_title	Product details	Detail produktu
 		
 modal_cart_title	Your order	Vaše objednávka
