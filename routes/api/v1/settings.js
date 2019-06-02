@@ -9,29 +9,30 @@ const settings = {
     zip: '12000',
     country: 'Česká republika',
   },
-  taxRates: [0, 10, 15, 21],
+  vatRates: [0, 10, 15, 21],
   residence: {
     street: 'Madridská 456',
-    city: 'ěščřžýáíéúůďťň ĚŠČŘŽÝÁÍÉÚŮĎŤŇ\n' +
+    city: 'ěščřžýáíéúůďťň ĚŠČŘŽÝÁÍÉÚŮĎŤŇ' /*+'\n' +
       'abcdefg{hijlkm}n opqrstuvwxyz\n' +
       'ABCDEFGHI`JLKMN OP´QRSTUVWXYZ\n' +
       '1234567890-=[This is small];This is big\n' +
       '\'\\,.//*-+\n' +
       '~!@#$%^&*()_+{bold}:"|<>?\n' +
-      '°ˇ§¨\n',
+      '°ˇ§¨'*/,
     zip: '11000',
     country: 'Česká republika',
   },
   employees: {
-    kiosk: 'Kiosk'
+    'kiosk': 'Kiosk',
+    'demo@gmail.com': 'Demo pracovník',
   },
   receipt: {
     img: '',
     header: 'Enjoy your meal',
     footer: '\\tThank you for coming\\t\n\\telusivecamel.co.uk\\t',
-    width: 58,
-    printWidth: 35,
-    extraPadding: 0,
+    width: 80, // 48
+    printWidth: 48, // 35
+    extraPadding: 4, // 0
   },
   tin: '12345678',
   vat: 'CZ12345678',

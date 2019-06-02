@@ -1,12 +1,12 @@
 text_id	en	cz
-dining_choice_welcome_title	Welcome!	Vítejte!
-dining_choice_special_offer_btn	Show me!	Přejít k nabídce!
-dining_choice_eat_in_title	Eat in	Na místě
-dining_choice_eat_in_text	Let's enjoy the atmosphere in our restaurant	Chtěl bych jíst v pohodlí restaurace
-dining_choice_eat_in_btn	I'll eat here	Budu jíst v restauraci
-dining_choice_take_out_title	Take out	S sebou
-dining_choice_take_out_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
-dining_choice_take_out_btn	I'll take it home	Zabalit s sebou
+delivery_method_welcome_title	Welcome!	Vítejte!
+delivery_method_special_offer_btn	Show me!	Přejít k nabídce!
+delivery_method_eat_in_title	Eat in	Na místě
+delivery_method_eat_in_text	Let's enjoy the atmosphere in our restaurant	Chtěl bych jíst v pohodlí restaurace
+delivery_method_eat_in_btn	I'll eat here	Budu jíst v restauraci
+delivery_method_take_out_title	Take out	S sebou
+delivery_method_take_out_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
+delivery_method_take_out_btn	I'll take it home	Zabalit s sebou
 		
 order_products_order_btn	Order	Vybrat
 order_checkout_btn	Checkout	Přejít k objednávce

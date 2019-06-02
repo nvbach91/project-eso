@@ -6,7 +6,7 @@ require('./components/localStorage.js');
 require('./screens/standbyScreen.js');
 require('./screens/orderScreen.js');
 require('./screens/checkoutScreen.js');
-require('./screens/diningChoiceScreen.js');
+require('./screens/deliveryMethodScreen.js');
 require('./screens/cardPaymentScreen.js')
 require('./screens/finishScreen.js');
 require('./components/header.js');

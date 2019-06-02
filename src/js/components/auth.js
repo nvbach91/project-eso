@@ -28,17 +28,18 @@ App.renderLoginForm = () => {
   loginForm.find('#launch').click(() => {
     loginForm.toggleClass('full-width');
   });
-  const subdomain = loginForm.find('[name="subdomain"]').val(location.protocol + '//' + location.hostname);
-  const username = loginForm.find('[name="username"]').val('demo@gmail.com');
-  const password = loginForm.find('[name="password"]').val('demo@gmail.com');
+  const subdomainInput = loginForm.find('[name="subdomain"]').val(location.protocol + '//' + location.hostname);
+  const usernameInput = loginForm.find('[name="username"]').val('demo@gmail.com');
+  const passwordInput = loginForm.find('[name="password"]').val('demo@gmail.com');
   loginForm.submit((e) => {
     e.preventDefault();
     App.authenticate({
-      subdomain: subdomain.val().replace(/http(s)?:\/\//, '').split('.')[0],
-      username: username.val(),
-      password: password.val(),
+      subdomain: subdomainInput.val().replace(/http(s)?:\/\//, '').split('.')[0],
+      username: usernameInput.val(),
+      password: passwordInput.val(),
     }).done((resp) => {
       localStorage.setItem('jwt', resp.token);
+      App.user = resp.user;
       dom.remove();
       App.start();
     }).fail((err) => {

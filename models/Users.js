@@ -7,7 +7,8 @@ const Users = new Schema({
   email: String,
   token: String,
   name: String,
-  
+  registerId: Schema.ObjectId,
+
 });
 
 module.exports = mongoose.model('users', Users)

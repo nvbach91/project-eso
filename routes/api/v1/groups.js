@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-var categories = [
+var groups = [
   {
     number: '0',
     name: 'Starters',
@@ -43,8 +43,8 @@ var categories = [
   // { number: '00', name: 'Soups', img: 'bg09_hjz6no' }
 ];
 
-router.get('/categories', (req, res) => {
-  res.json(categories);
+router.get('/groups', (req, res) => {
+  res.json(groups);
 });
 
 module.exports = router;

@@ -15,7 +15,8 @@ router.post('/auth', (req, res) => {
       }
       const token = jwt.sign(user, config.secret);
       return Users.updateOne({ _id: user._id }, { $set: { token } }).then(() => {
-        return res.json({ auth: true, user, token });
+        const { password, ...mUser } = user;
+        return res.json({ auth: true, user: mUser, token });
       });
     });
   })(req, res);

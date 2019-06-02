@@ -35,7 +35,7 @@ app.use(apiPrefix, passport.authenticate('jwt', { session: false }));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/settings.js'));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions.js'));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/products.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/categories.js'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/groups.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

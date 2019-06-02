@@ -42,13 +42,13 @@ App.renderStandbyScreen = () => {
     </main>
   `);
   screen.find('.carousel-item').click(() => {
-    App.renderDiningChoiceScreen();
+    App.renderDeliveryMethodScreen();
   });
   App.bindCarousel(screen.find('#standby-carousel'));
   screen.hide();
   App.jLocaleSwitcher.fadeIn();
   App.jBackButton.fadeOut();
-  App.jDiningChoiceIndicator.fadeOut();
+  App.jDeliveryMethodIndicator.fadeOut();
   App.jMain.replaceWith(screen);
   App.jMain = screen;
   App.jMain.fadeIn();

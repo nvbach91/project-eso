@@ -1,6 +1,7 @@
+App.transactions = [];
 App.products = {};
-App.categories = {};
-App.taxMarks = {};
+App.groups = {};
+App.vatMarks = {};
 App.settings = {};
 
 App.attachToken = (xhr) => {
@@ -11,21 +12,19 @@ App.attachToken = (xhr) => {
 };
 
 App.fetchSettings = () => {
-  return $.ajax({
-    type: 'GET',
+  return $.get({
     url: App.apiPrefix + '/settings',
     beforeSend: App.attachToken,
   }).done((resp) => {
     App.settings = resp;
-    App.settings.taxRates.forEach((taxRate, index) => {
-      App.taxMarks[taxRate] = String.fromCharCode(index + 65);
+    App.settings.vatRates.forEach((vatRate, index) => {
+      App.vatMarks[vatRate] = String.fromCharCode(index + 65);
     });
   });
 };
 
 App.fetchProducts = () => {
-  return $.ajax({
-    type: 'GET',
+  return $.get({
     url: App.apiPrefix + '/products',
     beforeSend: App.attachToken,
   }).done((resp) => {
@@ -37,13 +36,23 @@ App.fetchProducts = () => {
 
 App.fetchCategories = () => {
   return $.get({
-    type: 'GET',
-    url: App.apiPrefix + '/categories',
+    url: App.apiPrefix + '/groups',
     beforeSend: App.attachToken,
   }).done((resp) => {
-    resp.forEach((category) => {
-      App.categories[category.number] = category;
+    resp.forEach((group) => {
+      App.groups[group.number] = group;
     });
+  });
+};
+
+App.fetchLastTransaction = () => {
+  return $.get({
+    url: App.apiPrefix + '/transactions/last',
+    beforeSend: App.attachToken,
+  }).done((resp) => {
+    return resp;
+  }).catch(() => {
+    return App.getLastTransaction();
   });
 };
 

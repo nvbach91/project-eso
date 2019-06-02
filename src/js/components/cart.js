@@ -23,13 +23,13 @@ App.addToCart = (id) => {
   App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
   App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
-  const categoryId = App.products[id].category;
-  if (App.cartCategoryQuantities[categoryId]) {
-    App.cartCategoryQuantities[categoryId]++;
+  const groupId = App.products[id].group;
+  if (App.cartCategoryQuantities[groupId]) {
+    App.cartCategoryQuantities[groupId]++;
   } else {
-    App.cartCategoryQuantities[categoryId] = 1;
+    App.cartCategoryQuantities[groupId] = 1;
   }
-  App.jTabs.find(`[data-id=${categoryId}]`).fadeIn().find('span').text(App.cartCategoryQuantities[categoryId]);
+  App.jTabs.find(`[data-id=${groupId}]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupId]);
   App.calculateCart();
   App.saveLocalCart();
 
@@ -63,12 +63,12 @@ App.decrementFromCart = (id) => {
         }
       });
     }
-    const categoryId = App.products[id].category;
-    App.cartCategoryQuantities[categoryId]--;
-    if (App.cartCategoryQuantities[categoryId] <= 0) {
-      App.jTabs.find(`[data-id=${categoryId}]`).fadeOut();
+    const groupId = App.products[id].group;
+    App.cartCategoryQuantities[groupId]--;
+    if (App.cartCategoryQuantities[groupId] <= 0) {
+      App.jTabs.find(`[data-id=${groupId}]`).fadeOut();
     } else {
-      App.jTabs.find(`[data-id=${categoryId}]`).find('span').text(App.cartCategoryQuantities[categoryId]);
+      App.jTabs.find(`[data-id=${groupId}]`).find('span').text(App.cartCategoryQuantities[groupId]);
     }
     App.saveLocalCart();
     App.calculateCart();
@@ -80,12 +80,12 @@ App.removeFromCart = (id) => {
   App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
     $(this).remove();
   });
-  const categoryId = App.products[id].category;
-  App.cartCategoryQuantities[categoryId] -= App.cart[id].quantity;
-  if (App.cartCategoryQuantities[categoryId] <= 0) {
-    App.jTabs.find(`[data-id=${categoryId}]`).fadeOut();
+  const groupId = App.products[id].group;
+  App.cartCategoryQuantities[groupId] -= App.cart[id].quantity;
+  if (App.cartCategoryQuantities[groupId] <= 0) {
+    App.jTabs.find(`[data-id=${groupId}]`).fadeOut();
   } else {
-    App.jTabs.find(`[data-id=${categoryId}]`).find('span').text(App.cartCategoryQuantities[categoryId]);
+    App.jTabs.find(`[data-id=${groupId}]`).find('span').text(App.cartCategoryQuantities[groupId]);
   }
   delete App.cart[id];
   App.saveLocalCart();

@@ -16,11 +16,8 @@ App.renderFinishScreen = () => {
       </div>
     </main>
   `);
-  App.showSpinner();
   App.fetchJoke().done((resp) => {
     screen.find('.dyk-text').html(resp);
-  }).always(() => {
-    App.hideSpinner();
   });
   const resetTimeout = setTimeout(() => startNewButton.click(), 10000);
   const startNewButton = screen.find('.start-new').click(() => {

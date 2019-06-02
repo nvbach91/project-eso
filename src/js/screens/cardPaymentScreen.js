@@ -45,8 +45,8 @@ App.renderCardPaymentScreen = () => {
     //console.log(resp);
     const appendix = '';
     App.renderFinishScreen();
-    App.createReceipt().done((resp) => {
-      App.receipts.push(resp);
+    App.createTransaction().done((resp) => {
+      App.transactions.push(resp);
       App.printReceipt(resp, appendix);
     }).fail((resp) => {
       App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
@@ -60,8 +60,9 @@ App.renderCardPaymentScreen = () => {
 };
 
 App.payInCash = () => {
-  App.createReceipt().done((resp) => {
-    App.receipts.push(resp);
+  App.createTransaction().done((resp) => {
+    //App.renderFinishScreen();
+    App.transactions.push(resp);
     App.printReceipt(resp);
   }).fail((resp) => {
     App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);

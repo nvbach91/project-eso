@@ -173,8 +173,8 @@ App.printDirect = (msg, printer) => {
   });
 };;
 
-App.calculateTaxFromPrice = (price, taxRate) => {
-  return price / (100 + taxRate) * taxRate;
+App.calculateTaxFromPrice = (price, vatRate) => {
+  return price / (100 + vatRate) * vatRate;
 };
 
 App.getClerk = (username) => {
@@ -195,9 +195,15 @@ App.ESCPOS = {
   bold: (s) => {
     return '{' + s + '}';
   },
-  bigFont: (s) => {
+  doubleHeight: (s) => {
     return '`' + s + '´';
-  }
+  },
+  quadrupleSize: (s) => {
+    return '^' + s + 'ˇ';
+  },
+  invert: (s) => {
+    return '\x1d\x421' + s + '\x1d\x420';
+  },
 };
 
 App.getPaymentMethod = (code) => {

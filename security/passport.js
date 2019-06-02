@@ -13,7 +13,7 @@ const localStrategyOptions = {
 };
 
 const localStrategy = new passportLocal.Strategy(localStrategyOptions, (username, password, cb) => {
-  return Users.findOne({ username }).select('password').then((user) => {
+  return Users.findOne({ username }).select('username registerId companyId password').then((user) => {
     if (!user) {
       return cb(null, false, { msg: 'srv_user_not_found' });
     }
@@ -21,9 +21,11 @@ const localStrategy = new passportLocal.Strategy(localStrategyOptions, (username
       if (!match) {
         return cb(null, false, { msg: 'srv_incorrect_password' });
       }
-      return cb(null, { _id: user._id, username, password: user.password });
+      const { _id, username, registerId, companyId, password, } = user;
+      return cb(null, { _id, username, password, registerId, companyId });
     });
   }).catch(err => {
+    console.error(err);
     return cb(err);
   });
 });

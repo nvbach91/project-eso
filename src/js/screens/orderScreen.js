@@ -11,7 +11,7 @@ App.renderOrderScreen = () => {
   App.jTabs = screen.find('#tabs');
   App.jMain.replaceWith(screen);
   App.jMain = screen;
-  App.jDiningChoiceIndicator.hide().fadeIn();
+  App.jDeliveryMethodIndicator.hide().fadeIn();
   if (Object.keys(App.cart).length) {
     App.jCheckoutButton.fadeIn(() => {
       App.jCheckoutButton.css({ display: 'flex' });
@@ -19,7 +19,7 @@ App.renderOrderScreen = () => {
   }
   App.renderTabs();
   App.jBackButton.fadeIn().off('click').click(() => {
-    App.renderDiningChoiceScreen();
+    App.renderDeliveryMethodScreen();
   });
   App.renderOrderPreview();
 };
