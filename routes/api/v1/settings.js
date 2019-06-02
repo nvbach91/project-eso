@@ -15,8 +15,9 @@ const settings = {
     city: 'ěščřžýáíéúůďťň ĚŠČŘŽÝÁÍÉÚŮĎŤŇ\n' +
       'abcdefg{hijlkm}n opqrstuvwxyz\n' +
       'ABCDEFGHI`JLKMN OP´QRSTUVWXYZ\n' +
-      '1234567890-=[This is small];This is big\'\\,.//*-+\n' +
-      '~!@#$%^&*()_+{}:"|<>?\n' +
+      '1234567890-=[This is small];This is big\n' +
+      '\'\\,.//*-+\n' +
+      '~!@#$%^&*()_+{bold}:"|<>?\n' +
       '°ˇ§¨\n',
     zip: '11000',
     country: 'Česká republika',
@@ -57,6 +58,7 @@ const settings = {
 };
 
 router.get('/settings', (req, res) => {
+  //console.log(req.user);
   res.json(settings);
 });
 

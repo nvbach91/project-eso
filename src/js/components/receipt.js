@@ -4,9 +4,10 @@ App.findReceiptByNumber = (number) => {
 };
 
 App.createReceipt = () => {
-  App.showSpinner();
-  return $.post({
-    url: '/sale',
+  return $.ajax({
+    type: 'POST',
+    url: App.apiPrefix + '/transactions',
+    beforeSend: App.attachToken,
     contentType: 'application/json',
     dataType: 'json',
     data: JSON.stringify(App.cart),
@@ -86,7 +87,7 @@ App.renderReceiptText = (receipt) => {
     `\n${App.getReceiptHorizontalLine()}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +
     `\n${App.getReceiptHorizontalLine()}` +
-    `\n\t${App.receiptCredits}\t`;
+    `\n\t${App.credits}\t`;
 
   let text = `${header}\n${body}\n${payment}\n${summary}\n${footer}`;
   const result = App.alignReceiptText(text);

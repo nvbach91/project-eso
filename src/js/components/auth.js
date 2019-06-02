@@ -34,10 +34,11 @@ App.renderLoginForm = () => {
   loginForm.submit((e) => {
     e.preventDefault();
     App.authenticate({
-      subdomain: subdomain.val().replace(/http(s)?/, ''),
+      subdomain: subdomain.val().replace(/http(s)?:\/\//, '').split('.')[0],
       username: username.val(),
       password: password.val(),
     }).done((resp) => {
+      localStorage.setItem('jwt', resp.token);
       dom.remove();
       App.start();
     }).fail((err) => {
@@ -48,5 +49,5 @@ App.renderLoginForm = () => {
 };
 
 App.authenticate = ({ subdomain, username, password }) => {
-  return $.post('/api/v1/auth', { subdomain, username, password });
+  return $.post('/auth', { username: `${subdomain}:${username}`, password });
 };

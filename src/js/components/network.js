@@ -3,8 +3,19 @@ App.categories = {};
 App.taxMarks = {};
 App.settings = {};
 
+App.attachToken = (xhr) => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+  }
+};
+
 App.fetchSettings = () => {
-  return $.get('/api/v1/settings').done((resp) => {
+  return $.ajax({
+    type: 'GET',
+    url: App.apiPrefix + '/settings',
+    beforeSend: App.attachToken,
+  }).done((resp) => {
     App.settings = resp;
     App.settings.taxRates.forEach((taxRate, index) => {
       App.taxMarks[taxRate] = String.fromCharCode(index + 65);
@@ -13,7 +24,11 @@ App.fetchSettings = () => {
 };
 
 App.fetchProducts = () => {
-  return $.get('/api/v1/products').done((resp) => {
+  return $.ajax({
+    type: 'GET',
+    url: App.apiPrefix + '/products',
+    beforeSend: App.attachToken,
+  }).done((resp) => {
     resp.forEach((product) => {
       App.products[product.ean] = product;
     });
@@ -21,7 +36,11 @@ App.fetchProducts = () => {
 };
 
 App.fetchCategories = () => {
-  return $.get('/api/v1/categories').done((resp) => {
+  return $.get({
+    type: 'GET',
+    url: App.apiPrefix + '/categories',
+    beforeSend: App.attachToken,
+  }).done((resp) => {
     resp.forEach((category) => {
       App.categories[category.number] = category;
     });

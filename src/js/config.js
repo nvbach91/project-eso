@@ -1,5 +1,6 @@
 const App = {};
 window.App = App;
+App.apiPrefix = '/api/v1';
 App.imageUrlBase = 'https://res.cloudinary.com/ceny24/image/upload/';
 
 App.localhostServerURL = window.location.protocol + '//localhost:2443';

@@ -79,7 +79,7 @@ const watch = (cb) => {
 };
 
 const monitor = (cb) => {
-    var started = false;
+    let started = false;
     nodemon({
         script: './bin/www',
         ignore: [

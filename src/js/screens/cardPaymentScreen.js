@@ -7,7 +7,7 @@ App.ptSend = (ptRequest) => {
 };
 
 App.ptPay = (amount, currency, customerLanguage, receiptNumber) => {
-  var ptRequest = {
+  const ptRequest = {
     transactionType: 'sale',
     ip: App.settings.paymentTerminal.ip,
     port: App.settings.paymentTerminal.port,
@@ -46,8 +46,8 @@ App.renderCardPaymentScreen = () => {
     const appendix = '';
     App.renderFinishScreen();
     App.createReceipt().done((resp) => {
-      App.receipts.push(resp.msg);
-      App.printReceipt(resp.msg, appendix);
+      App.receipts.push(resp);
+      App.printReceipt(resp, appendix);
     }).fail((resp) => {
       App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
     });
@@ -61,8 +61,8 @@ App.renderCardPaymentScreen = () => {
 
 App.payInCash = () => {
   App.createReceipt().done((resp) => {
-    App.receipts.push(resp.msg);
-    App.printReceipt(resp.msg);
+    App.receipts.push(resp);
+    App.printReceipt(resp);
   }).fail((resp) => {
     App.showWarning(`<p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p><p>${App.lang.modal_payment_failed_p2}</p>`);
   });

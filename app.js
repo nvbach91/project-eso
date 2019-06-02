@@ -3,6 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/eso', { 
+    useNewUrlParser: true,
+    useFindAndModify: true,
+    useCreateIndex: true,
+});
+
+require('./security/passport.js');
 
 const app = express();
 
@@ -17,11 +27,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index.js'));
-app.use('/api/v1', require('./routes/auth.js'));
-app.use('/api/v1', require('./routes/settings.js'));
-app.use('/api/v1', require('./routes/transactions.js'));
-app.use('/api/v1', require('./routes/products.js'));
-app.use('/api/v1', require('./routes/categories.js'));
+app.use('/', require('./routes/auth.js'));
+app.use('/', require('./routes/registration.js'));
+
+const apiPrefix = '/api/v1';
+app.use(apiPrefix, passport.authenticate('jwt', { session: false }));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/settings.js'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions.js'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/products.js'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/categories.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
