@@ -198,5 +198,5 @@ App.createRandomNumberArray = (n) => {
 App.randomOrderNumbers = App.createRandomNumberArray(100);
 
 App.maskOrderNumber = (number) => {
-  return App.randomOrderNumbers[number.toString().slice(-2)];
+  return App.randomOrderNumbers[parseInt(number.toString().slice(-2))];
 };
