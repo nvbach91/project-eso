@@ -13,7 +13,7 @@ const localStrategyOptions = {
 };
 
 const localStrategy = new passportLocal.Strategy(localStrategyOptions, (username, password, cb) => {
-  return Users.findOne({ username }).select('username registerId companyId password').then((user) => {
+  return Users.findOne({ username }).select('_id password').then((user) => {
     if (!user) {
       return cb(null, false, { msg: 'srv_user_not_found' });
     }
@@ -21,8 +21,8 @@ const localStrategy = new passportLocal.Strategy(localStrategyOptions, (username
       if (!match) {
         return cb(null, false, { msg: 'srv_incorrect_password' });
       }
-      const { _id, username, registerId, companyId, password, } = user;
-      return cb(null, { _id, username, password, registerId, companyId });
+      const { _id } = user;
+      return cb(null, { _id, username });
     });
   }).catch(err => {
     console.error(err);
@@ -37,7 +37,7 @@ const jwtStrategyOptions = {
 };
 
 const jwtStrategy = new passportJWT.Strategy(jwtStrategyOptions, (req, jwtPayload, cb) => {
-  return Users.findOne({ _id: jwtPayload._id }).select('username token').then((user) => {
+  return Users.findOne({ _id: jwtPayload._id }).select('username token registerId companyId').then((user) => {
     if (!user) {
       return cb(null, false);
     }
@@ -45,6 +45,8 @@ const jwtStrategy = new passportJWT.Strategy(jwtStrategyOptions, (req, jwtPayloa
     // if (jwtAuthorizationToken !== 'Bearer ' + user.token) {
     //   return cb(null, false);
     // }
+    
+    // this user object is attached to every request in every route
     return cb(null, user);
   }).catch(err => {
     return cb(err, false);

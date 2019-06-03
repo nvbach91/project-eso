@@ -6,7 +6,7 @@ const products = [
     name: 'swallow grass',
     price: '142.00',
     img: 'bg09_hjz6no',
-    group: '2',
+    group: 2,
     vat: 15,
     highlight: true
   },
@@ -15,7 +15,7 @@ const products = [
     name: 'freight dream',
     price: '142.00',
     img: 'bg10_coyfml',
-    group: '2',
+    group: 2,
     vat: 15
   },
   {
@@ -23,7 +23,7 @@ const products = [
     name: 'comfort veil',
     price: '112.00',
     img: 'bg07_wrsdxe',
-    group: '7',
+    group: 7,
     vat: 15
   },
   {
@@ -31,7 +31,7 @@ const products = [
     name: 'equinox faint',
     price: '172.00',
     img: 'bg04_i3fq68',
-    group: '4',
+    group: 4,
     vat: 15
   },
   {
@@ -39,7 +39,7 @@ const products = [
     name: 'cunning voyage',
     price: '156.00',
     img: 'bg06_gmmeqj',
-    group: '3',
+    group: 3,
     vat: 15
   },
   {
@@ -47,7 +47,7 @@ const products = [
     name: 'trolley bus',
     price: '171.00',
     img: 'bg01_mog1lh',
-    group: '2',
+    group: 2,
     vat: 15
   },
   {
@@ -55,7 +55,7 @@ const products = [
     name: 'scandal shark',
     price: '181.00',
     img: 'bg05_osoyo0',
-    group: '0',
+    group: 0,
     vat: 15,
     highlight: true
   },
@@ -64,7 +64,7 @@ const products = [
     name: 'primary die',
     price: '162.00',
     img: 'bg02_komziq',
-    group: '7',
+    group: 7,
     vat: 15
   },
   {
@@ -72,7 +72,7 @@ const products = [
     name: 'capital top',
     price: '131.00',
     img: 'bg03_tdlabn',
-    group: '0',
+    group: 0,
     vat: 15
   },
   {
@@ -80,7 +80,7 @@ const products = [
     name: 'service pull',
     price: '119.00',
     img: 'bg08_hsajsa',
-    group: '8',
+    group: 8,
     vat: 15
   },
   {
@@ -88,7 +88,7 @@ const products = [
     name: 'reactor deer',
     price: '242.00',
     img: 'bg10_coyfml',
-    group: '5',
+    group: 5,
     vat: 15
   },
   {
@@ -96,7 +96,7 @@ const products = [
     name: 'freedom cherry',
     price: '212.00',
     img: 'bg07_wrsdxe',
-    group: '2',
+    group: 2,
     vat: 21
   },
   {
@@ -104,7 +104,7 @@ const products = [
     name: 'recruit kneel',
     price: '272.00',
     img: 'bg04_i3fq68',
-    group: '4',
+    group: 4,
     vat: 21
   },
   {
@@ -112,7 +112,7 @@ const products = [
     name: 'dribble suburb',
     price: '256.00',
     img: 'bg06_gmmeqj',
-    group: '3',
+    group: 3,
     vat: 21
   },
   {
@@ -120,7 +120,7 @@ const products = [
     name: 'overall oak',
     price: '271.00',
     img: 'bg01_mog1lh',
-    group: '2',
+    group: 2,
     vat: 21
   },
   {
@@ -128,7 +128,7 @@ const products = [
     name: 'cabinet pass',
     price: '281.00',
     img: 'bg05_osoyo0',
-    group: '7',
+    group: 7,
     vat: 21
   },
   {
@@ -136,7 +136,7 @@ const products = [
     name: 'release cope',
     price: '262.00',
     img: 'bg02_komziq',
-    group: '0',
+    group: 0,
     vat: 21
   },
   {
@@ -144,7 +144,7 @@ const products = [
     name: 'penalty sniff',
     price: '231.00',
     img: 'bg03_tdlabn',
-    group: '1',
+    group: 1,
     vat: 21
   },
   {
@@ -152,7 +152,7 @@ const products = [
     name: 'clothes walk',
     price: '219.00',
     img: 'bg08_hsajsa',
-    group: '0',
+    group: 0,
     vat: 21
   },
   {
@@ -160,7 +160,7 @@ const products = [
     name: 'fortune linen',
     price: '342.00',
     img: 'bg10_coyfml',
-    group: '6',
+    group: 6,
     vat: 21
   },
   {
@@ -168,7 +168,7 @@ const products = [
     name: 'skilled jaw',
     price: '312.00',
     img: 'bg07_wrsdxe',
-    group: '8',
+    group: 8,
     vat: 21
   },
   {
@@ -176,7 +176,7 @@ const products = [
     name: 'academy marine',
     price: '372.00',
     img: 'bg04_i3fq68',
-    group: '6',
+    group: 6,
     vat: 10
   },
   {
@@ -184,7 +184,7 @@ const products = [
     name: 'husband wander',
     price: '381.00',
     img: 'bg05_osoyo0',
-    group: '9',
+    group: 9,
     vat: 21
   },
   {
@@ -192,7 +192,7 @@ const products = [
     name: 'glasses salmon',
     price: '356.00',
     img: 'bg06_gmmeqj',
-    group: '3',
+    group: 3,
     vat: 10
   },
   {
@@ -200,7 +200,7 @@ const products = [
     name: 'overeat duck',
     price: '362.00',
     img: 'bg02_komziq',
-    group: '1',
+    group: 1,
     vat: 10
   },
   {
@@ -208,7 +208,7 @@ const products = [
     name: 'whisper porter',
     price: '371.00',
     img: 'bg01_mog1lh',
-    group: '2',
+    group: 2,
     vat: 10
   },
   {
@@ -216,7 +216,7 @@ const products = [
     name: 'chapter betray',
     price: '442.00',
     img: 'bg10_coyfml',
-    group: '1',
+    group: 1,
     vat: 10
   },
   {
@@ -224,7 +224,7 @@ const products = [
     name: 'soprano maze',
     price: '412.00',
     img: 'bg07_wrsdxe',
-    group: '5',
+    group: 5,
     vat: 10
   },
   {
@@ -232,7 +232,7 @@ const products = [
     name: 'attract pot',
     price: '472.00',
     img: 'bg04_i3fq68',
-    group: '4',
+    group: 4,
     vat: 10
   },
   {
@@ -240,7 +240,7 @@ const products = [
     name: 'inflate salad',
     price: '481.00',
     img: 'bg05_osoyo0',
-    group: '0',
+    group: 0,
     vat: 10
   },
   {
@@ -248,7 +248,7 @@ const products = [
     name: 'channel sight',
     price: '456.00',
     img: 'bg06_gmmeqj',
-    group: '3',
+    group: 3,
     vat: 10
   },
   {
@@ -256,7 +256,7 @@ const products = [
     name: 'fashion lazy',
     price: '462.00',
     img: 'bg02_komziq',
-    group: '0',
+    group: 0,
     vat: 10
   },
   {
@@ -264,7 +264,7 @@ const products = [
     name: 'recycle manage',
     price: '471.00',
     img: 'bg01_mog1lh',
-    group: '7',
+    group: 7,
     vat: 10
   },
   {
@@ -272,7 +272,7 @@ const products = [
     name: 'adviser class',
     price: '431.00',
     img: 'bg03_tdlabn',
-    group: '1',
+    group: 1,
     vat: 10
   },
   {
@@ -280,7 +280,7 @@ const products = [
     name: 'serious heal',
     price: '419.00',
     img: 'bg08_hsajsa',
-    group: '0',
+    group: 0,
     vat: 10
   },
   {
@@ -288,7 +288,7 @@ const products = [
     name: 'partner drama',
     price: '512.00',
     img: 'bg07_wrsdxe',
-    group: '2',
+    group: 2,
     vat: 10
   },
   {
@@ -296,7 +296,7 @@ const products = [
     name: 'density chief',
     price: '572.00',
     img: 'bg04_i3fq68',
-    group: '4',
+    group: 4,
     vat: 10
   },
   {
@@ -304,7 +304,7 @@ const products = [
     name: 'drawing seller',
     price: '556.00',
     img: 'bg06_gmmeqj',
-    group: '3',
+    group: 3,
     vat: 10
   },
   {
@@ -312,7 +312,7 @@ const products = [
     name: 'musical pair',
     price: '571.00',
     img: 'bg01_mog1lh',
-    group: '2',
+    group: 2,
     vat: 10
   },
   {
@@ -320,7 +320,7 @@ const products = [
     name: 'wrestle ditch',
     price: '581.00',
     img: 'bg05_osoyo0',
-    group: '7',
+    group: 7,
     vat: 10
   },
   {
@@ -328,7 +328,7 @@ const products = [
     name: 'kinship oppose',
     price: '562.00',
     img: 'bg02_komziq',
-    group: '0',
+    group: 0,
     vat: 10
   },
   {
@@ -336,7 +336,7 @@ const products = [
     name: 'offense panel',
     price: '531.00',
     img: 'bg03_tdlabn',
-    group: '1',
+    group: 1,
     vat: 10
   },
   {
@@ -344,7 +344,7 @@ const products = [
     name: 'produce retire',
     price: '242.00',
     img: 'bg09_hjz6no',
-    group: '2',
+    group: 2,
     vat: 10
   },
   {
@@ -352,7 +352,7 @@ const products = [
     name: 'bathtub shrink',
     price: '342.00',
     img: 'bg09_hjz6no',
-    group: '2',
+    group: 2,
     vat: 21
   },
   {
@@ -360,7 +360,7 @@ const products = [
     name: 'address cousin',
     price: '442.00',
     img: 'bg09_hjz6no',
-    group: '2',
+    group: 2,
     vat: 21
   }
 ];

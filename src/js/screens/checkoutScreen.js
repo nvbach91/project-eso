@@ -18,7 +18,7 @@ App.renderCheckoutScreen = () => {
             </div>
           </div>
           <div class="card payment-method" data-method="cash">
-            <div class="btn card-img-top" style="background-image: url(https://s8523.pcdn.co/wp-content/uploads/sites/4/2014/06/cash-payments.jpg)"></div>
+            <div class="btn card-img-top" style="background-image: url(https://securecdn.pymnts.com/wp-content/uploads/2017/10/Europe_Cash-Usage_Global-Cash-Index.jpg)"></div>
             <div class="card-body">
               <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
               <p class="card-text">${App.lang.checkout_cash_pay_desc}</p>

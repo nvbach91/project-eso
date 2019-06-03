@@ -4,13 +4,15 @@ App.getLastTransaction = () => {
 
 App.createNewTransactionNumber = (lastTransaction) => {
   const thisYearPrefix = new Date().getFullYear().toString().slice(2);
+  const registerNumber = App.settings.number < 10 ? '0' + App.settings.number : App.settings.number;
   const lastTransactionNumber =
     lastTransaction ?
-      lastTransaction.number : (parseInt(thisYearPrefix + App.settings.number + "0000000") - 1);
+      lastTransaction.number : 
+      (parseInt(thisYearPrefix + registerNumber + '0000000') - 1);
   let newTransactionNumber = parseInt(lastTransactionNumber) + 1;
   // creating new year prefix based on the current time prefix and last receipt prefix
   if (thisYearPrefix !== lastTransactionNumber.toString().slice(0, 2)) {
-    newTransactionNumber = parseInt(thisYearPrefix + App.settings.number + "0000000");
+    newTransactionNumber = parseInt(thisYearPrefix + registerNumber + '0000000');
   }
   return newTransactionNumber;
 };
@@ -100,22 +102,25 @@ App.renderReceiptText = (transaction) => {
   //   `\nTendered:\t${transaction.tendered.formatMoney()}` +
   //   `${change ? `\nChange:\t${change.formatMoney()}` : ''}`;
 
+  const receiptLargeEnough = App.settings.receipt.printWidth >= 38;
+  const extraPadding = App.settings.receipt.extraPadding;
   const summary =
     'Rates' + 
-    App.addPadding('Net', 10 + App.settings.receipt.extraPadding) + 
-    (App.settings.receipt.printWidth >= 38 ? App.addPadding('VAT', 10 + App.settings.receipt.extraPadding) : '\tVAT') +
-    (App.settings.receipt.printWidth >= 38 ? '\tTotal' : '') +
+    App.addPadding('Net', 10 + extraPadding) + 
+    (receiptLargeEnough ? App.addPadding('VAT', 10 + extraPadding) : '\tVAT') +
+    (receiptLargeEnough ? '\tTotal' : '') +
     
     `\n${Object.keys(vatSummary).filter((vatRate) => {
       return vatSummary[vatRate].total !== 0;
     }).map((vatRate) => {
       const thisNet = vatSummary[vatRate].total - vatSummary[vatRate].vat;
+      const thisVat = vatSummary[vatRate].vat.formatMoney();
       return (
         App.vatMarks[vatRate] + ' ' +
         App.addPadding(vatRate, 2) + '%' +
-        App.addPadding(thisNet.formatMoney(), 10 + App.settings.receipt.extraPadding) +
-        (App.settings.receipt.printWidth >= 38 ? App.addPadding(vatSummary[vatRate].vat.formatMoney(), 10 + App.settings.receipt.extraPadding) : ('\t' + vatSummary[vatRate].vat.formatMoney())) +
-        (App.settings.receipt.printWidth >= 38 ? ('\t' + (thisNet + vatSummary[vatRate].vat).formatMoney()) : '')
+        App.addPadding(thisNet.formatMoney(), 10 + extraPadding) +
+        (receiptLargeEnough ? App.addPadding(thisVat, 10 + extraPadding) : ('\t' + thisVat)) +
+        (receiptLargeEnough ? ('\t' + vatSummary[vatRate].total.formatMoney()) : '')
       );
     }).join('\n')}` +
     `${transaction.bkp ?

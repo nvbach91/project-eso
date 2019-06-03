@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Users = require('../models/Users');
+const utils = require('../utils');
 const bcrypt = require('bcryptjs');
 
 router.post('/registration', (req, res) => {
@@ -19,10 +20,7 @@ router.post('/registration', (req, res) => {
     }).save();
   }).then((user) => {
     res.json(user);
-  }).catch((err) => {
-    console.error(err);
-    res.status(err.code || 500).json({ msg: err.msg || 'srv_internal_server_error' });
-  });
+  }).catch(utils.handleError(res));
 });
 
 module.exports = router;

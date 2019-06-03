@@ -5,9 +5,10 @@ App.renderProducts = (group) => {
       <span>${App.groups[group].name}</span>
       <i class="material-icons">menu</i>
     </div>
-  `).hide().appendTo(container);
+  `).hide();
+  header.appendTo(container);
   Object.keys(App.products).filter((id) => {
-    return group === App.products[id].group;
+    return group == App.products[id].group;
   }).forEach((id) => {
     const product = App.products[id];
     const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
