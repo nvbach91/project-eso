@@ -9,11 +9,14 @@ require('./screens/checkoutScreen.js');
 require('./screens/diningChoiceScreen.js');
 require('./screens/cardPaymentScreen.js')
 require('./screens/finishScreen.js');
+require('./screens/controlPanelScreen.js');
+require('./screens/cp_screens/pluArticlesScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
 require('./components/receipt.js');
+require('./components/cpTabs.js');
 require('./lang/cs.js');
 require('./lang/en.js');
 
