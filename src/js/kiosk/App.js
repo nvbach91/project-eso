@@ -1,32 +1,24 @@
-require('./config.js');
-require('./utils.js');
-require('./components/auth.js');
-require('./components/network.js');
-require('./components/localStorage.js');
+require('../common/config.js');
+require('../common/utils.js');
+require('../common/auth.js');
+require('../common/localStorage.js');
+require('../common/network.js');
+require('../common/lang/cs.js');
+require('../common/lang/en.js');
 require('./screens/standbyScreen.js');
 require('./screens/orderScreen.js');
 require('./screens/checkoutScreen.js');
 require('./screens/deliveryMethodScreen.js');
 require('./screens/cardPaymentScreen.js')
 require('./screens/finishScreen.js');
-require('./screens/controlPanelScreen.js');
-require('./screens/cp_screens/pluArticlesScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
 require('./components/receipt.js');
-require('./components/cpTabs.js');
-require('./lang/cs.js');
-require('./lang/en.js');
+require('./components/tabs.js');
+require('./components/products.js');
 
-$(document).ajaxStop(() => {
-  App.hideSpinner();
-});
-
-$(document).ajaxStart(() => {
-  App.showSpinner();
-});
 
 App.render = () => {
   App.renderHeader();

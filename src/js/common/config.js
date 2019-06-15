@@ -31,4 +31,3 @@ App.formats = {
   dayDateTime: 'dddd DD.MM.YYYY HH:mm:ss',
   datePrefix: 'YYYYMMDD',
 };
-

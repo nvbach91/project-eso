@@ -1,0 +1,3 @@
+App.renderMain = () => {
+  App.renderControlPanelScreen();
+};

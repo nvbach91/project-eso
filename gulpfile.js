@@ -33,19 +33,23 @@ const scss = () => {
         .pipe(bs.stream());
 };
 
-const js = () => {
-    return gulp.src('./src/js/index.js')
+const js = (prefix) => {
+    return gulp.src(`./src/js/${prefix}/index.js`)
         .pipe(plumber())
         .pipe(browserify({
             insertGlobals: true,
             debug : argv.dev ? true : false
         }))
-        .pipe(rename({basename: 'build', suffix: '.min', extname: '.js'}))
+        .pipe(rename({basename: `${prefix}.build`, suffix: '.min', extname: '.js'}))
         .pipe(!argv.dev ? uglify() : tap(() => {}))
         .pipe(!argv.dev ? obfuscate() : tap(() => {}))
         .pipe(gulp.dest('./public/js/'))
         .pipe(bs.reload({ stream: true }));
 };
+
+const kioskjs = () => js('kiosk');
+
+const adminjs = () => js('admin');
 
 const browserSync = (cb) => {
     bs.init({
@@ -73,7 +77,8 @@ const pug = () => {
 
 const watch = (cb) => {
     gulp.watch('./src/scss/**/*.scss', scss);
-    gulp.watch('./src/js/**/*.js', js);
+    gulp.watch('./src/js/kiosk/**/*.js', kioskjs);
+    gulp.watch('./src/js/admin/**/*.js', adminjs);
     gulp.watch('./views/**/*.pug', pug);
     cb();
 };
@@ -97,5 +102,5 @@ const monitor = (cb) => {
     });
 };
 
-exports.build = gulp.parallel(js, scss);
-exports.default = gulp.parallel(js, scss, monitor, browserSync, watch);
+exports.build = gulp.parallel(kioskjs, adminjs, scss);
+exports.default = gulp.parallel(kioskjs, adminjs, scss, monitor, browserSync, watch);

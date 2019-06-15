@@ -1,6 +1,3 @@
-
-const img = 'https://amp.businessinsider.com/images/53a9d02becad04fd3af8649a-640-480.jpg';
-//<h1 class="display-2">${App.settings.name}<h1>
 App.renderHeader = () => {
   const header = $(`
     <header id="header">

@@ -4,6 +4,14 @@ App.groups = {};
 App.vatMarks = {};
 App.settings = {};
 
+$(document).ajaxStop(() => {
+  App.hideSpinner();
+});
+
+$(document).ajaxStart(() => {
+  App.showSpinner();
+});
+
 App.attachToken = (xhr) => {
   const token = localStorage.getItem('jwt');
   if (token) {
