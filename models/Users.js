@@ -8,7 +8,7 @@ const Users = new Schema({
   token: String,
   name: String,
   registerId: Schema.ObjectId,
-
+  companyId: Schema.ObjectId,
 });
 
-module.exports = mongoose.model('users', Users)
+module.exports = mongoose.model('users', Users);

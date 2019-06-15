@@ -2,12 +2,80 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Registers = new Schema({
-  subdomain: String,
+  subdomain: { type: String, index: true },
   number: Number,
-  street: String,
-  city: String,
-  zip: String,
-  country: String,
+  name: String,
+  address: Object, // { street, city, zip, country }
+  vatRates: [Number],
+  receipt: Object, // { img, header, footer, width, printWidth, extraPadding },
+  carouselInterval: Number,
+  currency: Object, // { code: 'CZK', symbol: 'Kč' },
+  printer: String,
+  paymentTerminal: Object, //{ ip, port, password, endpoint },
+  ors: Object, // { public_key, private_key, vat, fileName, store_id, upload_date, valid_until }
+  activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
+  activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
 });
 
-module.exports = mongoose.model('registers', Registers)
+module.exports = mongoose.model('registers', Registers);
+
+/*
+const settings = {
+  number: 0,
+  name: 'The Elusive Camel',
+  address: {
+    street: 'Americká 123',
+    city: 'Praha 2',
+    zip: '12000',
+    country: 'Česká republika',
+  },
+  vatRates: [0, 10, 15, 21],
+  residence: {
+    street: 'Madridská 456',
+    city: 'ěščřžýáíéúůďťň ĚŠČŘŽÝÁÍÉÚŮĎŤŇ',
+      //+'\n' +
+      // 'abcdefg{hijlkm}n opqrstuvwxyz\n' +
+      // 'ABCDEFGHI`JLKMN OP´QRSTUVWXYZ\n' +
+      // '1234567890-=[This is small];This is big\n' +
+      // '\'\\,.//*-+\n' +
+      // '~!@#$%^&*()_+{bold}:"|<>?\n' +
+      // '°ˇ§¨',
+    zip: '11000',
+    country: 'Česká republika',
+  },
+  employees: {
+    'kiosk': 'Kiosk',
+    'demo@gmail.com': 'Demo pracovník',
+  },
+  receipt: {
+    img: '',
+    header: 'Enjoy your meal',
+    footer: '\\tThank you for coming\\t\n\\telusivecamel.co.uk\\t',
+    width: 80, // 48
+    printWidth: 48, // 35
+    extraPadding: 4, // 0
+  },
+  tin: '12345678',
+  vat: 'CZ12345678',
+  carouselInterval: 20000,
+  currency: { code: 'CZK', symbol: 'Kč' },
+  printer: 'EPSON TM-T20II Receipt',
+  paymentTerminal: {
+    ip: '10.0.0.42',
+    port: '2050',
+    password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP',
+    endpoint: 'https://localhost:3443/pt',
+  },
+  ors: {
+    public_key: '',
+    private_key: '',
+    vat: 'CZ12345678',
+    fileName: '',
+    store_id: '11',
+    upload_date: '2019-05-03T12:54:11.000Z',
+    valid_until: '2022-05-03T12:54:11.000Z'
+  },
+  activityTimeout: 60000, // if the app is idle for this amount of time, an activity check dialog will appear
+  activityCheckTimeout: 25000, // if the app is idle for this amount of time after the check appeared, the app will reset
+};
+*/
