@@ -7,6 +7,7 @@ require('../common/lang/cs.js');
 require('../common/lang/en.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
+require('./screens/transactionScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 

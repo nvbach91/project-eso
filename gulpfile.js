@@ -15,6 +15,7 @@ const obfuscate = require('gulp-javascript-obfuscator');
 
 const scss = () => {
     return gulp.src([
+        './src/scss/admin.scss',
         './src/scss/variables.scss',
         './src/scss/auth.scss',
         './src/scss/main.scss',
@@ -77,8 +78,8 @@ const pug = () => {
 
 const watch = (cb) => {
     gulp.watch('./src/scss/**/*.scss', scss);
-    gulp.watch('./src/js/kiosk/**/*.js', kioskjs);
-    gulp.watch('./src/js/admin/**/*.js', adminjs);
+    gulp.watch('./src/js/**/*.js', kioskjs);
+    gulp.watch('./src/js/**/*.js', adminjs);
     gulp.watch('./views/**/*.pug', pug);
     cb();
 };

@@ -299,3 +299,17 @@ App.renderModal = () => {
   App.jModal.replaceWith(modal);
   App.jModal = modal;
 };
+
+App.getLastTransaction = () => {
+  return App.transactions[App.transactions.length - 1];
+};
+
+App.calculateTransactionTotal = (items) => {
+  let totalPrice = 0;
+  items.forEach((item) => {
+    let itemPrice = item.quantity * item.price;
+    itemPrice = itemPrice - itemPrice * (item.discount || 0) / 100;
+    totalPrice += itemPrice;
+  });
+  return totalPrice;
+};

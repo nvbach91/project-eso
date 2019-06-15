@@ -55,13 +55,22 @@ App.fetchCategories = () => {
 
 App.fetchLastTransaction = () => {
   return $.get({
-    url: App.apiPrefix + '/transactions/last',
+    url: App.apiPrefix + '/transactions/0/1',
     beforeSend: App.attachToken,
   }).done((resp) => {
-    return resp;
+    return resp[0];
   }).catch(() => {
     return App.getLastTransaction();
   });
+};
+
+App.fetchTransactions = (offset, limit) => {
+  return $.get({
+    url: `${App.apiPrefix}/transactions/${offset || 0}/${limit || 100}`,
+    beforeSend: App.attachToken,
+  }).done((resp) => {
+    return resp;
+  }).fail(() => {});
 };
 
 App.connect = () => {

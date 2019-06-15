@@ -7,10 +7,15 @@ router.get('/transactions', (req, res) => {
     res.json(transactions);
   }).catch(utils.handleError(res));
 });
-// registerId 5cf3fe3a9f7f971f0c018db4
-router.get('/transactions/last', (req, res) => {
-  Transactions.find({ registerId: req.user.registerId }).select('-_id -__v -registerId').limit(1).then((transactions) => {
-    res.json(transactions[0]);
+
+router.get('/transactions/:offset/:limit', (req, res) => {
+  const { limit, offset } = req.params;
+  Transactions.find({ registerId: req.user.registerId }).skip(parseInt(offset)).limit(parseInt(limit)).select('-_id -__v -registerId').then((transactions) => {
+    if (!transactions.length) {
+      res.status(404).json([]);
+    } else {
+      res.json(transactions);
+    }
   }).catch(utils.handleError(res));
 });
 

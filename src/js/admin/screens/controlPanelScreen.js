@@ -1,12 +1,12 @@
-App.cpTabs = ["Dashboard", "Transaction History", "PLU Articles"];
+const cpTabs = ["Dashboard", "Transactions", "PLU Articles"];
 
-App.renderCPTabs = () => {
+App.renderControlPanelTabs = () => {
   const container = $('<div>');
-  Object.keys(App.cpTabs).forEach((id) => {
+  Object.keys(cpTabs).forEach((id) => {
     const element = $(`
     <div class="btn btn-primary cp-tab">
       <div class="tab-overlay cp-overlay"></div>
-      <div class="cp-tab-name">${App.cpTabs[id]}</div>
+      <div class="cp-tab-name">${cpTabs[id]}</div>
     </div>
     `);
     element.click(() => {
@@ -15,19 +15,20 @@ App.renderCPTabs = () => {
       App.activeCPTabPosition = element.index();
       const header = $(`
       <div id="cp-header" class="btn btn-primary btn-raised btn-lg">
-        <span>${App.cpTabs[element.index()]}</span>
+        <span>${cpTabs[element.index()]}</span>
       </div>
       `);
-      App.jCPHeader.replaceWith(header);
-      App.jCPHeader = header;
-      App.jCPBody.empty();
-      switch(App.cpTabs[element.index()]) {
+      App.jControlPanelHeader.replaceWith(header);
+      App.jControlPanelHeader = header;
+      App.jControlPanelBody.empty();
+      switch(cpTabs[element.index()]) {
         case "Dashboard":
           break;
-        case "Transaction History":
+        case "Transactions":
+          App.renderTransactionScreen();
           break;
         case "PLU Articles":
-          App.renderPluArticlesScreen();
+          App.renderProductsScreen();
           break;
       }
     });
@@ -35,8 +36,8 @@ App.renderCPTabs = () => {
   });
   container.children()[0].click();
 
-  App.jCPTabs.empty();
-  App.jCPTabs.append(container.children());
+  App.jControlPanelTabs.empty();
+  App.jControlPanelTabs.append(container.children());
 
 };
 
@@ -44,20 +45,19 @@ App.renderControlPanelScreen = () => {
   const screen = $(`
     <main id="main">
       <div class="screen control-panel">
-        <div id="cp-tabs"> </div>
+        <div id="cp-tabs"></div>
         <div id="cp-tab-screen">
-          <div id="cp-header"> </div> 
-          <div id="cp-body"> </div>
+          <div id="cp-header"></div> 
+          <div id="cp-body"></div>
         </div>
       </div>
     </main>
   `);
-  App.jCPTabs = screen.find('#cp-tabs');
-  //App.jCPTabScreen = screen.find('#cp-tab-screen');
-  App.jCPHeader = screen.find("#cp-header");
-  App.jCPBody = screen.find('#cp-body');
+  App.jControlPanelTabs = screen.find('#cp-tabs');
+  App.jControlPanelHeader = screen.find("#cp-header");
+  App.jControlPanelBody = screen.find('#cp-body');
   App.jMain.replaceWith(screen);
   App.jMain = screen;
 
-  App.renderCPTabs();
+  App.renderControlPanelTabs();
 };

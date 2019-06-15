@@ -1,0 +1,17 @@
+
+.table {
+    display: table;
+}
+.tr {
+    display: table-row;
+}
+.td {
+    display: table-cell;
+    padding: 10px;
+}
+.tr:nth-child(even) {
+    background: #f9f9f9;
+}
+.tr:hover {
+    background-color: #f1f1f1;
+}

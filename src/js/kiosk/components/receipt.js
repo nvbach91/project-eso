@@ -1,7 +1,3 @@
-App.getLastTransaction = () => {
-  return App.transactions[App.transactions.length - 1];
-};
-
 App.createNewTransactionNumber = (lastTransaction) => {
   const thisYearPrefix = new Date().getFullYear().toString().slice(2);
   const registerNumber = App.settings.number < 10 ? '0' + App.settings.number : App.settings.number;

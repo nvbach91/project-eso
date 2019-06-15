@@ -1,5 +1,5 @@
 App.renderProductsScreen = () => {
-  const screen = $(`
+  const cpBody = $(`
     <div class="card no-bounds-card">
       <h5 class="card-header">Manage your catalog
         <button class="btn btn-primary">Import/Export</button>
@@ -13,6 +13,6 @@ App.renderProductsScreen = () => {
       </div>
     </div>
   `);
-  App.jCPBody.replaceWith(screen);
-  App.jCPBody = screen;
+  App.jControlPanelBody.replaceWith(cpBody);
+  App.jControlPanelBody = cpBody;
 }
