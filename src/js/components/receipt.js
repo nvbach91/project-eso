@@ -69,18 +69,17 @@ App.renderReceiptText = (transaction) => {
 
   const header =
     `\t${App.ESCPOS.doubleHeight(App.settings.name)}\t` +
-    `\n\tTIN: ${App.settings.tin}\t` +
-    `\n\tVAT: ${App.settings.vat}\t` +
-    `\nResidence: ${App.settings.address.street}` +
+    `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} | ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
+    `\n${App.lang.receipt_header_residence}: ${App.settings.address.street}` +
     `\n${App.settings.address.zip} ${App.settings.address.city}` +
-    `\nPremise: ${App.settings.residence.street}` +
+    `\n${App.lang.receipt_header_premise}: ${App.settings.residence.street}` +
     `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
     `\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body = 
-    `\t${App.ESCPOS.quadrupleSize(`Order #${transaction.order}`)}\t` +
-    `\n${App.ESCPOS.invert(`\t${transactionHasTax ? 'VATx Invoice' : 'Invoice'} #${App.ESCPOS.bold(transaction.number)}\t`)}` +
+    `\t${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}\t` +
+    `\n${App.ESCPOS.invert(`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`)}` +
     `\n${transaction.items.map((item) => {
       const itemTotal = item.quantity * item.price;
       subTotal += itemTotal;
@@ -95,20 +94,20 @@ App.renderReceiptText = (transaction) => {
     `\n${App.getReceiptHorizontalLine()}`;
 
   const total = App.round(subTotal, 2);
-  // const change = transaction.tendered - total;
-  const payment = '';
-  //   `${App.ESCPOS.doubleHeight(`Total:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
-  //   `\nPayment method:\t${App.getPaymentMethod(transaction.payment)}` +
-  //   `\nTendered:\t${transaction.tendered.formatMoney()}` +
-  //   `${change ? `\nChange:\t${change.formatMoney()}` : ''}`;
+  //const change = transaction.tendered - total;
+  const payment =
+     `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
+     `\n${App.lang.receipt_payment_method}:\t${App.getPaymentMethod(transaction.payment)}`/* +
+     `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
+     `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;
 
   const receiptLargeEnough = App.settings.receipt.printWidth >= 38;
   const extraPadding = App.settings.receipt.extraPadding;
   const summary =
-    'Rates' + 
-    App.addPadding('Net', 10 + extraPadding) + 
-    (receiptLargeEnough ? App.addPadding('VAT', 10 + extraPadding) : '\tVAT') +
-    (receiptLargeEnough ? '\tTotal' : '') +
+    App.lang.receipt_summary_rates + 
+    App.addPadding(App.lang.receipt_summary_net, 10 + extraPadding) + 
+    (receiptLargeEnough ? App.addPadding(App.lang.receipt_summary_vat, 10 + extraPadding) : `\t${App.lang.receipt_summary_vat}`) +
+    (receiptLargeEnough ? `\t${App.lang.receipt_payment_total}` : '') +
     
     `\n${Object.keys(vatSummary).filter((vatRate) => {
       return vatSummary[vatRate].total !== 0;
@@ -125,13 +124,13 @@ App.renderReceiptText = (transaction) => {
     }).join('\n')}` +
     `${transaction.bkp ?
       `\n${App.getReceiptHorizontalLine()}` +
-      `\nPRE: ${App.settings.ors.store_id}, POS: ${App.settings.number}` +
-      `\nBKP: ${transaction.bkp}` +
-      `\nFIK: ${transaction.fik}` : ''
+      `\n${App.lang.receipt_summary_pre}: ${App.settings.ors.store_id}, ${App.lang.receipt_summary_pos}: ${App.settings.number}` +
+      `\n${App.lang.receipt_summary_bkp}: ${transaction.bkp}` +
+      `\n${App.lang.receipt_summary_fik}: ${transaction.fik}` : ''
     }`;
 
   const footer =
-    `Clerk: ${App.getClerk(transaction.clerk)}` +
+    `${App.lang.receipt_footer_clerk}: ${App.getClerk(transaction.clerk)}` +
     `\n${moment(transaction.date).format(App.formats.dayDateTime)}` +
     `\n${App.getReceiptHorizontalLine()}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +

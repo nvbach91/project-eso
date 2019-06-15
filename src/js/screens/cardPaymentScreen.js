@@ -61,7 +61,7 @@ App.renderCardPaymentScreen = () => {
 
 App.payInCash = () => {
   App.createTransaction().done((resp) => {
-    //App.renderFinishScreen();
+    App.renderFinishScreen();
     App.transactions.push(resp);
     App.printReceipt(resp);
   }).fail((resp) => {

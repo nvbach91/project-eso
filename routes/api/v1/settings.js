@@ -14,6 +14,7 @@ router.get('/settings', (req, res) => {
     settings = { ...settings, residence, tin, vat };
     return Users.find({ companyId: req.user.companyId }).select('username name');
   }).then((users) => {
+    console.log(users)
     settings.employees = {};
     users.forEach((user) => settings.employees[user.username.split(':')[1]] = user.name);
     res.json(settings);
