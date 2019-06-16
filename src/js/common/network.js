@@ -55,10 +55,18 @@ App.fetchCategories = () => {
 
 App.fetchTransactions = (offset, limit) => {
   return $.get({
-    url: `${App.apiPrefix}/transactions/${offset || 0}/${limit || 100}`,
+    url: `${App.apiPrefix}/transactions/page/${offset || 0}/${limit || 100}`,
     beforeSend: App.attachToken,
-  }).done((resp) => {
-    return resp;
+  });
+};
+
+App.fetchTransactionsByDatePrefix = (date) => {
+  const datePrefix = moment(date || new Date()).format(App.formats.datePrefix);
+  return $.get({
+    url: `${App.apiPrefix}/transactions/date/${datePrefix}`,
+    beforeSend: App.attachToken,
+  }).then((resp) => {
+    return resp.sort((a, b) => b.number - a.number);
   });
 };
 

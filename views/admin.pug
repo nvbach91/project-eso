@@ -1,8 +1,12 @@
 extends layout
 
-block content
-  #app
-  #spinner
-  #modal
+block links
+  //link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/css/bootstrap-material-datetimepicker.min.css')
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css')
+
+block scripts
+  //script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js')
   script(src='/js/admin.build.min.js')
+
 

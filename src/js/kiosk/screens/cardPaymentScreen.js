@@ -42,7 +42,6 @@ App.renderCardPaymentScreen = () => {
 
   const { totalPrice } = App.calculateCartSummaryValues();
   App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {
-    //console.log(resp);
     const appendix = '';
     App.renderFinishScreen();
     App.createTransaction().done((resp) => {

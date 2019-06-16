@@ -9,7 +9,6 @@ App.renderControlPanelTabs = () => {
   const container = $('<div>');
   cpTabs.forEach((tab) => {
     const { name, icon, render } = tab;
-    console.log(tab);
     const element = $(`
       <button class="btn btn-primary cp-tab">
         <i class="material-icons">${icon}</i>
@@ -19,13 +18,6 @@ App.renderControlPanelTabs = () => {
     element.click(() => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
-      const header = $(`
-        <div id="cp-header" class="btn btn-primary btn-raised btn-lg">
-          <span>${name}</span>
-        </div>
-      `);
-      App.jControlPanelHeader.replaceWith(header);
-      App.jControlPanelHeader = header;
       App.jControlPanelBody.empty();
       render();
     });
@@ -43,9 +35,9 @@ App.renderControlPanelScreen = () => {
     <main id="main">
       <div class="screen control-panel">
         <div id="cp-tabs"></div>
-        <div id="cp-tab-screen">
-          <div id="cp-header"></div> 
-          <div id="cp-body"></div>
+        <div id="cp-tab-screen" class="card no-bounds-card">
+          <div id="cp-header" class="card-header"></div> 
+          <div id="cp-body" class="card-body"></div>
         </div>
       </div>
     </main>

@@ -12,13 +12,23 @@
     justify-content: flex-start;
     padding: 10px;
     overflow: auto;
+    box-shadow: none;
+    h5 {
+        margin: 0;
+    }
 }
 #cp-header {
-    background-color: $themeColor;
+    color: $themeColor;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cp-name {
+    font-size: 24px;
 }
 #cp-tabs {
-    width: 240px;
+    min-width: 200px;
+    max-width: 200px;
     overflow: auto;
     scroll-padding: 50px 0 0 50px;
     height: 100%;
@@ -27,7 +37,25 @@
         margin: 0;
     }
 }
-
+.cp-control {
+    display: flex;
+    align-items: center;
+    .btn { margin: 0 }
+    .bmd-form-group {
+        margin: 0 5px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+    input {
+        color: $themeColor;
+        width: 100px;
+        text-align: center;
+    }
+}
+.cp-tab.active {
+    border-right: 5px solid white !important;
+}
 .cp-tab {
     width: 100%;
     padding: 20px 0;
@@ -71,6 +99,16 @@
 .tr:hover {
     background-color: #f1f1f1;
 }
+.transaction-item .ti-number {
+    border-left: 2px solid transparent;
+}
+.transaction-item:hover .ti-number {
+    border-left: 2px solid $themeColor;
+}
+.ti-number {
+    font-weight: bold;
+    cursor: pointer;
+}
 .ti-order {
     font-weight: bold;
 }
@@ -82,4 +120,25 @@
 }
 .ti-number {
     color: $themeColor;
+}
+.receipt-preview {
+    margin: 0 auto;
+    width: fit-content;
+}
+span.match {
+    color: $themeColor;
+    font-weight: bold;
+}
+.sr-img {
+    width: 60px;
+    background-size: contain;
+}
+.sr-ean, .sr-price {
+    text-align: right;
+}
+.sr-group, .sr-vat, .sr-edit {
+    text-align: center;
+}
+.sr-name {
+    cursor: pointer;
 }

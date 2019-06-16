@@ -10,6 +10,7 @@ html(lang='en')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons')
     link(rel='stylesheet', href='/css/styles.min.css')
     link(rel='icon', href='https://www.shareicon.net/download/2016/08/18/816370_coffee-cup_512x512.png')
+    block links
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js')
     script(src='https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js')
@@ -17,5 +18,8 @@ html(lang='en')
     script(src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/cs.js')
+    block scripts
   body
-    block content
+    #app
+    #spinner
+    #modal

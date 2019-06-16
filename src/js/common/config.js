@@ -26,8 +26,13 @@ App.supportedLocales = {
   'de': 'Deutsch',
 };
 
+App.pikadayInstances = [];
+
 App.formats = {
+  date: 'DD.MM.YYYY',
   dateTime: 'DD.MM.YYYY HH:mm:ss',
   dayDateTime: 'dddd DD.MM.YYYY HH:mm:ss',
   datePrefix: 'YYYYMMDD',
 };
+
+App.debounceTime = 300;

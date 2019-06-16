@@ -5,6 +5,7 @@ require('../common/utils.js');
 require('../common/auth.js');
 require('../common/localStorage.js');
 require('../common/network.js');
+require('../common/receipt.js');
 require('./screens/standbyScreen.js');
 require('./screens/orderScreen.js');
 require('./screens/checkoutScreen.js');
@@ -15,7 +16,6 @@ require('./components/header.js');
 require('./components/main.js');
 require('./components/footer.js');
 require('./components/cart.js');
-require('./components/receipt.js');
 require('./components/tabs.js');
 require('./components/products.js');
 

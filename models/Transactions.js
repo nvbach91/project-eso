@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Transactions = new Schema({
   registerId: Schema.ObjectId,
   number: Number,
+  d: { type: Number, index: true }, // dateprefix
   date: Date,
   items: [],
   tendered: Number,

@@ -317,3 +317,29 @@ App.calculateTransactionTotal = (items) => {
   });
   return totalPrice;
 };
+
+App.destroyPikadays = () => {
+  App.pikadayInstances.forEach((p) => p.destroy());
+  App.pikadayInstances = [];
+};
+
+App.highlightMatchedText = (text, search) => {
+  const startMatchIndex = text.toLowerCase().indexOf(search.toLowerCase());
+  const displayContent = startMatchIndex >= 0 ? (
+    text.slice(0, startMatchIndex) +
+    '<span class="match">' +
+      text.slice(startMatchIndex, startMatchIndex + search.length) +
+    '</span>' +
+    text.slice(startMatchIndex + search.length)
+  ) : text;
+  return displayContent;
+};
+
+App.debounce = (fn, time) => {
+  let timeout;
+  return function () {
+    const functionCall = () => fn.apply(this, arguments);
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  };
+};

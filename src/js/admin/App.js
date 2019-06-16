@@ -6,6 +6,7 @@ require('../common/utils.js');
 require('../common/auth.js');
 require('../common/localStorage.js');
 require('../common/network.js');
+require('../common/receipt.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
 require('./screens/transactionScreen.js');
