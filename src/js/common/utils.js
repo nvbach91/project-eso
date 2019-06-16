@@ -210,6 +210,10 @@ App.getPaymentMethod = (code) => {
   return App.lang['payment_method_' + code];
 };
 
+App.getDeliveryMethod = (code) => {
+  return App.lang['delivery_method_' + code];
+};
+
 App.loadLocale = () => {
   App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN;
 };

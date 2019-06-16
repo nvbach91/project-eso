@@ -1,10 +1,11 @@
+
 require('../common/config.js');
+require('../common/lang/cs.js');
+require('../common/lang/en.js');
 require('../common/utils.js');
 require('../common/auth.js');
 require('../common/localStorage.js');
 require('../common/network.js');
-require('../common/lang/cs.js');
-require('../common/lang/en.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
 require('./screens/transactionScreen.js');

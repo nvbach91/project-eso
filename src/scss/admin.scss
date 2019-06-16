@@ -1,6 +1,59 @@
 
+.control-panel {
+    display: flex;
+    flex-direction:row;
+    justify-content:flex-start;
+}
+#cp-tab-screen {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    overflow: auto;
+}
+#cp-header {
+    background-color: $themeColor;
+    display: flex;
+}
+#cp-tabs {
+    width: 240px;
+    overflow: auto;
+    scroll-padding: 50px 0 0 50px;
+    height: 100%;
+    background-color: #00332d;
+    .btn {
+        margin: 0;
+    }
+}
+
+.cp-tab {
+    width: 100%;
+    padding: 20px 0;
+    position: relative;
+    .cp-tab-name {
+        text-align: left;
+        text-indent: 50px;
+    }
+    i.material-icons {
+        position: absolute;
+        left: 10px;
+        top: 19px;
+    }
+}
+
+#cp-body {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
 .table {
     display: table;
+    .btn {
+        margin: 0;
+        width: 100%;
+    }
 }
 .tr {
     display: table-row;
@@ -9,9 +62,24 @@
     display: table-cell;
     padding: 10px;
 }
+.tr:first-child {
+    font-weight: bold;
+}
 .tr:nth-child(even) {
     background: #f9f9f9;
 }
 .tr:hover {
     background-color: #f1f1f1;
+}
+.ti-order {
+    font-weight: bold;
+}
+.ti-order, .ti-total {
+    text-align: right;
+}
+.ti-print, .ti-payment, .ti-delivery {
+    text-align: center;
+}
+.ti-number {
+    color: $themeColor;
 }

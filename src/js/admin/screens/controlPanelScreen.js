@@ -1,40 +1,37 @@
-const cpTabs = ["Dashboard", "Transactions", "PLU Articles"];
+
 
 App.renderControlPanelTabs = () => {
+  const cpTabs = [
+    { icon: 'dashboard', name: 'Dashboard', render: () => {} },
+    { icon: 'history', name: 'Transactions', render: App.renderTransactionScreen },
+    { icon: 'view_module', name: 'Products', render: App.renderProductsScreen },
+  ];
   const container = $('<div>');
-  Object.keys(cpTabs).forEach((id) => {
+  cpTabs.forEach((tab) => {
+    const { name, icon, render } = tab;
+    console.log(tab);
     const element = $(`
-    <div class="btn btn-primary cp-tab">
-      <div class="tab-overlay cp-overlay"></div>
-      <div class="cp-tab-name">${cpTabs[id]}</div>
-    </div>
+      <button class="btn btn-primary cp-tab">
+        <i class="material-icons">${icon}</i>
+        <div class="cp-tab-name">${name}</div>
+      </button>
     `);
     element.click(() => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
-      App.activeCPTabPosition = element.index();
       const header = $(`
-      <div id="cp-header" class="btn btn-primary btn-raised btn-lg">
-        <span>${cpTabs[element.index()]}</span>
-      </div>
+        <div id="cp-header" class="btn btn-primary btn-raised btn-lg">
+          <span>${name}</span>
+        </div>
       `);
       App.jControlPanelHeader.replaceWith(header);
       App.jControlPanelHeader = header;
       App.jControlPanelBody.empty();
-      switch(cpTabs[element.index()]) {
-        case "Dashboard":
-          break;
-        case "Transactions":
-          App.renderTransactionScreen();
-          break;
-        case "PLU Articles":
-          App.renderProductsScreen();
-          break;
-      }
+      render();
     });
     container.append(element);
   });
-  container.children()[0].click();
+  container.children().eq(0).click();
 
   App.jControlPanelTabs.empty();
   App.jControlPanelTabs.append(container.children());

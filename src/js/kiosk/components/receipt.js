@@ -3,7 +3,7 @@ App.createNewTransactionNumber = (lastTransaction) => {
   const registerNumber = App.settings.number < 10 ? '0' + App.settings.number : App.settings.number;
   const lastTransactionNumber =
     lastTransaction ?
-      lastTransaction.number : 
+      lastTransaction.number :
       (parseInt(thisYearPrefix + registerNumber + '0000000') - 1);
   let newTransactionNumber = parseInt(lastTransactionNumber) + 1;
   // creating new year prefix based on the current time prefix and last receipt prefix
@@ -14,7 +14,12 @@ App.createNewTransactionNumber = (lastTransaction) => {
 };
 
 App.createTransaction = () => {
-  return App.fetchLastTransaction().then((lastTransaction) => {
+  return App.fetchTransactions(0, 1).then((transactions) => {
+    if (transactions.length) {
+      return transactions[0];
+    }
+    return App.getLastTransaction();
+  }).then((lastTransaction) => {
     const newTransactionNumber = App.createNewTransactionNumber(lastTransaction);
     const transaction = {
       number: newTransactionNumber,
@@ -73,7 +78,7 @@ App.renderReceiptText = (transaction) => {
     `\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
-  const body = 
+  const body =
     `\t${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}\t` +
     `\n${App.ESCPOS.invert(`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`)}` +
     `\n${transaction.items.map((item) => {
@@ -92,19 +97,19 @@ App.renderReceiptText = (transaction) => {
   const total = App.round(subTotal, 2);
   //const change = transaction.tendered - total;
   const payment =
-     `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
-     `\n${App.lang.receipt_payment_method}:\t${App.getPaymentMethod(transaction.payment)}`/* +
+    `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
+    `\n${App.lang.receipt_payment_method}:\t${App.getPaymentMethod(transaction.payment)}`/* +
      `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
      `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;
 
   const receiptLargeEnough = App.settings.receipt.printWidth >= 38;
   const extraPadding = App.settings.receipt.extraPadding;
   const summary =
-    App.lang.receipt_summary_rates + 
-    App.addPadding(App.lang.receipt_summary_net, 10 + extraPadding) + 
+    App.lang.receipt_summary_rates +
+    App.addPadding(App.lang.receipt_summary_net, 10 + extraPadding) +
     (receiptLargeEnough ? App.addPadding(App.lang.receipt_summary_vat, 10 + extraPadding) : `\t${App.lang.receipt_summary_vat}`) +
     (receiptLargeEnough ? `\t${App.lang.receipt_payment_total}` : '') +
-    
+
     `\n${Object.keys(vatSummary).filter((vatRate) => {
       return vatSummary[vatRate].total !== 0;
     }).map((vatRate) => {
