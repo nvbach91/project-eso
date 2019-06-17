@@ -28,9 +28,9 @@ App.init = () => {
   App.renderSpinner();
   App.renderModal();
   App.renderLoginForm();
-  App.connect().then(() => {
-    App.showProductEditForm('6333');
-  })
+  //App.connect().then(() => {
+  //  App.showProductEditForm('6333');
+  //})
 };
 
 App.start = () => {
