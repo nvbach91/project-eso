@@ -142,3 +142,43 @@ span.match {
 .sr-name {
     cursor: pointer;
 }
+.custom-select {
+    cursor: pointer;
+    border: none;
+    height: 36px;
+    &:focus {
+        box-shadow: none;
+    }
+}
+.form-row > * {
+    flex-grow: 1;
+}
+[class^=bmd-label] {
+    color: #434343;
+}
+.form-btns {
+    text-align: right;
+}
+.btn-save {
+    width: 200px;
+}
+.img-upload {
+    max-width: 300px;
+    cursor: pointer;
+    padding-right: 20px;
+    width: 100%;
+    height: 100%;
+    .img-holder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    i.material-icons {
+        font-size: 80px;
+    }
+}
+.control-panel .card-body {
+    padding: 0 1.25rem;
+}

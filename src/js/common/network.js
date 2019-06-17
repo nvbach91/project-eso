@@ -70,6 +70,28 @@ App.fetchTransactionsByDatePrefix = (date) => {
   });
 };
 
+App.saveProduct = (product) => {
+  const { ean } = product;
+  return $.post({
+    url: `${App.apiPrefix}/products/`,
+    beforeSend: App.attachToken,
+    contentType: 'application/json',
+    data: JSON.stringify(product),
+  }).done(() => {
+    App.products[ean] = product;
+  });
+};
+
+App.deleteProduct = (ean) => {
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/products/${ean}`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    delete App.products[ean];
+  });
+};
+
 App.connect = () => {
   return $.when(
     App.fetchSettings(),

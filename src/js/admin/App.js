@@ -12,6 +12,7 @@ require('./screens/productsScreen.js');
 require('./screens/transactionScreen.js');
 require('./components/header.js');
 require('./components/main.js');
+require('./components/form.js');
 
 App.render = () => {
   App.renderHeader();
@@ -27,6 +28,9 @@ App.init = () => {
   App.renderSpinner();
   App.renderModal();
   App.renderLoginForm();
+  App.connect().then(() => {
+    App.showProductEditForm('6333');
+  })
 };
 
 App.start = () => {
