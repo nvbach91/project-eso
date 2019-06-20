@@ -129,7 +129,7 @@ App.showProductEditForm = (ean, cb) => {
       <div class="form-row">
         <div class="form-col">
           <div class="img-upload">
-            <div class="btn btn-primary img-holder"${style}>${style ? '' : '<i class="material-icons">image</i>'}</div>
+            <div class="btn img-holder"${style}>${style ? '' : '<i class="material-icons">image</i>'}</div>
             <input type="hidden" name="img" value="${img}">
           </div>
         </div>
