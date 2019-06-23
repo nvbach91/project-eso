@@ -71,11 +71,6 @@
     }
 }
 
-#cp-body {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
 .table {
     display: table;
     .btn {
@@ -182,3 +177,51 @@ span.match {
 .control-panel .card-body {
     padding: 0 1.25rem;
 }
+.dashboard {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, auto);
+    grid-gap: 10px;
+}
+/*.db-row {
+    display: flex;
+    width: 100%;
+}*/
+.db-card {
+    padding: 15px 20px;
+    text-align: left;
+    background-color: #f9f9f9;
+    max-height: 720px;
+    overflow: auto;
+}
+.db-value {
+    font-size: 24px;
+}
+.db-label {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 500;
+}
+#db-hourly-chart {
+    grid-column: 1/4;
+    height: 320px;
+}
+#db-top-sold {
+    grid-column: 2/4;
+    grid-row: 3/6
+}
+.db-item {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    &:hover {
+        background-color: #f1f1f1;
+    }
+}
+#db-average-revenue, #db-revenues-by-vat, #db-revenues-by-group {
+    grid-column: 1/2;
+}
+#db-average-revenue { grid-row: 3/4 }
+#db-revenues-by-vat { grid-row: 4/5 }
+#db-revenues-by-group { grid-row: 5/6 }

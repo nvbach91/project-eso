@@ -26,7 +26,7 @@ App.supportedLocales = {
   'de': 'Deutsch',
 };
 
-App.pikadayInstances = [];
+App.datePickerInstances = [];
 
 App.formats = {
   date: 'DD.MM.YYYY',
@@ -36,3 +36,7 @@ App.formats = {
 };
 
 App.debounceTime = 300;
+
+App.configure = () => {
+  Chart.defaults.global.defaultFontFamily = 'Open Sans';
+};

@@ -11,6 +11,7 @@ const createTransactiontable = () => $(`
     </div>
   </div>
 `);
+
 const renderTransactions = (transactions) => {
   const table = createTransactiontable();
   if (transactions.length) {
@@ -41,51 +42,45 @@ const renderTransactions = (transactions) => {
   App.jControlPanelBody.replaceWith(table);
   App.jControlPanelBody = table;
 };
+
 const clearTransactions = () => {
   const table = createTransactiontable();
   table.append(`<div>Something went wrong</div>`);
   App.jControlPanelBody.replaceWith(table);
   App.jControlPanelBody = table;
 };
+
+const onDateSelect = (date) => {
+  App.fetchTransactionsByDatePrefix(date).done(renderTransactions).fail(clearTransactions);
+};
+
 App.renderTransactionScreen = () => {
-  App.destroyPikadays();
+  App.destroyDatePickers();
   const header = $(`
     <div id="cp-header" class="card-header">
       <div class="cp-name">Transactions</div>
       <div class="cp-control">
         <button class="btn btn-primary date-nav" id="date-prev"><i class="material-icons">keyboard_arrow_left</i></button>
-        <button class="btn btn-primary datepicker-btn"><i class="material-icons">date_range</i></button>
+        <button class="btn btn-primary datepicker-btn" data-id="datepicker"><i class="material-icons">date_range</i></button>
         <input type="text" class="form-control datetimepicker-input" id="datepicker">
         <button class="btn btn-primary date-nav" id="date-next"><i class="material-icons">keyboard_arrow_right</i></button>
       </div>
     </div>
   `);
-  const dateField = header.find('#datepicker');
-  const pikaday = new Pikaday({
-    setDefaultDate: true,
-    defaultDate: new Date(),
-    maxDate: new Date(),
-    field: dateField.get(0),
-    format: App.formats.date,
-    onSelect: (date) => {
-      App.fetchTransactionsByDatePrefix(date).done(renderTransactions).fail(clearTransactions);
-    }
-  });
-  header.find('.datepicker-btn').click(() => dateField.click());
+  App.jControlPanelHeader.replaceWith(header);
+  App.jControlPanelHeader = header;
+  const datePicker = App.bindDatePicker({ id: 'datepicker', onSelect: onDateSelect });
   header.find('.date-nav').click(function () {
-    const currentDate = pikaday.getDate();
+    const currentDate = datePicker.getDate();
     if ($(this).attr('id') === 'date-next') {
       currentDate.setDate(currentDate.getDate() + 1);
       if (currentDate <= new Date()) {
-        pikaday.setDate(currentDate);
+        datePicker.setDate(currentDate);
       }
     } else {
       currentDate.setDate(currentDate.getDate() - 1);
-      pikaday.setDate(currentDate);
+      datePicker.setDate(currentDate);
     }
   });
-  App.pikadayInstances.push(pikaday);
-  App.jControlPanelHeader.replaceWith(header);
-  App.jControlPanelHeader = header;
   App.fetchTransactionsByDatePrefix().done(renderTransactions).fail(clearTransactions);
 };

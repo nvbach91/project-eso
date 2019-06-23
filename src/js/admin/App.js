@@ -10,6 +10,7 @@ require('../common/receipt.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
 require('./screens/transactionScreen.js');
+require('./screens/dashboardScreen.js');
 require('./components/header.js');
 require('./components/main.js');
 require('./components/form.js');
@@ -28,6 +29,7 @@ App.init = () => {
   App.renderSpinner();
   App.renderModal();
   App.renderLoginForm();
+  //$('.form-signin').submit();
   //App.connect().then(() => {
   //  App.showProductEditForm('6333');
   //})

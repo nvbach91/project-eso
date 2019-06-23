@@ -318,9 +318,9 @@ App.calculateTransactionTotal = (items) => {
   return totalPrice;
 };
 
-App.destroyPikadays = () => {
-  App.pikadayInstances.forEach((p) => p.destroy());
-  App.pikadayInstances = [];
+App.destroyDatePickers = () => {
+  App.datePickerInstances.forEach((p) => p.destroy());
+  App.datePickerInstances = [];
 };
 
 App.highlightMatchedText = (text, search) => {
@@ -342,4 +342,29 @@ App.debounce = (fn, time) => {
     clearTimeout(timeout);
     timeout = setTimeout(functionCall, time);
   };
+};
+
+App.createDatePicker = ({ field, onSelect, onOpen }) => {
+  const picker = new Pikaday({
+    firstDay: 1,
+    setDefaultDate: true,
+    defaultDate: new Date(),
+    maxDate: new Date(),
+    format: App.formats.date,
+    field,
+    onSelect,
+    onOpen: onOpen ? onOpen : () => {},
+  });
+  App.datePickerInstances.push(picker);
+  return picker;
+};
+
+App.bindDatePicker = ({ id, onSelect, onOpen }) => {
+  const dateField = App.jControlPanelHeader.find(`#${id}`);
+  App.jControlPanelHeader.find(`.datepicker-btn[data-id=${id}]`).click(() => dateField.click());
+  return App.createDatePicker({
+    field: dateField.get(0),
+    onSelect: onSelect,
+    onOpen: onOpen ? onOpen : () => {}
+  });
 };

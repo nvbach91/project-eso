@@ -2,7 +2,7 @@
 
 App.renderControlPanelTabs = () => {
   const cpTabs = [
-    { icon: 'dashboard', name: 'Dashboard', render: () => {} },
+    { icon: 'dashboard', name: 'Dashboard', render: App.renderDashboardScreen },
     { icon: 'history', name: 'Transactions', render: App.renderTransactionScreen },
     { icon: 'view_module', name: 'Products', render: App.renderProductsScreen },
   ];
