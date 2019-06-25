@@ -134,7 +134,7 @@ App.showProductEditForm = (ean, cb) => {
           </div>
         </div>
         <div class="form-col">
-          ${App.generateFormInput({ label: 'Code', name: 'ean', value: ean || '', required: true })}
+          ${App.generateFormDisabledInput({ label: 'Code', name: 'ean', value: ean || '' })}
           ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
         </div>
       </div>

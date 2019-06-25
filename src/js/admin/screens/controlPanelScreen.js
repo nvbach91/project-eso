@@ -5,6 +5,7 @@ App.renderControlPanelTabs = () => {
     { icon: 'dashboard', name: 'Dashboard', render: () => {} },
     { icon: 'history', name: 'Transactions', render: App.renderTransactionScreen },
     { icon: 'view_module', name: 'Products', render: App.renderProductsScreen },
+    { icon: 'category', name: 'Groups', render: App.renderGroupsScreen },
   ];
   const container = $('<div>');
   cpTabs.forEach((tab) => {

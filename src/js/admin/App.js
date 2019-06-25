@@ -9,6 +9,7 @@ require('../common/network.js');
 require('../common/receipt.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
+require('./screens/groupsScreen.js');
 require('./screens/transactionScreen.js');
 require('./components/header.js');
 require('./components/main.js');
