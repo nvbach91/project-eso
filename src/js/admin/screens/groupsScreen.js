@@ -32,7 +32,7 @@ App.renderGroupsScreen = () => {
     App.jControlPanelBody = cpBody;
 }
 
-App.renderGroupsTable = (groupsContainer) => {
+App.renderGroupsTable = () => {
     const groupKeys = Object.keys(App.groups);
 
     App.jGroupsContainer.empty();
@@ -51,7 +51,8 @@ App.renderGroupsTable = (groupsContainer) => {
             </div>
         `);
         item.children('.sr-edit, .sr-name').click(() => {
-            App.showProductEditForm(ean, () => input.keyup());
+            /** TODO */
+            //App.showGroupEditForm(ean, () => input.keyup());
         });
         App.jGroupsContainer.append(item);
     }
