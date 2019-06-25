@@ -42,7 +42,7 @@ App.renderGroupsScreen = () => {
     
     input.keyup(function(){
         const newKey = input.val();
-        if(newKey && !isNaN(newKey) && !groupKeys[newKey]) {
+        if(newKey && !isNaN(newKey) && !groupKeys[parseInt(newKey)]) {
             input.removeClass("invalid");
         } else {
             input.addClass("invalid");
