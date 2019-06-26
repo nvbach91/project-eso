@@ -23,7 +23,7 @@ A cross-platform self-ordering system for browsers
 ``` 
 
 #### 3) Open the website 
-- Open <https://app.vcap.me:9000> or <https://localhost:9000> in a browser.
+- Open <https://eso.vcap.me:9000> in a browser.
 
 ## Preview
 https://eso.gokasa.cz
