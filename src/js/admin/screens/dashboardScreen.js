@@ -12,9 +12,7 @@ const onDateSelect = App.debounce((date) => {
       startDatePicker.setDate(date);
     }
   } else {
-    App.fetchAggregates(startDate, endDate).then(() => {
-      renderDashboard();
-    });
+    App.fetchAggregates(startDate, endDate).done(renderDashboard).fail(clearDashboard);
     console.log('START', moment(startDate).format(App.formats.date));
     console.log('  END', moment(endDate).format(App.formats.date));
   }
@@ -61,22 +59,22 @@ const renderDashboard = () => {
   const dashboard = $(`
     <div class="dashboard">
       <div class="btn db-card" id="db-total-revenue">
-        <div class="db-value">${(42147).formatMoney()}</div>
+        <div class="db-value">${App.sumObjectValues(App.aggregates.revenueByTax).formatMoney()}</div>
         <div class="db-label">Total revenue</div>
       </div>
       <div class="btn db-card" id="db-transactions">
-        <div class="db-value">142</div>
-        <div class="db-label">Sales total</div>
+        <div class="db-value">${App.aggregates.nTransactions}</div>
+        <div class="db-label">Transactions</div>
       </div>
       <div class="btn db-card" id="db-sold-products">
-        <div class="db-value">${74}</div>
+        <div class="db-value">${App.aggregates.nProductsSold}</div>
         <div class="db-label">Products sold</div>
       </div>
       <div class="db-card" id="db-hourly-chart">
         <canvas></canvas>
       </div>
       <div class="btn db-card" id="db-average-revenue">
-        <div class="db-value">${(321).formatMoney()}</div>
+        <div class="db-value">${(App.sumObjectValues(App.aggregates.revenueByTax) / App.aggregates.nTransactions).formatMoney()}</div>
         <div class="db-label">Average revenue</div>
       </div>
       ${generateRevenuesByVat()}
@@ -90,7 +88,7 @@ const renderDashboard = () => {
 };
 
 const clearDashboard = () => {
-  const dashboard = $(`<div>Something went wrong</div>`);
+  const dashboard = $(`<button class="btn">There is no data in the selected time period</btn>`);
   App.jControlPanelBody.replaceWith(dashboard);
   App.jControlPanelBody = dashboard;
 };
@@ -170,7 +168,7 @@ const generateTopSoldCard = () => {
 
 const generateRevenuesByVat = () => {
   const card = `
-    <div class="btn db-card" id="db-revenues-by-vat">
+    <div class="db-card" id="db-revenues-by-vat">
       <div class="db-label">Revenues by VAT</div>
       ${Object.keys(App.aggregates.revenueByTax).map((taxRate) => {
         return `
@@ -187,7 +185,7 @@ const generateRevenuesByVat = () => {
 
 const generateRevenuesByGroup = () => {
   const card = `
-    <div class="btn db-card" id="db-revenues-by-group">
+    <div class="db-card" id="db-revenues-by-group">
       <div class="db-label">Revenues by groups</div>
       ${Object.keys(App.aggregates.revenueByGroup).map((groupNumber) => {
         const group = App.groups[groupNumber];

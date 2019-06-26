@@ -224,7 +224,7 @@ App.printQRCode = (data) => {
   $.post({
     url: 'https://localhost:2443/printdirectimage',
     data: {
-      image: qrcodeContainer.find('canvas')[0].toDataURL(), 
+      image: qrcodeContainer.find('canvas')[0].toDataURL(),
       cut: true,
     }
   });
@@ -327,9 +327,7 @@ App.highlightMatchedText = (text, search) => {
   const startMatchIndex = text.toLowerCase().indexOf(search.toLowerCase());
   const displayContent = startMatchIndex >= 0 ? (
     text.slice(0, startMatchIndex) +
-    '<span class="match">' +
-      text.slice(startMatchIndex, startMatchIndex + search.length) +
-    '</span>' +
+    '<span class="match">' + text.slice(startMatchIndex, startMatchIndex + search.length) + '</span>' +
     text.slice(startMatchIndex + search.length)
   ) : text;
   return displayContent;
@@ -353,7 +351,7 @@ App.createDatePicker = ({ field, onSelect, onOpen }) => {
     format: App.formats.date,
     field,
     onSelect,
-    onOpen: onOpen ? onOpen : () => {},
+    onOpen: onOpen ? onOpen : () => { },
   });
   App.datePickerInstances.push(picker);
   return picker;
@@ -365,6 +363,20 @@ App.bindDatePicker = ({ id, onSelect, onOpen }) => {
   return App.createDatePicker({
     field: dateField.get(0),
     onSelect: onSelect,
-    onOpen: onOpen ? onOpen : () => {}
+    onOpen: onOpen ? onOpen : () => { }
   });
+};
+
+
+App.sumObjectValues = (o) => {
+  if (!o) return 0;
+  const keys = Object.keys(o);
+  let sum = 0;
+  keys.forEach((key) => {
+    const val = o[key];
+    if (!isNaN(val)) {
+      sum += val;
+    }
+  });
+  return sum;
 };
