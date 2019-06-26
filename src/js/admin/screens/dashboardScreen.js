@@ -1,18 +1,22 @@
-let currentPickerId = '';
-App.dailyAggregates = { "start": 20190401, "end": 20190623, "revenueByTax": { "0": 794, "10": 84, "15": 8494.1, "21": 3195.41 }, "revenueSentToORS": { "0": 0, "10": 0, "15": 0, "21": 0 }, "revenueByGroup": { "1": 212.9, "2": 204, "3": 2125.3, "4": 636.81, "5": 84, "6": 288, "7": 642 }, "revenueByEmployee": { "demo": 12527.51, "abc": 40 }, "revenueByPaymentMethod": { "cash": 12147.51, "card": 320, "cheque": 100 }, "revenueByForeignCurrency": {}, "round": 0.49, "canceledRevenues": { "2": -20, "not_plu": -2817.7 }, "canceledRevenuesByEmployee": { "demo": -2837.7, "abc": 0 }, "soldCntByEan": { "0": 49, "1": 14, "2": 25, "3": 35, "4": 44, "5": 13, "6": 5, "7": 11, "8": 11, "9": 5, "30": 9, "31": 1, "32": 3, "33": 1, "54": 3, "55": 1, "56": 1, "57": 1, "333": 40, "9115": 2, "105713": 4, "not_plu": 185, "034": 5, "035": 1, "036": 1 }, "hourlyTotalSales": { "0": 656.5, "1": 21, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 60, "11": 89, "12": 167, "13": 560, "14": 237.4, "15": 2403.7, "16": 339, "17": 90, "18": 0, "19": 736.3, "20": 6732.41, "21": -73.79999999999998, "22": 18, "23": 531 }, "hourlyTransCnt": { "0": 13, "1": 3, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 1, "11": 2, "12": 6, "13": 10, "14": 5, "15": 7, "16": 5, "17": 1, "18": 0, "19": 2, "20": 19, "21": 4, "22": 1, "23": 6 }, "nProductsSold": 470, "nTransactions": 85 };
+let currentDatePickerId = '';
 
 const onDateSelect = App.debounce((date) => {
   const startDatePicker = App.datePickerInstances[0];
   const endDatePicker = App.datePickerInstances[1];
-  if (startDatePicker.getDate() > endDatePicker.getDate()) {
-    if (currentPickerId === 'datepicker-start') {
+  const startDate = startDatePicker.getDate();
+  const endDate = endDatePicker.getDate();
+  if (startDate > endDate) {
+    if (currentDatePickerId === 'datepicker-start') {
       endDatePicker.setDate(date);
-    } else if (currentPickerId === 'datepicker-end') {
+    } else if (currentDatePickerId === 'datepicker-end') {
       startDatePicker.setDate(date);
     }
   } else {
-    console.log('START', moment(startDatePicker.getDate()).format(App.formats.date));
-    console.log('  END', moment(endDatePicker.getDate()).format(App.formats.date));
+    App.fetchAggregates(startDate, endDate).then(() => {
+      renderDashboard();
+    });
+    console.log('START', moment(startDate).format(App.formats.date));
+    console.log('  END', moment(endDate).format(App.formats.date));
   }
 }, 10);
 
@@ -33,10 +37,10 @@ App.renderDashboardScreen = () => {
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
-  App.bindDatePicker({ id: 'datepicker-start', onSelect: onDateSelect, onOpen: () => currentPickerId = 'datepicker-start' });
-  App.bindDatePicker({ id: 'datepicker-end', onSelect: onDateSelect, onOpen: () => currentPickerId = 'datepicker-end' });
+  App.bindDatePicker({ id: 'datepicker-start', onSelect: onDateSelect, onOpen: () => currentDatePickerId = 'datepicker-start' });
+  App.bindDatePicker({ id: 'datepicker-end', onSelect: onDateSelect, onOpen: () => currentDatePickerId = 'datepicker-end' });
   header.find('.date-nav').click(function () {
-    currentPickerId = '';
+    currentDatePickerId = '';
     const newDate = App.datePickerInstances[0].getDate();
     if ($(this).attr('id') === 'date-next') {
       newDate.setDate(newDate.getDate() + 1);
@@ -50,8 +54,7 @@ App.renderDashboardScreen = () => {
       App.datePickerInstances[1].setDate(newDate);
     }
   });
-  renderDashboard();
-  //App.fetchAggregates().done(renderDashboard).fail(clearDashboard);
+  App.fetchAggregates().done(renderDashboard).fail(clearDashboard);
 };
 
 const renderDashboard = () => {
@@ -98,13 +101,13 @@ const renderHourlyChart = (container) => {
       labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
         '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
       datasets: [{
-        data: mapHourlyValues(App.dailyAggregates.hourlyTotalSales),
+        data: mapHourlyValues(App.aggregates.hourlyTotalSales),
         label: 'Hourly total revenues',
         yAxisID: 'y-axis-1',
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,0.4)'
       }, {
-        data: mapHourlyValues(App.dailyAggregates.hourlyTransCnt),
+        data: mapHourlyValues(App.aggregates.hourlyTransCnt),
         label: 'Hourly transactions count',
         yAxisID: 'y-axis-2',
         backgroundColor: 'rgba(192,75,75,0.4)',
@@ -151,12 +154,12 @@ const generateTopSoldCard = () => {
   const card = `
     <div class="db-card" id="db-top-sold">
       <div class="db-label">Top products</div>
-      ${Object.keys(App.dailyAggregates.soldCntByEan).map((ean) => {
+      ${Object.keys(App.aggregates.soldCntByEan).map((ean) => {
         const product = App.products[ean];
         return `
           <div class="db-item">
             <div class="di-label">${product ? product.name : `[${ean}]`}</div>
-            <div class="di-value">${App.dailyAggregates.soldCntByEan[ean]}</div>
+            <div class="di-value">${App.aggregates.soldCntByEan[ean]}</div>
           </div>
         `;
       }).join('')}
@@ -164,15 +167,16 @@ const generateTopSoldCard = () => {
   `
   return card;
 };
+
 const generateRevenuesByVat = () => {
   const card = `
     <div class="btn db-card" id="db-revenues-by-vat">
       <div class="db-label">Revenues by VAT</div>
-      ${Object.keys(App.dailyAggregates.revenueByTax).map((taxRate) => {
+      ${Object.keys(App.aggregates.revenueByTax).map((taxRate) => {
         return `
           <div class="db-item">
             <div class="di-label">${taxRate} %</div>
-            <div class="di-value">${App.dailyAggregates.revenueByTax[taxRate].formatMoney()}</div>
+            <div class="di-value">${App.aggregates.revenueByTax[taxRate].formatMoney()}</div>
           </div>
         `;
       }).join('')}
@@ -180,16 +184,17 @@ const generateRevenuesByVat = () => {
   `
   return card;
 };
+
 const generateRevenuesByGroup = () => {
   const card = `
     <div class="btn db-card" id="db-revenues-by-group">
       <div class="db-label">Revenues by groups</div>
-      ${Object.keys(App.dailyAggregates.revenueByGroup).map((groupNumber) => {
+      ${Object.keys(App.aggregates.revenueByGroup).map((groupNumber) => {
         const group = App.groups[groupNumber];
         return `
           <div class="db-item">
             <div class="di-label">${group ? group.name : `[${groupNumber}]`}</div>
-            <div class="di-value">${App.dailyAggregates.revenueByGroup[groupNumber].formatMoney()}</div>
+            <div class="di-value">${App.aggregates.revenueByGroup[groupNumber].formatMoney()}</div>
           </div>
         `;
       }).join('')}

@@ -3,6 +3,7 @@ App.products = {};
 App.groups = {};
 App.vatMarks = {};
 App.settings = {};
+App.aggregates = {};
 
 $(document).ajaxStop(() => {
   App.hideSpinner();
@@ -98,4 +99,15 @@ App.connect = () => {
     App.fetchProducts(),
     App.fetchCategories()
   );
+};
+
+App.fetchAggregates = (start, end) => {
+  const startPrefix = moment(start || new Date()).format(App.formats.datePrefix);
+  const endPrefix = moment(end || new Date()).format(App.formats.datePrefix);
+  return $.get({
+    url: `${App.apiPrefix}/aggregates/${startPrefix}/${endPrefix}`,
+    beforeSend: App.attachToken,
+  }).done((resp) => {
+    App.aggregates = resp;
+  });
 };
