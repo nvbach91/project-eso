@@ -11,30 +11,30 @@ const tableHeader = `
 App.renderGroupsScreen = () => {
   const groupKeys = Object.keys(App.groups);
   const header = $(`
-  <div id="cp-header" class="card-header">
-    <div class="cp-name">Groups</div>
-    <div class="cp-control">${groupKeys.length}&nbsp;<i class="material-icons">storage</i></div>
-  </div>
+    <div id="cp-header" class="card-header">
+      <div class="cp-name">Groups</div>
+      <div class="cp-control">${groupKeys.length}&nbsp;<i class="material-icons">storage</i></div>
+    </div>
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`
-  <div>
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h5>Manage groups</h5>
-      <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
+    <div>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Manage groups</h5>
+        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Add or edit group by entering its number</p>
+        <form id="group-addition">
+          <div class="input-group">
+            <input class="form-control" placeholder="Enter groups’ number" title="Key 1-20 digits" required>
+            <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
+          </div>
+        </form>
+      </div>
+      <div id="groups-table" class="table"></div>
     </div>
-    <div class="card-body">
-      <p class="card-text">Add or edit group by entering its number</p>
-      <form id="group-addition">
-        <div class="input-group">
-          <input class="form-control" placeholder="Enter groups’ number" title="Key 1-20 digits" required>
-          <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
-        </div>
-      </form>
-    </div>
-    <div id="groups-table" class="table"></div>
-  </div>
   `);
   App.jGroupsContainer = cpBody.find('#groups-table');
   const form = cpBody.find('#group-addition');
@@ -85,26 +85,26 @@ App.renderGroupsTable = () => {
     const { name, order, img } = group || {};
     const style = img ? ` style="background-image: url(${img})"` : '';
     const form = $(`
-    <form>
-      <p class="h4 mb-4">${group ? 'Edit' : 'Create'} group - ${number}</p>
-      <div class="form-row">
-        <div class="form-col">
-          <div class="img-upload">
-            <div class="btn img-holder"${style}>${style ? '' : '<i class="material-icons">image</i>'}</div>
-            <input type="hidden" name="img" value="${img}">
+      <form>
+        <p class="h4 mb-4">${group ? 'Edit' : 'Create'} group - ${number}</p>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="img-upload">
+              <div class="btn img-holder"${style}>${style ? '' : '<i class="material-icons">image</i>'}</div>
+              <input type="hidden" name="img" value="${img}">
+            </div>
+          </div>
+          <div class="form-col">
+            ${App.generateFormInput({ label: 'Number', name: 'number', value: number || '', disabled: true })}
+            ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
+            ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order, required: true })}
           </div>
         </div>
-        <div class="form-col">
-          ${App.generateFormInput({ label: 'Number', name: 'number', value: number || '', disabled: true })}
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
-          ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order, required: true })}
+        <div class="form-btns">
+          ${group ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
+          <button class="btn btn-primary btn-raised btn-save">Save</button>
         </div>
-      </div>
-      <div class="form-btns">
-        ${group ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
-        <button class="btn btn-primary btn-raised btn-save">Save</button>
-      </div>
-    </form>
+      </form>
     `);
     /** TODO: Add Saving and Deletion of a group */
     /*
