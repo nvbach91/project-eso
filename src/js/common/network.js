@@ -105,7 +105,7 @@ App.fetchAggregates = (start, end) => {
   const startPrefix = moment(start || new Date()).format(App.formats.datePrefix);
   const endPrefix = moment(end || new Date()).format(App.formats.datePrefix);
   return $.get({
-    url: `${App.apiPrefix}/aggregates/${startPrefix}/${endPrefix}`,
+    url: `${App.apiPrefix}/aggregates/all/${startPrefix}/${endPrefix}`,
     beforeSend: App.attachToken,
   }).done((resp) => {
     App.aggregates = resp;

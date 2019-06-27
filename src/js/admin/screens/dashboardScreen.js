@@ -13,8 +13,8 @@ const onDateSelect = App.debounce((date) => {
     }
   } else {
     App.fetchAggregates(startDate, endDate).done(renderDashboard).fail(clearDashboard);
-    console.log('START', moment(startDate).format(App.formats.date));
-    console.log('  END', moment(endDate).format(App.formats.date));
+    //console.log('START', moment(startDate).format(App.formats.date));
+    //console.log('  END', moment(endDate).format(App.formats.date));
   }
 }, 10);
 
@@ -59,54 +59,54 @@ const renderDashboard = () => {
   const dashboard = $(`
     <div class="dashboard">
       <div class="btn db-card" id="db-total-revenue">
-        <div class="db-value">${App.sumObjectValues(App.aggregates.revenueByTax).formatMoney()}</div>
+        <div class="db-value">${App.sumObjectValues(App.aggregates.revByVat).formatMoney()}</div>
         <div class="db-label">Total revenue</div>
       </div>
       <div class="btn db-card" id="db-transactions">
-        <div class="db-value">${App.aggregates.nTransactions}</div>
+        <div class="db-value">${App.aggregates.nTrans}</div>
         <div class="db-label">Transactions</div>
       </div>
       <div class="btn db-card" id="db-sold-products">
-        <div class="db-value">${App.aggregates.nProductsSold}</div>
+        <div class="db-value">${App.aggregates.nProdSold}</div>
         <div class="db-label">Products sold</div>
       </div>
-      <div class="db-card" id="db-hourly-chart">
+      <div class="db-card" id="db-hour-chart">
         <canvas></canvas>
       </div>
       <div class="btn db-card" id="db-average-revenue">
-        <div class="db-value">${(App.sumObjectValues(App.aggregates.revenueByTax) / App.aggregates.nTransactions).formatMoney()}</div>
+        <div class="db-value">${(App.sumObjectValues(App.aggregates.revByVat) / App.aggregates.nTrans).formatMoney()}</div>
         <div class="db-label">Average revenue</div>
       </div>
-      ${generateRevenuesByVat()}
-      ${generateRevenuesByGroup()}
+      ${generateRevByVat()}
+      ${generateRevByGroup()}
       ${generateTopSoldCard()}
     </div>
   `);
   App.jControlPanelBody.replaceWith(dashboard);
   App.jControlPanelBody = dashboard;
-  renderHourlyChart(dashboard.find('#db-hourly-chart canvas'));
+  generateHourChart(dashboard.find('#db-hour-chart canvas'));
 };
 
 const clearDashboard = () => {
-  const dashboard = $(`<button class="btn">There is no data in the selected time period</btn>`);
+  const dashboard = $(`<button class="btn">There is no data in the selected time period</button>`);
   App.jControlPanelBody.replaceWith(dashboard);
   App.jControlPanelBody = dashboard;
 };
 
-const renderHourlyChart = (container) => {
+const generateHourChart = (container) => {
   if (typeof Chart === 'function') {
     const data = {
       labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
         '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
       datasets: [{
-        data: mapHourlyValues(App.aggregates.hourlyTotalSales),
-        label: 'Hourly total revenues',
+        data: mapHourValues(App.aggregates.hourSales),
+        label: 'hour total revenues',
         yAxisID: 'y-axis-1',
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,0.4)'
       }, {
-        data: mapHourlyValues(App.aggregates.hourlyTransCnt),
-        label: 'Hourly transactions count',
+        data: mapHourValues(App.aggregates.hourTrans),
+        label: 'hour transactions count',
         yAxisID: 'y-axis-2',
         backgroundColor: 'rgba(192,75,75,0.4)',
         borderColor: 'rgba(192,75,75,0.4)'
@@ -130,20 +130,20 @@ const renderHourlyChart = (container) => {
   }
 };
 
-const mapHourlyValues = (hourly) => {
-  if (!hourly) {
+const mapHourValues = (hour) => {
+  if (!hour) {
     return [];
   }
   const result = [];
-  const hours = Object.keys(hourly).map((hour) => {
+  const hours = Object.keys(hour).map((hour) => {
     return parseInt(hour);
   }).sort((a, b) => a - b);
   const maxHour = (hours[hours.length - 1] || 0) + 1;
   for (let i = 0; i < maxHour; i++) {
-    if (typeof hourly[i] !== 'number') {
-      hourly[i] = 0;
+    if (typeof hour[i] !== 'number') {
+      hour[i] = 0;
     }
-    result.push(+hourly[i].toFixed(2));
+    result.push(+hour[i].toFixed(2));
   }
   return result;
 };
@@ -166,15 +166,15 @@ const generateTopSoldCard = () => {
   return card;
 };
 
-const generateRevenuesByVat = () => {
+const generateRevByVat = () => {
   const card = `
     <div class="db-card" id="db-revenues-by-vat">
       <div class="db-label">Revenues by VAT</div>
-      ${Object.keys(App.aggregates.revenueByTax).map((taxRate) => {
+      ${Object.keys(App.aggregates.revByVat).map((taxRate) => {
         return `
           <div class="db-item">
             <div class="di-label">${taxRate} %</div>
-            <div class="di-value">${App.aggregates.revenueByTax[taxRate].formatMoney()}</div>
+            <div class="di-value">${App.aggregates.revByVat[taxRate].formatMoney()}</div>
           </div>
         `;
       }).join('')}
@@ -183,16 +183,16 @@ const generateRevenuesByVat = () => {
   return card;
 };
 
-const generateRevenuesByGroup = () => {
+const generateRevByGroup = () => {
   const card = `
     <div class="db-card" id="db-revenues-by-group">
       <div class="db-label">Revenues by groups</div>
-      ${Object.keys(App.aggregates.revenueByGroup).map((groupNumber) => {
+      ${Object.keys(App.aggregates.revByGroup).map((groupNumber) => {
         const group = App.groups[groupNumber];
         return `
           <div class="db-item">
             <div class="di-label">${group ? group.name : `[${groupNumber}]`}</div>
-            <div class="di-value">${App.aggregates.revenueByGroup[groupNumber].formatMoney()}</div>
+            <div class="di-value">${App.aggregates.revByGroup[groupNumber].formatMoney()}</div>
           </div>
         `;
       }).join('')}
