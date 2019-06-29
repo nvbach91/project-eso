@@ -59,9 +59,8 @@ App.renderGroupsTable = () => {
 
   App.jGroupsContainer.empty();
   App.jGroupsContainer.append(tableHeader);
-  for (var i = 0; i < groupKeys.length; i++) {
-    const groupKey = groupKeys[i];
-    const group = App.groups[groupKey];
+  groupKeys.forEach((key) => {
+    const group = App.groups[key];
     const { name, number, order, img } = group || {};
     const style = ` style="background-image: url(${img})"`;
     const item = $(`
@@ -77,7 +76,7 @@ App.renderGroupsTable = () => {
       App.showGroupEditForm(number, () => input.keyup());
     });
     App.jGroupsContainer.append(item);
-  }
+  });
 
   App.showGroupEditForm = (number, cb) => {
     if (!cb) cb = () => {};
