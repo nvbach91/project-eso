@@ -20,7 +20,7 @@ App.renderProductsScreen = () => {
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`
-    <div>
+   <div>
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Manage your catalog</h5>
         <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
@@ -134,7 +134,7 @@ App.showProductEditForm = (ean, cb) => {
           </div>
         </div>
         <div class="form-col">
-          ${App.generateFormInput({ label: 'Code', name: 'ean', value: ean || '', required: true })}
+          ${App.generateFormInput({ label: 'Code', name: 'ean', value: ean || '', disabled: true })}
           ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
         </div>
       </div>
