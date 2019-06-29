@@ -44,7 +44,7 @@ App.renderGroupsScreen = () => {
     e.preventDefault();
     const number = input.val();
     if (number && !isNaN(number)) {
-      App.showGroupEditForm(number);
+      showGroupEditForm(number);
     } 
   });
   
@@ -73,12 +73,12 @@ App.renderGroupsTable = () => {
       </div>
     `);
     item.children('.sr-edit, .sr-name').click(() => {
-      App.showGroupEditForm(number, () => input.keyup());
+      showGroupEditForm(number, () => input.keyup());
     });
     App.jGroupsContainer.append(item);
   });
 
-  App.showGroupEditForm = (number, cb) => {
+  showGroupEditForm = (number, cb) => {
     if (!cb) cb = () => {};
     const group = App.groups[number];
     const { name, order, img } = group || {};
