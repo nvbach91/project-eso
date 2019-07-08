@@ -179,6 +179,40 @@ span.match {
 .control-panel .card-body {
     padding: 0 1.25rem;
 }
+.mod-item {
+  padding: 1rem 2rem 0rem 3rem;
+}
+.mi-header {
+  font-size: 17px;
+  position: relative;
+  overflow: hidden;
+  background-color: #009688;
+  text-transform: uppercase;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+.mi-body {
+  padding: 25px;
+  border-bottom: 1px solid #cacaca;
+  border-left: 1px solid #cacaca;
+  border-right: 1px solid #cacaca;
+  .bmd-form-group {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+}
+.mi-control {
+  padding-top: 30px;
+  width: 50%;
+}
+.mi-btn {
+  width: 50%;
+  max-width: 270px;
+}
 .dashboard {
     padding: 10px;
     display: grid;
