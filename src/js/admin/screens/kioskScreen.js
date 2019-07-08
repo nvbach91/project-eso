@@ -24,7 +24,7 @@ App.renderKioskScreen = () => {
       <div class="mi-header">Settings</div>
       <div class="mi-body">
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: App.settings.name || '' })}
+          ${App.generateFormInput({ label: 'Name', name: 'name', value: '' })}
           ${App.generateFormInput({ label: 'Number', name: 'number', value: App.settings.number || 0 , disabled: true })}
         </div>
         <div class="form-row"> 
@@ -52,7 +52,6 @@ App.renderKioskScreen = () => {
         </div>
       </div>
     </form>
-    <div id="groups-table" class="table"></div>
   </div>
   `);
   App.jControlPanelBody.replaceWith(cpBody);
