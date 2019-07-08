@@ -1,5 +1,3 @@
-var isTaxable = true;
-
 App.renderControlPanelTabs = () => {
   const cpTabs = [
     { icon: 'dashboard', name: 'Dashboard', render: App.renderDashboardScreen },
