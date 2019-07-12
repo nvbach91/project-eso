@@ -1,6 +1,6 @@
 App.ptSend = (ptRequest) => {
   return $.post({
-    url: App.settings.paymentTerminal.endpoint,
+    url: App.settings.terminal.endpoint,
     dataType: 'json',
     data: ptRequest,
   });
@@ -9,13 +9,13 @@ App.ptSend = (ptRequest) => {
 App.ptPay = (amount, currency, customerLanguage, receiptNumber) => {
   const ptRequest = {
     transactionType: 'sale',
-    ip: App.settings.paymentTerminal.ip,
-    port: App.settings.paymentTerminal.port,
+    ip: App.settings.terminal.ip,
+    port: App.settings.terminal.port,
     amount: amount,
     currency: currency,
     customerLanguage: customerLanguage,
     referenceNumber: receiptNumber.toString(),
-    password: App.settings.paymentTerminal.password
+    password: App.settings.terminal.password
   };
   return App.ptSend(ptRequest);
 };

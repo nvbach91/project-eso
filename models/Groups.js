@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Groups = new Schema({
   registerId: Schema.ObjectId,
   number: Number,
+  order: Number,
   name: String,
   img: String,
 });

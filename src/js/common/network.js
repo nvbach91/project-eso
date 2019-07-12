@@ -74,7 +74,7 @@ App.fetchTransactionsByDatePrefix = (date) => {
 App.saveProduct = (product) => {
   const { ean } = product;
   return $.post({
-    url: `${App.apiPrefix}/products/`,
+    url: `${App.apiPrefix}/products`,
     beforeSend: App.attachToken,
     contentType: 'application/json',
     data: JSON.stringify(product),

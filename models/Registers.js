@@ -11,8 +11,8 @@ const Registers = new Schema({
   carouselInterval: Number,
   currency: Object, // { code: 'CZK', symbol: 'Kč' },
   printer: String,
-  paymentTerminal: Object, //{ ip, port, password, endpoint },
-  ors: Object, // { public_key, private_key, vat, fileName, store_id, upload_date, valid_until }
+  terminal: Object, //{ ip, port, password, endpoint },
+  ors: Object, // { public_key, private_key, vat, file_name, store_id, upload_date, valid_until }
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
 });
@@ -60,7 +60,7 @@ const settings = {
   carouselInterval: 20000,
   currency: { code: 'CZK', symbol: 'Kč' },
   printer: 'EPSON TM-T20II Receipt',
-  paymentTerminal: {
+  terminal: {
     ip: '10.0.0.42',
     port: '2050',
     password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP',
@@ -70,7 +70,7 @@ const settings = {
     public_key: '',
     private_key: '',
     vat: 'CZ12345678',
-    fileName: '',
+    file_name: '',
     store_id: '11',
     upload_date: '2019-05-03T12:54:11.000Z',
     valid_until: '2022-05-03T12:54:11.000Z'
