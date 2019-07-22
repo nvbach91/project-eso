@@ -3,7 +3,7 @@ const Groups = require('../../../models/Groups');
 const utils = require('../../../utils');
 
 router.get('/groups', (req, res) => {
-  Groups.find({ registerId: req.user.registerId }).select('-_id -__v -registerId').then((groups) => {
+  Groups.find({ regId: req.user.regId }).select('-_id -__v -regId').then((groups) => {
     res.json(groups);
   }).catch(utils.handleError(res));
 });

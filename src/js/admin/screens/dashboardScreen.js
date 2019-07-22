@@ -152,12 +152,12 @@ const generateTopSoldCard = () => {
   const card = `
     <div class="db-card" id="db-top-sold">
       <div class="db-label">Top products</div>
-      ${Object.keys(App.aggregates.soldCntByEan).map((ean) => {
+      ${Object.keys(App.aggregates.soldCnt).map((ean) => {
         const product = App.products[ean];
         return `
           <div class="db-item">
             <div class="di-label">${product ? product.name : `[${ean}]`}</div>
-            <div class="di-value">${App.aggregates.soldCntByEan[ean]}</div>
+            <div class="di-value">${App.aggregates.soldCnt[ean]}</div>
           </div>
         `;
       }).join('')}

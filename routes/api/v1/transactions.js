@@ -4,33 +4,33 @@ const Transactions = require('../../../models/Transactions');
 const Aggregates = require('../../../models/Aggregates');
 
 router.get('/transactions', (req, res) => {
-  Transactions.find({ registerId: req.user.registerId }).select('-_id -__v -registerId').then((transactions) => {
+  Transactions.find({ regId: req.user.regId }).select('-_id -__v -regId').then((transactions) => {
     res.json(transactions);
   }).catch(utils.handleError(res));
 });
 
 router.get('/transactions/page/:offset/:limit', (req, res) => {
   const { limit, offset } = req.params;
-  Transactions.find({ registerId: req.user.registerId }).skip(parseInt(offset)).limit(parseInt(limit)).select('-_id -__v -registerId').then((transactions) => {
+  Transactions.find({ regId: req.user.regId }).skip(parseInt(offset)).limit(parseInt(limit)).select('-_id -__v -regId').then((transactions) => {
     res.json(transactions);
   }).catch(utils.handleError(res));
 });
 
 router.get('/transactions/date/:d', (req, res) => {
   const { d } = req.params;
-  Transactions.find({ registerId: req.user.registerId, d }).select('-_id -__v -registerId').then((transactions) => {
+  Transactions.find({ regId: req.user.regId, d }).select('-_id -__v -regId').then((transactions) => {
     res.json(transactions);
   }).catch(utils.handleError(res));
 });
 
 router.post('/transactions', (req, res) => {
-  const registerId = req.user.registerId;
+  const regId = req.user.regId;
   const number = req.body.number;
-  Transactions.findOne({ registerId, number }).select('_id').then((transaction) => {
+  Transactions.findOne({ regId, number }).select('_id').then((transaction) => {
     if (transaction) {
       throw { code: 400, msg: 'srv_transaction_number_already_exists' };
     }
-    const newTransaction = { ...req.body, registerId, d: req.body.date.slice(0, 10).replace(/-/g, '') };
+    const newTransaction = { ...req.body, regId, d: req.body.date.slice(0, 10).replace(/-/g, '') };
     return new Transactions(newTransaction).save();
   }).then((transaction) => {
     const { _id, __v, ...t } = transaction._doc;
@@ -40,11 +40,11 @@ router.post('/transactions', (req, res) => {
 });
 
 const updateAggregates = (t) => {
-  const { d, registerId, date } = t;
+  const { d, regId, date } = t;
   const $inc = {};
   const revByVat = {};
   const revByGroup = {};
-  const soldCntByEan = {};
+  const soldCnt = {};
   let nProdSold = 0;
   let total = 0;
   /*
@@ -66,11 +66,11 @@ const updateAggregates = (t) => {
     nProdSold += item.quantity % 1 === 0 ? item.quantity : 1;
     fillNestedInc(revByVat, item.vat, itemTotal);
     fillNestedInc(revByGroup, item.group, itemTotal);
-    fillNestedInc(soldCntByEan, item.ean, item.quantity);
+    fillNestedInc(soldCnt, item.ean, item.quantity);
   });
   Object.keys(revByVat).forEach((vat) => $inc[`revByVat.${vat}`] = revByVat[vat]);
   Object.keys(revByGroup).forEach((group) => $inc[`revByGroup.${group}`] = revByGroup[group]);
-  Object.keys(soldCntByEan).forEach((ean) => $inc[`soldCntByEan.${ean}`] = soldCntByEan[ean]);
+  Object.keys(soldCnt).forEach((ean) => $inc[`soldCnt.${ean}`] = soldCnt[ean]);
   $inc[`revByEmp.${t.clerk.replace(/\./g, '-')}`] = total;
   $inc[`revByPayment.${t.payment}`] = total;
   $inc[`nTrans`] = 1;
@@ -80,7 +80,7 @@ const updateAggregates = (t) => {
   $inc['hourTrans.' + hour] = 1;
   
   //console.log($inc);
-  Aggregates.updateOne({ date: d, registerId }, { $inc }, { upsert: true }).then((info) => {
+  Aggregates.updateOne({ date: d, regId }, { $inc }, { upsert: true }).then((info) => {
     console.log(info);
   });
 };

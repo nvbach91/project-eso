@@ -6,7 +6,7 @@ const utils = require('../../../utils');
 
 router.get('/settings', (req, res) => {
   let settings = {};
-  Registers.findOne({ _id: req.user.registerId }).select('-_id -__v').then((register) => {
+  Registers.findOne({ _id: req.user.regId }).select('-_id -__v').then((register) => {
     settings = { ...register._doc };
     return Companies.findOne({ _id: req.user.companyId }).select('tin vat residence');
   }).then((company) => {

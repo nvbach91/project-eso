@@ -37,7 +37,7 @@ const jwtStrategyOptions = {
 };
 
 const jwtStrategy = new passportJWT.Strategy(jwtStrategyOptions, (req, jwtPayload, cb) => {
-  return Users.findOne({ _id: jwtPayload._id }).select('username token registerId companyId').then((user) => {
+  return Users.findOne({ _id: jwtPayload._id }).select('username token regId companyId').then((user) => {
     if (!user) {
       return cb(null, false);
     }

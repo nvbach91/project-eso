@@ -5,9 +5,9 @@ const Aggregates = require('../../../models/Aggregates');
 const aggregateKeys = [
   'revByVat',
   'revByGroup',
-  'soldCntByEan',
-  'canceledRev',
-  'canceledRevByEmp',
+  'soldCnt',
+  'cancelRev',
+  'cancelRevByEmp',
   'nTrans',
   'nProdSold',
   'hourSales',
@@ -19,7 +19,7 @@ const aggregateKeys = [
 router.get('/aggregates/:keys/:start/:end', (req, res) => {
   const { start, end, keys } = req.params;
   const select = keys === 'all' ? aggregateKeys.join(' ') : keys.split(',').join(' ');
-  const query = { registerId: req.user.registerId, date: { $gte: start, $lte: end } };
+  const query = { regId: req.user.regId, date: { $gte: start, $lte: end } };
   Aggregates.find(query).select(select + ' -_id').then((aggregates) => {
     if (!aggregates.length) {
       return res.sendStatus(404);

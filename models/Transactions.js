@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Transactions = new Schema({
-  registerId: Schema.ObjectId,
+  regId: Schema.ObjectId,
   number: Number,
   d: { type: Number, index: true }, // dateprefix
   date: Date,
@@ -18,7 +18,7 @@ const Transactions = new Schema({
   fik: String,
 });
 
-Transactions.index({ registerId: 1, number: -1 }, { unique: true }); // index from most recent
+Transactions.index({ regId: 1, number: -1 }, { unique: true }); // index from most recent
 
 module.exports = mongoose.model('transactions', Transactions);
 

@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const Aggregates = new Schema({
   date: Number,
-  registerId: Schema.ObjectId,
+  regId: Schema.ObjectId,
   revByVat: {},
   revByGroup: {},
-  soldCntByEan: {},
-  canceledRev: {},
-  canceledRevByEmp: {},
+  soldCnt: {},
+  cancelRev: {},
+  cancelRevByEmp: {},
   nTrans: Number,
   nProdSold: Number,
   hourSales: {},
@@ -18,6 +18,6 @@ const Aggregates = new Schema({
   round: Number
 });
 
-Aggregates.index({ registerId: 1, date: -1 }, { unique: true }); // index from most recent
+Aggregates.index({ regId: 1, date: -1 }, { unique: true }); // index from most recent
 
 module.exports = mongoose.model('aggregates', Aggregates);
