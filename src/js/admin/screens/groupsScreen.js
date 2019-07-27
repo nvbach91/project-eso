@@ -13,26 +13,23 @@ App.renderGroupsScreen = () => {
   const header = $(`
     <div id="cp-header" class="card-header">
       <div class="cp-name">Groups</div>
-      <div class="cp-control">${groupKeys.length}&nbsp;<i class="material-icons">storage</i></div>
+      <div class="d-flex justify-content-flex-end">
+        <div class="cp-control">${groupKeys.length}&nbsp;<i class="material-icons">storage</i></div>
+        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
+      </div>
     </div>
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`
-    <div>
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Manage groups</h5>
-        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
-      </div>
-      <div class="card-body">
-        <p class="card-text">Add or edit group by entering its number</p>
-        <form id="group-addition">
-          <div class="input-group">
-            <input class="form-control" placeholder="Enter groups’ number" title="Key 1-20 digits" required>
-            <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
-          </div>
-        </form>
-      </div>
+    <div class="card-body">
+      <div class="card-text">Tip: Add or edit group by entering its number</div>
+      <form id="group-addition">
+        <div class="input-group">
+          <input class="form-control" placeholder="Enter groups’ number" title="Key 1-20 digits" required>
+          <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
+        </div>
+      </form>
       <div id="groups-table" class="table"></div>
     </div>
   `);
@@ -51,7 +48,7 @@ App.renderGroupsScreen = () => {
   App.renderGroupsTable();
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
-}
+};
 
 App.renderGroupsTable = () => {
   const groupKeys = Object.keys(App.groups);
@@ -84,7 +81,7 @@ App.renderGroupsTable = () => {
     const { name, order, img } = group || {};
     const style = img ? ` style="background-image: url(${img})"` : '';
     const form = $(`
-      <form>
+      <form class="mod-item">
         <p class="h4 mb-4">${group ? 'Edit' : 'Create'} group - ${number}</p>
         <div class="form-row">
           <div class="form-col">
@@ -94,9 +91,11 @@ App.renderGroupsTable = () => {
             </div>
           </div>
           <div class="form-col">
-            ${App.generateFormInput({ label: 'Number', name: 'number', value: number || '', disabled: true })}
+            <div class="form-row">
+              ${App.generateFormInput({ label: 'Number', name: 'number', value: number || '', disabled: true })}
+              ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order, required: true })}
+            </div>
             ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
-            ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order, required: true })}
           </div>
         </div>
         <div class="form-btns">
@@ -138,4 +137,4 @@ App.renderGroupsTable = () => {
     */
     App.showInModal(form);
   }
-}
+};

@@ -1,11 +1,11 @@
-
-
 App.renderControlPanelTabs = () => {
   const cpTabs = [
     { icon: 'dashboard', name: 'Dashboard', render: App.renderDashboardScreen },
     { icon: 'history', name: 'Transactions', render: App.renderTransactionScreen },
     { icon: 'view_module', name: 'Products', render: App.renderProductsScreen },
     { icon: 'category', name: 'Groups', render: App.renderGroupsScreen },
+    { icon: 'business', name: 'Company', render: App.renderCompanyScreen },
+    { icon: 'web_asset', name: 'Kiosk', render: App.renderKioskScreen },
   ];
   const container = $('<div>');
   cpTabs.forEach((tab) => {

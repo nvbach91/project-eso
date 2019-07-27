@@ -8,10 +8,10 @@ router.get('/settings', (req, res) => {
   let settings = {};
   Registers.findOne({ _id: req.user.regId }).select('-_id -__v').then((register) => {
     settings = { ...register._doc };
-    return Companies.findOne({ _id: req.user.companyId }).select('tin vat residence');
+    return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence name bank');
   }).then((company) => {
-    const { residence, tin, vat } = company._doc;
-    settings = { ...settings, residence, tin, vat };
+    const { residence, tin, vat, vatRegistered, name, bank } = company._doc;
+    settings = { ...settings, residence, tin, vat, vatRegistered, companyName: name, bank };
     return Users.find({ companyId: req.user.companyId }).select('username name');
   }).then((users) => {
     settings.employees = {};

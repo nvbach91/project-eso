@@ -10,6 +10,8 @@ require('../common/receipt.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
 require('./screens/groupsScreen.js');
+require('./screens/companyScreen.js');
+require('./screens/kioskScreen.js');
 require('./screens/transactionScreen.js');
 require('./screens/dashboardScreen.js');
 require('./components/header.js');

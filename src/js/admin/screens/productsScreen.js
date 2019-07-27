@@ -9,31 +9,29 @@ const tableHeader = `
     <div class="td sr-edit">Edit</div>
   </div>
 `;
+
 App.renderProductsScreen = () => {
   const productKeys = Object.keys(App.products);
   const header = $(`
     <div id="cp-header" class="card-header">
       <div class="cp-name">Products</div>
-      <div class="cp-control">${productKeys.length}&nbsp;<i class="material-icons">storage</i></div>
+      <div class="d-flex justify-content-flex-end">
+        <div class="cp-control">${productKeys.length}&nbsp;<i class="material-icons">storage</i></div>
+        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
+      </div>
     </div>
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`
-   <div>
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Manage your catalog</h5>
-        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
-      </div>
-      <div class="card-body">
-        <p class="card-text">Search for a product by its name or code</p>
-        <form id="product-search">
-          <div class="input-group">
-            <input class="form-control" placeholder="Search by name or code" title="PLU EAN code 1-20 digits" required>
-            <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
-          </div>
-        </form>
-      </div>
+    <div class="card-body">
+      <div class="card-text">Tip: Search for a product by its name or code</div>
+      <form id="product-search">
+        <div class="input-group">
+          <input class="form-control" placeholder="Search by name or code" title="PLU EAN code 1-20 digits" required>
+          <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
+        </div>
+      </form>
       <div id="search-results" class="table"></div>
     </div>
   `);
@@ -92,39 +90,38 @@ App.renderProductsScreen = () => {
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
 };
-App.generateGroupSelect = (selected) => {
-  return `
-    <div class="form-group">
-      <label>Group</label>
-      <select class="custom-select" name="group" required>
-        <option></option>
-        ${Object.keys(App.groups).map((group) => {
-          const { name } = App.groups[group];
-          return `<option value="${group}"${selected == group ? ' selected' : ''}>${group} - ${name}</option>`;
-        }).join('')}
-      </select>
-    </div>
-  `;
-};
-App.generateVatRateSelect = (selected) => {
-  return `
-    <div class="form-group">
-      <label>VAT</label>
-      <select class="custom-select" name="vat" required>
-        ${App.settings.vatRates.map((rate) => {
-          return `<option value="${rate}"${selected == rate ? ' selected' : ''}>${rate} %</option>`;
-        }).join('')}
-      </select>
-    </div>
-  `;
-};
+
+App.generateGroupSelect = (selected) => `
+  <div class="form-group">
+    <label>Group</label>
+    <select class="custom-select" name="group" required>
+      <option></option>
+      ${Object.keys(App.groups).map((group) => {
+        const { name } = App.groups[group];
+        return `<option value="${group}"${selected == group ? ' selected' : ''}>${group} - ${name}</option>`;
+      }).join('')}
+    </select>
+  </div>
+`;
+
+App.generateVatRateSelect = (selected) => `
+  <div class="form-group">
+    <label>VAT</label>
+    <select class="custom-select" name="vat" required>
+      ${App.settings.vatRates.map((rate) => {
+        return `<option value="${rate}"${selected == rate ? ' selected' : ''}>${rate} %</option>`;
+      }).join('')}
+    </select>
+  </div>
+`;
+
 App.showProductEditForm = (ean, cb) => {
   if (!cb) cb = () => {};
   const product = App.products[ean];
   const { name, price, group, img, vat } = product || {};
   const style = img ? ` style="background-image: url(${App.imageUrlBase}${img})"` : '';
   const form = $(`
-    <form>
+    <form class="mod-item">
       <p class="h4 mb-4">${product ? 'Edit' : 'Create'} product - ${ean}</p>
       <div class="form-row">
         <div class="form-col">
