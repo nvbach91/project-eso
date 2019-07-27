@@ -139,10 +139,19 @@ span.match {
 .custom-select {
     cursor: pointer;
     border: none;
-    height: 36px;
+    height: 31px;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
     &:focus {
         box-shadow: none;
     }
+}
+form {
+    .form-control:read-only {
+        background-color: transparent;
+        color: #aaa;
+    }
+    
 }
 .form-control.invalid {
     background-image: linear-gradient(0deg, #d50000 2px, rgba(213,0,0,0) 0), linear-gradient(0deg, rgba(0,0,0,.26) 1px, transparent 0);
@@ -171,47 +180,47 @@ span.match {
         display: flex;
         align-items: center;
         justify-content: center;
+        background-size: contain;
     }
     i.material-icons {
         font-size: 80px;
     }
 }
 .control-panel .card-body {
-    padding: 0 1.25rem;
+  padding: 0 1.25rem;
 }
 .mod-item {
-  padding: 1rem 2rem 0rem 3rem;
+    input, select {
+        color: $themeColor;
+        font-weight: 700;
+    }
+    .form-row {
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
 .mi-header {
-  font-size: 17px;
-  position: relative;
-  overflow: hidden;
-  background-color: #009688;
-  text-transform: uppercase;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: white;
+    font-size: 14px;
+    background-color: #009688;
+    text-transform: uppercase;
+    padding: 10px;
+    color: white;
 }
 .mi-body {
-  padding: 25px;
-  border-bottom: 1px solid #cacaca;
-  border-left: 1px solid #cacaca;
-  border-right: 1px solid #cacaca;
-  .bmd-form-group {
-    margin: 0 10px;
-    display: flex;
-    align-items: center;
-  }
+    padding: 10px;
+    .bmd-form-group {
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+    }
 }
 .mi-control {
-  padding-top: 30px;
-  width: 50%;
+    padding-top: 30px;
+    width: 50%;
 }
 .mi-btn {
-  width: 50%;
-  max-width: 270px;
+    width: 50%;
+    max-width: 270px;
 }
 .dashboard {
     padding: 10px;
@@ -252,6 +261,7 @@ span.match {
 @media screen and (min-width: 720px) {
     #cp-header {
         display: flex;
+        height: 80px;
     }
     #db-hour-chart {
         display: block;

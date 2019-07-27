@@ -6,7 +6,7 @@ const Companies = new Schema({
   tin: { type: String, index: { unique: true} },
   vat: String,
   name: String,
-  isTaxable: Boolean,
+  vatRegistered: Boolean,
   license: String,
   expiration: Date,
   bank: String,
