@@ -31,7 +31,7 @@ App.renderStandbyScreen = () => {
               return `
                 <div class="carousel-item${index === App.currentSlidePosition ? ' active' : ''}">
                   <div class="d-flex align-items-center justify-content-center min-vh-100"${style}>
-                    <button class="btn btn-primary btn-raised btn-lg">${btn}</button>
+                    <button class="btn btn-primary btn-raised btn-lg btn-xlg">${btn}</button>
                   </div>
                 </div>
               `;

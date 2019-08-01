@@ -26,7 +26,7 @@ App.renderGroupsScreen = () => {
       <div class="card-text">Tip: Add or edit group by entering its number</div>
       <form id="group-addition">
         <div class="input-group">
-          <input class="form-control" placeholder="Enter groups’ number" title="Key 1-20 digits" required>
+          <input class="form-control" placeholder="Enter group number" title="Key 1-20 digits" required>
           <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
         </div>
       </form>
@@ -93,9 +93,9 @@ App.renderGroupsTable = () => {
           <div class="form-col">
             <div class="form-row">
               ${App.generateFormInput({ label: 'Number', name: 'number', value: number || '', disabled: true })}
-              ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order, required: true })}
+              ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? '' : order })}
             </div>
-            ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
+            ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
           </div>
         </div>
         <div class="form-btns">

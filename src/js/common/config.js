@@ -35,6 +35,20 @@ App.formats = {
   datePrefix: 'YYYYMMDD',
 };
 
+App.supportedPrinters = [ // will change after call to local api for active printers
+  "",
+  "EPSON TM-T20II Receipt",
+  "EPSON TM-T20II Receipt5",
+  "BP003",
+  "POS80 Printer",
+  "PRP-085",
+  "BP-T3",
+  "XP-58",
+  "XP-58C",
+  "XP-80",
+  "XP-80C"
+];
+
 App.debounceTime = 300;
 
 App.configure = () => {

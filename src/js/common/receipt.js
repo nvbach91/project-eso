@@ -50,7 +50,7 @@ App.createTransaction = () => {
 
 App.printReceipt = (transaction, appendix) => {
   const text = App.renderReceiptText(transaction) + (appendix ? `\n${appendix}` : '');
-  App.printDirect(text);
+  App.printDirect(App.settings.printer.diacritics ? text : App.removeDiacritics(text));
 };
 
 App.renderReceiptText = (transaction) => {

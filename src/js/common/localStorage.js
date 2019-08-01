@@ -11,6 +11,5 @@ App.saveLocalPreference = (key, value) => {
 App.loadLocalStorage = () => {
   App.cart = JSON.parse(localStorage.cart || '{}');
   App.cartCategoryQuantities = JSON.parse(localStorage.cartCategoryQuantities || '{}');
-  
   App.locale = localStorage.locale || App.detectBrowserLanguage();
 };

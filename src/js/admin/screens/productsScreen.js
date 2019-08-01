@@ -91,35 +91,18 @@ App.renderProductsScreen = () => {
   App.jControlPanelBody = cpBody;
 };
 
-App.generateGroupSelect = (selected) => `
-  <div class="form-group">
-    <label>Group</label>
-    <select class="custom-select" name="group" required>
-      <option></option>
-      ${Object.keys(App.groups).map((group) => {
-        const { name } = App.groups[group];
-        return `<option value="${group}"${selected == group ? ' selected' : ''}>${group} - ${name}</option>`;
-      }).join('')}
-    </select>
-  </div>
-`;
-
-App.generateVatRateSelect = (selected) => `
-  <div class="form-group">
-    <label>VAT</label>
-    <select class="custom-select" name="vat" required>
-      ${App.settings.vatRates.map((rate) => {
-        return `<option value="${rate}"${selected == rate ? ' selected' : ''}>${rate} %</option>`;
-      }).join('')}
-    </select>
-  </div>
-`;
-
 App.showProductEditForm = (ean, cb) => {
   if (!cb) cb = () => {};
   const product = App.products[ean];
   const { name, price, group, img, vat } = product || {};
   const style = img ? ` style="background-image: url(${App.imageUrlBase}${img})"` : '';
+  const groupOptions = Object.keys(App.groups).map((group) => {
+    return { label: App.groups[group].name, value: group };
+  });
+  //groupOptions.unshift({ label: '', value: '' });
+  const vatOptions = App.settings.vatRates.map((rate) => {
+    return { label: `${rate} %`, value: rate };
+  });
   const form = $(`
     <form class="mod-item">
       <p class="h4 mb-4">${product ? 'Edit' : 'Create'} product - ${ean}</p>
@@ -132,13 +115,13 @@ App.showProductEditForm = (ean, cb) => {
         </div>
         <div class="form-col">
           ${App.generateFormInput({ label: 'Code', name: 'ean', value: ean || '', disabled: true })}
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '', required: true })}
+          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
         </div>
       </div>
       <div class="form-row">
-        ${App.generateFormInput({ label: 'Price', name: 'price', value: price || '', required: true })}
-        ${App.generateGroupSelect(group || '')}
-        ${App.generateVatRateSelect(vat || 0)}
+        ${App.generateFormInput({ label: 'Price', name: 'price', value: price || '' })}
+        ${App.generateFormSelect({ label: 'Group', name: 'group', value: group || '', options: groupOptions })}
+        ${App.generateFormSelect({ label: 'VAT', name: 'vat', value: vat || 0, options: vatOptions })}
       </div>
       <div class="form-btns">
         ${product ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}

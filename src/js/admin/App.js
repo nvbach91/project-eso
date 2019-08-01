@@ -12,6 +12,7 @@ require('./screens/productsScreen.js');
 require('./screens/groupsScreen.js');
 require('./screens/companyScreen.js');
 require('./screens/kioskScreen.js');
+require('./screens/peripheralsScreen.js');
 require('./screens/transactionScreen.js');
 require('./screens/dashboardScreen.js');
 require('./components/header.js');
@@ -24,6 +25,9 @@ App.render = () => {
 };
 
 App.init = () => {
+  $.getJSON(`${App.localhostServerURL}/activeprinters`).done(function (resp) {
+    App.supportedPrinters = [""].concat(resp.msg);
+  });
   App.loadLocalStorage();
   App.loadLocale();
   App.jContainer = $('#app');

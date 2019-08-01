@@ -160,7 +160,7 @@ App.createInlineSpinner = () => {
 };
 
 App.printDirect = (msg, printer) => {
-  const destination = printer || App.settings.printer;
+  const destination = printer || App.settings.printer.name;
   if (!destination) {
     return false;
   }
@@ -222,7 +222,7 @@ App.printQRCode = (data) => {
   const qrcodeContainer = $('<div>');
   qrcodeContainer.qrcode(data.toString());
   $.post({
-    url: 'https://localhost:2443/printdirectimage',
+    url: App.localhostServerURL + '/printdirectimage',
     data: {
       image: qrcodeContainer.find('canvas')[0].toDataURL(),
       cut: true,
@@ -379,4 +379,19 @@ App.sumObjectValues = (o) => {
     }
   });
   return sum;
+};
+
+const diaDict = {};
+const dia = 'ěščřžýáíéóúůďťňľäĚŠČŘŽÝÁÍÉÓÚŮĎŤŇĂĽÄăÂâĐđÊêÔôƠơƯưÀàẰằẦầÈèỀềÌìÒòỒồỜờÙùỪừỲỳẢảẲẳẨẩẺẻỂểỈỉỎỏỔổỞởỦủỬửỶỷÃãẴẵẪẫẼẽỄễĨĩÕõỖỗỠỡŨũỮữỸỹÁáẮắẤấÉéẾếÍíÓóỐốỚớÚúỨứÝý';
+const non = 'escrzyaieouudtnlaESCRZYAIEOUUDTNALAaAaDdEeOoOoUuAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYy';
+for (let i = 0; i < dia.length; i++) {
+  diaDict[dia[i]] = non[i];
+}
+
+App.removeDiacritics = (s) => {
+  let res = '';
+  for (let i = 0; i < s.length; i++) {
+    res += diaDict[s[i]] || s[i];
+  }
+  return res;
 };

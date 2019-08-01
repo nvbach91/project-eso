@@ -139,8 +139,8 @@ span.match {
 .custom-select {
     cursor: pointer;
     border: none;
-    height: 31px;
-    border-bottom: 1px solid #bbb;
+    height: 35px;
+    border-bottom: 1px solid #c1c1c1;
     border-radius: 0;
     &:focus {
         box-shadow: none;
@@ -193,10 +193,31 @@ form {
     input, select {
         color: $themeColor;
         font-weight: 700;
+        padding: 7px 5px;
+    }/*
+        border-bottom: 1px solid #d1d1d1;
+        background-image: none;
     }
+    input:required {
+        background-position: center right 5px;
+        background-size: 12px !important;
+        background-image: url(https://app.gokasa.cz/img/ico/asterisk.svg);
+    }
+    input:focus {
+        background-color: #eee;
+        border-bottom: 1px solid $themeColor;
+    }*/
     .form-row {
         margin-right: 0;
         margin-left: 0;
+    }
+    input + i {
+        position: absolute;
+        right: 5px;
+        top: 60%;
+        font-size: 16px;
+        font-style: normal;
+        color: rgb(255, 192, 192)
     }
 }
 .mi-header {

@@ -10,7 +10,7 @@ const Registers = new Schema({
   receipt: Object, // { img, header, footer, width, printWidth, extraPadding },
   carouselInterval: Number,
   currency: Object, // { code: 'CZK', symbol: 'Kč' },
-  printer: String,
+  printer: Object, // { name: 'EPSOM TM-T20II', diacritics: true }
   terminal: Object, //{ ip, port, password, endpoint },
   ors: Object, // { public_key, private_key, vat, file_name, store_id, upload_date, valid_until }
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
@@ -59,7 +59,7 @@ const settings = {
   vat: 'CZ12345678',
   carouselInterval: 20000,
   currency: { code: 'CZK', symbol: 'Kč' },
-  printer: 'EPSON TM-T20II Receipt',
+  printer: { name: 'EPSON TM-T20II Receipt', diacritics: true },
   terminal: {
     ip: '10.0.0.42',
     port: '2050',
