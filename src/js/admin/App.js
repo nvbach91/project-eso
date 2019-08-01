@@ -25,9 +25,6 @@ App.render = () => {
 };
 
 App.init = () => {
-  $.getJSON(`${App.localhostServerURL}/activeprinters`).done(function (resp) {
-    App.supportedPrinters = [""].concat(resp.msg);
-  });
   App.loadLocalStorage();
   App.loadLocale();
   App.jContainer = $('#app');
@@ -40,6 +37,9 @@ App.init = () => {
   //App.connect().then(() => {
   //  App.showProductEditForm('6333');
   //})
+  $.getJSON(`${App.localhostServerURL}/activeprinters`).done(function (resp) {
+    App.supportedPrinters = [""].concat(resp.msg);
+  });
 };
 
 App.start = () => {
