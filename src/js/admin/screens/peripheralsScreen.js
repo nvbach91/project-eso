@@ -9,7 +9,7 @@ App.renderPeripheralsScreen = () => {
   const printerOptions = App.supportedPrinters.map((printer) => ({ label: printer, value: printer }));
   const cpBody = $(`<div class="card-body"></div>`);
   const printerForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Printer</div>
       <div class="mi-body">
         <div class="form-row"> 
@@ -26,7 +26,7 @@ App.renderPeripheralsScreen = () => {
   App.bindForm(printerForm, '/settings');
 
   const paymentTerminalForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Payment terminal</div>
       <div class="mi-body">
         <div class="form-row"> 

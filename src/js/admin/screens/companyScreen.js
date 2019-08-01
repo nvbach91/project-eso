@@ -13,7 +13,7 @@ App.renderCompanyScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`<div class="card-body"></div>`);
   const companyForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Settings</div>
       <div class="mi-body">
         <div class="form-row"> 

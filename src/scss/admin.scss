@@ -32,6 +32,7 @@
     color: $themeColor;
     justify-content: space-between;
     align-items: center;
+    border-bottom: none;
 }
 .cp-name {
     font-size: 24px;
@@ -241,6 +242,7 @@ form {
     text-transform: uppercase;
     padding: 10px;
     color: white;
+    border: 5px solid white;
 }
 .mi-body {
     padding: 10px;

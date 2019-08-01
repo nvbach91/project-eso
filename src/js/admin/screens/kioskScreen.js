@@ -12,7 +12,7 @@ App.renderKioskScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`<div class="card-body"></div>`);
   const settingsForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Settings</div>
       <div class="mi-body">
         <div class="form-row"> 
@@ -35,7 +35,7 @@ App.renderKioskScreen = () => {
   App.bindForm(settingsForm, '/settings');
   
   const orsForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Fiscal settings</div>
       <div class="mi-body">
         <div class="form-row"> 
@@ -56,7 +56,7 @@ App.renderKioskScreen = () => {
   App.bindForm(orsForm, '/ors');
 
   const timersForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Timers</div>
       <div class="mi-body">
         <div class="form-row"> 
@@ -73,7 +73,7 @@ App.renderKioskScreen = () => {
   App.bindForm(timersForm, '/settings');
 
   const receiptForm = $(`
-    <form class="mod-item">
+    <form class="mod-item card">
       <div class="mi-header">Receipt</div>
       <div class="mi-body">
         <div class="form-row"> 
