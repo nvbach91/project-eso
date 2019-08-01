@@ -36,22 +36,20 @@ router.post('/settings', (req, res) => {
 
 router.post('/ors', (req, res) => {
   const { content, password, upload_date, valid_until, ...settings } = req.body;
-  console.log(settings);
   readPkcs12(Buffer.from(content.replace(/^data:application\/x-pkcs12;base64,/, ''), 'base64'), { p12Password: password }).then((result) => {
     settings['ors.public_key'] = btoa(result.cert);
     settings['ors.private_key'] = btoa(result.key);
     return readCertificateInfo(result.cert);
   }).then((certInfo) => {
     if (!certInfo.commonName.includes(settings['ors.vat'])) {
-      throw 'srv_certificate_invalid_vat';
+      throw { code: 400, msg: 'srv_certificate_invalid_vat' };
     }
     settings['ors.upload_date'] = new Date();
     settings['ors.valid_until'] = new Date(+certInfo.validity.end);
-    console.log(settings);
     const $set = { ...settings };
     return Registers.updateOne({ _id: req.user.regId }, { $set });
   }).then(() => {
-    res.json(settings);
+    res.json({ success: true, msg: settings });
   }).catch(utils.handleError(res));
 });
 
