@@ -88,8 +88,14 @@ App.bindForm = (form, endpoint) => {
       beforeSend: App.attachToken,
       contentType: 'application/json',
       data: JSON.stringify(data),
-    }).done(() => {
+    }).done((resp) => {
       btnSave.addClass('btn-success');
+      if (endpoint === '/ors') {
+        form.find('input[name="upload_date"]').val(moment(resp.msg['ors.upload_date']).format(App.formats.dateTime));
+        form.find('input[name="valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));
+      }
+    }).fail((resp) => {
+      App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
     });
   });
 };

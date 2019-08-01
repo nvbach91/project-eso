@@ -44,8 +44,8 @@ App.renderKioskScreen = () => {
           ${App.generateFormInput({ type: 'password', label: 'Certificate password', name: 'password', value: '' })}
           ${App.generateFormInput({ label: 'Certificate file', name: 'ors.file_name', placeholder: App.settings.ors.file_name })}
           ${App.generateFormInput({ type: 'file', hidden: true, label: 'Certificate file', name: 'ors.file', accept: '.p12', optional: true })}
-          ${App.generateFormInput({ label: 'Upload date', name: 'upload_date', optional: true, disabled: true })}
-          ${App.generateFormInput({ label: 'Valid until', name: 'valid_until', optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Upload date', name: 'upload_date', value: App.settings.ors.upload_date, optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Valid until', name: 'valid_until', value: App.settings.ors.valid_until, optional: true, disabled: true })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save</button>

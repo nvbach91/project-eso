@@ -45,7 +45,7 @@ router.post('/ors', (req, res) => {
       throw { code: 400, msg: 'srv_certificate_invalid_vat' };
     }
     settings['ors.upload_date'] = new Date();
-    settings['ors.valid_until'] = new Date(+certInfo.validity.end);
+    settings['ors.valid_until'] = new Date(Number(certInfo.validity.end));
     const $set = { ...settings };
     return Registers.updateOne({ _id: req.user.regId }, { $set });
   }).then(() => {
