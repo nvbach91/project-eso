@@ -22,7 +22,7 @@ App.renderProducts = (group) => {
         </div>
         <div class="po-name">${product.name}</div>
         <div class="po-row">
-          <div class="po-price">${product.price} ${App.settings.currency.symbol}</div>
+          <div class="po-price">${product.price} ${App.settings.currencySymbol}</div>
           <div class="po-control">
             <button class="btn btn-primary add">
               <i class="material-icons">playlist_add</i>
@@ -65,7 +65,7 @@ App.showProductDetail = (id) => {
         <div class="text-left">
           <div class="pd-name">${product.name}</div>
           ${product.description ? `<div class="pd-description">${product.description}</div>` : ''}
-          <div class="pd-price">${product.price} ${App.settings.currency.symbol}</div>
+          <div class="pd-price">${product.price} ${App.settings.currencySymbol}</div>
         </div>
         <div class="pd-control text-left">
           <div class="pd-row justify-content-start">

@@ -37,7 +37,6 @@ app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions.js'));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/products.js'));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/groups.js'));
 app.use(apiPrefix, require('./routes' + apiPrefix + '/aggregates.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/kiosk.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

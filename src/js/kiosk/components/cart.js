@@ -123,7 +123,7 @@ App.calculateCart = () => {
   const { nItems, totalPrice } = App.calculateCartSummaryValues();
   const itemText = App.getNumeralForm('misc_item', nItems);
   App.jModal.find('.cs-quantity').text(`${nItems} ${itemText}`);
-  App.jModal.find('.cs-price').find('span').text(`${totalPrice.formatMoney()} ${App.settings.currency.symbol}`);
+  App.jModal.find('.cs-price').find('span').text(`${totalPrice.formatMoney()} ${App.settings.currencySymbol}`);
   App.jItemsCount.text(`${nItems} ${itemText}`);
   App.jTotal.text(totalPrice.formatMoney());
 };
@@ -191,7 +191,7 @@ App.showCart = () => {
   const cartSummary = $(`
     <div class="cart-summary">
       <div class="btn btn-primary cs-quantity">${nItems} ${App.getNumeralForm('misc_item', nItems)}</div>
-      <button class="btn btn-primary btn-raised btn-lg cs-price">${App.lang.modal_cart_btn} <span>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</span></button>
+      <button class="btn btn-primary btn-raised btn-lg cs-price">${App.lang.modal_cart_btn} <span>${totalPrice.formatMoney()} ${App.settings.currencySymbol}</span></button>
     </div>
   `);
   cartSummary.find('.cs-price').click(() => {

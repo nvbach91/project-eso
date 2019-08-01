@@ -26,6 +26,7 @@ App.fetchSettings = () => {
     beforeSend: App.attachToken,
   }).done((resp) => {
     App.settings = resp;
+    App.settings.currencySymbol = App.supportedCurrencies[resp.currency];
     App.settings.vatRates.forEach((vatRate, index) => {
       App.vatMarks[vatRate] = String.fromCharCode(index + 65);
     });

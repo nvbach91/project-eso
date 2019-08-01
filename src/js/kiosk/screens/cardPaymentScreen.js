@@ -41,7 +41,7 @@ App.renderCardPaymentScreen = () => {
   App.jMain.find('.card').slideDown(App.getAnimationTime());
 
   const { totalPrice } = App.calculateCartSummaryValues();
-  App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {
+  App.ptPay(totalPrice.formatMoney(), App.settings.currency, App.locale, 0).done((resp) => {
     const appendix = '';
     App.renderFinishScreen();
     App.createTransaction().done((resp) => {

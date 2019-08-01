@@ -63,7 +63,7 @@ App.renderProductsScreen = () => {
               <div class="td sr-img" ${style}></div>
               <div class="td sr-ean">${App.highlightMatchedText(ean, searchValue)}</div>
               <div class="td sr-name">${App.highlightMatchedText(name, searchValue)}</div>
-              <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
+              <div class="td sr-price">${price} ${App.settings.currencySymbol}</div>
               <div class="td sr-group">${groupName}</div>
               <div class="td sr-vat">${vat} %</div>
               <button class="td sr-edit btn btn-primary"><i class="material-icons">edit</i></button>

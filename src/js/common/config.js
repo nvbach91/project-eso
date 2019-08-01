@@ -16,6 +16,11 @@ App.provider = 'Ethereals United';
 App.thisYear = new Date().getFullYear();
 App.credits = App.thisYear + ' © ' + App.provider;
 
+App.supportedCurrencies = {
+  CZK: 'Kč',
+  //EUR: '€'
+};
+
 App.supportedLocales = {
   'en': 'English',
   'cs': 'Čeština',

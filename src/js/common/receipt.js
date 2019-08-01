@@ -97,7 +97,7 @@ App.renderReceiptText = (transaction) => {
   const total = App.round(subTotal, 2);
   //const change = transaction.tendered - total;
   const payment =
-    `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
+    `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency}`)}` +
     `\n${App.lang.receipt_payment_method}:\t${App.getPaymentMethod(transaction.payment)}`/* +
      `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
      `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;

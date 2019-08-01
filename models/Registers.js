@@ -5,14 +5,41 @@ const Registers = new Schema({
   subdomain: { type: String, index: true },
   number: Number,
   name: String,
-  address: Object, // { street, city, zip, country }
+  address: { 
+    street: String, 
+    city: String, 
+    zip: String, 
+    country: String 
+  },
   vatRates: [Number],
-  receipt: Object, // { img, header, footer, width, printWidth, extraPadding },
+  receipt: { 
+    img: String, 
+    header: String, 
+    footer: String, 
+    extraPadding: Number 
+  },
   carouselInterval: Number,
-  currency: Object, // { code: 'CZK', symbol: 'Kč' },
-  printer: Object, // { name: 'EPSOM TM-T20II', diacritics: true }
-  terminal: Object, //{ ip, port, password, endpoint },
-  ors: Object, // { public_key, private_key, vat, file_name, store_id, upload_date, valid_until }
+  currency: String, 
+  printer: { 
+    name: String, 
+    diacritics: Boolean, 
+    columns: Number 
+  }, 
+  terminal: { 
+    ip: String, 
+    port: Number, 
+    password: String, 
+    endpoint: String 
+  },
+  ors: { 
+    public_key: String, 
+    private_key: String, 
+    vat: String, 
+    file_name: String, 
+    store_id: Number, 
+    upload_date: Date, 
+    valid_until: Date 
+  },
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
 });
@@ -58,7 +85,7 @@ const settings = {
   tin: '12345678',
   vat: 'CZ12345678',
   carouselInterval: 20000,
-  currency: { code: 'CZK', symbol: 'Kč' },
+  currency: 'CZK',
   printer: { name: 'EPSON TM-T20II Receipt', diacritics: true },
   terminal: {
     ip: '10.0.0.42',
