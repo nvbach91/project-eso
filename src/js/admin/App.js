@@ -34,6 +34,7 @@ App.init = () => {
   App.renderModal();
   App.renderLoginForm();
   $.getJSON(`${App.localhostServerURL}/activeprinters`).done((resp) => App.supportedPrinters = ['', ...resp.msg]);
+  $.cloudinary.config({ cloud_name: App.cloudinaryCloudName, secure: true });
 
   //$('.form-signin').submit();
   //App.connect();

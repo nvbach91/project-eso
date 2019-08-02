@@ -1,12 +1,13 @@
 const App = {};
 window.App = App;
 App.apiPrefix = '/api/v1';
-App.imageUrlBase = 'https://res.cloudinary.com/ceny24/image/upload/';
+App.cloudinaryCloudName = 'itakecz';
+App.imageUrlBase = `https://res.cloudinary.com/${App.cloudinaryCloudName}/image/upload/`;
 
 App.localhostServerURL = window.location.protocol + '//localhost:2443';
 App.tableSyncServerURL = window.location.protocol + '//sync.vcap.me:2443';
 
-const [ subdomain, domain, realm ] = location.hostname.split('.');
+const [ subdomain, domain, realm ] = window.location.hostname.split('.');
 App.subdomain = subdomain;
 App.domain = domain;
 App.realm = realm;

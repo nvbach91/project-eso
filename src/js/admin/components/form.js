@@ -77,8 +77,8 @@ App.bindForm = (form, endpoint) => {
   }
   const btnSave = form.find('.btn-save');
   form.submit((e) => {
-    btnSave.removeClass('btn-success btn-danger');
     e.preventDefault();
+    App.ajaxSaving(btnSave);
     const data = App.serializeForm(form);
     if (endpoint === '/ors') {
       data.content = certificateUploadInput.data('content') || '';
@@ -89,13 +89,13 @@ App.bindForm = (form, endpoint) => {
       contentType: 'application/json',
       data: JSON.stringify(data),
     }).done((resp) => {
-      btnSave.addClass('btn-success');
+      App.ajaxSaveDone(btnSave)();
       if (endpoint === '/ors') {
         form.find('input[name="upload_date"]').val(moment(resp.msg['ors.upload_date']).format(App.formats.dateTime));
         form.find('input[name="valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));
       }
     }).fail((resp) => {
-      btnSave.addClass('btn-danger');
+      App.ajaxSaveFail(btnSave)();
       App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
     });
   });
@@ -116,4 +116,63 @@ App.serializeForm = (form) => {
     data[input.name] = value;
   });
   return data;
+};
+
+App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder) => {
+  imgHolder.off('click').click(() => {
+    cloudinaryFileUploadInput.click();
+  });
+  cloudinaryFileUploadInput.cloudinary_fileupload({
+    disableImageResize: false,
+    imageMaxWidth: 800,                   // 800 is an example value - no default
+    imageMaxHeight: 600,                  // 600 is an example value - no default
+    maxFileSize: 1000000,                 // 20MB is an example value - no default
+    loadImageMaxFileSize: 20000000,       // default is 10MB
+    acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i
+  });
+  cloudinaryFileUploadInput.bind('cloudinarydone', (e, data) => {
+    cloudinaryPublicIdHolder.val(data.result.public_id);
+    imgHolder.empty().attr('style', App.getBackgroundImage(data.result.public_id).slice(8, -1));
+    //uncomment to allow reupload of the same file in the same fileupload instance
+    //cloudinaryFileUploadInput.wrap('<form>').closest('form').get(0).reset();
+    //cloudinaryFileUploadInput.unwrap();
+    
+    // bind again to allow change of file
+    App.bindCloudinaryFileUpload(cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder);
+    return true;
+  });
+};
+
+App.getCloudinaryUploadTag = () => {
+  const dfd = JSON.stringify({
+    upload_preset: 'r9ktkupy',
+    callback: `${location.origin}/cloudinary_cors.html`,
+    tags: App.settings._id,
+  }).replace(/"/g, '&quot;');
+  return `<input class="cloudinary-fileupload" name="file" type="file" data-form-data="${dfd}">`;
+};
+
+App.ajaxSaving = (btn) => {
+  btn.prop('disabled', true).text('Saving...').removeClass('btn-success btn-danger');
+};
+
+App.ajaxSaveDone = (btn) => () => {
+  btn.prop('disabled', false).text('Saved').addClass('btn-success');
+};
+
+App.ajaxSaveFail = (btn) => () => {
+  btn.prop('disabled', false).text('Failed to save').addClass('btn-danger');
+};
+
+App.ajaxDeleting = (btn) => {
+  btn.prop('disabled', true).text('Deleting...').removeData('ready');
+};
+
+App.ajaxDeleteDone = (btn) => () => {
+  btn.prop('disabled', false).text('Deleted').addClass('btn-success');
+  App.closeModal();
+};
+
+App.ajaxDeleteFail = (btn) => () => {
+  btn.prop('disabled', false).text('Failed to delete').addClass('btn-danger');
 };

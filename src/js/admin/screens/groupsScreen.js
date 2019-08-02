@@ -92,6 +92,7 @@ const showGroupEditForm = (number, cb) => {
           <div class="img-upload">
             <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">image</i>'}</div>
             <input class="hidden" name="img" value="${img || ''}">
+            ${App.getCloudinaryUploadTag()}
           </div>
         </div>
         <div class="form-col">
@@ -108,20 +109,18 @@ const showGroupEditForm = (number, cb) => {
       </div>
     </form>
   `);
-  
+  App.bindCloudinaryFileUpload(
+    form.find('input.cloudinary-fileupload[type=file]'), 
+    form.find('input[name=img]'), 
+    form.find('.img-holder')
+  );
   const btnSave = form.find('.btn-save');
   const btnDelete = form.find('.btn-delete');
   form.submit((e) => {
     e.preventDefault();
-    btnSave.text('Saving').removeClass('btn-success btn-danger');
-    const data = App.serializeForm(form);
-    App.saveGroup(data).done(() => {
-      btnSave.text('Saved').addClass('btn-success');
-    }).fail(() => {
-      btnSave.text('Failed to save').addClass('btn-danger');
-    }).always(cb);
+    App.saveGroup(App.serializeForm(form), btnSave).always(cb);
   });
-  form.find('.btn-delete').click(() => {
+  btnDelete.click(() => {
     const nProductsInGroup = App.getNumberOfProductsInGroup(number);
     if (nProductsInGroup) {
       return App.showWarning(`
@@ -146,16 +145,10 @@ const showGroupEditForm = (number, cb) => {
       `);
     }
     // must confirm (click delete twice) to delete
-    if (!btnDelete.attr('data-ready')) {
-      btnDelete.text('Confirm delete').attr('data-ready', true);
+    if (!btnDelete.data('ready')) {
+      btnDelete.text('Confirm delete').data('ready', true);
     } else {
-      btnDelete.text('Deleting').removeAttr('data-ready');
-      App.deleteGroup(number).done(() => {
-        btnDelete.text('Deleted').addClass('btn-success');
-      App.closeModal();
-      }).fail(() => {
-        btnDelete.text('Failed to delete').addClass('btn-danger');
-      }).always(cb);
+      App.deleteGroup(number, btnDelete).always(cb);
     }
   });
   App.showInModal(form);

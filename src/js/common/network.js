@@ -78,7 +78,8 @@ App.fetchTransactionsByDatePrefix = (date) => {
   });
 };
 
-App.saveProduct = (product) => {
+App.saveProduct = (product, btn) => {
+  App.ajaxSaving(btn);
   const originalProduct = App.products[product.ean];
   if (originalProduct) {
     App.productCountByGroups[originalProduct.group]--;
@@ -91,20 +92,22 @@ App.saveProduct = (product) => {
   }).done(() => {
     App.products[product.ean] = product;
     App.productCountByGroups[product.group]++;
-  });
+  }).done(App.ajaxSaveDone(btn)).fail(App.ajaxSaveFail(btn));
 };
 
-App.deleteProduct = (ean) => {
+App.deleteProduct = (ean, btn) => {
+  App.ajaxDeleting(btn);
   return $.ajax({
     type: 'DELETE',
     url: `${App.apiPrefix}/products/${ean}`,
     beforeSend: App.attachToken,
   }).done(() => {
     delete App.products[ean];
-  });
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
-App.saveGroup = (group) => {
+App.saveGroup = (group, btn) => {
+  App.ajaxSaving(btn);
   return $.post({
     url: `${App.apiPrefix}/groups`,
     beforeSend: App.attachToken,
@@ -112,17 +115,18 @@ App.saveGroup = (group) => {
     data: JSON.stringify(group),
   }).done(() => {
     App.groups[group.number] = group;
-  });
+  }).done(App.ajaxSaveDone(btn)).fail(App.ajaxSaveFail(btn));
 };
 
-App.deleteGroup = (groupNumber) => {
-  return $.post({
+App.deleteGroup = (groupNumber, btn) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
     type: 'DELETE',
     url: `${App.apiPrefix}/groups/${groupNumber}`,
     beforeSend: App.attachToken,
   }).done(() => {
     delete App.groups[groupNumber];
-  });
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
 App.connect = () => {

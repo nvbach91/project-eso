@@ -13,7 +13,7 @@ const readCertificateInfo = bluebird.promisify(pem.readCertificateInfo);
 
 router.get('/settings', (req, res) => {
   let settings = {};
-  Registers.findOne({ _id: req.user.regId }).select('-_id -__v').then((register) => {
+  Registers.findOne({ _id: req.user.regId }).select('-__v').then((register) => {
     settings = { ...register._doc };
     return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence name bank');
   }).then((company) => {
