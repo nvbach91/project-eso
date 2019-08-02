@@ -1,6 +1,7 @@
 App.transactions = [];
 App.products = {};
 App.groups = {};
+App.productCountByGroups = {};
 App.vatMarks = {};
 App.settings = {};
 App.aggregates = {};
@@ -40,11 +41,16 @@ App.fetchProducts = () => {
   }).done((resp) => {
     resp.forEach((product) => {
       App.products[product.ean] = product;
+      if (typeof App.productCountByGroups[product.group] !== 'number') {
+        App.productCountByGroups[product.group] = 1;
+      } else {
+        App.productCountByGroups[product.group]++;
+      }
     });
   });
 };
 
-App.fetchCategories = () => {
+App.fetchGroups = () => {
   return $.get({
     url: App.apiPrefix + '/groups',
     beforeSend: App.attachToken,
@@ -73,14 +79,18 @@ App.fetchTransactionsByDatePrefix = (date) => {
 };
 
 App.saveProduct = (product) => {
-  const { ean } = product;
+  const originalProduct = App.products[product.ean];
+  if (originalProduct) {
+    App.productCountByGroups[originalProduct.group]--;
+  }
   return $.post({
     url: `${App.apiPrefix}/products`,
     beforeSend: App.attachToken,
     contentType: 'application/json',
     data: JSON.stringify(product),
   }).done(() => {
-    App.products[ean] = product;
+    App.products[product.ean] = product;
+    App.productCountByGroups[product.group]++;
   });
 };
 
@@ -94,11 +104,32 @@ App.deleteProduct = (ean) => {
   });
 };
 
+App.saveGroup = (group) => {
+  return $.post({
+    url: `${App.apiPrefix}/groups`,
+    beforeSend: App.attachToken,
+    contentType: 'application/json',
+    data: JSON.stringify(group),
+  }).done(() => {
+    App.groups[group.number] = group;
+  });
+};
+
+App.deleteGroup = (groupNumber) => {
+  return $.post({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/groups/${groupNumber}`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    delete App.groups[groupNumber];
+  });
+};
+
 App.connect = () => {
   return $.when(
     App.fetchSettings(),
     App.fetchProducts(),
-    App.fetchCategories()
+    App.fetchGroups()
   );
 };
 

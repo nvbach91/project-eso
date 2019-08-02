@@ -14,7 +14,7 @@ App.renderPeripheralsScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormSelect({ label: 'Printer name', name: 'printer.name', value: App.settings.printer.name, options: printerOptions })}
-          ${App.generateFormSelect({ label: 'Print diacritics', name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions })}
+          ${App.generateFormSelect({ label: 'Diacritics', name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormInput({ label: 'Print columns', name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 32, max: 48 })}
         </div>
         <div class="mi-control">
@@ -32,7 +32,7 @@ App.renderPeripheralsScreen = () => {
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Endpoint', name: 'terminal.endpoint', value: App.settings.terminal.endpoint, disabled: true })}
           ${App.generateFormInput({ label: 'IP Address', name: 'terminal.ip', value: App.settings.terminal.ip })}
-          ${App.generateFormInput({ label: 'Port', name: 'terminal.port', value: App.settings.terminal.port })}
+          ${App.generateFormInput({ label: 'Port', name: 'terminal.port', value: App.settings.terminal.port, type: 'number' })}
         </div>
         <div class="form-row"> 
           ${App.generateFormInput({ type: 'password', label: 'Password', name: 'terminal.password', value: App.settings.terminal.password })}

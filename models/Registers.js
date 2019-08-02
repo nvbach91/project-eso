@@ -79,7 +79,6 @@ const settings = {
     header: 'Enjoy your meal',
     footer: '\\tThank you for coming\\t\n\\telusivecamel.co.uk\\t',
     width: 80, // 48
-    printWidth: 48, // 35
     extraPadding: 4, // 0
   },
   tin: '12345678',
@@ -98,7 +97,7 @@ const settings = {
     private_key: '',
     vat: 'CZ12345678',
     file_name: '',
-    store_id: '11',
+    store_id: 11,
     upload_date: '2019-05-03T12:54:11.000Z',
     valid_until: '2022-05-03T12:54:11.000Z'
   },

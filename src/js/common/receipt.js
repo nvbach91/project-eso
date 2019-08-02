@@ -102,7 +102,7 @@ App.renderReceiptText = (transaction) => {
      `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
      `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;
 
-  const receiptLargeEnough = App.settings.receipt.printWidth >= 38;
+  const receiptLargeEnough = App.settings.printer.columns >= 38;
   const extraPadding = App.settings.receipt.extraPadding;
   const summary =
     App.lang.receipt_summary_rates +
@@ -165,14 +165,14 @@ App.alignReceiptText = (text) => {
         lineLength -= 2;
         lineLength += lineLength;
       }
-      const remainingSpaceCount = Math.floor((App.settings.receipt.printWidth - lineLength) / tabs.length) + 1;
+      const remainingSpaceCount = Math.floor((App.settings.printer.columns - lineLength) / tabs.length) + 1;
       if (remainingSpaceCount > 0) {
         line = line.replace(/\t|\\t/g, ' '.repeat(remainingSpaceCount));
       } else {
         line = line.replace(/\t|\\t/g, '');
       }
     }
-    if (App.settings.receipt.printWidth - line.length === 1) {
+    if (App.settings.printer.columns - line.length === 1) {
       line = line.replace('   ', '    ');
     }
     return line;
@@ -181,7 +181,7 @@ App.alignReceiptText = (text) => {
 
 
 App.getReceiptHorizontalLine = () => {
-  return '-'.repeat(App.settings.receipt.printWidth);
+  return '-'.repeat(App.settings.printer.columns);
 };
 
 App.createRandomNumberArray = (n) => {

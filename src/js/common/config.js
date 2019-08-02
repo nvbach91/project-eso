@@ -13,8 +13,7 @@ App.realm = realm;
 
 App.provider = 'Ethereals United';
 
-App.thisYear = new Date().getFullYear();
-App.credits = App.thisYear + ' © ' + App.provider;
+App.credits = new Date().getFullYear() + ' © ' + App.provider;
 
 App.supportedCurrencies = {
   CZK: 'Kč',
@@ -41,17 +40,17 @@ App.formats = {
 };
 
 App.supportedPrinters = [ // will change after call to local api for active printers
-  "",
-  "EPSON TM-T20II Receipt",
-  "EPSON TM-T20II Receipt5",
-  "BP003",
-  "POS80 Printer",
-  "PRP-085",
-  "BP-T3",
-  "XP-58",
-  "XP-58C",
-  "XP-80",
-  "XP-80C"
+  '',
+  'EPSON TM-T20II Receipt',
+  'EPSON TM-T20II Receipt5',
+  'BP003',
+  'POS80 Printer',
+  'PRP-085',
+  'BP-T3',
+  'XP-58',
+  'XP-58C',
+  'XP-80',
+  'XP-80',
 ];
 
 App.debounceTime = 300;

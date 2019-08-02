@@ -25,12 +25,12 @@ App.renderCompanyScreen = () => {
           ${App.generateFormInput({ label: 'TIN', name: 'tin', value: App.settings.tin, disabled: true })}
         </div>
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Street', name: 'street', value: App.settings.residence.street })}
-          ${App.generateFormInput({ label: 'City', name: 'city', value: App.settings.residence.city })}
-          ${App.generateFormInput({ label: 'Zip', name: 'zip', value: App.settings.residence.zip })}
-          ${App.generateFormInput({ label: 'Country', name: 'country', value: App.settings.residence.country })}
+          ${App.generateFormInput({ label: 'Street', name: 'residence.street', value: App.settings.residence.street })}
+          ${App.generateFormInput({ label: 'City', name: 'residence.city', value: App.settings.residence.city })}
+          ${App.generateFormInput({ label: 'Zip', name: 'residence.zip', value: App.settings.residence.zip })}
+          ${App.generateFormInput({ label: 'Country', name: 'residence.country', value: App.settings.residence.country })}
         </div>
-        ${App.generateFormSelect({ label: 'VAT registration status', value: App.settings.vatRegistered, options: vatRegisterationOptions })}
+        ${App.generateFormSelect({ label: 'VAT registration status', name: 'vatRegistered', value: App.settings.vatRegistered, options: vatRegisterationOptions })}
         ${App.generateFormInput({ label: 'Bank', name: 'bank', value: App.settings.bank || '', optional: true })}
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save</button>

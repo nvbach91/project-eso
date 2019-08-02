@@ -1,12 +1,11 @@
 App.renderTabs = () => {
   const container = $('<div>');
   Object.keys(App.groups).forEach((id) => {
-    const group = App.groups[id];
-    const style = group.img ? ` style="background-image: url(${group.img.startsWith('http') ? '' : App.imageUrlBase}${group.img})"` : ``;
+    const { img, name } = App.groups[id];
     const element = $(`
       <div class="btn btn-primary tab">
-        <div class="tab-overlay"${style}></div>
-        <div class="tab-name">${group.name}</div>
+        <div class="tab-overlay"${App.getBackgroundImage(img)}></div>
+        <div class="tab-name">${name}</div>
         <div class="btn btn-primary btn-raised${App.cartCategoryQuantities[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
           <i class="material-icons">shopping_cart</i> 
           <span>${App.cartCategoryQuantities[id] || 0}</span>

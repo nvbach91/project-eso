@@ -10,19 +10,18 @@ App.renderProducts = (group) => {
   Object.keys(App.products).filter((id) => {
     return group == App.products[id].group;
   }).forEach((id) => {
-    const product = App.products[id];
-    const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
+    const { highlight, img, name, price } = App.products[id];
     const element = $(`
-      <div class="product-offer${product.highlight ? ' highlight' : ''}">
-        <div class="btn btn-raised po-img"${style}>
+      <div class="product-offer${highlight ? ' highlight' : ''}">
+        <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
           <button class="btn btn-primary btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
             <i class="material-icons">shopping_cart</i> 
             <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
           </button>
         </div>
-        <div class="po-name">${product.name}</div>
+        <div class="po-name">${name}</div>
         <div class="po-row">
-          <div class="po-price">${product.price} ${App.settings.currencySymbol}</div>
+          <div class="po-price">${price} ${App.settings.currencySymbol}</div>
           <div class="po-control">
             <button class="btn btn-primary add">
               <i class="material-icons">playlist_add</i>
@@ -56,16 +55,15 @@ App.renderProducts = (group) => {
 };
 
 App.showProductDetail = (id) => {
-  const product = App.products[id];
-  const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
+  const { img, name, price, desc } = App.products[id];
   const element = $(`
     <div class="product-details">
-      <div class="pd-img"${style}></div>
+      <div class="pd-img"${App.getBackgroundImage(img)}></div>
       <div class="pd-details">
         <div class="text-left">
-          <div class="pd-name">${product.name}</div>
-          ${product.description ? `<div class="pd-description">${product.description}</div>` : ''}
-          <div class="pd-price">${product.price} ${App.settings.currencySymbol}</div>
+          <div class="pd-name">${name}</div>
+          ${desc ? `<div class="pd-description">${desc}</div>` : ''}
+          <div class="pd-price">${price} ${App.settings.currencySymbol}</div>
         </div>
         <div class="pd-control text-left">
           <div class="pd-row justify-content-start">

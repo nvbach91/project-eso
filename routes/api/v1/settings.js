@@ -29,8 +29,15 @@ router.get('/settings', (req, res) => {
 
 router.post('/settings', (req, res) => {
   const settings = { ...req.body };
-  Registers.update({ _id: req.user.regId }, { $set: settings }).then(() => {
-    res.json({ success: true });
+  Registers.updateOne({ _id: req.user.regId }, { $set: settings }).then(() => {
+    res.json({ msg: 'srv_success' });
+  }).catch(utils.handleError(res));
+});
+
+router.post('/company', (req, res) => {
+  const settings = { ...req.body };
+  Companies.updateOne({ _id: req.user.companyId }, { $set: settings }).then(() => {
+    res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });
 
@@ -46,10 +53,9 @@ router.post('/ors', (req, res) => {
     }
     settings['ors.upload_date'] = new Date();
     settings['ors.valid_until'] = new Date(Number(certInfo.validity.end));
-    const $set = { ...settings };
-    return Registers.updateOne({ _id: req.user.regId }, { $set });
+    return Registers.updateOne({ _id: req.user.regId }, { $set: settings });
   }).then(() => {
-    res.json({ success: true, msg: settings });
+    res.json({ msg: settings });
   }).catch(utils.handleError(res));
 });
 

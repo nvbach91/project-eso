@@ -1,12 +1,12 @@
 App.generateFormInput = (args) => {
-  const { label, name, value, optional, disabled, type, step, width, min, max, hidden, accept, placeholder } = args;
-  const style = `${width ? `max-width: ${width};` : ''}${hidden ? ` display: none;` : ''}`;
+  const { label, name, value, optional, disabled, type, step, width, min, max, hidden, accept, placeholder, autocomplete } = args;
+  const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
       <label>${label}</label>
       <input
         ${type ? ` type="${type}"` : ''}
-        ${type === 'password' ? ` autocomplete="off"` : ''}
+        ${autocomplete ? ` autocomplete="${autocomplete}"` : ' autocomplete="off"'}
         ${accept ? ` accept="${accept}"` : ''}
         ${step ? ` step="${step}"` : ''}
         ${min !== undefined ? ` min="${min}"` : ''}
@@ -23,12 +23,13 @@ App.generateFormInput = (args) => {
 };
 
 App.generateFormSelect = (args) => {
-  const { label, name, value, options } = args;
+  const { label, name, value, options, optional, type, width } = args;
   const selected = value;
+  const style = `${width ? `max-width: ${width}px;` : ''}`;
   return `
-    <div class="form-group">
+    <div class="form-group"${style ? ` style="${style}"` : ''}>
       <label>${label}</label>
-      <select class="custom-select" name="${name}">
+      <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}>
         ${options.map((o) => {
           const { label, value } = o;
           return `<option value="${value}"${selected == value ? ' selected' : ''}>${label}</option>`;
@@ -76,10 +77,9 @@ App.bindForm = (form, endpoint) => {
   }
   const btnSave = form.find('.btn-save');
   form.submit((e) => {
-    btnSave.removeClass('btn-success');
+    btnSave.removeClass('btn-success btn-danger');
     e.preventDefault();
-    const data = {};
-    form.serializeArray().forEach((input) => data[input.name] = input.value.trim());
+    const data = App.serializeForm(form);
     if (endpoint === '/ors') {
       data.content = certificateUploadInput.data('content') || '';
     }
@@ -95,7 +95,25 @@ App.bindForm = (form, endpoint) => {
         form.find('input[name="valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));
       }
     }).fail((resp) => {
+      btnSave.addClass('btn-danger');
       App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
     });
   });
+};
+
+App.serializeForm = (form) => {
+  const data = {};
+  const serialized = form.serializeArray();
+  serialized.forEach((input) => {
+    let value = input.value.trim();
+    const inputType = form.find(`[name="${input.name}"]`).attr('type');
+    if (inputType === 'number' && /\d+/.test(value)) {
+      value = Number(value);
+    }
+    else if (value === 'undefined') value = undefined;
+    else if (value === 'true') value = true;
+    else if (value === 'false') value = false;
+    data[input.name] = value;
+  });
+  return data;
 };

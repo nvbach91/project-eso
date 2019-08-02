@@ -13,8 +13,9 @@ const createTransactiontable = () => $(`
 `);
 
 const renderTransactions = (transactions) => {
-  const table = createTransactiontable();
+  let table;
   if (transactions.length) {
+    table = createTransactiontable();
     transactions.forEach((transaction) => {
       const { number, date, order, payment, delivery, items } = transaction;
       const item = $(`
@@ -37,7 +38,7 @@ const renderTransactions = (transactions) => {
       table.append(item);
     });
   } else {
-    table.append(`<div>There is no data for this time range</div>`);
+    table = $(`<button class="btn">There is no data in the selected time period</div>`);
   }
   App.jControlPanelBody.replaceWith(table);
   App.jControlPanelBody = table;

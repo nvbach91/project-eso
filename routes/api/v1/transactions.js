@@ -81,7 +81,7 @@ const updateAggregates = (t) => {
   
   //console.log($inc);
   Aggregates.updateOne({ date: d, regId }, { $inc }, { upsert: true }).then((info) => {
-    console.log(info);
+    //console.log(info);
   });
 };
 

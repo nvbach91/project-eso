@@ -33,13 +33,10 @@ App.init = () => {
   App.renderSpinner();
   App.renderModal();
   App.renderLoginForm();
+  $.getJSON(`${App.localhostServerURL}/activeprinters`).done((resp) => App.supportedPrinters = ['', ...resp.msg]);
+
   //$('.form-signin').submit();
-  //App.connect().then(() => {
-  //  App.showProductEditForm('6333');
-  //})
-  $.getJSON(`${App.localhostServerURL}/activeprinters`).done(function (resp) {
-    App.supportedPrinters = [""].concat(resp.msg);
-  });
+  //App.connect();
 };
 
 App.start = () => {

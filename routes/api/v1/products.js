@@ -9,15 +9,21 @@ router.get('/products', (req, res) => {
 });
 
 router.post('/products', (req, res) => {
-  const { ean, name, group, price, vat, img } = req.body;
-  Products.update({ regId: req.user.regId, ean }, { $set: req.body }, { upsert: true }).then((info) => {
+  const { ean, highlight, ...product } = req.body;
+  const update = { $set: product };
+  if (!highlight) {
+    update.$unset = { highlight: true };
+  } else {
+    update.$set.highlight = true;
+  }
+  Products.updateOne({ regId: req.user.regId, ean }, update, { upsert: true }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });
 
 router.delete('/products/:ean', (req, res) => {
   const { ean } = req.params;
-  Products.remove({ regId: req.user.regId, ean }).then((info) => {
+  Products.remove({ regId: req.user.regId, ean }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });

@@ -9,15 +9,15 @@ router.get('/groups', (req, res) => {
 });
 
 router.post('/groups', (req, res) => {
-  const { number, name, order, vat, img } = req.body;
-  Groups.update({ regId: req.user.regId, number }, { $set: req.body }, { upsert: true }).then((info) => {
+  const { number, ...group } = req.body;
+  Groups.updateOne({ regId: req.user.regId, number }, { $set: group }, { upsert: true }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });
 
 router.delete('/groups/:number', (req, res) => {
   const { number } = req.params;
-  Groups.remove({ regId: req.user.regId, number }).then((info) => {
+  Groups.remove({ regId: req.user.regId, number }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });

@@ -139,18 +139,17 @@ App.showCart = () => {
     cartItems.append(emptyCartButton);
   }
   cartKeys.forEach((id) => {
-    const product = App.products[id];
+    const { price, name, img } = App.products[id];
     const cartItem = App.cart[id];
-    const thisTotal = cartItem.quantity * product.price;
-    const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
+    const thisTotal = cartItem.quantity * price;
     const el = $(`
       <div class="cart-item">
-        <div class="ci-img"${style}></div>
-        <div class="ci-name">${product.name}</div>
+        <div class="ci-img"${App.getBackgroundImage(img)}></div>
+        <div class="ci-name">${name}</div>
         <button class="btn btn-primary btn-dec">-</button>
         <div class="ci-quantity" data-id="${id}">${cartItem.quantity}</div>
         <button class="btn btn-primary btn-inc">+</button>
-        <div class="ci-price">${product.price}</div>
+        <div class="ci-price">${price}</div>
         <div class="ci-total">${thisTotal.formatMoney()}</div>
         <button class="btn btn-primary ci-remove">&times;</button>
       </div>

@@ -139,13 +139,13 @@ span.match {
     width: 60px;
     background-size: contain;
 }
-.sr-ean, .sr-price, .sr-number, .sr-order {
+.sr-ean, .sr-price, .sr-number, .sr-order, .sr-products {
     text-align: right;
 }
 .sr-group, .sr-vat, .sr-edit {
     text-align: center;
 }
-.sr-name {
+.sr-name, .sr-img {
     cursor: pointer;
 }
 .custom-select {
@@ -201,6 +201,9 @@ form {
 .control-panel .card-body {
   padding: 0 1.25rem;
 }
+input.hidden {
+    display: none;
+}
 .mod-item {
     input, select {
         color: $themeColor;
@@ -237,6 +240,7 @@ form {
     }
 }
 .mi-header {
+    font-weight: bold;
     font-size: 14px;
     background-color: #009688;
     text-transform: uppercase;

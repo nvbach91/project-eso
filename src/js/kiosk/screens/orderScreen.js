@@ -64,11 +64,10 @@ App.renderOrderPreview = () => {
 };
 
 App.createOrderPreviewItem = (id) => {
-  const product = App.products[id];
-  const style = ` style="background-image: url(${App.imageUrlBase}${product.img})"`;
+  const { img } = App.products[id];
   const el = $(`
     <div class="op-item">
-      <div class="op-img"${style}>
+      <div class="op-img"${App.getBackgroundImage(img)}>
         <button class="btn btn-primary btn-raised${App.cart[id] ? '' : ' hidden'} cart-quantity-indicator" data-id="${id}">
           <i class="material-icons">shopping_cart</i> 
           <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>

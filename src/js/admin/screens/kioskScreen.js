@@ -17,7 +17,7 @@ App.renderKioskScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Name', name: 'name', value: App.settings.name })}
-          ${App.generateFormInput({ label: 'Number', name: 'number', value: App.settings.number, disabled: true })}
+          ${App.generateFormInput({ label: 'Number', name: 'number', value: App.settings.number, disabled: true, type: 'number' })}
         </div>
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Street', name: 'address.street', value: App.settings.address.street })}
@@ -42,10 +42,12 @@ App.renderKioskScreen = () => {
           ${App.generateFormInput({ label: 'VAT', name: 'ors.vat', value: App.settings.ors.vat })}
           ${App.generateFormInput({ type: 'number', label: 'Store ID', name: 'ors.store_id', value: App.settings.ors.store_id })}
           ${App.generateFormInput({ type: 'password', label: 'Certificate password', name: 'password', value: '' })}
+        </div>
+        <div class="form-row"> 
           ${App.generateFormInput({ label: 'Certificate file', name: 'ors.file_name', placeholder: App.settings.ors.file_name })}
           ${App.generateFormInput({ type: 'file', hidden: true, label: 'Certificate file', name: 'ors.file', accept: '.p12', optional: true })}
-          ${App.generateFormInput({ label: 'Upload date', name: 'upload_date', value: App.settings.ors.upload_date, optional: true, disabled: true })}
-          ${App.generateFormInput({ label: 'Valid until', name: 'valid_until', value: App.settings.ors.valid_until, optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Upload date', name: 'upload_date', value: moment(App.settings.ors.upload_date).format(App.formats.dateTime), optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Valid until', name: 'valid_until', value: moment(App.settings.ors.valid_until).format(App.formats.dateTime), optional: true, disabled: true })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save</button>
@@ -78,9 +80,11 @@ App.renderKioskScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Image', name: 'receipt.img', value: App.settings.receipt.img, optional: true })}
+          ${App.generateFormInput({ type: 'number', min: 0, label: 'Extra column padding', name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
+        </div>
+        <div class="form-row"> 
           ${App.generateFormInput({ label: 'Header', name: 'receipt.header', value: App.settings.receipt.header, optional: true })}
           ${App.generateFormInput({ label: 'Footer', name: 'receipt.footer', value: App.settings.receipt.footer, optional: true })}
-          ${App.generateFormInput({ type: 'number', min: 0, label: 'Extra column padding', name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save</button>
