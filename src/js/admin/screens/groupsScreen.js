@@ -90,7 +90,7 @@ const showGroupEditForm = (number, cb) => {
       <div class="form-row">
         <div class="form-col">
           <div class="img-upload">
-            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">image</i>'}</div>
+            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">file_upload</i>'}</div>
             <input class="hidden" name="img" value="${img || ''}">
             ${App.getCloudinaryUploadTag()}
           </div>

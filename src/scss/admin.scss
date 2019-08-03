@@ -148,6 +148,9 @@ span.match {
 .sr-name, .sr-img {
     cursor: pointer;
 }
+.navbar .btn-group {
+    margin: 0;
+}
 .custom-select {
     cursor: pointer;
     border: none;
@@ -307,7 +310,7 @@ input.hidden {
 @media screen and (min-width: 720px) {
     #cp-header {
         display: flex;
-        height: 80px;
+        min-height: 80px;
     }
     #db-hour-chart {
         display: block;

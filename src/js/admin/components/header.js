@@ -1,4 +1,4 @@
-App.renderHeader = () => {
+App.renderHeader = (localeSwitcher) => {
   const header = $(`
     <header id="header">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -6,9 +6,13 @@ App.renderHeader = () => {
           <img src="https://www.shareicon.net/download/2016/09/23/833952_food.svg" width="30" height="30" class="d-inline-block align-top" alt="">
           <span>The Elusive Camel</span>
         </a>
+        <div id="locale-switcher"></div>
       </nav>
     </header>
   `);
+  if (localeSwitcher) {
+    header.find('#locale-switcher').replaceWith(localeSwitcher.find('.btn-group'));
+  }
   App.jHeader.replaceWith(header);
   App.jHeader = header;
 };

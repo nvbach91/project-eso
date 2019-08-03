@@ -20,7 +20,7 @@ require('./components/main.js');
 require('./components/form.js');
 
 App.render = () => {
-  App.renderHeader();
+  App.renderHeader(App.createLocaleSwitcher());
   App.renderMain();
 };
 

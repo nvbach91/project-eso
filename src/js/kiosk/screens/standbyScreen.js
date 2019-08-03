@@ -4,16 +4,16 @@ const progress = `
 </div>
 `;
 const slides = [
-  {img: 'bg09_hjz6no', btn: "Touch to start" }, 
-  {img: 'bg10_coyfml', btn: "Touch to start" },
-  {img: 'bg07_wrsdxe', btn: "Touch to start" },
-  {img: 'bg04_i3fq68', btn: "Touch to start" },
-  {img: 'bg06_gmmeqj', btn: "Touch to start" },
-  {img: 'bg01_mog1lh', btn: "Touch to start" },
-  {img: 'bg05_osoyo0', btn: "Touch to start" },
-  {img: 'bg02_komziq', btn: "Touch to start" },
-  {img: 'bg03_tdlabn', btn: "Touch to start" },
-  {img: 'bg08_hsajsa', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg09_hjz6no', btn: "Touch to start" }, 
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg10_coyfml', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg04_i3fq68', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg06_gmmeqj', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg01_mog1lh', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg05_osoyo0', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg02_komziq', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg03_tdlabn', btn: "Touch to start" },
+  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg08_hsajsa', btn: "Touch to start" },
 ];
 App.renderStandbyScreen = () => {
   const screen = $(`

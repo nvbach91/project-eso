@@ -257,7 +257,9 @@ App.nextTab = () => {
 
 App.preloadImages = (images) => {
   Array.from(new Set(images)).forEach((image) => {
-    new Image().src = App.imageUrlBase + image;
+    if (image) {
+      new Image().src = `${image.startsWith('http') ? '' : App.imageUrlBase}${image}`;
+    }
   });
 };
 
@@ -402,4 +404,49 @@ App.getNumberOfProductsInGroup = (groupNumber) => {
 
 App.getBackgroundImage = (img) => {
   return img ? ` style="background-image: url(${img.startsWith('http') ? '' : App.imageUrlBase}${img})"` : '';
+};
+
+App.createLocaleSwitcher = () => {
+  const switcher = $(`
+    <li class="nav-item" id="locale-switcher">
+      <div class="btn-group dropup">
+        ${Object.keys(App.supportedLocales).filter((locale) => locale === App.locale).map((locale) => {
+          return `
+            <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown">
+              <div class="flag locale-${locale}"></div>
+              <span>${App.supportedLocales[locale]}</span>
+            </button>
+          `;
+        }).join('')}
+        <div class="dropdown-menu">
+          ${Object.keys(App.supportedLocales).filter((locale) => locale !== App.locale).map((locale) => {
+            return `
+              <button class="btn locale-button" data-locale="${locale}">
+                <div class="flag locale-${locale}"></div>
+                <span>${App.supportedLocales[locale]}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </li>
+  `);
+  
+  const menu = switcher.find('.dropdown-menu');
+  const dropdown = switcher.children('.dropup');
+  switcher.find('.locale-button').click(function () {
+    const t = $(this);
+    if (t.parent().hasClass('dropdown-menu')) {
+      const selectedLocale = t.data('locale');
+      App.saveLocalPreference('locale', selectedLocale);
+      App.loadLocale();
+      App.render();
+    }
+    const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
+    menu.prepend(currentLocaleButton);
+
+    t.attr({'data-toggle': 'dropdown'});
+    dropdown.prepend(t);
+  });
+  return switcher;
 };
