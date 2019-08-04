@@ -16,9 +16,9 @@ App.renderTabs = () => {
       element.addClass('active').blur();
       element.siblings().removeClass('active');
       App.activeTabPosition = element.index();
-      App.jProducts.slideUp(App.getAnimationTime(), () => {
+      //App.jProducts.slideUp(App.getAnimationTime(), () => {
         App.renderProducts(id);
-      });
+      //});
     });
     container.append(element);
   });

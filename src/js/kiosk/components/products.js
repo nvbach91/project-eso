@@ -5,7 +5,7 @@ App.renderProducts = (group) => {
       <span>${App.groups[group].name}</span>
       <i class="material-icons">menu</i>
     </div>
-  `).hide();
+  `);
   header.appendTo(container);
   Object.keys(App.products).filter((id) => {
     return group == App.products[id].group;
