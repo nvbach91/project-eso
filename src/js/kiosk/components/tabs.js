@@ -7,7 +7,7 @@ App.renderTabs = () => {
         <div class="tab-overlay"${App.getBackgroundImage(img)}></div>
         <div class="tab-name">${name}</div>
         <div class="btn btn-primary btn-raised${App.cartCategoryQuantities[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
-          <i class="material-icons">shopping_cart</i> 
+          ${App.getIcon('shopping_cart')}
           <span>${App.cartCategoryQuantities[id] || 0}</span>
         </div>
       </div>

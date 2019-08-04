@@ -26,7 +26,7 @@ const renderTransactions = (transactions) => {
           <div class="td ti-payment">${App.getPaymentMethod(payment)}</div>
           <div class="td ti-delivery">${App.getDeliveryMethod(delivery)}</div>
           <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currencySymbol}</div>
-          <button class="td btn btn-primary ti-print"><i class="material-icons">print</i></button>
+          <button class="td btn btn-primary ti-print">${App.getIcon('print')}</button>
         </div>
       `);
       item.children('.ti-number').click(() => {
@@ -61,10 +61,10 @@ App.renderTransactionScreen = () => {
     <div id="cp-header" class="card-header">
       <div class="cp-name">Transactions</div>
       <div class="cp-control">
-        <button class="btn btn-primary date-nav" id="date-prev"><i class="material-icons">keyboard_arrow_left</i></button>
-        <button class="btn btn-primary datepicker-btn" data-id="datepicker"><i class="material-icons">date_range</i></button>
+        <button class="btn btn-primary date-nav" id="date-prev">${App.getIcon('keyboard_arrow_left')}</button>
+        <button class="btn btn-primary datepicker-btn" data-id="datepicker">${App.getIcon('date_range')}</button>
         <input type="text" class="form-control datetimepicker-input" id="datepicker">
-        <button class="btn btn-primary date-nav" id="date-next"><i class="material-icons">keyboard_arrow_right</i></button>
+        <button class="btn btn-primary date-nav" id="date-next">${App.getIcon('keyboard_arrow_right')}</button>
       </div>
     </div>
   `);

@@ -10,7 +10,7 @@ App.renderHeader = () => {
           <li class="nav-item active" id="payment-method">
             <a class="nav-link" href="#">
               <span></span>&nbsp;
-              <i class="material-icons">book</i>
+              ${App.getIcon('book')}
             </a>
           </li>
         </ul>

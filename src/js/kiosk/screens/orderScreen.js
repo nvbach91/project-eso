@@ -69,13 +69,13 @@ App.createOrderPreviewItem = (id) => {
     <div class="op-item">
       <div class="op-img"${App.getBackgroundImage(img)}>
         <button class="btn btn-primary btn-raised${App.cart[id] ? '' : ' hidden'} cart-quantity-indicator" data-id="${id}">
-          <i class="material-icons">shopping_cart</i> 
+          ${App.getIcon('shopping_cart')}
           <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
         </button>
       </div>
       <div class="op-control">
-        <button class="btn btn-primary op-inc"><i class="material-icons">add</i></button>
-        <button class="btn btn-primary op-dec"><i class="material-icons">remove</i></button>
+        <button class="btn btn-primary op-inc">${App.getIcon('add')}</button>
+        <button class="btn btn-primary op-dec">${App.getIcon('remove')}</button>
       </div>
     </div>
   `);

@@ -24,12 +24,12 @@ App.renderDashboardScreen = () => {
     <div id="cp-header" class="card-header">
       <div class="cp-name">Dashboard</div>
       <div class="cp-control">
-        <button class="btn btn-primary date-nav" id="date-prev"><i class="material-icons">keyboard_arrow_left</i></button>
-        <button class="btn btn-primary datepicker-btn" data-id="datepicker-start"><i class="material-icons">date_range</i></button>
+        <button class="btn btn-primary date-nav" id="date-prev">${App.getIcon('keyboard_arrow_left')}</button>
+        <button class="btn btn-primary datepicker-btn" data-id="datepicker-start">${App.getIcon('date_range')}</button>
         <input type="text" class="form-control datetimepicker-input" id="datepicker-start">
-        <button class="btn btn-primary datepicker-btn" data-id="datepicker-end"><i class="material-icons">date_range</i></button>
+        <button class="btn btn-primary datepicker-btn" data-id="datepicker-end">${App.getIcon('date_range')}</i></button>
         <input type="text" class="form-control datetimepicker-input" id="datepicker-end">
-        <button class="btn btn-primary date-nav" id="date-next"><i class="material-icons">keyboard_arrow_right</i></button>
+        <button class="btn btn-primary date-nav" id="date-next">${App.getIcon('keyboard_arrow_right')}</i></button>
       </div>
     </div>
   `);

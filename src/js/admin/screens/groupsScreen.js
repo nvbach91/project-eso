@@ -15,8 +15,8 @@ App.renderGroupsScreen = () => {
     <div id="cp-header" class="card-header">
       <div class="cp-name">Groups</div>
       <div class="d-flex justify-content-flex-end">
-        <div class="cp-control">${groupKeys.length}&nbsp;<i class="material-icons">storage</i></div>
-        <button class="btn btn-primary"><i class="material-icons">import_export</i>&nbsp;Import/Export</button>
+        <div class="cp-control">${groupKeys.length}&nbsp;${App.getIcon('storage')}</div>
+        <button class="btn btn-primary">${App.getIcon('import_export')}&nbsp;Import/Export</button>
       </div>
     </div>
   `);
@@ -28,7 +28,7 @@ App.renderGroupsScreen = () => {
       <form id="group-addition">
         <div class="input-group">
           <input class="form-control" placeholder="Enter group number" title="Key 1-20 digits" required>
-          <button class="btn btn-primary btn-raised"><i class="material-icons">search</i>&nbsp;Search</button>
+          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;Search</button>
         </div>
       </form>
       <div id="groups-table" class="table"></div>
@@ -69,7 +69,7 @@ App.renderGroupsTable = () => {
         <div class="td sr-order">${order}</div>
         <div class="td sr-name">${name}</div>
         <div class="td sr-products">${nProducts}</div>
-        <button class="td sr-edit btn btn-primary"><i class="material-icons">edit</i></button>
+        <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
       </div>
     `);
     item.children('.sr-edit, .sr-name, .sr-img').click(() => {
@@ -90,7 +90,7 @@ const showGroupEditForm = (number, cb) => {
       <div class="form-row">
         <div class="form-col">
           <div class="img-upload">
-            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">file_upload</i>'}</div>
+            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
             <input class="hidden" name="img" value="${img || ''}">
             ${App.getCloudinaryUploadTag({ tags: ['group'] })}
           </div>

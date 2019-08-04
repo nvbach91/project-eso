@@ -133,7 +133,7 @@ App.showCart = () => {
   const cartItems = $(`<div class="cart-items"></div>`);
   const cartKeys = Object.keys(App.cart);
   if (!cartKeys.length) {
-    const emptyCartButton = $('<button class="btn btn-lg"><i class="material-icons">apps</i></button>').click(() => {
+    const emptyCartButton = $(`<button class="btn btn-lg">${App.getIcon('apps')}</button>`).click(() => {
       App.closeModal();
     });
     cartItems.append(emptyCartButton);

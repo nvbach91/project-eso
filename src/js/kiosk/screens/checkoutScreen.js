@@ -31,7 +31,7 @@ App.renderCheckoutScreen = () => {
           <h5 class="card-header">${App.lang.checkout_return_title}</h5>
           <div class="card-body">
             <button class="btn btn-warning go-back btn-icon">
-              <i class="material-icons">arrow_back</i>
+              ${App.getIcon('arrow_back')}
               <span>${App.lang.checkout_return_btn}</span>
             </button>
           </div>

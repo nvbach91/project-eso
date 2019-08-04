@@ -3,7 +3,7 @@ App.renderProducts = (group) => {
   const header = $(`
     <div class="btn btn-primary btn-raised btn-lg products-header">
       <span>${App.groups[group].name}</span>
-      <i class="material-icons">menu</i>
+      ${App.getIcon('menu')}
     </div>
   `);
   header.appendTo(container);
@@ -15,7 +15,7 @@ App.renderProducts = (group) => {
       <div class="product-offer${highlight ? ' highlight' : ''}">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
           <button class="btn btn-primary btn-raised${App.cart[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
-            <i class="material-icons">shopping_cart</i> 
+            ${App.getIcon('shopping_cart')}
             <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
           </button>
         </div>
@@ -24,7 +24,7 @@ App.renderProducts = (group) => {
           <div class="po-price">${price} ${App.settings.currencySymbol}</div>
           <div class="po-control">
             <button class="btn btn-primary add">
-              <i class="material-icons">playlist_add</i>
+              ${App.getIcon('playlist_add')}
             </button>
           </div>
         </div>
@@ -67,16 +67,16 @@ App.showProductDetail = (id) => {
         </div>
         <div class="pd-control text-left">
           <div class="pd-row justify-content-start">
-            <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove"><i class="material-icons">remove</i></button>
+            <button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove">${App.getIcon('remove')}</button>
             <button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
-              <i class="material-icons">shopping_cart</i> 
+              ${App.getIcon('shopping_cart')}
               <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
             </button>
-            <button class="btn btn-primary add"><i class="material-icons">add</i></button>
+            <button class="btn btn-primary add">${App.getIcon('add')}</button>
           </div>
           <button class="btn btn-raised btn-primary order">
             <span>${App.lang.order_products_order_btn}</span>&nbsp;
-            <i class="material-icons">playlist_add</i>
+            ${App.getIcon('playlist_add')}
           </button>
         </div>
       </div>

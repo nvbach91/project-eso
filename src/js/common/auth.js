@@ -3,19 +3,19 @@ App.renderLoginForm = () => {
     <div class="container-signin text-center">
       <div class="signin-aside"></div>
       <form class="card form-signin">
-        <button type="button" id="launch" class="btn btn-primary btn-lg mb-4"><i class="material-icons" style="font-size: 48px">fingerprint</i></button>
+        <button type="button" id="launch" class="btn btn-primary btn-lg mb-4">${App.getIcon('fingerprint', 48)}</button>
         <h1 class="h3 mb-3 font-weight-normal">Launch</h1>
         <h2 class="h4 mb-3 font-weight-bold">Itadakimasu Restaurant</h2>
         <div class="input-group">
-          <span class="input-group-addon"><i class="material-icons">public</i></span>
+          <span class="input-group-addon">${App.getIcon('public')}</span>
           <input name="subdomain" class="form-control" placeholder="Subdomain">
         </div>
         <div class="input-group">
-          <span class="input-group-addon"><i class="material-icons">person</i></span>
+          <span class="input-group-addon">${App.getIcon('person')}</span>
           <input type="email" name="username" class="form-control" placeholder="Username / Email address" required autofocus>
         </div>
         <div class="input-group">
-          <span class="input-group-addon"><i class="material-icons">lock</i></span>
+          <span class="input-group-addon">${App.getIcon('lock')}</span>
           <input type="password" name="password" class="form-control" placeholder="Password" required>
         </div>
         <br>

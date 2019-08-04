@@ -83,7 +83,7 @@ App.renderKioskScreen = () => {
         <div class="form-row">
           <div class="form-col" style="width: 200px">
             <div class="img-upload">
-              <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">file_upload</i>'}</div>
+              <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
               <input class="hidden" name="receipt.img" value="${App.settings.receipt.img || ''}">
               ${App.getCloudinaryUploadTag({ tags: ['receipt'] })}
             </div>
@@ -112,7 +112,7 @@ App.renderKioskScreen = () => {
       receiptForm.find('.img-holder').removeAttr('style');
       receiptForm.find('input[name="receipt.img"]').val('');
       App.resetFileInput(receiptForm.find('input.cloudinary-fileupload[type=file]'));
-      removeBtn.next().append('<i class="material-icons">file_upload</i>');
+      removeBtn.next().append(App.getIcon('file_upload'));
     });
   }
   App.jControlPanelBody.replaceWith(cpBody);

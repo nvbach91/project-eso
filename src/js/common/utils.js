@@ -450,3 +450,10 @@ App.createLocaleSwitcher = () => {
   });
   return switcher;
 };
+
+App.getIcon = (url, size) => {
+  if (/^(\/|http)/.test(url)) {
+    return `<i class="icon" style="background-image: url(${url}); width: ${size}px; height: ${size}px;"></i>`;
+  }
+  return `<i class="material-icons" ${size ? ` style="font-size: ${size}px"` : ''}>${url}</i>`;
+};

@@ -5,7 +5,7 @@ App.renderFooter = () => {
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item" id="back-button">
-            <a class="nav-link active" href="#"><i class="material-icons">arrow_back</i></a>
+            <a class="nav-link active" href="#">${App.getIcon('arrow_back')}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="#">Blazefire Production</a>
@@ -17,7 +17,7 @@ App.renderFooter = () => {
           <li class="nav-item">
             <button id="checkout-button" class="btn btn-primary btn-icon">
               <span>${App.lang.order_checkout_btn}</span>
-              <i class="material-icons">arrow_forward</i>
+              ${App.getIcon('arrow_forward')}
             </button>
           </li>
         </ul>

@@ -13,7 +13,7 @@ App.renderControlPanelTabs = () => {
     const { name, icon, render } = tab;
     const element = $(`
       <button class="btn btn-primary cp-tab">
-        <i class="material-icons">${icon}</i>
+        ${App.getIcon(icon)}
         <div class="cp-tab-name">${name}</div>
       </button>
     `);
