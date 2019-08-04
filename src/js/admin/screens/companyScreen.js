@@ -17,7 +17,7 @@ App.renderCompanyScreen = () => {
       <div class="mi-header">Settings</div>
       <div class="mi-body">
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: App.settings.companyName })}
+          ${App.generateFormInput({ label: 'Name', name: 'companyName', value: App.settings.companyName })}
           ${App.generateFormInput({ label: 'Subdomain', name: 'subdomain', value: App.settings.subdomain, disabled: true })}
         </div>
         <div class="form-row"> 

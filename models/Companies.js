@@ -5,7 +5,7 @@ const Companies = new Schema({
   subdomain: { type: String, index: { unique: true} },
   tin: { type: String, index: { unique: true} },
   vat: String,
-  name: String,
+  companyName: String,
   vatRegistered: Boolean,
   license: String,
   expiration: Date,

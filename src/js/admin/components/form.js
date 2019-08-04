@@ -6,6 +6,7 @@ App.generateFormInput = (args) => {
       <label>${label}</label>
       <input
         ${type ? ` type="${type}"` : ''}
+        ${type === 'password' && !autocomplete ? ` autocomplete="new-password"` : ''}
         ${autocomplete ? ` autocomplete="${autocomplete}"` : ' autocomplete="off"'}
         ${accept ? ` accept="${accept}"` : ''}
         ${step ? ` step="${step}"` : ''}
@@ -48,10 +49,9 @@ App.binarySelectOptions = [
 App.bindForm = (form, endpoint) => {
   if (endpoint === '/ors') {
     var certificateUploadInput = form.find('input[name="ors.file"]');
+    var encodedDataHolder = form.find('input[name="_content"]');
     const certificateUploadButton = form.find('input[name="ors.file_name"]').click((e) => {
-      certificateUploadInput.removeData('content');
-      certificateUploadInput.wrap('<form>').closest('form').get(0).reset();
-      certificateUploadInput.unwrap();
+      App.resetFileInput(certificateUploadInput);
       certificateUploadInput.click();
     });
     certificateUploadInput.change((e) => {
@@ -68,7 +68,7 @@ App.bindForm = (form, endpoint) => {
         } else if (!/^data:application\/x-pkcs12;base64,\s*(?:(?:[A-Za-z0-9+\/]{4})+\s*)*[A-Za-z0-9+\/]*={0,2}\s*$/.test(encodedCertificateFileContent)) {
           App.showWarning('Error: invalid file type');
         } else {
-          certificateUploadInput.data('content', encodedCertificateFileContent);
+          encodedDataHolder.val(encodedCertificateFileContent);
           certificateUploadButton.val(file.name);
         }
       };
@@ -76,13 +76,13 @@ App.bindForm = (form, endpoint) => {
     });
   }
   const btnSave = form.find('.btn-save');
+  form.find('input, select').change(() => {
+    btnSave.removeClass('btn-success btn-fail').text('Save');
+  });
   form.submit((e) => {
     e.preventDefault();
     App.ajaxSaving(btnSave);
     const data = App.serializeForm(form);
-    if (endpoint === '/ors') {
-      data.content = certificateUploadInput.data('content') || '';
-    }
     $.post({
       url: `${App.apiPrefix}${endpoint}`,
       beforeSend: App.attachToken,
@@ -90,6 +90,15 @@ App.bindForm = (form, endpoint) => {
       data: JSON.stringify(data),
     }).done((resp) => {
       App.ajaxSaveDone(btnSave)();
+      const changes = resp.msg === 'srv_success' ? data : resp.msg;
+      Object.keys(changes).forEach((key) => {
+        if (key.includes('.')) {
+          const kps = key.split('.');
+          App.settings[kps[0]][kps[1]] = changes[key];
+        } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
+          App.settings[key] = changes[key];
+        }
+      });
       if (endpoint === '/ors') {
         form.find('input[name="upload_date"]').val(moment(resp.msg['ors.upload_date']).format(App.formats.dateTime));
         form.find('input[name="valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));
@@ -126,16 +135,15 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
     disableImageResize: false,
     imageMaxWidth: 800,                   // 800 is an example value - no default
     imageMaxHeight: 600,                  // 600 is an example value - no default
-    maxFileSize: 1000000,                 // 20MB is an example value - no default
-    loadImageMaxFileSize: 20000000,       // default is 10MB
+    maxFileSize: 3000000,                 // 20MB is an example value - no default
+    loadImageMaxFileSize: 10000000,       // default is 10MB
     acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i
   });
   cloudinaryFileUploadInput.bind('cloudinarydone', (e, data) => {
     cloudinaryPublicIdHolder.val(data.result.public_id);
     imgHolder.empty().attr('style', App.getBackgroundImage(data.result.public_id).slice(8, -1));
     //uncomment to allow reupload of the same file in the same fileupload instance
-    //cloudinaryFileUploadInput.wrap('<form>').closest('form').get(0).reset();
-    //cloudinaryFileUploadInput.unwrap();
+    //App.resetFileInput(cloudinaryFileUploadInput);
     
     // bind again to allow change of file
     App.bindCloudinaryFileUpload(cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder);
@@ -143,11 +151,15 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
   });
 };
 
-App.getCloudinaryUploadTag = () => {
+App.getCloudinaryUploadTag = (options) => {
+  let tags = [ App.settings._id ];
+  if (options && options.tags) {
+    options.tags.forEach((tag) => tags.push(tag));
+  }
   const dfd = JSON.stringify({
     upload_preset: 'r9ktkupy',
     callback: `${location.origin}/cloudinary_cors.html`,
-    tags: App.settings._id,
+    tags: tags.join(',')
   }).replace(/"/g, '&quot;');
   return `<input class="cloudinary-fileupload" name="file" type="file" data-form-data="${dfd}">`;
 };
@@ -175,4 +187,9 @@ App.ajaxDeleteDone = (btn) => () => {
 
 App.ajaxDeleteFail = (btn) => () => {
   btn.prop('disabled', false).text('Failed to delete').addClass('btn-danger');
+};
+
+App.resetFileInput = (input) => {
+  input.wrap('<form>').closest('form').get(0).reset();
+  input.unwrap();
 };

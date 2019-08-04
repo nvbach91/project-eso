@@ -111,7 +111,7 @@ const showProductEditForm = (ean, cb) => {
           <div class="img-upload">
             <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : '<i class="material-icons">file_upload</i>'}</div>
             <input class="hidden" name="img" value="${img || ''}">
-            ${App.getCloudinaryUploadTag()}
+            ${App.getCloudinaryUploadTag({ tags: ['product'] })}
           </div>
         </div>
         <div class="form-col">
@@ -141,6 +141,9 @@ const showProductEditForm = (ean, cb) => {
   );
   const btnSave = form.find('.btn-save');
   const btnDelete = form.find('.btn-delete');
+  form.find('input, select').change(() => {
+    btnSave.removeClass('btn-success btn-fail').text('Save');
+  });
   form.submit((e) => {
     e.preventDefault();
     App.saveProduct(App.serializeForm(form), btnSave).always(cb);
@@ -148,7 +151,7 @@ const showProductEditForm = (ean, cb) => {
   btnDelete.click(() => {
     // must confirm (click delete twice) to delete
     if (!btnDelete.data('ready')) {
-      btnDelete.text('Confirm delete').data('ready', true);
+      btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
     } else {
       App.deleteProduct(ean, btnDelete).always(cb);
     }

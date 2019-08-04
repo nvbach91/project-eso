@@ -15,10 +15,10 @@ router.get('/settings', (req, res) => {
   let settings = {};
   Registers.findOne({ _id: req.user.regId }).select('-__v').then((register) => {
     settings = { ...register._doc };
-    return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence name bank');
+    return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence companyName bank');
   }).then((company) => {
-    const { residence, tin, vat, vatRegistered, name, bank } = company._doc;
-    settings = { ...settings, residence, tin, vat, vatRegistered, companyName: name, bank };
+    const { residence, tin, vat, vatRegistered, companyName, bank } = company._doc;
+    settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank };
     return Users.find({ companyId: req.user.companyId }).select('username name');
   }).then((users) => {
     settings.employees = {};
@@ -42,8 +42,8 @@ router.post('/company', (req, res) => {
 });
 
 router.post('/ors', (req, res) => {
-  const { content, password, upload_date, valid_until, ...settings } = req.body;
-  readPkcs12(Buffer.from(content.replace(/^data:application\/x-pkcs12;base64,/, ''), 'base64'), { p12Password: password }).then((result) => {
+  const { _content, _password, _upload_date, _valid_until, ...settings } = req.body;
+  readPkcs12(Buffer.from(_content.replace(/^data:application\/x-pkcs12;base64,/, ''), 'base64'), { p12Password: _password }).then((result) => {
     settings['ors.public_key'] = btoa(result.cert);
     settings['ors.private_key'] = btoa(result.key);
     return readCertificateInfo(result.cert);
