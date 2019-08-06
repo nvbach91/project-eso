@@ -119,7 +119,7 @@ const orsAuthorizeTransaction = (newTransaction, req) => {
         return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, config.axiosConfig);
       }).then((resp) => {
         if (!resp.data.success) {
-          throw { code: 400, msg: resp.data.msg };
+          throw { code: 500, msg: resp.data.msg };
         }
         newTransaction.fik = resp.data.msg.fik;
         newTransaction.bkp = resp.data.msg.bkp;
