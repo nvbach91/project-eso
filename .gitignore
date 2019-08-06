@@ -7,3 +7,6 @@
 *.log
 
 /.env
+
+iisnode/
+deploy.bat
