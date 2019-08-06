@@ -118,9 +118,8 @@ const orsAuthorizeTransaction = (newTransaction, req) => {
         authorizationInfo.isTaxpayer = company.vatRegistered;
         return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, config.axiosConfig);
       }).then((resp) => {
-        //console.log(resp.data);
         if (!resp.data.success) {
-          throw resp.data.msg;
+          throw { code: 400, msg: resp.data.msg };
         }
         newTransaction.fik = resp.data.msg.fik;
         newTransaction.bkp = resp.data.msg.bkp;
