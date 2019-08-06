@@ -1,6 +1,6 @@
 App.renderTabs = () => {
   const container = $('<div>');
-  Object.keys(App.groups).forEach((groupNumber) => {
+  Object.keys(App.groups).sort((a, b) => App.groups[a].order - App.groups[b].order).forEach((groupNumber) => {
     const { img, name } = App.groups[groupNumber];
     const element = $(`
       <div class="btn btn-primary tab">

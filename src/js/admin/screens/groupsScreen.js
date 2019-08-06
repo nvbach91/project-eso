@@ -54,7 +54,7 @@ App.renderGroupsScreen = () => {
 
 App.renderGroupsTable = () => {
   const groupKeys = Object.keys(App.groups);
-  groupKeys.sort((a, b) => App.groups[a]['order'] - App.groups[b]['order']); // Ascending order
+  groupKeys.sort((a, b) => App.groups[a].order - App.groups[b].order); // Ascending order
 
   App.jGroupsContainer.empty();
   App.jGroupsContainer.append(tableHeader);
