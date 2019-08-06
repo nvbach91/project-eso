@@ -50,8 +50,8 @@ App.renderOrderPreview = () => {
   App.jItemsCount = orderPreview.find('#items-count');
 
   const cartKeys = Object.keys(App.cart);
-  cartKeys.forEach((id) => {
-    const el = App.createOrderPreviewItem(id);
+  cartKeys.forEach((ean) => {
+    const el = App.createOrderPreviewItem(ean);
     App.jOrderPreviewList.append(el);
   });
   orderPreview.find('#cart-indicator').click(() => {
@@ -63,14 +63,14 @@ App.renderOrderPreview = () => {
   }
 };
 
-App.createOrderPreviewItem = (id) => {
-  const { img } = App.products[id];
+App.createOrderPreviewItem = (ean) => {
+  const { img } = App.products[ean];
   const el = $(`
     <div class="op-item">
       <div class="op-img"${App.getBackgroundImage(img)}>
-        <button class="btn btn-primary btn-raised${App.cart[id] ? '' : ' hidden'} cart-quantity-indicator" data-id="${id}">
+        <button class="btn btn-primary btn-raised${App.cart[ean] ? '' : ' hidden'} cart-quantity-indicator" data-id="${ean}">
           ${App.getIcon('shopping_cart')}
-          <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
+          <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
         </button>
       </div>
       <div class="op-control">
@@ -80,13 +80,13 @@ App.createOrderPreviewItem = (id) => {
     </div>
   `);
   el.find('.op-img').click(() => {
-    App.showProductDetail(id);
+    App.showProductDetail(ean);
   });
   el.find('.op-inc').click(() => {
-    App.addToCart(id);
+    App.addToCart(ean);
   });
   el.find('.op-dec').click(() => {
-    App.decrementFromCart(id);
+    App.decrementFromCart(ean);
   });
   return el;
 };

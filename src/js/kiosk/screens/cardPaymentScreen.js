@@ -64,7 +64,8 @@ App.renderCardPaymentScreen = () => {
     }
   }).fail((resp) => {
     App.showWarning(`
-      <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
+      <p>${App.lang.modal_payment_failed_p1}</p>
+      ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
       <p>${App.lang.modal_payment_failed_p2}</p>
     `);
     App.renderCheckoutScreen();

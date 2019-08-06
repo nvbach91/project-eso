@@ -1,14 +1,14 @@
 App.renderTabs = () => {
   const container = $('<div>');
-  Object.keys(App.groups).forEach((id) => {
-    const { img, name } = App.groups[id];
+  Object.keys(App.groups).forEach((groupNumber) => {
+    const { img, name } = App.groups[groupNumber];
     const element = $(`
       <div class="btn btn-primary tab">
         <div class="tab-overlay"${App.getBackgroundImage(img)}></div>
         <div class="tab-name">${name}</div>
-        <div class="btn btn-primary btn-raised${App.cartCategoryQuantities[id] ? '': ' hidden'} cart-quantity-indicator" data-id="${id}">
+        <div class="btn btn-primary btn-raised${App.cartCategoryQuantities[groupNumber] ? '': ' hidden'} cart-quantity-indicator" data-id="${groupNumber}">
           ${App.getIcon('shopping_cart')}
-          <span>${App.cartCategoryQuantities[id] || 0}</span>
+          <span>${App.cartCategoryQuantities[groupNumber] || 0}</span>
         </div>
       </div>
     `).hide();
@@ -17,7 +17,7 @@ App.renderTabs = () => {
       element.siblings().removeClass('active');
       App.activeTabPosition = element.index();
       //App.jProducts.slideUp(App.getAnimationTime(), () => {
-        App.renderProducts(id);
+        App.renderProducts(groupNumber);
       //});
     });
     container.append(element);

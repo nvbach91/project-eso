@@ -1,13 +1,13 @@
 
-App.addToCart = (id) => {
+App.addToCart = (ean) => {
   App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[id]) {
-    App.cart[id].quantity++;
+  if (App.cart[ean]) {
+    App.cart[ean].quantity++;
   } else {
-    App.cart[id] = {
+    App.cart[ean] = {
       quantity: 1
     };
-    const orderPreviewItem = App.createOrderPreviewItem(id);
+    const orderPreviewItem = App.createOrderPreviewItem(ean);
     App.jOrderPreviewList.append(orderPreviewItem.addClass('last').hide().fadeIn());
     
     App.jOrderPreviewList.animate({
@@ -15,21 +15,21 @@ App.addToCart = (id) => {
     }, App.getAnimationTime());
   }
   App.jOrderPreview.fadeIn();
-  const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
+  const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${ean}"]`).fadeIn().parent().parent().addClass('last');
   /*App.jOrderPreviewList.animate({
     scrollLeft: existingOrderPreviewItem.offset().left
   }, App.getAnimationTime());*/
-  existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
-  App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
-  App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
-  App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
-  const groupId = App.products[id].group;
-  if (App.cartCategoryQuantities[groupId]) {
-    App.cartCategoryQuantities[groupId]++;
+  existingOrderPreviewItem.find('span').text(App.cart[ean].quantity);
+  App.jProducts.find(`[data-id="${ean}"]`).fadeIn().find('span').text(App.cart[ean].quantity);
+  App.jModal.find(`.product-details [data-id="${ean}"]`).fadeIn().find('span').text(App.cart[ean].quantity);
+  App.jModal.find(`.cart [data-id="${ean}"]`).text(App.cart[ean].quantity);
+  const groupNumber = App.products[ean].group;
+  if (App.cartCategoryQuantities[groupNumber]) {
+    App.cartCategoryQuantities[groupNumber]++;
   } else {
-    App.cartCategoryQuantities[groupId] = 1;
+    App.cartCategoryQuantities[groupNumber] = 1;
   }
-  App.jTabs.find(`[data-id=${groupId}]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupId]);
+  App.jTabs.find(`[data-id=${groupNumber}]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupNumber]);
   App.calculateCart();
   App.saveLocalCart();
 
@@ -40,22 +40,22 @@ App.addToCart = (id) => {
   }
 };
 
-App.decrementFromCart = (id) => {
+App.decrementFromCart = (ean) => {
   App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[id]) {
-    App.cart[id].quantity--;
-    const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
+  if (App.cart[ean]) {
+    App.cart[ean].quantity--;
+    const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${ean}"]`).fadeIn().parent().parent().addClass('last');
     /*App.jOrderPreviewList.animate({
       scrollLeft: existingOrderPreviewItem.offset().left
     }, App.getAnimationTime());*/
-    existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
-    App.jProducts.find(`[data-id="${id}"]`).find('span').text(App.cart[id].quantity);
-    App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
-    App.jModal.find(`.cart-quantity-indicator[data-id="${id}"] span`).text(App.cart[id].quantity);
-    if (App.cart[id].quantity <= 0) {
-      delete App.cart[id];
-      App.jProducts.find(`[data-id="${id}"]`).fadeOut();
-      App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
+    existingOrderPreviewItem.find('span').text(App.cart[ean].quantity);
+    App.jProducts.find(`[data-id="${ean}"]`).find('span').text(App.cart[ean].quantity);
+    App.jModal.find(`.cart [data-id="${ean}"]`).text(App.cart[ean].quantity);
+    App.jModal.find(`.cart-quantity-indicator[data-id="${ean}"] span`).text(App.cart[ean].quantity);
+    if (App.cart[ean].quantity <= 0) {
+      delete App.cart[ean];
+      App.jProducts.find(`[data-id="${ean}"]`).fadeOut();
+      App.jOrderPreviewList.find(`[data-id="${ean}"]`).parent().parent().fadeOut(function () {
         $(this).remove();
         if (!Object.keys(App.cart).length) {
           App.jCheckoutButton.fadeOut();
@@ -63,31 +63,31 @@ App.decrementFromCart = (id) => {
         }
       });
     }
-    const groupId = App.products[id].group;
-    App.cartCategoryQuantities[groupId]--;
-    if (App.cartCategoryQuantities[groupId] <= 0) {
-      App.jTabs.find(`[data-id=${groupId}]`).fadeOut();
+    const groupNumber = App.products[ean].group;
+    App.cartCategoryQuantities[groupNumber]--;
+    if (App.cartCategoryQuantities[groupNumber] <= 0) {
+      App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
     } else {
-      App.jTabs.find(`[data-id=${groupId}]`).find('span').text(App.cartCategoryQuantities[groupId]);
+      App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
     }
     App.saveLocalCart();
     App.calculateCart();
   }
 };
 
-App.removeFromCart = (id) => {
-  App.jProducts.find(`[data-id="${id}"]`).fadeOut();
-  App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
+App.removeFromCart = (ean) => {
+  App.jProducts.find(`[data-id="${ean}"]`).fadeOut();
+  App.jOrderPreviewList.find(`[data-id="${ean}"]`).parent().parent().fadeOut(function () {
     $(this).remove();
   });
-  const groupId = App.products[id].group;
-  App.cartCategoryQuantities[groupId] -= App.cart[id].quantity;
-  if (App.cartCategoryQuantities[groupId] <= 0) {
-    App.jTabs.find(`[data-id=${groupId}]`).fadeOut();
+  const groupNumber = App.products[ean].group;
+  App.cartCategoryQuantities[groupNumber] -= App.cart[ean].quantity;
+  if (App.cartCategoryQuantities[groupNumber] <= 0) {
+    App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
   } else {
-    App.jTabs.find(`[data-id=${groupId}]`).find('span').text(App.cartCategoryQuantities[groupId]);
+    App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
   }
-  delete App.cart[id];
+  delete App.cart[ean];
   App.saveLocalCart();
   App.calculateCart();
 };
@@ -108,9 +108,9 @@ App.removeAllFromCart = () => {
 App.calculateCartSummaryValues = () => {
   let nItems = 0;
   let totalPrice = 0;
-  Object.keys(App.cart).forEach((id) => {
-    const product = App.products[id];
-    const cartItem = App.cart[id];
+  Object.keys(App.cart).forEach((ean) => {
+    const product = App.products[ean];
+    const cartItem = App.cart[ean];
     let itemPrice = cartItem.quantity * product.price;
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
     totalPrice += itemPrice;
@@ -138,16 +138,16 @@ App.showCart = () => {
     });
     cartItems.append(emptyCartButton);
   }
-  cartKeys.forEach((id) => {
-    const { price, name, img } = App.products[id];
-    const cartItem = App.cart[id];
+  cartKeys.forEach((ean) => {
+    const { price, name, img } = App.products[ean];
+    const cartItem = App.cart[ean];
     const thisTotal = cartItem.quantity * price;
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
         <div class="ci-name">${name}</div>
         <button class="btn btn-primary btn-dec">-</button>
-        <div class="ci-quantity" data-id="${id}">${cartItem.quantity}</div>
+        <div class="ci-quantity" data-id="${ean}">${cartItem.quantity}</div>
         <button class="btn btn-primary btn-inc">+</button>
         <div class="ci-price">${price}</div>
         <div class="ci-total">${thisTotal.formatMoney()}</div>
@@ -155,7 +155,7 @@ App.showCart = () => {
       </div>
     `);
     el.find('.ci-remove').click(() => {
-      App.removeFromCart(id);
+      App.removeFromCart(ean);
       el.find('button').prop('disabled', true);
       el.slideUp(App.getAnimationTime(), () => {
         el.remove();
@@ -167,8 +167,8 @@ App.showCart = () => {
       });
     });
     el.find('.btn-dec').click(() => {
-      App.decrementFromCart(id);
-      if (!App.cart[id]) {
+      App.decrementFromCart(ean);
+      if (!App.cart[ean]) {
         el.find('button').prop('disabled', true);
         el.fadeOut(() => {
           el.remove();
@@ -181,7 +181,7 @@ App.showCart = () => {
       }
     });
     el.find('.btn-inc').click(() => {
-      App.addToCart(id);
+      App.addToCart(ean);
       App.calculateCart();
     });
     cartItems.append(el);

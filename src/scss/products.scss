@@ -106,6 +106,14 @@
 .product-details {
     display: flex;
 }
+.pd-description {
+    width: 100%;
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    font-style: italic;
+    resize: none;
+}
 .pd-img {
     width: 50%;
     height: 200px;

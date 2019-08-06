@@ -130,15 +130,17 @@ const showGroupEditForm = (number, cb) => {
         <div>You must delete all products (${nProductsInGroup}) of this group first</div>
         <div class="table">
           <div class="tr groups-table-header">
+            <div class="td sr-order">Order</div>
             <div class="td sr-ean">Code</div>
             <div class="td sr-name">Name</div>
           </div>
           ${Object.keys(App.products).filter((ean) => {
             return number == App.products[ean].group;
-          }).map((ean) => {
-            const { name } = App.products[ean];
+          }).sort((a, b) => App.products[a].order - App.products[b].order).map((ean) => {
+            const { name, order } = App.products[ean];
             return `
               <div class="tr search-result">
+                <div class="td sr-order">${order || 0}</div>
                 <div class="td sr-number">${ean}</div>
                 <div class="td sr-name">${name}</div>
               </div>
