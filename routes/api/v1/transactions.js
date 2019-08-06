@@ -1,14 +1,11 @@
 const router = require('express').Router();
 const axios = require('axios');
-const https = require('https');
 const utils = require('../../../utils');
 const config = require('../../../config');
 const Transactions = require('../../../models/Transactions');
 const Aggregates = require('../../../models/Aggregates');
 const Registers = require('../../../models/Registers');
 const Companies = require('../../../models/Companies');
-
-const axiosConfig = { httpsAgent: new https.Agent({ rejectUnauthorized: false }) };
 
 router.get('/transactions', (req, res) => {
   Transactions.find({ regId: req.user.regId }).select('-_id -__v -regId').then((transactions) => {
@@ -119,7 +116,7 @@ const orsAuthorizeTransaction = (newTransaction, req) => {
 
       return Companies.findOne({ _id: req.user.companyId }).select('vatRegistered').then((company) => {
         authorizationInfo.isTaxpayer = company.vatRegistered;
-        return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, axiosConfig);
+        return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, utils.axiosConfig);
       }).then((resp) => {
         //console.log(resp.data);
         if (!resp.data.success) {
