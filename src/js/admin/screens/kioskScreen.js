@@ -11,7 +11,16 @@ App.renderKioskScreen = () => {
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`<div class="card-body"></div>`);
-  const settingsForm = $(`
+  createSettingsForm().appendTo(cpBody);
+  createOrsForm().appendTo(cpBody);
+  createTimersForm().appendTo(cpBody);
+  createReceiptForm().appendTo(cpBody);
+  App.jControlPanelBody.replaceWith(cpBody);
+  App.jControlPanelBody = cpBody;
+};
+
+const createSettingsForm = () => {
+  const form = $(`
     <form class="mod-item card">
       <div class="mi-header">Settings</div>
       <div class="mi-body">
@@ -31,10 +40,13 @@ App.renderKioskScreen = () => {
         </div>
       </div>
     </form>
-  `).appendTo(cpBody);
-  App.bindForm(settingsForm, '/settings');
-  
-  const orsForm = $(`
+  `);
+  App.bindForm(form, '/settings');
+  return form;
+};
+
+const createOrsForm = () => {
+  const form = $(`
     <form class="mod-item card">
       <div class="mi-header">Fiscal settings</div>
       <div class="mi-body">
@@ -47,18 +59,34 @@ App.renderKioskScreen = () => {
           ${App.generateFormInput({ label: 'Certificate file', name: 'ors.file_name', placeholder: App.settings.ors.file_name })}
           ${App.generateFormInput({ type: 'file', hidden: true, label: 'Certificate file', name: 'ors.file', accept: '.p12', optional: true })}
           ${App.generateFormInput({ hidden: true, label: '', name: '_content', optional: true })}
-          ${App.generateFormInput({ label: 'Upload date', name: '_upload_date', value: moment(App.settings.ors.upload_date).format(App.formats.dateTime), optional: true, disabled: true })}
-          ${App.generateFormInput({ label: 'Valid until', name: '_valid_until', value: moment(App.settings.ors.valid_until).format(App.formats.dateTime), optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Upload date', name: '_upload_date', value: App.settings.ors.upload_date ? moment(App.settings.ors.upload_date).format(App.formats.dateTime) : '', optional: true, disabled: true })}
+          ${App.generateFormInput({ label: 'Valid until', name: '_valid_until', value: App.settings.ors.valid_until ? moment(App.settings.ors.valid_until).format(App.formats.dateTime) : '', optional: true, disabled: true })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save</button>
+          ${App.settings.ors.private_key ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
         </div>
       </div>
     </form>
-  `).appendTo(cpBody);
-  App.bindForm(orsForm, '/ors');
+  `);
+  const btnDelete = form.find('.btn-delete');
+  btnDelete.click(() => {
+    // must confirm (click delete twice) to delete
+    if (!btnDelete.data('ready')) {
+      btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
+    } else {
+      App.deleteOrs(btnDelete).done(() => {
+        form.find('input').val('').removeAttr('placeholder');
+        btnDelete.remove();
+      });
+    }
+  });
+  App.bindForm(form, '/ors');
+  return form;
+};
 
-  const timersForm = $(`
+const createTimersForm = () => {
+  const form = $(`
     <form class="mod-item card">
       <div class="mi-header">Timers</div>
       <div class="mi-body">
@@ -72,11 +100,14 @@ App.renderKioskScreen = () => {
         </div>
       </div>
     </form>
-  `).appendTo(cpBody);
-  App.bindForm(timersForm, '/settings');
+  `);
+  App.bindForm(form, '/settings');
+  return form;
+};
 
+const createReceiptForm = () => {
   const imgStyle = App.getBackgroundImage(App.settings.receipt.img);
-  const receiptForm = $(`
+  const form = $(`
     <form class="mod-item card">
       <div class="mi-header">Receipt</div>
       <div class="mi-body">
@@ -99,22 +130,21 @@ App.renderKioskScreen = () => {
         </div>
       </div>
     </form>
-  `).appendTo(cpBody);
-  App.bindForm(receiptForm, '/settings');
+  `);
+  App.bindForm(form, '/settings');
   App.bindCloudinaryFileUpload(
-    receiptForm.find('input.cloudinary-fileupload[type=file]'), 
-    receiptForm.find('input[name="receipt.img"]'), 
-    receiptForm.find('.img-holder')
+    form.find('input.cloudinary-fileupload[type=file]'), 
+    form.find('input[name="receipt.img"]'), 
+    form.find('.img-holder')
   );
   if (imgStyle) {
-    const removeBtn = $('<button type="button" class="close">×</button>').prependTo(receiptForm.find('.img-upload'));
+    const removeBtn = $('<button type="button" class="close">×</button>').prependTo(form.find('.img-upload'));
     removeBtn.click(() => {
-      receiptForm.find('.img-holder').removeAttr('style');
-      receiptForm.find('input[name="receipt.img"]').val('');
-      App.resetFileInput(receiptForm.find('input.cloudinary-fileupload[type=file]'));
+      form.find('.img-holder').removeAttr('style');
+      form.find('input[name="receipt.img"]').val('');
+      App.resetFileInput(form.find('input.cloudinary-fileupload[type=file]'));
       removeBtn.next().append(App.getIcon('file_upload'));
     });
   }
-  App.jControlPanelBody.replaceWith(cpBody);
-  App.jControlPanelBody = cpBody;
+  return form;
 };

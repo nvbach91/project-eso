@@ -126,8 +126,8 @@ App.renderReceiptText = (transaction) => {
     `${transaction.bkp ?
       `\n${App.getReceiptHorizontalLine()}` +
       `\n${App.lang.receipt_summary_pre}: ${App.settings.ors.store_id}, ${App.lang.receipt_summary_pos}: ${App.settings.number}` +
-      `\n${App.lang.receipt_summary_bkp}: ${transaction.bkp}` +
-      `\n${App.lang.receipt_summary_fik}: ${transaction.fik}` : ''
+      `\n${App.lang.receipt_summary_bkp}:${transaction.bkp}` +
+      `\n${App.lang.receipt_summary_fik}:${transaction.fik}` : ''
     }`;
 
   const footer =

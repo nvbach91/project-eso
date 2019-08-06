@@ -54,7 +54,7 @@ const adminjs = () => js('admin');
 
 const browserSync = (cb) => {
     bs.init({
-        proxy: 'https://app.vcap.me:3000',
+        proxy: 'https://app.vcap.me:2000',
         https: {
             cert: './security/vcap-me-cert.pem',
             key: './security/vcap-me-key.pem',

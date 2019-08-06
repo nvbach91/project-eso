@@ -41,6 +41,12 @@ router.post('/company', (req, res) => {
   }).catch(utils.handleError(res));
 });
 
+router.delete('/ors', (req, res) => {
+  Registers.updateOne({ _id: req.user.regId }, { $unset: { ors: true } }).then(() => {
+    res.json({ msg: 'srv_success' });
+  });
+});
+
 router.post('/ors', (req, res) => {
   const { _content, _password, _upload_date, _valid_until, ...settings } = req.body;
   readPkcs12(Buffer.from(_content.replace(/^data:application\/x-pkcs12;base64,/, ''), 'base64'), { p12Password: _password }).then((result) => {

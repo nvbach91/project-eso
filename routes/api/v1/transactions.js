@@ -1,7 +1,14 @@
 const router = require('express').Router();
+const axios = require('axios');
+const https = require('https');
 const utils = require('../../../utils');
+const config = require('../../../config');
 const Transactions = require('../../../models/Transactions');
 const Aggregates = require('../../../models/Aggregates');
+const Registers = require('../../../models/Registers');
+const Companies = require('../../../models/Companies');
+
+const axiosConfig = { httpsAgent: new https.Agent({ rejectUnauthorized: false }) };
 
 router.get('/transactions', (req, res) => {
   Transactions.find({ regId: req.user.regId }).select('-_id -__v -regId').then((transactions) => {
@@ -26,11 +33,14 @@ router.get('/transactions/date/:d', (req, res) => {
 router.post('/transactions', (req, res) => {
   const regId = req.user.regId;
   const number = req.body.number;
+  let newTransaction;
   Transactions.findOne({ regId, number }).select('_id').then((transaction) => {
     if (transaction) {
       throw { code: 400, msg: 'srv_transaction_number_already_exists' };
     }
-    const newTransaction = { ...req.body, regId, d: req.body.date.slice(0, 10).replace(/-/g, '') };
+    newTransaction = { ...req.body, regId, d: req.body.date.slice(0, 10).replace(/-/g, '') };
+    return orsAuthorizeTransaction(newTransaction, req);
+  }).then(() => {
     return new Transactions(newTransaction).save();
   }).then((transaction) => {
     const { _id, __v, ...t } = transaction._doc;
@@ -78,7 +88,7 @@ const updateAggregates = (t) => {
   const hour = new Date(date).getHours();
   $inc['hourSales.' + hour] = total;
   $inc['hourTrans.' + hour] = 1;
-  
+
   //console.log($inc);
   Aggregates.updateOne({ date: d, regId }, { $inc }, { upsert: true }).then((info) => {
     //console.log(info);
@@ -91,6 +101,35 @@ const fillNestedInc = (o, key, value) => {
   } else {
     o[key] += value;
   }
+};
+
+const orsAuthorizeTransaction = (newTransaction, req) => {
+  return Registers.findOne({ _id: req.user.regId }).select('ors number').then((register) => {
+    if (register.ors && register.ors.private_key) {
+      let authorizationInfo = {};
+
+      authorizationInfo.vat = register.ors.vat;
+      authorizationInfo.posId = register.number;
+      authorizationInfo.storeId = register.ors.store_id;
+      authorizationInfo.public_key = register.ors.public_key;
+      authorizationInfo.private_key = register.ors.private_key;
+      authorizationInfo.items = JSON.stringify(newTransaction.items.map(({ price, quantity, vat }) => ({ price, quantity, vat })));
+      authorizationInfo.date = newTransaction.date;
+      authorizationInfo.number = newTransaction.number;
+
+      return Companies.findOne({ _id: req.user.companyId }).select('vatRegistered').then((company) => {
+        authorizationInfo.isTaxpayer = company.vatRegistered;
+        return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, axiosConfig);
+      }).then((resp) => {
+        //console.log(resp.data);
+        if (!resp.data.success) {
+          throw resp.data.msg;
+        }
+        newTransaction.fik = resp.data.msg.fik;
+        newTransaction.bkp = resp.data.msg.bkp;
+      });
+    }
+  });
 };
 
 module.exports = router;

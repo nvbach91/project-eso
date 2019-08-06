@@ -147,3 +147,14 @@ App.fetchAggregates = (start, end) => {
     App.aggregates = resp;
   });
 };
+
+App.deleteOrs = (btn) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/ors`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    App.settings.ors = {};
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
+};
