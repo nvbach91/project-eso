@@ -116,7 +116,7 @@ const orsAuthorizeTransaction = (newTransaction, req) => {
 
       return Companies.findOne({ _id: req.user.companyId }).select('vatRegistered').then((company) => {
         authorizationInfo.isTaxpayer = company.vatRegistered;
-        return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, utils.axiosConfig);
+        return axios.post(config.orsSaleAuthorizationUrl, authorizationInfo, config.axiosConfig);
       }).then((resp) => {
         //console.log(resp.data);
         if (!resp.data.success) {
