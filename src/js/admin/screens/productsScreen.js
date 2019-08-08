@@ -107,12 +107,10 @@ const showProductEditForm = (ean, cb) => {
     <form class="mod-item">
       <p class="h4 mb-4">${product ? 'Edit' : 'Create'} product - ${ean}</p>
       <div class="form-row">
-        <div class="form-col">
-          <div class="img-upload">
-            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
-            <input class="hidden" name="img" value="${img || ''}">
-            ${App.getCloudinaryUploadTag({ tags: ['product'] })}
-          </div>
+        <div class="img-upload">
+          <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+          <input class="hidden" name="img" value="${img || ''}">
+          ${App.getCloudinaryUploadTag({ tags: ['product'] })}
         </div>
         <div class="form-col">
           <div class="form-row">

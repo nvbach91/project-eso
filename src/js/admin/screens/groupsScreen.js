@@ -88,12 +88,10 @@ const showGroupEditForm = (number, cb) => {
     <form class="mod-item">
       <p class="h4 mb-4">${group ? 'Edit' : 'Create'} group - ${number}</p>
       <div class="form-row">
-        <div class="form-col">
-          <div class="img-upload">
-            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
-            <input class="hidden" name="img" value="${img || ''}">
-            ${App.getCloudinaryUploadTag({ tags: ['group'] })}
-          </div>
+        <div class="img-upload">
+          <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+          <input class="hidden" name="img" value="${img || ''}">
+          ${App.getCloudinaryUploadTag({ tags: ['group'] })}
         </div>
         <div class="form-col">
           <div class="form-row">

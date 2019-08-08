@@ -112,12 +112,10 @@ const createReceiptForm = () => {
       <div class="mi-header">Receipt</div>
       <div class="mi-body">
         <div class="form-row">
-          <div class="form-col" style="width: 200px">
-            <div class="img-upload">
-              <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
-              <input class="hidden" name="receipt.img" value="${App.settings.receipt.img || ''}">
-              ${App.getCloudinaryUploadTag({ tags: ['receipt'] })}
-            </div>
+          <div class="img-upload">
+            <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+            <input class="hidden" name="receipt.img" value="${App.settings.receipt.img || ''}">
+            ${App.getCloudinaryUploadTag({ tags: ['receipt'] })}
           </div>
           <div class="form-col">
             ${App.generateFormInput({ type: 'number', min: 0, label: 'Extra column padding', name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
