@@ -107,6 +107,15 @@ App.bindForm = (form, endpoint) => {
       App.ajaxSaveFail(btnSave)();
       App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
     });
+    
+    // set the payment terminal type at localhost
+    if (data['terminal.port'] && App.paymentTerminalTypesByPort[data['terminal.port']]) {
+      $.post(App.localhostServerURL + '/set-payment-terminal-config', {
+        config: JSON.stringify({
+            type: App.paymentTerminalTypesByPort[data['terminal.port']]
+        })
+      });
+    }
   });
 };
 

@@ -177,9 +177,6 @@ form {
 [class^=bmd-label] {
     color: #434343;
 }
-.form-btns {
-    text-align: right;
-}
 .btn-save {
     width: 200px;
 }
@@ -264,6 +261,14 @@ input.hidden {
 }
 .mi-control {
     padding-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    button, a {
+        margin-left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 .mi-btn {
     width: 50%;

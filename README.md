@@ -10,20 +10,20 @@ A cross-platform self-ordering system for browsers
 #### 1) MongoDB local database setup
 - [Install](https://www.mongodb.com/download-center/community) MongoDB Server  
 - Create path `C:\data\db`
-- Run with <b>cmd</b> at MongoDB Server <b>bin folder</b>
+- Run with **cmd** at MongoDB Server **bin folder**
 ```bash
     mongod
     mongorestore --gzip --archive=[path to eso.gzip]
 ```
 #### 2) Npm repository setup
-- Run with <b>cmd</b> at <b>project folder</b>
+- Run with **cmd** at **project folder**
 ```bash
     npm install
     npm run dev
 ``` 
 
 #### 3) Open the website 
-- Open <https://eso.vcap.me:9000> in a browser.
+- Open https://eso.vcap.me:9000 in a browser.
 
 ## Preview
-https://eso.gokasa.cz
+https://eso.itake.cz

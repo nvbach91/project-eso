@@ -50,7 +50,12 @@ App.createTransaction = () => {
 
 App.printReceipt = (transaction, appendix) => {
   const text = App.renderReceiptText(transaction) + (appendix ? `\n${appendix}` : '');
-  App.printDirect(App.settings.printer.diacritics ? text : App.removeDiacritics(text));
+  App.printDirect(App.settings.printer.diacritics ? text : App.removeDiacritics(text), App.settings.printer.name);
+};
+
+App.printKitchenReceipt = (transaction) => {
+  const text = App.renderKitchenReceiptText(transaction);
+  App.printDirect(App.settings.kitchenPrinter.diacritics ? text : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
 };
 
 App.renderReceiptText = (transaction) => {
@@ -97,7 +102,7 @@ App.renderReceiptText = (transaction) => {
   const total = App.round(subTotal, 2);
   //const change = transaction.tendered - total;
   const payment =
-    `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency}`)}` +
+    `${App.ESCPOS.doubleHeight(`${App.lang.receipt_payment_total}:\t${total.formatMoney()} ${App.settings.currency.code}`)}` +
     `\n${App.lang.receipt_payment_method}:\t${App.getPaymentMethod(transaction.payment)}`/* +
      `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
      `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;
@@ -140,6 +145,23 @@ App.renderReceiptText = (transaction) => {
 
   const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}`;
   //const text = `${body}`;
+  const result = App.alignReceiptText(text);
+  return result;
+};
+
+App.renderKitchenReceiptText = (transaction) => {
+  const text =
+    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
+    `\n${moment(transaction.date).format(App.formats.dateTime)}` +
+    `\n${transaction.items.map((item) => {
+      //const itemTotal = item.quantity * item.price;
+      const quantityPadded = App.addPadding(item.quantity, 7);
+      const product = App.products[item.ean];
+      const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
+      return `${App.ESCPOS.quadrupleSize(itemName)}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
+    }).join('\n')}` +
+    `\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`;
+
   const result = App.alignReceiptText(text);
   return result;
 };

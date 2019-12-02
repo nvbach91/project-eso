@@ -35,8 +35,8 @@ App.renderOrderPreview = () => {
           <li class="nav-item active" id="cart-indicator">
             <span id="items-count" class="badge badge-pill badge-light">${nItems} ${App.getNumeralForm('misc_item', nItems)}</span>
             <a class="nav-link" href="#">
-              <span>Σ</span>&nbsp;
-              <span id="total">${totalPrice.formatMoney()}</span> ${App.settings.currencySymbol}
+              <span>&sum;</span>&nbsp;
+              <span id="total">${totalPrice.formatMoney()}</span> ${App.settings.currency.symbol}
             </a>
           </li>
         </ul>

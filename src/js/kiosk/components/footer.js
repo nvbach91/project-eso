@@ -34,6 +34,6 @@ App.renderFooter = () => {
     }
   });
   
-  App.jLocaleSwitcher = App.createLocaleSwitcher();
+  App.jLocaleSwitcher = App.createLocaleSwitcher({});
   App.jFooter.find('#locale-switcher').replaceWith(App.jLocaleSwitcher);
 };

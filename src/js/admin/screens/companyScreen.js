@@ -33,7 +33,7 @@ App.renderCompanyScreen = () => {
         ${App.generateFormSelect({ label: 'VAT registration status', name: 'vatRegistered', value: App.settings.vatRegistered, options: vatRegisterationOptions })}
         ${App.generateFormInput({ label: 'Bank', name: 'bank', value: App.settings.bank || '', optional: true })}
         <div class="mi-control">
-          <button class="btn btn-primary btn-raised btn-save">Save</button>
+          <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
       </div>
     </form>

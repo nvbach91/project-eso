@@ -55,9 +55,9 @@ App.hideSpinner = () => {
   App.jSpinner.hide();
 };
 
-App.fetchJoke = () => {
-  return $.get('https://geek-jokes.sameerkumar.website/api');
-};
+// App.fetchJoke = () => {
+//   return $.get('https://geek-jokes.sameerkumar.website/api');
+// };
 
 App.reset = () => {
   App.cart = {};
@@ -159,16 +159,15 @@ App.createInlineSpinner = () => {
   `);
 };
 
-App.printDirect = (msg, printer) => {
-  const destination = printer || App.settings.printer.name;
-  if (!destination) {
+App.printDirect = (content, printer) => {
+  if (!printer) {
     return false;
   }
   $.post({
     url: App.localhostServerURL + '/printdirect',
     data: {
-      printer: destination,
-      content: msg
+      printer,
+      content,
     }
   });
 };;
@@ -215,7 +214,33 @@ App.getDeliveryMethod = (code) => {
 };
 
 App.loadLocale = () => {
-  App.lang = App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN;
+  App.lang = JSON.parse(JSON.stringify(App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN));
+  if (App.settings.currency) {
+    const currencyLocaleLangKeys = [
+      'receipt_header_order',
+      'receipt_header_tin',
+      'receipt_header_vat',
+      'receipt_header_residence',
+      'receipt_header_premise',
+      'receipt_body_vat_invoice',
+      'receipt_body_invoice',
+      'receipt_payment_total',
+      'receipt_payment_method',
+      'receipt_payment_tendered',
+      'receipt_payment_change',
+      'receipt_summary_rates',
+      'receipt_summary_net',
+      'receipt_summary_vat',
+      'receipt_summary_pre',
+      'receipt_summary_pos',
+      'receipt_summary_bkp',
+      'receipt_summary_fik',
+      'receipt_footer_clerk',
+    ];
+    currencyLocaleLangKeys.forEach((key) => {
+      App.lang[key] = (App['GLocale' + App.settings.currency.locale.toUpperCase()] || App.GLocaleEN)[key];
+    });
+  }
 };
 
 App.printQRCode = (data) => {
@@ -406,10 +431,10 @@ App.getBackgroundImage = (img) => {
   return img ? ` style="background-image: url(${img.startsWith('http') ? '' : App.imageUrlBase}${img})"` : '';
 };
 
-App.createLocaleSwitcher = () => {
+App.createLocaleSwitcher = (options) => {
   const switcher = $(`
     <li class="nav-item" id="locale-switcher">
-      <div class="btn-group dropup">
+      <div class="btn-group ${options.direction || 'dropup'}">
         ${Object.keys(App.supportedLocales).filter((locale) => locale === App.locale).map((locale) => {
           return `
             <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown">

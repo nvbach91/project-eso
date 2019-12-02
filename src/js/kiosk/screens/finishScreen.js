@@ -8,17 +8,17 @@ App.renderFinishScreen = () => {
             <button class="btn btn-primary btn-raised start-new">${App.lang.finish_header_btn}</button>
           </h5>
           <div class="card-body">
-            <p class="text-center">${App.getIcon('https://image.flaticon.com/icons/svg/134/134665.svg', 200)} ${App.lang.finish_body_title}</p>
-            <h5 class="card-title">${App.lang.finish_body_question}</h5>
-            <button class="btn btn-primary dyk-text">&nbsp;</button>
+            <p class="text-center">${App.getIcon(`${App.imageUrlBase}receipt_rkkwuo`, 200)} ${App.lang.finish_body_title}</p>
           </div>
         </div>
       </div>
     </main>
   `);
-  App.fetchJoke().done((resp) => {
-    screen.find('.dyk-text').html(resp);
-  });
+  // <h5 class="card-title">${App.lang.finish_body_question}</h5>
+  // <button class="btn btn-primary dyk-text">&nbsp;</button>
+  // App.fetchJoke().done((resp) => {
+  //   screen.find('.dyk-text').html(resp);
+  // });
   const resetTimeout = setTimeout(() => startNewButton.click(), 20000);
   const startNewButton = screen.find('.start-new').click(() => {
     clearTimeout(resetTimeout);

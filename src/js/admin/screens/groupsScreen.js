@@ -101,9 +101,9 @@ const showGroupEditForm = (number, cb) => {
           ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
         </div>
       </div>
-      <div class="form-btns">
+      <div class="mi-control">
         ${group ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
-        <button class="btn btn-primary btn-raised btn-save">Save</button>
+        <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
       </div>
     </form>
   `);

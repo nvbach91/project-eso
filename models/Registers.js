@@ -19,8 +19,18 @@ const Registers = new Schema({
     extraPadding: Number 
   },
   carouselInterval: Number,
-  currency: String, 
-  printer: { 
+  currency: { 
+    code: String, 
+    locale: String, 
+    rounding: Boolean, 
+    symbol: String
+  },
+  printers: { 
+    name: String, 
+    diacritics: Boolean, 
+    columns: Number 
+  }, 
+  kitchenPrinter: { 
     name: String, 
     diacritics: Boolean, 
     columns: Number 
@@ -29,7 +39,8 @@ const Registers = new Schema({
     ip: String, 
     port: Number, 
     password: String, 
-    endpoint: String 
+    endpoint: String,
+    id: String,
   },
   ors: { 
     public_key: String, 
@@ -84,13 +95,14 @@ const settings = {
   tin: '12345678',
   vat: 'CZ12345678',
   carouselInterval: 20000,
-  currency: 'CZK',
+  currency: { code: 'CZK', locale: 'cs', rounding: true, symbol: 'Kč' },
   printer: { name: 'EPSON TM-T20II Receipt', diacritics: true },
   terminal: {
     ip: '10.0.0.42',
     port: '2050',
     password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP',
     endpoint: 'https://localhost:3443/pt',
+    id: 'A123456',
   },
   ors: {
     public_key: '',

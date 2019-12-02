@@ -20,7 +20,7 @@ require('./components/main.js');
 require('./components/form.js');
 
 App.render = () => {
-  App.renderHeader(App.createLocaleSwitcher());
+  App.renderHeader(App.createLocaleSwitcher({ direction: 'dropdown' }));
   App.renderMain();
 };
 
@@ -45,6 +45,7 @@ App.start = () => {
     App.jHeader = $('<header id="header">').appendTo(App.jContainer);
     App.jMain = $('<main id="main">').appendTo(App.jContainer);
     App.jFooter = $('<footer id="footer">').appendTo(App.jContainer);
+    App.loadLocale();
     App.render();
     moment.locale(App.locale);
   });

@@ -1,12 +1,12 @@
 App.GLocaleCS = {
   "delivery_method_welcome_title"           : "Vítejte!",
   "delivery_method_special_offer_btn"       : "Přejít k nabídce!",
-  "delivery_method_eatin"            : "Na místě",
-  "delivery_method_eatin_text"             : "Chtěl bych jíst v pohodlí restaurace",
-  "delivery_method_eatin_btn"              : "Budu jíst v restauraci",
-  "delivery_method_takeout"          : "S sebou",
-  "delivery_method_takeout_text"           : "Chtěl bych si své jídlo vzít s sebou",
-  "delivery_method_takeout_btn"            : "Zabalit s sebou",
+  "delivery_method_eatin"                   : "Na místě",
+  "delivery_method_eatin_text"              : "Chtěl bych jíst v pohodlí restaurace",
+  "delivery_method_eatin_btn"               : "Budu jíst v restauraci",
+  "delivery_method_takeout"                 : "S sebou",
+  "delivery_method_takeout_text"            : "Chtěl bych si své jídlo vzít s sebou",
+  "delivery_method_takeout_btn"             : "Zabalit s sebou",
 
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
@@ -23,6 +23,7 @@ App.GLocaleCS = {
 
   "card_payment_title"                      : "Informace",
   "card_payment_desc"                       : "Prosíme následujte instrukce na platebním terminálu",
+
   "payment_method_cash"                     : "Hotově",
   "payment_method_card"                     : "Kartou",
 

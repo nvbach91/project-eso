@@ -62,7 +62,7 @@ App.renderProductsScreen = () => {
               <div class="td sr-img"${App.getBackgroundImage(img)}></div>
               <div class="td sr-ean">${App.highlightMatchedText(ean, searchValue)}</div>
               <div class="td sr-name">${App.highlightMatchedText(name, searchValue)}</div>
-              <div class="td sr-price">${price} ${App.settings.currencySymbol}</div>
+              <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
               <div class="td sr-group">${groupName}</div>
               <div class="td sr-vat">${vat} %</div>
               <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
@@ -130,9 +130,9 @@ const showProductEditForm = (ean, cb) => {
         <label>Description</label>
         <textarea name="desc" class="form-control" rows="4">${desc || ''}</textarea>
       </div>
-      <div class="form-btns">
+      <div class="mi-control">
         ${product ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
-        <button class="btn btn-primary btn-raised btn-save">Save</button>
+        <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
       </div>
     </form>
   `);

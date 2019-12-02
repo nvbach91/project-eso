@@ -21,7 +21,7 @@ App.renderProducts = (group) => {
         </div>
         <div class="po-name">${name}</div>
         <div class="po-row">
-          <div class="po-price">${price} ${App.settings.currencySymbol}</div>
+          <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
             <button class="btn btn-primary add">
               ${App.getIcon('playlist_add')}
@@ -37,7 +37,7 @@ App.renderProducts = (group) => {
     element.find('.add').click((e) => {
       e.stopPropagation();
       App.addToCart(ean);
-      App.nextTab();
+      //App.nextTab();
     });
     const cartQuantityIndicator = element.find('.cart-quantity-indicator');
     cartQuantityIndicator.click((e) => {
@@ -63,7 +63,7 @@ App.showProductDetail = (ean) => {
         <div class="text-left">
           <div class="pd-name">${name}</div>
           ${desc ? `<textarea disabled class="pd-description">${desc}</textarea>` : ''}
-          <div class="pd-price">${price} ${App.settings.currencySymbol}</div>
+          <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
         <div class="pd-control text-left">
           <div class="pd-row justify-content-start">
@@ -107,7 +107,7 @@ App.showProductDetail = (ean) => {
       App.addToCart(ean);
     }
     App.closeModal();
-    App.nextTab();
+    //App.nextTab();
   });
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();

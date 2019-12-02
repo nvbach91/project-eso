@@ -25,7 +25,7 @@ const renderTransactions = (transactions) => {
           <div class="td ti-order">${order}</div>
           <div class="td ti-payment">${App.getPaymentMethod(payment)}</div>
           <div class="td ti-delivery">${App.getDeliveryMethod(delivery)}</div>
-          <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currencySymbol}</div>
+          <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currency.symbol}</div>
           <button class="td btn btn-primary ti-print">${App.getIcon('print')}</button>
         </div>
       `);

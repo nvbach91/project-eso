@@ -34,9 +34,9 @@ const createSettingsForm = () => {
           ${App.generateFormInput({ label: 'Zip', name: 'address.zip', value: App.settings.address.zip })}
           ${App.generateFormInput({ label: 'Country', name: 'address.country', value: App.settings.address.country })}
         </div>
-        ${App.generateFormSelect({label: 'Currency', name: 'currency', value: App.settings.currency, options: currencyOptions })} 
+        ${App.generateFormSelect({label: 'Currency', name: 'currency', value: App.settings.currency.code, options: currencyOptions })} 
         <div class="mi-control">
-          <button class="btn btn-primary btn-raised btn-save">Save</button>
+          <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
       </div>
     </form>
@@ -63,7 +63,7 @@ const createOrsForm = () => {
           ${App.generateFormInput({ label: 'Valid until', name: '_valid_until', value: App.settings.ors.valid_until ? moment(App.settings.ors.valid_until).format(App.formats.dateTime) : '', optional: true, disabled: true })}
         </div>
         <div class="mi-control">
-          <button class="btn btn-primary btn-raised btn-save">Save</button>
+          <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
           ${App.settings.ors.private_key ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
         </div>
       </div>
@@ -96,7 +96,7 @@ const createTimersForm = () => {
           ${App.generateFormInput({ type: 'number', step: 1000, label: 'Carousel Interval (ms)', name: 'carouselInterval', value: App.settings.carouselInterval })}
         </div>
         <div class="mi-control">
-          <button class="btn btn-primary btn-raised btn-save">Save</button>
+          <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
       </div>
     </form>
@@ -124,7 +124,7 @@ const createReceiptForm = () => {
           </div>
         </div>
         <div class="mi-control">
-          <button class="btn btn-primary btn-raised btn-save">Save</button>
+          <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
       </div>
     </form>

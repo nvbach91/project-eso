@@ -10,17 +10,17 @@ App.renderCheckoutScreen = () => {
         <br>
         <div class="selection">
           <div class="card payment-method" data-method="card">
-            <div class="btn card-img-top" style="background-image: url(https://www.csob.cz/portal/documents/10710/29976/promobox-debetni-karta-standard)"></div>
+            <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}credit-card-min_aoqb3h)"></div>
             <div class="card-body">
-              <h5 class="card-title">${App.lang.checkout_card_pay_title} <strong>${totalPrice.formatMoney()} ${App.settings.currencySymbol}</strong></h5>
+              <h5 class="card-title">${App.lang.checkout_card_pay_title} <strong>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</strong></h5>
               <p class="card-text">${App.lang.checkout_card_pay_desc}</p>
               <button class="btn btn-primary btn-raised">${App.lang.checkout_card_pay_btn}</button>
             </div>
           </div>
           <div class="card payment-method" data-method="cash">
-            <div class="btn card-img-top" style="background-image: url(https://securecdn.pymnts.com/wp-content/uploads/2017/10/Europe_Cash-Usage_Global-Cash-Index.jpg)"></div>
+            <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}cash-min_lautl6)"></div>
             <div class="card-body">
-              <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currencySymbol}</strong></h5>
+              <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
               <p class="card-text">${App.lang.checkout_cash_pay_desc}</p>
               <button class="btn btn-primary btn-danger btn-raised">${App.lang.checkout_cash_pay_btn}</button>
             </div>

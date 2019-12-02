@@ -7,13 +7,13 @@ App.renderDeliveryMethodScreen = () => {
       title: App.lang.delivery_method_eatin,
       text: App.lang.delivery_method_eatin_text,
       btn: { text: App.lang.delivery_method_eatin_btn, class: 'btn-primary' },
-      img: 'https://media1.s-nbcnews.com/j/streams/2014/October/141006/2D274906938828-today-cafeteria-140811-01.fit-760w.jpg',
+      img: `${App.imageUrlBase}eatin_zd3gg0`,
     },
     'takeout': { 
       title: App.lang.delivery_method_takeout,
       text: App.lang.delivery_method_takeout_text,
       btn: { text: App.lang.delivery_method_takeout_btn, class: 'btn-warning' },
-      img: 'https://www.sld.com/wp-content/uploads/2017/03/1280x480RestaurantTakeOut.jpg',
+      img: `${App.imageUrlBase}takeout_v1ldmt`,
     },
   };
   const screen = $(`
@@ -21,11 +21,11 @@ App.renderDeliveryMethodScreen = () => {
       <div class="screen delivery-methods">
         <div class="card full-width-card">
           <h5 class="card-header">${App.lang.delivery_method_welcome_title}</h5>
-          <div class="card-body">
+          <!--div class="card-body">
             <h5 class="card-title">Daily offer: special on-the-house treatment</h5>
             <p class="card-text">Order 5 get 1 free</p>
             <button class="btn btn-primary">${App.lang.delivery_method_special_offer_btn}</button>
-          </div>
+          </div-->
         </div>
         <br>
         <div class="selection">

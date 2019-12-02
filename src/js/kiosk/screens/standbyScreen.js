@@ -4,16 +4,16 @@ const progress = `
 </div>
 `;
 const slides = [
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg09_hjz6no', btn: "Touch to start" }, 
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg10_coyfml', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg04_i3fq68', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg06_gmmeqj', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg01_mog1lh', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg05_osoyo0', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg02_komziq', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg03_tdlabn', btn: "Touch to start" },
-  { img: 'https://res.cloudinary.com/ceny24/image/upload/bg08_hsajsa', btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg09_hjz6no-min_sgc2il`, btn: "Touch to start" }, 
+  { img: `${App.imageUrlBase}bg10_coyfml-min_fcywew`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg01_mog1lh-min_fbiyp4`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg05_osoyo0-min_l20vdt`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg04_i3fq68-min_ezecgd`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg08_hsajsa-min_rcwj9g`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg02_komziq-min_js6pl0`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg03_tdlabn-min_xwllb6`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg07_wrsdxe-min_vi4wot`, btn: "Touch to start" },
+  { img: `${App.imageUrlBase}bg06_gmmeqj-min_nsxd6e`, btn: "Touch to start" },
 ];
 App.renderStandbyScreen = () => {
   const screen = $(`

@@ -1,12 +1,12 @@
 App.GLocaleEN = {
   "delivery_method_welcome_title"           : "Welcome!",
   "delivery_method_special_offer_btn"       : "Show me!",
-  "delivery_method_eatin"            : "Eat in",
-  "delivery_method_eatin_text"             : "Let's enjoy the atmosphere in our restaurant",
-  "delivery_method_eatin_btn"              : "I'll eat here",
-  "delivery_method_takeout"          : "Take out",
-  "delivery_method_takeout_text"           : "I want to pack my meal",
-  "delivery_method_takeout_btn"            : "I'll take it home",
+  "delivery_method_eatin"                   : "Eat in",
+  "delivery_method_eatin_text"              : "Let's enjoy the atmosphere in our restaurant",
+  "delivery_method_eatin_btn"               : "I'll eat here",
+  "delivery_method_takeout"                 : "Take out",
+  "delivery_method_takeout_text"            : "I want to pack my meal",
+  "delivery_method_takeout_btn"             : "I'll take it home",
 
   "order_products_order_btn"                : "Order",
   "order_checkout_btn"                      : "Checkout",
@@ -23,6 +23,7 @@ App.GLocaleEN = {
 
   "card_payment_title"                      : "Information",
   "card_payment_desc"                       : "Please follow instructions on the payment terminal screen",
+
   "payment_method_cash"                     : "Cash",
   "payment_method_card"                     : "Card",
 

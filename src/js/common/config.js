@@ -4,8 +4,14 @@ App.apiPrefix = '/api/v1';
 App.cloudinaryCloudName = 'itakecz';
 App.imageUrlBase = `https://res.cloudinary.com/${App.cloudinaryCloudName}/image/upload/`;
 
+App.paymentTerminalServerURL = window.location.protocol + '//localhost:3443';
 App.localhostServerURL = window.location.protocol + '//localhost:2443';
 App.tableSyncServerURL = window.location.protocol + '//sync.vcap.me:2443';
+
+App.paymentTerminalTypesByPort = {
+  '2050': 'payment-terminal-ingenico',
+  '20008': 'payment-terminal-pax',
+};
 
 const [ subdomain, domain, realm ] = window.location.hostname.split('.');
 App.subdomain = subdomain;
@@ -24,11 +30,11 @@ App.supportedCurrencies = {
 App.supportedLocales = {
   'en': 'English',
   'cs': 'Čeština',
-  'sk': 'Slovenčina',
-  'vi': 'tiếng Việt',
-  'ko': '한국어',
-  'ja': '日本語',
-  'de': 'Deutsch',
+  // 'sk': 'Slovenčina',
+  // 'vi': 'tiếng Việt',
+  // 'ko': '한국어',
+  // 'ja': '日本語',
+  // 'de': 'Deutsch',
 };
 
 App.datePickerInstances = [];
