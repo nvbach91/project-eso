@@ -160,7 +160,8 @@ App.renderKitchenReceiptText = (transaction) => {
       const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
       return `${App.ESCPOS.quadrupleSize(itemName)}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
     }).join('\n')}` +
-    `\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`;
+    //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
+    `\n\n\n\n.`;
 
   const result = App.alignReceiptText(text);
   return result;

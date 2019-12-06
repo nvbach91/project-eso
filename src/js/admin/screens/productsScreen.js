@@ -43,7 +43,7 @@ App.renderProductsScreen = () => {
   form.submit((e) => {
     e.preventDefault();
     const searchValue = input.val();
-    if (/^\d+$/.test(searchValue)) {
+    if (/^[A-Z\d]+$/.test(searchValue)) {
       showProductEditForm(searchValue, () => input.keyup());
     }
   });
