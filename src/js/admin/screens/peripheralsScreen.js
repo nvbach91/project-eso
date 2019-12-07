@@ -18,7 +18,7 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormInput({ label: 'Print columns', name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 32, max: 48 })}
         </div>
         <div class="form-row"> 
-          ${App.generateFormSelect({ label: 'Kitchen printer name', name: 'kitchenPrinter.name', value: App.settings.kitchenPrinter.name, options: printerOptions })}
+          ${App.generateFormSelect({ label: 'Kitchen printer name', name: 'kitchenPrinter.name', value: App.settings.kitchenPrinter.name, options: printerOptions, optional: true })}
           ${App.generateFormSelect({ label: 'Diacritics', name: 'kitchenPrinter.diacritics', value: App.settings.kitchenPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormInput({ label: 'Print columns', name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 32, max: 48 })}
         </div>
