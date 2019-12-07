@@ -25,7 +25,7 @@ const Registers = new Schema({
     rounding: Boolean, 
     symbol: String
   },
-  printers: { 
+  printer: { 
     name: String, 
     diacritics: Boolean, 
     columns: Number 
