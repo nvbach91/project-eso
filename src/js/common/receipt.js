@@ -80,12 +80,12 @@ App.renderReceiptText = (transaction) => {
     `\n${App.settings.address.zip} ${App.settings.address.city}` +
     `\n${App.lang.receipt_header_premise}: ${App.settings.residence.street}` +
     `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
-    `\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
     `\t${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}\t` +
-    `\n${App.ESCPOS.invert(`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`)}` +
+    `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
     `\n${transaction.items.map((item) => {
       const itemTotal = item.quantity * item.price;
       subTotal += itemTotal;
@@ -96,8 +96,8 @@ App.renderReceiptText = (transaction) => {
       const product = App.products[item.ean];
       const itemName = product ? product.name : ('EAN: ' + item.ean);
       return `${App.ESCPOS.bold(itemName)}\n${quantityPadded} x${App.addPadding(item.price, 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
-    }).join('\n')}` +
-    `\n${App.getReceiptHorizontalLine()}`;
+    }).join('\n')}`;// +
+    //`\n${App.getReceiptHorizontalLine()}`;
 
   const total = App.round(subTotal, 2);
   //const change = transaction.tendered - total;
@@ -129,7 +129,7 @@ App.renderReceiptText = (transaction) => {
       );
     }).join('\n')}` +
     `${transaction.bkp ?
-      `\n${App.getReceiptHorizontalLine()}` +
+      //`\n${App.getReceiptHorizontalLine()}` +
       `\n${App.lang.receipt_summary_pre}: ${App.settings.ors.store_id}, ${App.lang.receipt_summary_pos}: ${App.settings.number}` +
       `\n${App.lang.receipt_summary_bkp}:${transaction.bkp}` +
       `\n${App.lang.receipt_summary_fik}:${transaction.fik}` : ''
@@ -138,9 +138,9 @@ App.renderReceiptText = (transaction) => {
   const footer =
     `${App.lang.receipt_footer_clerk}: ${App.getClerk(transaction.clerk)}` +
     `\n${moment(transaction.date).format(App.formats.dayDateTime)}` +
-    `\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine()}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +
-    `\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine()}` +
     `\n\t${App.credits}\t`;
 
   const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n\n\n.`;
