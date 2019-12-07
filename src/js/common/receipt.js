@@ -143,7 +143,7 @@ App.renderReceiptText = (transaction) => {
     `\n${App.getReceiptHorizontalLine()}` +
     `\n\t${App.credits}\t`;
 
-  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}`;
+  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n\n\n.`;
   //const text = `${body}`;
   const result = App.alignReceiptText(text);
   return result;
