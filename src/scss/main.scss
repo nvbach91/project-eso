@@ -101,7 +101,7 @@ main {
         width: 100%;
     }
     .card-img-top {
-        height: 100px;
+        height: 140px;
     }
 }
 #standby-carousel {
@@ -138,7 +138,14 @@ footer .card-header {
 #back-button {
     display: none;
     .nav-link {
+        span {
+            font-size: 14px;
+        }
         padding: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 100px;
     }
 }
 .ac-control {

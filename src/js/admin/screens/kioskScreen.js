@@ -1,5 +1,6 @@
 const currencyOptions = Object.keys(App.supportedCurrencies).map((code) => {
-  return { label: `${code} - ${App.supportedCurrencies[code]}`, value: code };
+  const currency = App.supportedCurrencies[code];
+  return { label: `${code} - ${currency.symbol}`, value: code };
 });
 
 App.renderKioskScreen = () => {
@@ -11,18 +12,19 @@ App.renderKioskScreen = () => {
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`<div class="card-body"></div>`);
-  createSettingsForm().appendTo(cpBody);
-  createOrsForm().appendTo(cpBody);
-  createTimersForm().appendTo(cpBody);
-  createReceiptForm().appendTo(cpBody);
+  createGeneralSettingsForm().appendTo(cpBody);
+  createOrsSettingsForm().appendTo(cpBody);
+  createInterfaceSettingsForm().appendTo(cpBody);
+  createReceiptSettingsForm().appendTo(cpBody);
+  createSlidesSettingsForm().appendTo(cpBody);
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
 };
 
-const createSettingsForm = () => {
+const createGeneralSettingsForm = () => {
   const form = $(`
     <form class="mod-item card">
-      <div class="mi-header">Settings</div>
+      <div class="mi-header">General settings</div>
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Name', name: 'name', value: App.settings.name })}
@@ -34,7 +36,7 @@ const createSettingsForm = () => {
           ${App.generateFormInput({ label: 'Zip', name: 'address.zip', value: App.settings.address.zip })}
           ${App.generateFormInput({ label: 'Country', name: 'address.country', value: App.settings.address.country })}
         </div>
-        ${App.generateFormSelect({label: 'Currency', name: 'currency', value: App.settings.currency.code, options: currencyOptions })} 
+        ${App.generateFormSelect({label: 'Currency', name: 'currency', value: App.settings.currency.code, options: currencyOptions })}
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
@@ -45,7 +47,7 @@ const createSettingsForm = () => {
   return form;
 };
 
-const createOrsForm = () => {
+const createOrsSettingsForm = () => {
   const form = $(`
     <form class="mod-item card">
       <div class="mi-header">Fiscal settings</div>
@@ -85,15 +87,18 @@ const createOrsForm = () => {
   return form;
 };
 
-const createTimersForm = () => {
+const createInterfaceSettingsForm = () => {
   const form = $(`
     <form class="mod-item card">
-      <div class="mi-header">Timers</div>
+      <div class="mi-header">Interface settings</div>
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ type: 'number', step: 1000, label: 'Activity Check Timeout (ms)', name: 'activityCheckTimeout', value: App.settings.activityCheckTimeout })}
           ${App.generateFormInput({ type: 'number', step: 1000, label: 'Activity Timeout (ms)', name: 'activityTimeout', value: App.settings.activityTimeout })}
           ${App.generateFormInput({ type: 'number', step: 1000, label: 'Carousel Interval (ms)', name: 'carouselInterval', value: App.settings.carouselInterval })}
+        </div>
+        <div class="form-row">
+          ${App.generateFormSelect({ label: 'Automatically jump to next order tab', name: 'autoNextTab', value: App.settings.autoNextTab, options: App.binarySelectOptions })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
@@ -105,11 +110,11 @@ const createTimersForm = () => {
   return form;
 };
 
-const createReceiptForm = () => {
+const createReceiptSettingsForm = () => {
   const imgStyle = App.getBackgroundImage(App.settings.receipt.img);
   const form = $(`
     <form class="mod-item card">
-      <div class="mi-header">Receipt</div>
+      <div class="mi-header">Receipt settings</div>
       <div class="mi-body">
         <div class="form-row">
           <div class="img-upload">
@@ -131,7 +136,7 @@ const createReceiptForm = () => {
   `);
   App.bindForm(form, '/settings');
   App.bindCloudinaryFileUpload(
-    form.find('input.cloudinary-fileupload[type=file]'), 
+    form.find('input.cloudinary-fileupload[type="file"]'), 
     form.find('input[name="receipt.img"]'), 
     form.find('.img-holder')
   );
@@ -140,9 +145,62 @@ const createReceiptForm = () => {
     removeBtn.click(() => {
       form.find('.img-holder').removeAttr('style');
       form.find('input[name="receipt.img"]').val('');
-      App.resetFileInput(form.find('input.cloudinary-fileupload[type=file]'));
+      App.resetFileInput(form.find('input.cloudinary-fileupload[type="file"]'));
       removeBtn.next().append(App.getIcon('file_upload'));
     });
   }
   return form;
+};
+
+const createSlidesSettingsForm = () => {
+  const slides = [...App.settings.slides];
+  const form = $(`
+    <div class="mod-item card">
+      <div class="mi-header">
+        <span>Slides settings</span>
+        <button class="btn btn-success btn-raised btn-add">Add</button>
+      </div>
+      <div class="mi-body"></div>
+    </div>
+  `);
+  const miBody = form.find('.mi-body');
+  form.find('.btn-add').click(() => {
+    const formRow = createSlideFormRow({ order: 0, img: '', text: '' });
+    miBody.prepend('<hr>');
+    miBody.prepend(formRow);
+  });
+  slides.forEach((slide) => {
+    const formRow = createSlideFormRow(slide);
+    miBody.append(formRow);
+    miBody.append('<hr>');
+  });
+  return form;
+};
+
+const createSlideFormRow = (slide) => {
+  const imgStyle = App.getBackgroundImage(slide.img);
+  const formRow = $(`
+    <form class="form-row">
+      <div class="img-upload">
+        <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+        <input class="hidden" name="img" value="${slide.img || ''}">
+        ${App.getCloudinaryUploadTag({ tags: ['slide'] })}
+      </div>
+      <div class="form-col">
+        ${App.generateFormInput({ type: 'number', min: 0, label: 'Order', name: 'order', value: slide.order })}
+        ${App.generateFormInput({ label: 'Button text', name: 'text', value: slide.text, optional: true })}
+      </div>
+      <div class="mi-control">
+        <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
+        <button type="button" class="btn btn-danger btn-raised btn-remove">Remove ${App.getIcon('close')}</button>
+      </div>
+    </form>
+  `);
+  App.bindForm(formRow, '/slides');
+  App.bindCloudinaryFileUpload(
+    formRow.find('input.cloudinary-fileupload[type="file"]'), 
+    formRow.find('input[name="img"]'), 
+    formRow.find('.img-holder')
+  );
+  return formRow;
 };

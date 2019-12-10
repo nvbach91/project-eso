@@ -23,7 +23,12 @@ App.provider = 'Ethereals United';
 App.credits = new Date().getFullYear() + ' © ' + App.provider;
 
 App.supportedCurrencies = {
-  CZK: 'Kč',
+  CZK: {
+    code: 'CZK',
+    locale: 'cs',
+    rounding: true,
+    symbol: 'Kč'
+  },
   //EUR: '€'
 };
 

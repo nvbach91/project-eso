@@ -26,7 +26,7 @@
     border-radius: $borderRadius;
     background-color: #fff;
     padding: 10px 10px 0 10px;
-    height: 200px;
+    height: 260px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,34 +105,38 @@
 }
 .product-details {
     display: flex;
+    flex-direction: column;
+    button {
+        padding: 20px 40px;
+    }
 }
 .pd-description {
     width: 100%;
-    font-size: 14px;
+    font-size: 15px;
     border: none;
     background-color: transparent;
     font-style: italic;
     resize: none;
 }
 .pd-img {
-    width: 50%;
-    height: 200px;
+    height: 420px;
 }
 .pd-details {
-    width: 50%;
-    padding-left: 20px;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .pd-name {
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: bold;
+    font-size: 20px;
 }
 .pd-price {
     font-size: 32px;
-    font-weight: 500;
+    font-weight: bold;
     color: $themeColor;
+    text-align: right;
 }
 .pd-row {
     display: flex;

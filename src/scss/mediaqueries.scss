@@ -9,7 +9,7 @@
         min-width: 480px;
     }
     .product-offer {
-        height: 270px;
+        height: 320px;
     }
     .product-offer.highlight {
         grid-column-end: 3;
@@ -18,10 +18,16 @@
         flex-direction: row;
         overflow: initial;
         .card {
-            width: 48%;
+            flex-grow: 1;
+            &:nth-child(1) {
+                margin-right: 10px;
+            }
+            &:nth-child(2) {
+                margin-left: 10px;
+            }
         }
         .card-img-top {
-            height: 200px;
+            height: 280px;
         }
     }
     .navbar-brand span {
@@ -29,6 +35,9 @@
     }
     .modal-dialog {
         max-width: 768px;
+    }
+    .modal-dialog.modal-xl {
+        max-width: 1140px;
     }
     .cart-item {
         flex-wrap: nowrap;
@@ -61,7 +70,10 @@
         height: 180px;
     }
     .product-offer {
-        height: 300px;
+        height: 340px;
+    }
+    .po-control button {
+        padding: 15px 30px;
     }
     .product-offer.highlight {
         grid-column-end: 4;

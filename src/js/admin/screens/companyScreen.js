@@ -14,7 +14,7 @@ App.renderCompanyScreen = () => {
   const cpBody = $(`<div class="card-body"></div>`);
   const companyForm = $(`
     <form class="mod-item card">
-      <div class="mi-header">Settings</div>
+      <div class="mi-header">Company details</div>
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ label: 'Name', name: 'companyName', value: App.settings.companyName })}

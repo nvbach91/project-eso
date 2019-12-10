@@ -53,6 +53,14 @@ const Registers = new Schema({
   },
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
+  autoNextTab: Boolean,
+  slides: [
+    {
+      order: Number,
+      img: String,
+      text: String,
+    }
+  ]
 });
 
 module.exports = mongoose.model('registers', Registers);
@@ -115,5 +123,18 @@ const settings = {
   },
   activityTimeout: 60000, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: 25000, // if the app is idle for this amount of time after the check appeared, the app will reset
+  autoNextTab: false,
+  slides: [
+    { order: 0,img: 'bg09_hjz6no-min_sgc2il', text: "Touch to start" }, 
+    { order: 1,img: 'bg10_coyfml-min_fcywew', text: "Touch to start" },
+    { order: 2,img: 'bg01_mog1lh-min_fbiyp4', text: "Touch to start" },
+    { order: 3,img: 'bg05_osoyo0-min_l20vdt', text: "Touch to start" },
+    { order: 4,img: 'bg04_i3fq68-min_ezecgd', text: "Touch to start" },
+    { order: 5,img: 'bg08_hsajsa-min_rcwj9g', text: "Touch to start" },
+    { order: 6,img: 'bg02_komziq-min_js6pl0', text: "Touch to start" },
+    { order: 7,img: 'bg03_tdlabn-min_xwllb6', text: "Touch to start" },
+    { order: 8,img: 'bg07_wrsdxe-min_vi4wot', text: "Touch to start" },
+    { order: 9,img: 'bg06_gmmeqj-min_nsxd6e', text: "Touch to start" },
+  ]
 };
 */

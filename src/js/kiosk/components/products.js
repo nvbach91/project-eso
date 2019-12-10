@@ -23,7 +23,7 @@ App.renderProducts = (group) => {
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
-            <button class="btn btn-primary add">
+            <button class="btn btn-raised btn-primary add">
               ${App.getIcon('playlist_add')}
             </button>
           </div>
@@ -37,7 +37,7 @@ App.renderProducts = (group) => {
     element.find('.add').click((e) => {
       e.stopPropagation();
       App.addToCart(ean);
-      //App.nextTab();
+      App.nextTab();
     });
     const cartQuantityIndicator = element.find('.cart-quantity-indicator');
     cartQuantityIndicator.click((e) => {
@@ -60,12 +60,13 @@ App.showProductDetail = (ean) => {
     <div class="product-details">
       <div class="pd-img"${App.getBackgroundImage(img)}></div>
       <div class="pd-details">
-        <div class="text-left">
+        <div class="pd-info">
           <div class="pd-name">${name}</div>
           ${desc ? `<textarea disabled class="pd-description">${desc}</textarea>` : ''}
+          <hr>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
-        <div class="pd-control text-left">
+        <div class="pd-control">
           <div class="pd-row justify-content-start">
             <button class="btn btn-primary${App.cart[ean] ? '': ' hidden'} remove">${App.getIcon('remove')}</button>
             <button class="btn btn-primary cart-quantity-indicator" data-id="${ean}">
@@ -85,7 +86,7 @@ App.showProductDetail = (ean) => {
   if (desc) { // resizing the description textbox
     const descriptionContainer = element.find('.pd-description')[0];
     const nLines = desc.split(/\r\n/).length;
-    descriptionContainer.style.height = `${nLines * 22}px`;
+    descriptionContainer.style.height = `${nLines * 24}px`;
   }
   element.find('.cart-quantity-indicator').click((e) => {
     App.showCart();
@@ -107,7 +108,7 @@ App.showProductDetail = (ean) => {
       App.addToCart(ean);
     }
     App.closeModal();
-    //App.nextTab();
+    App.nextTab();
   });
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();

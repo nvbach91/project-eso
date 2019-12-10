@@ -5,12 +5,9 @@ App.renderFooter = () => {
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item" id="back-button">
-            <a class="nav-link active" href="#">${App.getIcon('arrow_back')}</a>
+            <a class="nav-link active" href="#">${App.getIcon('arrow_back')}<span>${App.lang.misc_go_back}</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Blazefire Production</a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" id="company-credits">
             <a class="nav-link" href="#">2019 &copy; Ethereals United</a>
           </li>
           <li id="locale-switcher"></li>

@@ -11,7 +11,7 @@ App.GLocaleCS = {
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
 
-  "checkout_title"                          : "Jakým způsobem chcete zaplatit?",
+  "checkout_title"                          : "Platba",
   "checkout_card_pay_title"                 : "Platba kartou",
   "checkout_card_pay_desc"                  : "Chci zaplatit přes kreditní kartu",
   "checkout_card_pay_btn"                   : "Zaplatím kartou",
@@ -73,5 +73,6 @@ App.GLocaleCS = {
   "misc_itemss"                             : "položek",
 
   "misc_close_btn"                          : "Zavřít",
+  "misc_go_back"                            : "Zpět",
 
 };

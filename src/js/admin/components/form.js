@@ -83,6 +83,14 @@ App.bindForm = (form, endpoint) => {
     e.preventDefault();
     App.ajaxSaving(btnSave);
     const data = App.serializeForm(form);
+    if (data.currency) {
+      const currencyCode = data.currency;
+      delete data.currency;
+      const currency = App.supportedCurrencies[currencyCode];
+      Object.keys(currency).forEach((key) => {
+        data['currency.' + key] = currency[key];
+      });
+    }
     $.post({
       url: `${App.apiPrefix}${endpoint}`,
       beforeSend: App.attachToken,

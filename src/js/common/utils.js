@@ -269,6 +269,9 @@ App.detectBrowserLanguage = () => {
 };
 
 App.nextTab = () => {
+  if (!App.settings.autoNextTab) {
+    return false;
+  }
   setTimeout(() => {
     const nextTab = App.jTabs.children().eq(App.activeTabPosition + 1);
     if (nextTab.length) {
