@@ -4,19 +4,20 @@ const progress = `
 </div>
 `;
 App.renderStandbyScreen = () => {
-  const slides = [...App.settings.slides];
-  slides.sort((a, b) => { return a.order - b.order });
+  const slideIds = Object.keys(App.settings.slides);
+  slideIds.sort((a, b) => App.settings.slides[a].order - App.settings.slides[b].order);
   const screen = $(`
     <main id="main">
       <div class="container-fluid px-0">
         <div id="standby-carousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
-            ${slides.map((slide, index) => {
+            ${slideIds.map((slideId, index) => {
               return `<li data-target="#standby-carousel" data-slide-to="${index}" ${index === App.currentSlidePosition ? ' class="active"' : ''}></li>`
             }).join('')}
           </ol>
           <div class="carousel-inner bg-info" role="listbox">
-            ${slides.map(({img, text}, index) => {
+            ${slideIds.map((slideId, index) => {
+              const { img, text } = App.settings.slides[slideId];
               return `
                 <div class="carousel-item${index === App.currentSlidePosition ? ' active' : ''}">
                   <div class="d-flex align-items-center justify-content-center min-vh-100"${App.getBackgroundImage(img)}>

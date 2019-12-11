@@ -128,6 +128,18 @@ App.deleteGroup = (groupNumber, btn) => {
   }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
+App.deleteSlide = (_id, btn) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/slides/${_id}`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    delete App.settings.slides[_id];
+    btn.parent().parent().remove();
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
+};
+
 App.connect = () => {
   return $.when(
     App.fetchSettings(),

@@ -99,14 +99,18 @@ App.bindForm = (form, endpoint) => {
     }).done((resp) => {
       App.ajaxSaveDone(btnSave)();
       const changes = resp.msg === 'srv_success' ? data : resp.msg;
-      Object.keys(changes).forEach((key) => {
-        if (key.includes('.')) {
-          const kps = key.split('.');
-          App.settings[kps[0]][kps[1]] = changes[key];
-        } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
-          App.settings[key] = changes[key];
-        }
-      });
+      if (endpoint === '/slides') {
+        App.settings.slides[changes._id] = changes;
+      } else {
+        Object.keys(changes).forEach((key) => {
+          if (key.includes('.')) {
+            const kps = key.split('.');
+            App.settings[kps[0]][kps[1]] = changes[key];
+          } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
+            App.settings[key] = changes[key];
+          }
+        });
+      }
       if (endpoint === '/ors') {
         form.find('input[name="_upload_date"]').val(moment(resp.msg['ors.upload_date']).format(App.formats.dateTime));
         form.find('input[name="_valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));

@@ -153,7 +153,6 @@ const createReceiptSettingsForm = () => {
 };
 
 const createSlidesSettingsForm = () => {
-  const slides = [...App.settings.slides];
   const form = $(`
     <div class="mod-item card">
       <div class="mi-header">
@@ -166,13 +165,14 @@ const createSlidesSettingsForm = () => {
   const miBody = form.find('.mi-body');
   form.find('.btn-add').click(() => {
     const formRow = createSlideFormRow({ order: 0, img: '', text: '' });
-    miBody.prepend('<hr>');
     miBody.prepend(formRow);
   });
-  slides.forEach((slide) => {
-    const formRow = createSlideFormRow(slide);
+  const slideIds = Object.keys(App.settings.slides);
+  slideIds.sort((a, b) => App.settings.slides[a].order - App.settings.slides[b].order);
+  slideIds.forEach((_id) => {
+    const { text, img, order } = App.settings.slides[_id];
+    const formRow = createSlideFormRow({ _id, text, img, order });
     miBody.append(formRow);
-    miBody.append('<hr>');
   });
   return form;
 };
@@ -184,6 +184,7 @@ const createSlideFormRow = (slide) => {
       <div class="img-upload">
         <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
         <input class="hidden" name="img" value="${slide.img || ''}">
+        <input class="hidden" name="_id" value="${slide._id || ''}">
         ${App.getCloudinaryUploadTag({ tags: ['slide'] })}
       </div>
       <div class="form-col">
@@ -192,7 +193,7 @@ const createSlideFormRow = (slide) => {
       </div>
       <div class="mi-control">
         <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
-        <button type="button" class="btn btn-danger btn-raised btn-remove">Remove ${App.getIcon('close')}</button>
+        <button type="button" class="btn btn-danger btn-delete">Delete ${App.getIcon('close')}</button>
       </div>
     </form>
   `);
@@ -202,5 +203,14 @@ const createSlideFormRow = (slide) => {
     formRow.find('input[name="img"]'), 
     formRow.find('.img-holder')
   );
+  const btnDelete = formRow.find('.btn-delete');
+  btnDelete.click(() => {
+    // must confirm (click delete twice) to delete
+    if (!btnDelete.data('ready')) {
+      btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
+    } else {
+      App.deleteSlide(slide._id, btnDelete);
+    }
+  });
   return formRow;
 };

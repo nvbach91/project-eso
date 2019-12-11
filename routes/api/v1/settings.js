@@ -1,6 +1,8 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
 const Registers = require('../../../models/Registers');
 const Companies = require('../../../models/Companies');
+const Slides = require('../../../models/Slides');
 const Users = require('../../../models/Users');
 const utils = require('../../../utils');
 const btoa = require('btoa');
@@ -15,14 +17,24 @@ router.get('/settings', (req, res) => {
   let settings = {};
   Registers.findOne({ _id: req.user.regId }).select('-__v').then((register) => {
     settings = { ...register._doc };
+
     return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence companyName bank');
   }).then((company) => {
     const { residence, tin, vat, vatRegistered, companyName, bank } = company._doc;
     settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank };
+
     return Users.find({ companyId: req.user.companyId }).select('username name');
   }).then((users) => {
     settings.employees = {};
     users.forEach((user) => settings.employees[user.username.split(':')[1]] = user.name);
+
+    return Slides.find({ regId: req.user.regId }).select('-__v -regId');
+  }).then((slides) => {
+    settings.slides = {};
+    slides.forEach(({ _id, text, img, order }) => {
+      settings.slides[_id.toString()] = { text, img, order };
+    });
+
     res.json(settings);
   }).catch(utils.handleError(res));
 });
@@ -62,6 +74,25 @@ router.post('/ors', (req, res) => {
     return Registers.updateOne({ _id: req.user.regId }, { $set: settings });
   }).then(() => {
     res.json({ msg: settings });
+  }).catch(utils.handleError(res));
+});
+
+router.post('/slides', (req, res) => {
+  const { _id, ...slide } = req.body;
+  if (_id) {
+    return Slides.update({ _id }, { $set: slide }).then(() => {
+      res.json({ msg: 'srv_success' });
+    }).catch(utils.handleError(res));
+  } else {
+    return new Slides({ ...slide, regId: req.user.regId }).save().then(() => {
+      res.json({ msg: 'srv_success' });
+    }).catch(utils.handleError(res));
+  }
+});
+
+router.delete('/slides/:_id', (req, res) => {
+  Slides.remove({ _id: req.params._id }).then(() => {
+    res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });
 

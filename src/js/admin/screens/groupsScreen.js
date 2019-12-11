@@ -79,8 +79,7 @@ App.renderGroupsTable = () => {
   });
 };
 
-const showGroupEditForm = (number, cb) => {
-  if (!cb) cb = () => {};
+const showGroupEditForm = (number) => {
   const group = App.groups[number];
   const { name, order, img } = group || {};
   const imgStyle = App.getBackgroundImage(img);
@@ -119,7 +118,7 @@ const showGroupEditForm = (number, cb) => {
   });
   form.submit((e) => {
     e.preventDefault();
-    App.saveGroup(App.serializeForm(form), btnSave).always(cb);
+    App.saveGroup(App.serializeForm(form), btnSave);
   });
   btnDelete.click(() => {
     const nProductsInGroup = App.getNumberOfProductsInGroup(number);
@@ -151,7 +150,7 @@ const showGroupEditForm = (number, cb) => {
     if (!btnDelete.data('ready')) {
       btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
     } else {
-      App.deleteGroup(number, btnDelete).always(cb);
+      App.deleteGroup(number, btnDelete);
     }
   });
   App.showInModal(form);
