@@ -57,7 +57,7 @@ App.printReceipt = (transaction, appendix) => {
     const text = receiptText + (appendix ? `\n${appendix}` : '');
     App.printDirect(App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.printer.name);
   } else {
-    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', () => window.print);
+    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
     App.jModal.find('.cs-cancel').remove();
   }
 };
@@ -68,7 +68,7 @@ App.printKitchenReceipt = (transaction) => {
     const text = App.renderKitchenReceiptText(transaction);
     App.printDirect(App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
   } else {
-    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', () => window.print);
+    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
     App.jModal.find('.cs-cancel').remove();
   }
 };
@@ -100,6 +100,7 @@ App.renderReceiptText = (transaction) => {
 
   const body =
     `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
+    `\n${App.getDeliveryMethod(transaction.delivery)}` +
     `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
     `\n${transaction.items.map((item) => {
       let itemPrice = parseFloat(item.price);
@@ -177,6 +178,7 @@ App.renderReceiptText = (transaction) => {
 App.renderKitchenReceiptText = (transaction) => {
   const text =
     `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
+    `\n${App.getDeliveryMethod(transaction.delivery)}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.map((item) => {
       const quantityPadded = App.addPadding(item.quantity, 7);
