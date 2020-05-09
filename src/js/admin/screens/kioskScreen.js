@@ -44,7 +44,7 @@ const createGeneralSettingsForm = () => {
               ${Object.keys(App.settings.paymentMethods).map((key) => {
                 const active = App.settings.paymentMethods[key].enabled;
                 return (`
-                  <button type="button" class="payment-method-toggle btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
+                  <button type="button" class="payment-method-toggle btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
                     ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
                   </button>
                 `);

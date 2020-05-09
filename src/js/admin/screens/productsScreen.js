@@ -136,7 +136,7 @@ const showEditForm = (ean, cb) => {
                 }).map((modNumber) => {
                   const active = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                   return (`
-                    <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
+                    <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
                       ${modNumber} - ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
                     </button>
                   `);

@@ -506,7 +506,7 @@ App.bindToggleButtons = (form, className) => {
   form.find(className).click(function () {
     const t = $(this);
     const active = t.data('active');
-    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
+    t.removeClass(active ? 'btn-raised btn-primary' : 'btn-secondary').addClass(!active ? 'btn-raised btn-primary' : 'btn-secondary');
     t.data('active', !active);
     if (active) {
       t.find('i').remove();

@@ -63,7 +63,6 @@ App.showProductDetail = (ean) => {
         <div class="pd-info">
           <div class="pd-name">${name}</div>
           ${desc ? `<textarea disabled class="pd-description">${desc}</textarea>` : ''}
-          <hr>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
         <div class="pd-mod">
@@ -84,7 +83,7 @@ App.showProductDetail = (ean) => {
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                     const active = App.cart[ean] && App.cart[ean].mods ? App.cart[ean].mods.includes(Number(modNumber)) : false;
                     return (!display ? '' : `
-                      <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
+                      <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
                         ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
                       </button>
                     `);
@@ -133,7 +132,7 @@ App.showProductDetail = (ean) => {
   });
   element.find('.order').click(() => {
     // if (!App.cart[ean]) {
-      App.addToCart(ean, getMods(element));
+      App.addToCart(ean, getMods(element), 0);
     // }
     App.closeModal();
     App.nextTab();

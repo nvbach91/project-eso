@@ -11,7 +11,7 @@ App.GLocaleEN = {
   "order_products_order_btn"                : "Order",
   "order_checkout_btn"                      : "Checkout",
 
-  "checkout_title"                          : "Choose a payment method",
+  "checkout_title"                          : "Payment",
   "checkout_card_pay_title"                 : "Pay by card",
   "checkout_card_pay_desc"                  : "Simply use your credit card to pay",
   "checkout_card_pay_btn"                   : "I'll pay by card",

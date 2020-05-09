@@ -1,11 +1,11 @@
 
-App.addToCart = (ean, mods) => {
+App.addToCart = (ean, mods, quantity) => {
   App.jOrderPreviewList.children().removeClass('last');
   if (App.cart[ean]) {
-    App.cart[ean].quantity++;
+    App.cart[ean].quantity += typeof quantity === 'number' ? quantity : 1;
   } else {
     App.cart[ean] = {
-      quantity: 1,
+      quantity: typeof quantity === 'number' ? quantity : 1,
     };
     const orderPreviewItem = App.createOrderPreviewItem(ean);
     App.jOrderPreviewList.append(orderPreviewItem.addClass('last').hide().fadeIn());

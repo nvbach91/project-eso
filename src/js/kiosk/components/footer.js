@@ -8,7 +8,7 @@ App.renderFooter = () => {
             <a class="nav-link active" href="#">${App.getIcon('arrow_back')}<span>${App.lang.misc_go_back}</span></a>
           </li>
           <li class="nav-item" id="company-credits">
-            <a class="nav-link" href="#">2019 &copy; Ethereals United</a>
+            <a class="nav-link" href="#">${new Date().getFullYear()} &copy; Ethereals United</a>
           </li>
           <li id="locale-switcher"></li>
           <li class="nav-item">
