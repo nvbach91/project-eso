@@ -4,18 +4,18 @@ const tableHeader = `
     <div class="td sr-number">Number</div>
     <div class="td sr-order">Order</div>
     <div class="td sr-name">Name</div>
-    <div class="td sr-products">Products</div>
+    <div class="td sr-type">Type</div>
     <div class="td sr-edit">Edit</div>
   </div>
 `;
 
 let table;
 
-App.renderGroupsScreen = () => {
-  const keys = Object.keys(App.groups);
+App.renderModsScreen = () => {
+  const keys = Object.keys(App.mods);
   const header = $(`
     <div id="cp-header" class="card-header">
-      <div class="cp-name">Groups</div>
+      <div class="cp-name">Modifications</div>
       <div class="d-flex justify-content-flex-end">
         <div class="cp-control">${keys.length}&nbsp;${App.getIcon('storage')}</div>
         <button class="btn btn-primary">${App.getIcon('import_export')}&nbsp;Import/Export</button>
@@ -26,10 +26,10 @@ App.renderGroupsScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`
     <div class="card-body">
-      <div class="card-text">Tip: Add or edit group by entering its number</div>
+      <div class="card-text">Tip: Add or edit modification by entering its number</div>
       <form class="search-form">
         <div class="input-group">
-          <input class="form-control" placeholder="Enter group number" title="Key 1-20 digits" required>
+          <input class="form-control" placeholder="Enter modification number" title="Key 1-20 digits" required>
           <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;Search</button>
         </div>
       </form>
@@ -55,41 +55,42 @@ App.renderGroupsScreen = () => {
 };
 
 const renderTable = () => {
-  const keys = Object.keys(App.groups);
-  keys.sort((a, b) => App.groups[a].order - App.groups[b].order); // Ascending order
+  const keys = Object.keys(App.mods);
+  keys.sort((a, b) => App.mods[a].order - App.mods[b].order); // Ascending order
 
   table.empty();
   table.append(tableHeader, keys.map((key) => {
-    const i = App.groups[key];
-    const { name, number, order, img } = i || {};
-    const nProducts = App.getNumberOfProductsInGroup(number);
+    const i = App.mods[key];
+    const { name, type, number, order, img } = i || {};
     const item = $(`
       <div class="tr">
         <div class="td sr-img"${App.getBackgroundImage(img)}></div>
         <div class="td sr-number">${number}</div>
         <div class="td sr-order">${order}</div>
         <div class="td sr-name">${name}</div>
-        <div class="td sr-products">${nProducts}</div>
+        <div class="td sr-type">${type}</div>
         <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
       </div>
     `);
-    item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => showEditForm(number));
+    item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => {
+      showEditForm(number);
+    });
     return item;
   }));
 };
 
 const showEditForm = (number) => {
-  const item = App.groups[number];
-  const { name, order, img } = item || {};
+  const item = App.mods[number];
+  const { name, type, order, img, eans } = item || { eans: {} };
   const imgStyle = App.getBackgroundImage(img);
   const form = $(`
     <form class="mod-item">
-      <p class="h4 mb-4">${item ? 'Edit' : 'Create'} group - ${number}</p>
+      <p class="h4 mb-4">${item ? 'Edit' : 'Create'} modification - ${number}</p>
       <div class="form-row">
         <div class="img-upload">
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
           <input class="hidden" name="img" value="${img || ''}">
-          ${App.getCloudinaryUploadTag({ tags: ['group'] })}
+          ${App.getCloudinaryUploadTag({ tags: ['mod'] })}
         </div>
         <div class="form-col">
           <div class="form-row">
@@ -97,6 +98,8 @@ const showEditForm = (number) => {
             ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
           </div>
           ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
+          ${App.generateFormInput({ label: 'Type', name: 'type', value: type || '' })}
+          ${App.generateFormInput({ label: 'EANs', name: 'eans', value: Object.keys(eans).length ? Object.keys(eans) : '', optional: true })}
         </div>
       </div>
       <div class="mi-control">
@@ -117,39 +120,14 @@ const showEditForm = (number) => {
   });
   form.submit((e) => {
     e.preventDefault();
-    App.saveGroup(App.serializeForm(form), btnSave).done(renderTable);
+    App.saveMod(App.serializeForm(form), btnSave, renderTable);
   });
   btnDelete.click(() => {
-    const nProductsInGroup = App.getNumberOfProductsInGroup(number);
-    if (nProductsInGroup) {
-      return App.showWarning(`
-        <div>You must delete all products (${nProductsInGroup}) of this group first</div>
-        <div class="table">
-          <div class="tr table-header">
-            <div class="td sr-order">Order</div>
-            <div class="td sr-ean">Code</div>
-            <div class="td sr-name">Name</div>
-          </div>
-          ${Object.keys(App.products).filter((ean) => {
-            return number == App.products[ean].group;
-          }).sort((a, b) => App.products[a].order - App.products[b].order).map((ean) => {
-            const { name, order } = App.products[ean];
-            return `
-              <div class="tr">
-                <div class="td sr-order">${order || 0}</div>
-                <div class="td sr-number">${ean}</div>
-                <div class="td sr-name">${name}</div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `);
-    }
     // must confirm (click delete twice) to delete
     if (!btnDelete.data('ready')) {
       btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
     } else {
-      App.deleteGroup(number, btnDelete);
+      App.deleteMod(number, btnDelete, renderTable);
     }
   });
   App.showInModal(form);

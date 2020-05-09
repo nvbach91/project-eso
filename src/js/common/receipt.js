@@ -27,10 +27,13 @@ App.createTransaction = () => {
       date: new Date().toISOString(),
       items: Object.keys(App.cart).map((ean) => {
         const { group, price, vat } = App.products[ean];
-        const { quantity, discount } = App.cart[ean];
+        const { quantity, discount, mods } = App.cart[ean];
         const item = { quantity, ean, price, group, vat };
         if (discount) {
           item.discount = discount;
+        }
+        if (mods) {
+          item.mods = mods;
         }
         return item;
       }),
@@ -95,7 +98,11 @@ App.renderReceiptText = (transaction) => {
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? product.name : ('EAN: ' + item.ean);
-      return `${App.ESCPOS.bold(itemName)}\n${quantityPadded} x${App.addPadding(item.price, 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
+      let mods = '';
+      if (item.mods) {
+        mods = item.mods.map((mod) => App.mods[mod].name).join(', ');
+      }
+      return `${App.ESCPOS.bold(itemName)}${mods ? `\n${mods}` : ''}\n${quantityPadded} x${App.addPadding(item.price, 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
     //`\n${App.getReceiptHorizontalLine()}`;
 
@@ -158,7 +165,11 @@ App.renderKitchenReceiptText = (transaction) => {
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
-      return `${App.ESCPOS.quadrupleSize(itemName)}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
+      let mods = '';
+      if (item.mods) {
+        mods = item.mods.map((mod) => App.mods[mod].name).join(', ');
+      }
+      return `${App.ESCPOS.quadrupleSize(itemName)}${mods ? `\n${mods}` : ''}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
     }).join('\n')}` +
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
     `\n\n\n\n.`;

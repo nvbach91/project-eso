@@ -66,6 +66,34 @@ App.showProductDetail = (ean) => {
           <hr>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
+        <div class="pd-mod">
+          ${Object.keys(App.modTypes).filter((type) => {
+            return Object.keys(App.mods).filter((modNumber) => {
+              return App.modTypes[type].includes(Number(modNumber));
+            }).filter((modNumber) => {
+              return !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+            }).filter((display) => display).length > 0;
+          }).map((type) => {
+            return (`
+              <div class="product-mods">
+                <label class="bmd-label-static">${type}</label>
+                <div class="horizontal-scroll">
+                  ${Object.keys(App.mods).filter((modNumber) => {
+                    return App.modTypes[type].includes(Number(modNumber));
+                  }).map((modNumber) => {
+                    const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+                    const active = App.cart[ean] && App.cart[ean].mods ? App.cart[ean].mods.includes(Number(modNumber)) : false;
+                    return (!display ? '' : `
+                      <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
+                        ${App.mods[modNumber].name} ${active ? App.getIcon('done') : ''}
+                      </button>
+                    `);
+                  }).join('')}
+                </div>
+              </div>
+            `)
+          }).join('')}
+        </div>
         <div class="pd-control">
           <div class="pd-row justify-content-start">
             <button class="btn btn-primary${App.cart[ean] ? '': ' hidden'} remove">${App.getIcon('remove')}</button>
@@ -100,16 +128,39 @@ App.showProductDetail = (ean) => {
     }
   });
   element.find('.add').click(() => {
-    App.addToCart(ean);
+    App.addToCart(ean, getMods(element));
     element.find('.remove').removeClass('hidden');
   });
   element.find('.order').click(() => {
-    if (!App.cart[ean]) {
-      App.addToCart(ean);
-    }
+    // if (!App.cart[ean]) {
+      App.addToCart(ean, getMods(element));
+    // }
     App.closeModal();
     App.nextTab();
   });
+  element.find('.product-mod').click(function () {
+    const t = $(this);
+    const active = t.data('active');
+    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
+    t.data('active', !active);
+    if (active) {
+      t.find('i').remove();
+    } else {
+      t.append(App.getIcon('done'));
+    }
+  });
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();
+  
+};
+
+const getMods = (container) => {
+  const mods = [];
+  container.find('.product-mod').each(function () {
+    const t = $(this);
+    if (t.data('active')) {
+      mods.push(t.data('number'));
+    }
+  });
+  if (mods.length) return mods;
 };

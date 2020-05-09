@@ -1,7 +1,7 @@
 const tableHeader = `
-  <div class="tr search-result">
+  <div class="tr table-header">
     <div class="td sr-img">Image</div>
-    <div class="td sr-ean">Code</div>
+    <div class="td sr-number">Code</div>
     <div class="td sr-name">Name</div>
     <div class="td sr-price">Price</div>
     <div class="td sr-group">Group</div>
@@ -26,73 +26,73 @@ App.renderProductsScreen = () => {
   const cpBody = $(`
     <div class="card-body">
       <div class="card-text">Tip: Search for a product by its name or code</div>
-      <form id="product-search">
+      <form class="search-form">
         <div class="input-group">
           <input class="form-control" placeholder="Search by name or code" title="PLU EAN code 1-20 digits" required>
           <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;Search</button>
         </div>
       </form>
-      <div id="search-results" class="table"></div>
+      <div class="table"></div>
     </div>
   `);
   const maxSearchResults = 20;
   let searchResults = [];
-  const form = cpBody.find('#product-search');
+  const form = cpBody.find('.search-form');
   const input = form.find('input');
-  const searchResultsContainer = cpBody.find('#search-results');
+  const searchResultsContainer = cpBody.find('.table');
   form.submit((e) => {
     e.preventDefault();
     const searchValue = input.val();
     if (/^[A-Z\d]+$/.test(searchValue)) {
-      showProductEditForm(searchValue, () => input.keyup());
+      showEditForm(searchValue, () => input.keyup());
     }
   });
   input.keyup(App.debounce(() => {
     searchResultsContainer.empty();
     const searchValue = input.val();
-    if (searchValue.trim()) {
-      const productKeys = Object.keys(App.products);
-      for (let i = 0; i < productKeys.length; i++) {
-        const ean = productKeys[i];
-        const { name, price, group, vat, img } = App.products[ean];
-        if (name.indexOf(searchValue) >= 0 || ean.indexOf(searchValue) >= 0) {
-          const groupName = App.groups[group] ? App.groups[group].name : '';
-          const item = $(`
-            <div class="tr search-result">
+    // if (searchValue.trim()) {
+    const productKeys = Object.keys(App.products);
+    for (let i = 0; i < productKeys.length; i++) {
+      const ean = productKeys[i];
+      const { name, price, group, vat, img } = App.products[ean];
+      if (!searchValue || name.indexOf(searchValue) >= 0 || ean.indexOf(searchValue) >= 0) {
+        const groupName = App.groups[group] ? App.groups[group].name : '';
+        const item = $(`
+            <div class="tr">
               <div class="td sr-img"${App.getBackgroundImage(img)}></div>
-              <div class="td sr-ean">${App.highlightMatchedText(ean, searchValue)}</div>
+              <div class="td sr-number">${App.highlightMatchedText(ean, searchValue)}</div>
               <div class="td sr-name">${App.highlightMatchedText(name, searchValue)}</div>
               <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
-              <div class="td sr-group">${groupName}</div>
+              <div class="td sr-group${groupName ? '' : ' text-danger'}">${group} - ${groupName ? groupName : 'N/A'}</div>
               <div class="td sr-vat">${vat} %</div>
               <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
             </div>
           `);
-          item.children('.sr-edit, .sr-name, .sr-img').click(() => {
-            showProductEditForm(ean, () => input.keyup());
-          });
-          searchResults.push(item);
-          if (searchResults.length >= maxSearchResults) {
-            break;
-          }
+        item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => {
+          showEditForm(ean, () => input.keyup());
+        });
+        searchResults.push(item);
+        if (searchResults.length >= maxSearchResults) {
+          break;
         }
       }
-      if (searchResults.length) {
-        searchResultsContainer.append(tableHeader);
-        searchResultsContainer.append(searchResults);
-      } else {
-        searchResultsContainer.append(`<div class="tr">No products found. ${/^\d+$/.test(searchValue) ? `Press Enter to create product <span class="match">${searchValue}</span>.` : ''}</div>`);
-      }
-      searchResults = [];
     }
-  }, App.debounceTime));
+    if (searchResults.length) {
+      searchResultsContainer.append(tableHeader);
+      searchResultsContainer.append(searchResults);
+    } else {
+      searchResultsContainer.append(`<div class="tr">No products found. ${/^\d+$/.test(searchValue) ? `Press Enter to create product <span class="match">${searchValue}</span>.` : ''}</div>`);
+    }
+    searchResults = [];
+    // }
+  }, App.debounceTime)).keyup();
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
   setTimeout(() => input.focus(), 100);
 };
 
-const showProductEditForm = (ean, cb) => {
-  if (!cb) cb = () => {};
+const showEditForm = (ean, cb) => {
+  if (!cb) cb = () => { };
   const product = App.products[ean];
   const { name, price, group, img, vat, highlight, order, desc } = product || {};
   const imgStyle = App.getBackgroundImage(img);
@@ -126,9 +126,28 @@ const showProductEditForm = (ean, cb) => {
         ${App.generateFormSelect({ label: 'Group', name: 'group', value: group || '', options: groupOptions, type: 'number' })}
         ${App.generateFormSelect({ label: 'VAT', name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
       </div>
+        ${Object.keys(App.modTypes).map((type) => {
+          return (`
+            <div class="form-row product-mods">
+              <label class="bmd-label-static">Mods - ${type}</label>
+              <div class="horizontal-scroll">
+                ${Object.keys(App.mods).filter((modNumber) => {
+                  return App.modTypes[type].includes(Number(modNumber));
+                }).map((modNumber) => {
+                  const active = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+                  return (`
+                    <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
+                      ${modNumber} - ${App.mods[modNumber].name} ${''/*active ? App.getIcon('done') : ''*/}
+                    </button>
+                  `);
+                }).join('')}
+              </div>
+            </div>
+          `)
+        }).join('')}
       <div class="form-group">
         <label>Description</label>
-        <textarea name="desc" class="form-control" rows="4">${desc || ''}</textarea>
+        <textarea name="desc" class="form-control" rows="6">${desc || ''}</textarea>
       </div>
       <div class="mi-control">
         ${product ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
@@ -137,8 +156,8 @@ const showProductEditForm = (ean, cb) => {
     </form>
   `);
   App.bindCloudinaryFileUpload(
-    form.find('input.cloudinary-fileupload[type=file]'), 
-    form.find('input[name=img]'), 
+    form.find('input.cloudinary-fileupload[type=file]'),
+    form.find('input[name=img]'),
     form.find('.img-holder')
   );
   const btnSave = form.find('.btn-save');
@@ -157,6 +176,28 @@ const showProductEditForm = (ean, cb) => {
     } else {
       App.deleteProduct(ean, btnDelete).always(cb);
     }
+  });
+  form.find('.horizontal-scroll').mousewheel(function (event, delta) {
+    this.scrollLeft -= (delta * 30);
+    event.preventDefault();
+  });
+  const sortProductMods = (container) => {
+    container.children().detach().sort((a, b) => {
+      if ($(a).data('active')) {
+        return -1;
+      }
+      return 1;
+    }).appendTo(container);
+  };
+  form.find('.product-mod').click(function () {
+    const t = $(this);
+    const active = t.data('active');
+    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
+    t.data('active', !active);
+    //sortProductMods(t.parent());
+  });
+  form.find('.product-mods .horizontal-scroll').each(function () {
+    sortProductMods($(this));
   });
   App.showInModal(form);
 };

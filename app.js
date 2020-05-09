@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost/eso', {
     useCreateIndex: true,
 });
 
-require('./security/passport.js');
+require('./security/passport');
 
 const app = express();
 
@@ -26,17 +26,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', require('./routes/index.js'));
-app.use('/', require('./routes/auth.js'));
-app.use('/', require('./routes/registration.js'));
+app.use('/', require('./routes/index'));
+app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/registration'));
 
 const apiPrefix = '/api/v1';
 app.use(apiPrefix, passport.authenticate('jwt', { session: false }));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/settings.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/products.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/groups.js'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/aggregates.js'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/settings'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/products'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/groups'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/mods'));
+app.use(apiPrefix, require('./routes' + apiPrefix + '/aggregates'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

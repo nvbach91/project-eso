@@ -17,7 +17,7 @@ router.post('/groups', (req, res) => {
 
 router.delete('/groups/:number', (req, res) => {
   const { number } = req.params;
-  Groups.remove({ regId: req.user.regId, number }).then(() => {
+  Groups.deleteOne({ regId: req.user.regId, number }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });

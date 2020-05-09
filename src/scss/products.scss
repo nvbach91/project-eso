@@ -127,6 +127,13 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.pd-mod .product-mod {
+    padding: 20px 10px;
+    width: calc(20% - 2px);
+    min-width: initial;
+    max-width: initial;
+    height: 64px;
+}
 .pd-name {
     text-transform: uppercase;
     font-weight: bold;

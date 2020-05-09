@@ -1,11 +1,11 @@
 
-App.addToCart = (ean) => {
+App.addToCart = (ean, mods) => {
   App.jOrderPreviewList.children().removeClass('last');
   if (App.cart[ean]) {
     App.cart[ean].quantity++;
   } else {
     App.cart[ean] = {
-      quantity: 1
+      quantity: 1,
     };
     const orderPreviewItem = App.createOrderPreviewItem(ean);
     App.jOrderPreviewList.append(orderPreviewItem.addClass('last').hide().fadeIn());
@@ -13,6 +13,9 @@ App.addToCart = (ean) => {
     App.jOrderPreviewList.animate({
       scrollLeft: orderPreviewItem.offset().left
     }, App.getAnimationTime());
+  }
+  if (mods) {
+    App.cart[ean].mods = mods;
   }
   App.jOrderPreview.fadeIn();
   const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${ean}"]`).fadeIn().parent().parent().addClass('last');
@@ -145,7 +148,7 @@ App.showCart = () => {
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
-        <div class="ci-name">${name}</div>
+        <div class="ci-name">${name} ${cartItem.mods ? `[${cartItem.mods.map((m) => App.mods[m].name).join(', ')}]` : ''}</div>
         <button class="btn btn-primary btn-dec">-</button>
         <div class="ci-quantity" data-id="${ean}">${cartItem.quantity}</div>
         <button class="btn btn-primary btn-inc">+</button>

@@ -1,6 +1,9 @@
 App.transactions = [];
 App.products = {};
 App.groups = {};
+App.mods = {};
+App.modTypes = {};
+App.productMods = {};
 App.productCountByGroups = {};
 App.vatMarks = {};
 App.settings = {};
@@ -54,8 +57,35 @@ App.fetchGroups = () => {
     url: App.apiPrefix + '/groups',
     beforeSend: App.attachToken,
   }).done((resp) => {
-    resp.forEach((group) => {
-      App.groups[group.number] = group;
+    resp.forEach((item) => {
+      App.groups[item.number] = item;
+    });
+  });
+};
+
+App.fetchMods = () => {
+  return $.get({
+    url: App.apiPrefix + '/mods',
+    beforeSend: App.attachToken,
+  }).done((resp) => {
+    App.mods = {};
+    App.modTypes = {};
+    App.productMods = {};
+    resp.forEach((mod) => {
+      App.mods[mod.number] = mod;
+      Object.keys(mod.eans).forEach((ean) => {
+        if (!App.productMods[ean]) {
+          App.productMods[ean] = [mod.number];
+        } else {
+          App.productMods[ean].push(mod.number);
+        }
+      });
+      const type = mod.type;
+      if (!App.modTypes[type]) {
+        App.modTypes[type] = [mod.number];
+      } else {
+        App.modTypes[type].push(mod.number);
+      }
     });
   });
 };
@@ -91,6 +121,7 @@ App.saveProduct = (product, btn) => {
   }).done(() => {
     App.products[product.ean] = product;
     App.productCountByGroups[product.group]++;
+    return App.fetchMods();
   }).done(App.ajaxSaveDone(btn)).fail(App.ajaxSaveFail(btn));
 };
 
@@ -101,7 +132,9 @@ App.deleteProduct = (ean, btn) => {
     url: `${App.apiPrefix}/products/${ean}`,
     beforeSend: App.attachToken,
   }).done(() => {
+    App.productCountByGroups[App.products[ean].group]--;
     delete App.products[ean];
+    return App.fetchMods();
   }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
@@ -117,14 +150,39 @@ App.saveGroup = (group, btn) => {
   }).done(App.ajaxSaveDone(btn)).fail(App.ajaxSaveFail(btn));
 };
 
-App.deleteGroup = (groupNumber, btn) => {
+App.deleteGroup = (number, btn) => {
   App.ajaxDeleting(btn);
   return $.ajax({
     type: 'DELETE',
-    url: `${App.apiPrefix}/groups/${groupNumber}`,
+    url: `${App.apiPrefix}/groups/${number}`,
     beforeSend: App.attachToken,
   }).done(() => {
-    delete App.groups[groupNumber];
+    delete App.groups[number];
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
+};
+
+App.saveMod = (item, btn, done) => {
+  App.ajaxSaving(btn);
+  return $.post({
+    url: `${App.apiPrefix}/mods`,
+    beforeSend: App.attachToken,
+    contentType: 'application/json',
+    data: JSON.stringify(item),
+  }).done(() => {
+    return App.fetchMods().done(done);
+    //App.mods[item.number] = item;
+  }).done(App.ajaxSaveDone(btn)).fail(App.ajaxSaveFail(btn));
+};
+
+App.deleteMod = (number, btn, done) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/mods/${number}`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    return App.fetchMods().done(done);
+    //delete App.mods[number];
   }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
@@ -144,7 +202,8 @@ App.connect = () => {
   return $.when(
     App.fetchSettings(),
     App.fetchProducts(),
-    App.fetchGroups()
+    App.fetchGroups(),
+    App.fetchMods()
   );
 };
 

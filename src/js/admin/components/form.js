@@ -139,12 +139,31 @@ App.serializeForm = (form) => {
     const inputType = form.find(`[name="${input.name}"]`).attr('type');
     if (inputType === 'number' && /\d+/.test(value)) {
       value = Number(value);
+    } else if (input.name === 'eans') {
+      const compositeValue = {};
+      value.split(',').forEach((v) => {
+        if (App.products[v.trim()]) {
+          compositeValue[v.trim()] = true;
+        }
+      });
+      form.find(`[name="${input.name}"]`).val(Object.keys(compositeValue).toString());
+      value = compositeValue;
+    } else if (value === 'undefined') {
+      value = undefined;
+    } else if (value === 'true') {
+      value = true;
+    } else if (value === 'false') {
+      value = false;
     }
-    else if (value === 'undefined') value = undefined;
-    else if (value === 'true') value = true;
-    else if (value === 'false') value = false;
     data[input.name] = value;
   });
+  const mods = [];
+  form.find('.product-mod').filter(function () {
+    return $(this).data('active');
+  }).each(function () {
+    mods.push($(this).data('number'));
+  });
+  data.mods = mods;
   return data;
 };
 

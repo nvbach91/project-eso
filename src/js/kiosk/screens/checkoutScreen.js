@@ -17,14 +17,14 @@ App.renderCheckoutScreen = () => {
               <button class="btn btn-primary btn-raised">${App.lang.checkout_card_pay_btn}</button>
             </div>
           </div>
-          <!--div class="card payment-method" data-method="cash">
+          <div class="card payment-method" data-method="cash">
             <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}cash-min_lautl6)"></div>
             <div class="card-body">
               <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
               <p class="card-text">${App.lang.checkout_cash_pay_desc}</p>
               <button class="btn btn-primary btn-danger btn-raised">${App.lang.checkout_cash_pay_btn}</button>
             </div>
-          </div-->
+          </div>
         </div>
         <br>
         <div class="card full-width-card">

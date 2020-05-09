@@ -91,7 +91,7 @@ router.post('/slides', (req, res) => {
 });
 
 router.delete('/slides/:_id', (req, res) => {
-  Slides.remove({ _id: req.params._id }).then(() => {
+  Slides.deleteOne({ _id: req.params._id }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));
 });
