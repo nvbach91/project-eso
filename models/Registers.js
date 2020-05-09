@@ -28,11 +28,13 @@ const Registers = new Schema({
   printer: { 
     name: String, 
     diacritics: Boolean, 
+    direct: Boolean, 
     columns: Number 
   },
   kitchenPrinter: { 
     name: String, 
     diacritics: Boolean, 
+    direct: Boolean, 
     columns: Number 
   }, 
   terminal: { 

@@ -103,9 +103,9 @@ const showEditForm = (ean, cb) => {
   const vatOptions = App.settings.vatRates.map((rate) => {
     return { label: `${rate} %`, value: rate };
   });
+  const modalTitle = `${product ? 'Edit' : 'Create'} product - ${ean}`;
   const form = $(`
     <form class="mod-item">
-      <p class="h4 mb-4">${product ? 'Edit' : 'Create'} product - ${ean}</p>
       <div class="form-row">
         <div class="img-upload">
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
@@ -135,9 +135,10 @@ const showEditForm = (ean, cb) => {
                   return App.modTypes[type].includes(Number(modNumber));
                 }).map((modNumber) => {
                   const active = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+                  const mod = App.mods[modNumber];
                   return (`
-                    <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
-                      ${modNumber} - ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
+                    <button title="${mod.price} ${App.settings.currency.symbol}" type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
+                      ${modNumber} - ${mod.name} ${active ? App.getIcon('done', 14) : ''}
                     </button>
                   `);
                 }).join('')}
@@ -167,7 +168,15 @@ const showEditForm = (ean, cb) => {
   });
   form.submit((e) => {
     e.preventDefault();
-    App.saveProduct(App.serializeForm(form), btnSave).always(cb);
+    const data = App.serializeForm(form);
+    const mods = [];
+    form.find('.product-mod').filter(function () {
+      return $(this).data('active');
+    }).each(function () {
+      mods.push($(this).data('number'));
+    });
+    data.mods = mods;
+    App.saveProduct(data, btnSave).always(cb);
   });
   btnDelete.click(() => {
     // must confirm (click delete twice) to delete
@@ -193,5 +202,5 @@ const showEditForm = (ean, cb) => {
   form.find('.product-mods .horizontal-scroll').each(function () {
     sortProductMods($(this));
   });
-  App.showInModal(form);
+  App.showInModal(form, modalTitle);
 };

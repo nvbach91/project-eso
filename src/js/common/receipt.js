@@ -52,13 +52,25 @@ App.createTransaction = () => {
 };
 
 App.printReceipt = (transaction, appendix) => {
-  const text = App.renderReceiptText(transaction) + (appendix ? `\n${appendix}` : '');
-  App.printDirect(App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.printer.name);
+  const receiptText = App.renderReceiptText(transaction);
+  if (App.settings.printer.direct) {
+    const text = receiptText + (appendix ? `\n${appendix}` : '');
+    App.printDirect(App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.printer.name);
+  } else {
+    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', () => window.print);
+    App.jModal.find('.cs-cancel').remove();
+  }
 };
 
 App.printKitchenReceipt = (transaction) => {
-  const text = App.renderKitchenReceiptText(transaction);
-  App.printDirect(App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
+  const receiptText = App.renderKitchenReceiptText(transaction);
+  if (App.settings.kitchenPrinter.direct) {
+    const text = App.renderKitchenReceiptText(transaction);
+    App.printDirect(App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
+  } else {
+    App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', () => window.print);
+    App.jModal.find('.cs-cancel').remove();
+  }
 };
 
 App.renderReceiptText = (transaction) => {
@@ -87,10 +99,16 @@ App.renderReceiptText = (transaction) => {
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    `\t${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}\t` +
-    `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
+    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
+    `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
     `\n${transaction.items.map((item) => {
-      const itemTotal = item.quantity * item.price;
+      let itemPrice = parseFloat(item.price);
+      if (item.mods) {
+        item.mods.forEach((mod) => {
+          itemPrice += parseFloat(mod.price);
+        });
+      }
+      const itemTotal = item.quantity * itemPrice;
       subTotal += itemTotal;
       const vat = App.calculateTaxFromPrice(itemTotal, item.vat);
       vatSummary[item.vat].vat += vat;
@@ -100,9 +118,9 @@ App.renderReceiptText = (transaction) => {
       const itemName = product ? product.name : ('EAN: ' + item.ean);
       let mods = '';
       if (item.mods) {
-        mods = item.mods.map((mod) => App.mods[mod].name).join(', ');
+        mods = item.mods.map((mod) => `  *${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
       }
-      return `${App.ESCPOS.bold(itemName)}${mods ? `\n${mods}` : ''}\n${quantityPadded} x${App.addPadding(item.price, 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
+      return `${App.ESCPOS.bold(itemName)}${mods ? `\n${mods}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
     //`\n${App.getReceiptHorizontalLine()}`;
 
@@ -118,8 +136,8 @@ App.renderReceiptText = (transaction) => {
   const extraPadding = App.settings.receipt.extraPadding;
   const summary =
     App.lang.receipt_summary_rates +
-    App.addPadding(App.lang.receipt_summary_net, 10 + extraPadding) +
-    (receiptLargeEnough ? App.addPadding(App.lang.receipt_summary_vat, 10 + extraPadding) : `\t${App.lang.receipt_summary_vat}`) +
+    App.addPadding(App.lang.receipt_summary_net, 8 + extraPadding) +
+    (receiptLargeEnough ? App.addPadding(App.lang.receipt_summary_vat, 8 + extraPadding) : `\t${App.lang.receipt_summary_vat}`) +
     (receiptLargeEnough ? `\t${App.lang.receipt_payment_total}` : '') +
 
     `\n${Object.keys(vatSummary).filter((vatRate) => {
@@ -130,8 +148,8 @@ App.renderReceiptText = (transaction) => {
       return (
         App.vatMarks[vatRate] + ' ' +
         App.addPadding(vatRate, 2) + '%' +
-        App.addPadding(thisNet.formatMoney(), 10 + extraPadding) +
-        (receiptLargeEnough ? App.addPadding(thisVat, 10 + extraPadding) : ('\t' + thisVat)) +
+        App.addPadding(thisNet.formatMoney(), 8 + extraPadding) +
+        (receiptLargeEnough ? App.addPadding(thisVat, 8 + extraPadding) : ('\t' + thisVat)) +
         (receiptLargeEnough ? ('\t' + vatSummary[vatRate].total.formatMoney()) : '')
       );
     }).join('\n')}` +
@@ -161,13 +179,12 @@ App.renderKitchenReceiptText = (transaction) => {
     `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.map((item) => {
-      //const itemTotal = item.quantity * item.price;
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
       let mods = '';
       if (item.mods) {
-        mods = item.mods.map((mod) => App.mods[mod].name).join(', ');
+        mods = item.mods.map((mod) => `  *${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       }
       return `${App.ESCPOS.quadrupleSize(itemName)}${mods ? `\n${mods}` : ''}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
     }).join('\n')}` +

@@ -46,7 +46,7 @@
     justify-content: space-around;
 }
 .product-details .order {
-    width: 350px;
+    width: 330px;
 }
 .cart-quantity-indicator {
     font-size: 1.25em;
@@ -132,13 +132,18 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.pd-mod label {
+    font-size: 16px;
+}
 .pd-mod .product-mod {
-    padding: 20px 10px;
-    width: calc(20% - 2px);
+    font-size: 16px;
+    padding: 10px;
+    width: calc(25% - 2px);
     min-width: initial;
     max-width: initial;
-    height: 64px;
-    border-radius: 32px;
+    height: 84px;
+    border-radius: 42px;
+    justify-content: space-around;
 }
 .pd-name {
     text-transform: uppercase;
@@ -154,7 +159,10 @@
 .pd-row {
     display: flex;
     text-align: right;
-    width: 350px;
+    width: 330px;
+    button {
+        flex-grow: 1;
+    }
 }
 .pd-control {
     flex-direction: column;

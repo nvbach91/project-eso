@@ -19,10 +19,14 @@ App.round = (value, decimals) => {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 };
 
-App.showInModal = (element, title) => {
+App.showInModal = (element, title, cb) => {
   App.jModal.find('.modal-title').text(title || '');
   App.jModal.find('.modal-body').empty().append(element);
   App.jModal.modal();
+  App.jModal.on('shown.bs.modal', () => {
+    cb && cb();
+    App.jModal.off('shown.bs.modal');
+  });
 };
 
 App.bindCarousel = (carousel) => {
@@ -502,7 +506,7 @@ App.getIcon = (url, size) => {
 };
 
 
-App.bindToggleButtons = (form, className) => {
+App.bindToggleButtons = (form, className, iconSize) => {
   form.find(className).click(function () {
     const t = $(this);
     const active = t.data('active');
@@ -511,7 +515,7 @@ App.bindToggleButtons = (form, className) => {
     if (active) {
       t.find('i').remove();
     } else {
-      t.append(App.getIcon('done', 14));
+      t.append(App.getIcon('done', iconSize || 14));
     }
   });
 };

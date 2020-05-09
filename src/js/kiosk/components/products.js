@@ -62,9 +62,9 @@ App.showProductDetail = (ean) => {
       <div class="pd-details">
         <div class="pd-info">
           <div class="pd-name">${name}</div>
-          ${desc ? `<textarea disabled class="pd-description">${desc}</textarea>` : ''}
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
+        ${desc ? `<div class="pd-info"><p class="pd-description">${desc.split(/[\r\n]+/).join('<br>')}</p></div>` : ''}
         <div class="pd-mod">
           ${Object.keys(App.modTypes).filter((type) => {
             return Object.keys(App.mods).filter((modNumber) => {
@@ -80,11 +80,12 @@ App.showProductDetail = (ean) => {
                   ${Object.keys(App.mods).filter((modNumber) => {
                     return App.modTypes[type].includes(Number(modNumber));
                   }).map((modNumber) => {
+                    const mod = App.mods[modNumber];
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
-                    const active = App.cart[ean] && App.cart[ean].mods ? App.cart[ean].mods.includes(Number(modNumber)) : false;
+                    const active = App.cart[ean] && App.cart[ean].mods ? !!App.cart[ean].mods.filter((m) => m.number === Number(modNumber)).length : false;
                     return (!display ? '' : `
                       <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
-                        ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
+                        ${parseFloat(mod.price) ? `<span>${mod.name}<br>+${mod.price} ${App.settings.currency.symbol}</span>` : mod.name} ${active ? App.getIcon('done', 24) : ''}
                       </button>
                     `);
                   }).join('')}
@@ -94,7 +95,7 @@ App.showProductDetail = (ean) => {
           }).join('')}
         </div>
         <div class="pd-control">
-          <div class="pd-row justify-content-start">
+          <div class="pd-row justify-content-center">
             <button class="btn btn-primary${App.cart[ean] ? '': ' hidden'} remove">${App.getIcon('remove')}</button>
             <button class="btn btn-primary cart-quantity-indicator" data-id="${ean}">
               ${App.getIcon('shopping_cart')}
@@ -131,14 +132,12 @@ App.showProductDetail = (ean) => {
     element.find('.remove').removeClass('hidden');
   });
   element.find('.order').click(() => {
-    // if (!App.cart[ean]) {
-      App.addToCart(ean, getMods(element), 0);
-    // }
+    App.addToCart(ean, getMods(element), !App.cart[ean] ? 1 : 0);
     App.closeModal();
     App.nextTab();
   });
-  App.bindToggleButtons(element, '.product-mod');
-  App.showInModal(element, 'Product details');
+  App.bindToggleButtons(element, '.product-mod', 24);
+  App.showInModal(element, App.lang.modal_product_detail_title);
   App.jModal.find('.cs-cancel').remove();
   
 };
@@ -148,8 +147,9 @@ const getMods = (container) => {
   container.find('.product-mod').each(function () {
     const t = $(this);
     if (t.data('active')) {
-      mods.push(t.data('number'));
+      const number = t.data('number');
+      mods.push({ number, price: App.mods[number].price });
     }
   });
-  if (mods.length) return mods;
+  return mods;
 };

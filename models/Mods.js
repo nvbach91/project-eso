@@ -6,6 +6,7 @@ const Mods = new Schema({
   order: Number,
   number: Number,
   name: String,
+  price: String,
   type: String,
   img: String,
   eans: Object, // { 1: true, 2: true }

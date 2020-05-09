@@ -68,7 +68,13 @@ const updateAggregates = (t) => {
   }
   */
   t.items.forEach((item) => {
-    const itemTotal = item.quantity * item.price;
+    let itemPrice = parseFloat(item.price);
+    if (item.mods) {
+      item.mods.forEach((mod) => {
+        itemPrice += parseFloat(mod.price);
+      });
+    }
+    const itemTotal = item.quantity * itemPrice;
     total += itemTotal;
     nProdSold += item.quantity % 1 === 0 ? item.quantity : 1;
     fillNestedInc(revByVat, item.vat, itemTotal);

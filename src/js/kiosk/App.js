@@ -56,3 +56,24 @@ App.start = () => {
     moment.locale(App.locale);
   });
 };
+
+(() => {
+  const beforePrint = () => {
+    // console.log('Functionality to run before printing.');
+  };
+  const afterPrint = () => {
+    App.closeModal();
+  };
+  if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addListener((mql) => {
+      if (mql.matches) {
+        beforePrint();
+      } else {
+        afterPrint();
+      }
+    });
+  }
+  window.onbeforeprint = beforePrint;
+  window.onafterprint = afterPrint;
+})();

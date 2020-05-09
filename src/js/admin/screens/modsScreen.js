@@ -4,6 +4,7 @@ const tableHeader = `
     <div class="td sr-number">Number</div>
     <div class="td sr-order">Order</div>
     <div class="td sr-name">Name</div>
+    <div class="td sr-price">Price</div>
     <div class="td sr-type">Type</div>
     <div class="td sr-edit">Edit</div>
   </div>
@@ -61,13 +62,14 @@ const renderTable = () => {
   table.empty();
   table.append(tableHeader, keys.map((key) => {
     const i = App.mods[key];
-    const { name, type, number, order, img } = i || {};
+    const { name, type, number, order, img, price } = i || {};
     const item = $(`
       <div class="tr">
         <div class="td sr-img"${App.getBackgroundImage(img)}></div>
         <div class="td sr-number">${number}</div>
         <div class="td sr-order">${order}</div>
         <div class="td sr-name">${name}</div>
+        <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
         <div class="td sr-type">${type}</div>
         <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
       </div>
@@ -81,11 +83,11 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.mods[number];
-  const { name, type, order, img, eans } = item || { eans: {} };
+  const { name, type, order, img, eans, price } = item || { };
   const imgStyle = App.getBackgroundImage(img);
+  const modalTitle = `${item ? 'Edit' : 'Create'} modification - ${number}`;
   const form = $(`
     <form class="mod-item">
-      <p class="h4 mb-4">${item ? 'Edit' : 'Create'} modification - ${number}</p>
       <div class="form-row">
         <div class="img-upload">
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
@@ -98,8 +100,11 @@ const showEditForm = (number) => {
             ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
           </div>
           ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
-          ${App.generateFormInput({ label: 'Type', name: 'type', value: type || '' })}
-          ${App.generateFormInput({ label: 'EANs', name: 'eans', value: Object.keys(eans).length ? Object.keys(eans) : '', optional: true })}
+          <div class="form-row">
+            ${App.generateFormInput({ label: 'Type', name: 'type', value: type || '' })}
+            ${App.generateFormInput({ label: 'Price', name: 'price', value: price || Number(0).formatMoney() })}
+          </div>
+          ${App.generateFormInput({ label: 'EANs', name: 'eans', value: eans ? Object.keys(eans) : '', optional: true })}
         </div>
       </div>
       <div class="mi-control">
@@ -130,5 +135,5 @@ const showEditForm = (number) => {
       App.deleteMod(number, btnDelete, renderTable);
     }
   });
-  App.showInModal(form);
+  App.showInModal(form, modalTitle);
 };

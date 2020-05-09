@@ -87,3 +87,34 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
+
+@media print {
+    body {
+      height: initial;
+    }
+    #app, #spinner, .pika-single, 
+    .modal-backdrop, .modal-header, .modal-footer {
+      display: none;
+    }
+    .modal-content {
+      box-shadow: none;
+      width: initial;
+    }
+    .modal-dialog {
+      max-width: initial;
+      margin: initial
+    }
+    .modal-dialog-centered {
+      align-items: initial;
+      min-height: initial;
+    }
+    .modal-content .modal-body {
+      padding: 0;
+    }
+    pre {
+      padding: 0 10px;
+      border: none;
+      font-size: 12px;
+    }
+  }
+  

@@ -33,13 +33,13 @@ finish_body_title	Please take your receipt and wait for your number to be called
 finish_body_question	Did you know?	Věděli jste?
 		
 
-receipt_header_order	Order	Objednávka
+receipt_header_order	Order no	Objednávka č.
 receipt_header_tin	TIN	IČO
 receipt_header_vat	VAT	DIČ
 receipt_header_residence	Residence	Adresa
 receipt_header_premise	Premise	Provozovna
-receipt_body_vat_invoice	VAT Invoice	Daňový doklad č.
-receipt_body_invoice	Invoice	Doklad č.
+receipt_body_vat_invoice	VAT Invoice	Daňový doklad
+receipt_body_invoice	Invoice	Doklad
 receipt_payment_total	Total	Celkem
 receipt_payment_method	Payment method	Způsob úhrady
 receipt_payment_tendered	Tendered	Přijato

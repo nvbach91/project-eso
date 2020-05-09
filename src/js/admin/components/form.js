@@ -160,13 +160,6 @@ App.serializeForm = (form) => {
     }
     data[input.name] = value;
   });
-  const mods = [];
-  form.find('.product-mod').filter(function () {
-    return $(this).data('active');
-  }).each(function () {
-    mods.push($(this).data('number'));
-  });
-  data.mods = mods;
   return data;
 };
 

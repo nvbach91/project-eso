@@ -188,7 +188,7 @@ form {
     padding-left: 5px;
     font-size: 0.675rem;
     cursor: pointer;
-    max-width: 120px;
+    width: calc(20% - 2px);
     min-width: 100px;
     border-radius: 20px;
     white-space: initial;

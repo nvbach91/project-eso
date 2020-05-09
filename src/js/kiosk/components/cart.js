@@ -1,4 +1,3 @@
-
 App.addToCart = (ean, mods, quantity) => {
   App.jOrderPreviewList.children().removeClass('last');
   if (App.cart[ean]) {
@@ -28,9 +27,9 @@ App.addToCart = (ean, mods, quantity) => {
   App.jModal.find(`.cart [data-id="${ean}"]`).text(App.cart[ean].quantity);
   const groupNumber = App.products[ean].group;
   if (App.cartCategoryQuantities[groupNumber]) {
-    App.cartCategoryQuantities[groupNumber]++;
+    App.cartCategoryQuantities[groupNumber] += typeof quantity === 'number' ? quantity : 1;
   } else {
-    App.cartCategoryQuantities[groupNumber] = 1;
+    App.cartCategoryQuantities[groupNumber] = typeof quantity === 'number' ? quantity : 1;
   }
   App.jTabs.find(`[data-id=${groupNumber}]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupNumber]);
   App.calculateCart();
@@ -114,11 +113,17 @@ App.calculateCartSummaryValues = () => {
   Object.keys(App.cart).forEach((ean) => {
     const product = App.products[ean];
     const cartItem = App.cart[ean];
-    let itemPrice = cartItem.quantity * product.price;
+    let itemPrice = parseFloat(product.price);
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
-    totalPrice += itemPrice;
+    if (cartItem.mods) {
+      cartItem.mods.forEach((mod) => {
+        itemPrice += parseFloat(mod.price);
+      });
+    }
+    totalPrice += cartItem.quantity * itemPrice;
     nItems += cartItem.quantity;
   });
+  // console.log(totalPrice);
   return { nItems, totalPrice };
 };
 
@@ -144,16 +149,29 @@ App.showCart = () => {
   cartKeys.forEach((ean) => {
     const { price, name, img } = App.products[ean];
     const cartItem = App.cart[ean];
-    const thisTotal = cartItem.quantity * price;
+    let finalPrice = parseFloat(price);
+    if (cartItem.mods) {
+      cartItem.mods.forEach((mod) => {
+        finalPrice += parseFloat(mod.price);
+      });
+    }
+    let thisTotal = cartItem.quantity * finalPrice;
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
-        <div class="ci-name">${name} ${cartItem.mods ? `[${cartItem.mods.map((m) => App.mods[m].name).join(', ')}]` : ''}</div>
+        <div class="ci-name">
+          ${name} 
+          ${cartItem.mods ? 
+            `- ${cartItem.mods.map((m) => 
+                `${App.mods[m.number] ? App.mods[m.number].name : `${m.number} - N/A`}${parseFloat(m.price) ? ` +${m.price} ${App.settings.currency.symbol}` : ''}`
+              ).join(', ')}`
+            : ''}
+        </div>
         <button class="btn btn-primary btn-dec">-</button>
         <div class="ci-quantity" data-id="${ean}">${cartItem.quantity}</div>
         <button class="btn btn-primary btn-inc">+</button>
-        <div class="ci-price">${price}</div>
-        <div class="ci-total">${thisTotal.formatMoney()}</div>
+        <div class="ci-price">${finalPrice.formatMoney()}</div>
+        <!--div class="ci-total">${thisTotal.formatMoney()}</div-->
         <button class="btn btn-primary ci-remove">&times;</button>
       </div>
     `);

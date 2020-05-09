@@ -82,9 +82,9 @@ const showEditForm = (number) => {
   const item = App.groups[number];
   const { name, order, img } = item || {};
   const imgStyle = App.getBackgroundImage(img);
+  const modalTitle = `${item ? 'Edit' : 'Create'} group - ${number}`;
   const form = $(`
     <form class="mod-item">
-      <p class="h4 mb-4">${item ? 'Edit' : 'Create'} group - ${number}</p>
       <div class="form-row">
         <div class="img-upload">
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
@@ -152,5 +152,5 @@ const showEditForm = (number) => {
       App.deleteGroup(number, btnDelete);
     }
   });
-  App.showInModal(form);
+  App.showInModal(form, modalTitle);
 };
