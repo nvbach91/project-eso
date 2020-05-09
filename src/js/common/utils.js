@@ -411,9 +411,24 @@ App.sumObjectValues = (o) => {
   return sum;
 };
 
+const vi_diaDict = {};
+const vi_dia = 'ĂăÂâĐđÊêÔôƠơƯưÀàẰằẦầÈèỀềÌìÒòỒồỜờÙùỪừỲỳẢảẲẳẨẩẺẻỂểỈỉỎỏỔổỞởỦủỬửỶỷÃãẴẵẪẫẼẽỄễĨĩÕõỖỗỠỡŨũỮữỸỹẮắẤấÉéẾếỐốỚớỨứẠạẶặẬậẸẹỆệỊịỌọỘộỢợỤụỰựỴỵ';
+const vi_non = 'AaAaDdEeOoOoUuAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaEeEeOoOoUuAaAaAaEeEeIiOoOoOoUuUuYy';
+for (let i = 0; i < vi_dia.length; i++) {
+  vi_diaDict[vi_dia[i]] = vi_non[i];
+}
+
+App.removeVietnameseDiacritics = (s) => {
+  let res = '';
+  for (let i = 0; i < s.length; i++) {
+    res += vi_diaDict[s[i]] || s[i];
+  }
+  return res;
+};
+
 const diaDict = {};
-const dia = 'ěščřžýáíéóúůďťňľäĚŠČŘŽÝÁÍÉÓÚŮĎŤŇĂĽÄăÂâĐđÊêÔôƠơƯưÀàẰằẦầÈèỀềÌìÒòỒồỜờÙùỪừỲỳẢảẲẳẨẩẺẻỂểỈỉỎỏỔổỞởỦủỬửỶỷÃãẴẵẪẫẼẽỄễĨĩÕõỖỗỠỡŨũỮữỸỹÁáẮắẤấÉéẾếÍíÓóỐốỚớÚúỨứÝý';
-const non = 'escrzyaieouudtnlaESCRZYAIEOUUDTNALAaAaDdEeOoOoUuAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYyAaAaAaEeEeIiOoOoOoUuUuYy';
+const dia = 'ěščřžýáíéóúůďťňľäĚŠČŘŽÝÁÍÉÓÚŮĎŤŇĽÄ' + vi_dia;
+const non = 'escrzyaieouudtnlaESCRZYAIEOUUDTNLA' + vi_non;
 for (let i = 0; i < dia.length; i++) {
   diaDict[dia[i]] = non[i];
 }
@@ -484,4 +499,19 @@ App.getIcon = (url, size) => {
     return `<i class="icon" style="background-image: url(${url}); width: ${size}px; height: ${size}px;"></i>`;
   }
   return `<i class="material-icons" ${size ? ` style="font-size: ${size}px"` : ''}>${url}</i>`;
+};
+
+
+App.bindToggleButtons = (form, className) => {
+  form.find(className).click(function () {
+    const t = $(this);
+    const active = t.data('active');
+    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
+    t.data('active', !active);
+    if (active) {
+      t.find('i').remove();
+    } else {
+      t.append(App.getIcon('done', 14));
+    }
+  });
 };

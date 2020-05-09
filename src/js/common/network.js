@@ -187,6 +187,9 @@ App.deleteMod = (number, btn, done) => {
 };
 
 App.deleteSlide = (_id, btn) => {
+  if (!_id) {
+    return btn.parent().parent().remove();
+  }
   App.ajaxDeleting(btn);
   return $.ajax({
     type: 'DELETE',

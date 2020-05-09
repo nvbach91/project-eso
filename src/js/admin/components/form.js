@@ -91,6 +91,9 @@ App.bindForm = (form, endpoint) => {
         data['currency.' + key] = currency[key];
       });
     }
+    if (endpoint === '/settings') {
+      data.paymentMethods = App.settings.paymentMethods;
+    }
     $.post({
       url: `${App.apiPrefix}${endpoint}`,
       beforeSend: App.attachToken,

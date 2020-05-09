@@ -29,7 +29,7 @@ const Registers = new Schema({
     name: String, 
     diacritics: Boolean, 
     columns: Number 
-  }, 
+  },
   kitchenPrinter: { 
     name: String, 
     diacritics: Boolean, 
@@ -51,6 +51,16 @@ const Registers = new Schema({
     upload_date: Date, 
     valid_until: Date 
   },
+  paymentMethods: { 
+    // 'card': {
+    //   img: 'credit-card-min_aoqb3h',
+    //   enabled: true 
+    // },
+    // 'cash': {
+    //     img: 'cash-min_lautl6',
+    //     enabled: true
+    // }
+  }, 
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
   autoNextTab: Boolean

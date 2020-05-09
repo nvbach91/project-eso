@@ -37,6 +37,21 @@ const createGeneralSettingsForm = () => {
           ${App.generateFormInput({ label: 'Country', name: 'address.country', value: App.settings.address.country })}
         </div>
         ${App.generateFormSelect({label: 'Currency', name: 'currency', value: App.settings.currency.code, options: currencyOptions })}
+        <div class="form-row">
+          <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-static">Payment methods</label>
+            <div class="form-control">
+              ${Object.keys(App.settings.paymentMethods).map((key) => {
+                const active = App.settings.paymentMethods[key].enabled;
+                return (`
+                  <button type="button" class="payment-method-toggle btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
+                    ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
+                  </button>
+                `);
+              }).join('')}
+            </div>
+          </div>
+        </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
         </div>
@@ -44,6 +59,11 @@ const createGeneralSettingsForm = () => {
     </form>
   `);
   App.bindForm(form, '/settings');
+  App.bindToggleButtons(form, '.payment-method-toggle');
+  form.find('.payment-method-toggle').click(function () {
+    const t = $(this);
+    App.settings.paymentMethods[t.data('key')].enabled = t.data('active');
+  });
   return form;
 };
 

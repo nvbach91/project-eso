@@ -53,12 +53,12 @@ App.createTransaction = () => {
 
 App.printReceipt = (transaction, appendix) => {
   const text = App.renderReceiptText(transaction) + (appendix ? `\n${appendix}` : '');
-  App.printDirect(App.settings.printer.diacritics ? text : App.removeDiacritics(text), App.settings.printer.name);
+  App.printDirect(App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.printer.name);
 };
 
 App.printKitchenReceipt = (transaction) => {
   const text = App.renderKitchenReceiptText(transaction);
-  App.printDirect(App.settings.kitchenPrinter.diacritics ? text : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
+  App.printDirect(App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
 };
 
 App.renderReceiptText = (transaction) => {

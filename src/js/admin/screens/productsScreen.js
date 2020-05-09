@@ -137,7 +137,7 @@ const showEditForm = (ean, cb) => {
                   const active = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                   return (`
                     <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active.toString()}" data-number="${modNumber}">
-                      ${modNumber} - ${App.mods[modNumber].name} ${''/*active ? App.getIcon('done') : ''*/}
+                      ${modNumber} - ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
                     </button>
                   `);
                 }).join('')}
@@ -189,13 +189,7 @@ const showEditForm = (ean, cb) => {
       return 1;
     }).appendTo(container);
   };
-  form.find('.product-mod').click(function () {
-    const t = $(this);
-    const active = t.data('active');
-    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
-    t.data('active', !active);
-    //sortProductMods(t.parent());
-  });
+  App.bindToggleButtons(form, '.product-mod');
   form.find('.product-mods .horizontal-scroll').each(function () {
     sortProductMods($(this));
   });

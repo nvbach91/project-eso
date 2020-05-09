@@ -85,7 +85,7 @@ App.showProductDetail = (ean) => {
                     const active = App.cart[ean] && App.cart[ean].mods ? App.cart[ean].mods.includes(Number(modNumber)) : false;
                     return (!display ? '' : `
                       <button type="button" class="product-mod btn btn-raised btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
-                        ${App.mods[modNumber].name} ${active ? App.getIcon('done') : ''}
+                        ${App.mods[modNumber].name} ${active ? App.getIcon('done', 14) : ''}
                       </button>
                     `);
                   }).join('')}
@@ -138,17 +138,7 @@ App.showProductDetail = (ean) => {
     App.closeModal();
     App.nextTab();
   });
-  element.find('.product-mod').click(function () {
-    const t = $(this);
-    const active = t.data('active');
-    t.removeClass(active ? 'btn-primary' : 'btn-secondary').addClass(!active ? 'btn-primary' : 'btn-secondary');
-    t.data('active', !active);
-    if (active) {
-      t.find('i').remove();
-    } else {
-      t.append(App.getIcon('done'));
-    }
-  });
+  App.bindToggleButtons(element, '.product-mod');
   App.showInModal(element, 'Product details');
   App.jModal.find('.cs-cancel').remove();
   

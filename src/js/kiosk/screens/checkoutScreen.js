@@ -9,22 +9,19 @@ App.renderCheckoutScreen = () => {
         </div>
         <br>
         <div class="selection">
-          <div class="card payment-method" data-method="card">
-            <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}credit-card-min_aoqb3h)"></div>
-            <div class="card-body">
-              <h5 class="card-title">${App.lang.checkout_card_pay_title} <strong>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</strong></h5>
-              <p class="card-text">${App.lang.checkout_card_pay_desc}</p>
-              <button class="btn btn-primary btn-raised">${App.lang.checkout_card_pay_btn}</button>
-            </div>
-          </div>
-          <div class="card payment-method" data-method="cash">
-            <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}cash-min_lautl6)"></div>
-            <div class="card-body">
-              <h5 class="card-title">${App.lang.checkout_cash_pay_title} <strong>${App.round(totalPrice, 2).formatMoney()} ${App.settings.currency.symbol}</strong></h5>
-              <p class="card-text">${App.lang.checkout_cash_pay_desc}</p>
-              <button class="btn btn-primary btn-danger btn-raised">${App.lang.checkout_cash_pay_btn}</button>
-            </div>
-          </div>
+          ${Object.keys(App.settings.paymentMethods).filter((key) => App.settings.paymentMethods[key].enabled).map((key) => {
+            const pm = App.settings.paymentMethods[key];
+            return (`
+              <div class="card payment-method" data-method="${key}">
+                <div class="btn card-img-top" style="background-image: url(${App.imageUrlBase}${pm.img})"></div>
+                <div class="card-body">
+                  <h5 class="card-title">${App.lang[`checkout_${key}_pay_title`]} <strong>${totalPrice.formatMoney()} ${App.settings.currency.symbol}</strong></h5>
+                  <p class="card-text">${App.lang[`checkout_${key}_pay_desc`]}</p>
+                  <button class="btn btn-primary btn-raised">${App.lang[`checkout_${key}_pay_btn`]}</button>
+                </div>
+              </div>
+            `)
+          }).join('')}
         </div>
         <br>
         <div class="card full-width-card">
