@@ -83,10 +83,16 @@ App.showProductDetail = (ean) => {
                     const mod = App.mods[modNumber];
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                     const active = App.cart[ean] && App.cart[ean].mods ? !!App.cart[ean].mods.filter((m) => m.number === Number(modNumber)).length : false;
+                    const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (!display ? '' : `
+                    <div class="product-mod-wrapper">
+                      <div class="pm-img"${imgStyle}>
+                        ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
+                      </div>
                       <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
-                        ${parseFloat(mod.price) ? `<span>${mod.name}<br>+${mod.price} ${App.settings.currency.symbol}</span>` : mod.name} ${active ? App.getIcon('done', 24) : ''}
+                        ${mod.name}
                       </button>
+                    </div>
                     `);
                   }).join('')}
                 </div>
@@ -136,7 +142,7 @@ App.showProductDetail = (ean) => {
     App.closeModal();
     App.nextTab();
   });
-  App.bindToggleButtons(element, '.product-mod', 24);
+  App.bindToggleButtons(element, '.product-mod', 24, '.pm-img');
   App.showInModal(element, App.lang.modal_product_detail_title);
   App.jModal.find('.cs-cancel').remove();
   

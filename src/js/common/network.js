@@ -8,6 +8,7 @@ App.productCountByGroups = {};
 App.vatMarks = {};
 App.settings = {};
 App.aggregates = {};
+App.availableThemes = {};
 
 $(document).ajaxStop(() => {
   App.hideSpinner();
@@ -32,6 +33,11 @@ App.fetchSettings = () => {
     App.settings = resp;
     App.settings.vatRates.forEach((vatRate, index) => {
       App.vatMarks[vatRate] = String.fromCharCode(index + 65);
+    });
+    
+    App.availableThemes[App.settings.theme] = $('#theme').attr('href');
+    $.get('/themes').done((res) => {
+      App.availableThemes = res;
     });
   });
 };

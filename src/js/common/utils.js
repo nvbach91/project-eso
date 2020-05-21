@@ -506,16 +506,29 @@ App.getIcon = (url, size) => {
 };
 
 
-App.bindToggleButtons = (form, className, iconSize) => {
+App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) => {
   form.find(className).click(function () {
     const t = $(this);
     const active = t.data('active');
     t.removeClass(active ? 'btn-raised btn-primary' : 'btn-secondary').addClass(!active ? 'btn-raised btn-primary' : 'btn-secondary');
     t.data('active', !active);
     if (active) {
-      t.find('i').remove();
+      if (checkMarkContainerSelector) {
+        t.siblings(checkMarkContainerSelector).find('i').remove();
+      } else {
+        t.find('i').remove();
+      }
     } else {
-      t.append(App.getIcon('done', iconSize || 14));
+      if (checkMarkContainerSelector) {
+        t.siblings(checkMarkContainerSelector).append(App.getIcon('done', iconSize || 14));
+      } else {
+        t.append(App.getIcon('done', iconSize || 14));
+      }
     }
   });
+  if (checkMarkContainerSelector) {
+    form.find(checkMarkContainerSelector).click(function () {
+      $(this).siblings(className).click();
+    });
+  }
 };

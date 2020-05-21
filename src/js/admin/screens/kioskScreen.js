@@ -138,6 +138,7 @@ const createReceiptSettingsForm = () => {
       <div class="mi-body">
         <div class="form-row">
           <div class="img-upload">
+            <label class="bmd-label-static">Image</label>
             <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
             <input class="hidden" name="receipt.img" value="${App.settings.receipt.img || ''}">
             ${App.getCloudinaryUploadTag({ tags: ['receipt'] })}
@@ -177,7 +178,7 @@ const createSlidesSettingsForm = () => {
     <div class="mod-item card">
       <div class="mi-header">
         <span>Slides settings</span>
-        <button class="btn btn-success btn-raised btn-add">Add</button>
+        <button class="btn btn-secondary btn-raised btn-add">Add</button>
       </div>
       <div class="mi-body"></div>
     </div>
@@ -202,6 +203,7 @@ const createSlideFormRow = (slide) => {
   const formRow = $(`
     <form class="form-row">
       <div class="img-upload">
+        <label class="bmd-label-static">Image</label>
         <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
         <input class="hidden" name="img" value="${slide.img || ''}">
         <input class="hidden" name="_id" value="${slide._id || ''}">

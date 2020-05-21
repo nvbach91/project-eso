@@ -1,4 +1,5 @@
 $backgroundColor: white;
-$themeColor: #009688;
-$themeColorDarker: #007065;
+$primaryThemeColor: var(--primary);
+$primaryThemeColorDarker: var(--primary-darker);
+$primaryThemeColorTransparent: var(--primary-transparent);
 $borderRadius: 5px;

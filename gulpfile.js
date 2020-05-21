@@ -1,4 +1,6 @@
 
+const fs = require('fs');
+const es = require('event-stream');
 const argv = require('yargs').argv;
 const gulp = require('gulp');
 const sass = require('gulp-sass');
@@ -34,6 +36,18 @@ const scss = () => {
         .pipe(bs.stream());
 };
 
+const themes = () => {
+    const themesSrcDir = './src/themes/';
+    const pipes = fs.readdirSync(themesSrcDir).map((file) => {
+        return gulp.src([`${themesSrcDir}${file}`])
+            .pipe(plumber())
+            .pipe(rename({suffix: '.min'}))
+            .pipe(!argv.dev ? minify() : tap(() => {}))
+            .pipe(gulp.dest('./public/css/'));
+    });
+    return es.merge(pipes).pipe(bs.stream());
+};
+
 const js = (prefix) => {
     return gulp.src(`./src/js/${prefix}/index.js`)
         .pipe(plumber())
@@ -54,7 +68,7 @@ const adminjs = () => js('admin');
 
 const browserSync = (cb) => {
     bs.init({
-        proxy: 'https://app.vcap.me:2000',
+        proxy: 'https://eso.vcap.me:2000',
         https: {
             cert: './security/vcap-me-cert.pem',
             key: './security/vcap-me-key.pem',
@@ -78,6 +92,7 @@ const pug = () => {
 
 const watch = (cb) => {
     gulp.watch('./src/scss/**/*.scss', scss);
+    gulp.watch('./src/themes/**/*.css', themes);
     gulp.watch('./src/js/**/*.js', kioskjs);
     gulp.watch('./src/js/**/*.js', adminjs);
     gulp.watch('./views/**/*.pug', pug);
@@ -103,5 +118,5 @@ const monitor = (cb) => {
     });
 };
 
-exports.build = gulp.parallel(kioskjs, adminjs, scss);
-exports.default = gulp.parallel(kioskjs, adminjs, scss, monitor, browserSync, watch);
+exports.build = gulp.parallel(kioskjs, adminjs, themes, scss);
+exports.default = gulp.parallel(kioskjs, adminjs, themes, scss, monitor, browserSync, watch);

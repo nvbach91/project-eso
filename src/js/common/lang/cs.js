@@ -53,7 +53,7 @@ App.GLocaleCS = {
   "receipt_summary_fik"                     : "FIK",
   "receipt_footer_clerk"                    : "Vydal",
 
-  "modal_product_detail_title"              : "Detail produktu",
+  "modal_product_detail_title"              : "Podrobnosti produktu",
 
   "modal_cart_title"                        : "Vaše objednávka",
   "modal_cart_cancel_btn"                   : "Zrušit objednávku",

@@ -87,6 +87,7 @@ const showEditForm = (number) => {
     <form class="mod-item">
       <div class="form-row">
         <div class="img-upload">
+          <label class="bmd-label-static">Image</label>
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
           <input class="hidden" name="img" value="${img || ''}">
           ${App.getCloudinaryUploadTag({ tags: ['group'] })}

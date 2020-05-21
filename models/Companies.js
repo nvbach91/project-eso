@@ -16,6 +16,8 @@ const Companies = new Schema({
   phone: String,
   registrationDate: Date,
   language: String,
+  theme: String,
+  img: String,
 }, { minimize: false});
 
 module.exports = mongoose.model('companies', Companies);

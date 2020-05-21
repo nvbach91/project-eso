@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.5",
+    "event-stream": "^4.0.1",
     "gulp": "^4.0.1",
     "gulp-browserify": "^0.5.1",
     "gulp-clean-css": "^4.2.0",

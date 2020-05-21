@@ -3,8 +3,8 @@ App.renderHeader = (localeSwitcher) => {
     <header id="header">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">
-          <img src="${App.imageUrlBase}favicon_zuuuf9.png" width="30" height="30" class="d-inline-block align-top" alt="">
-          <span>The Elusive Camel</span>
+          <img src="${App.imageUrlBase}${App.settings.img || 'favicon_zuuuf9.png'}" width="30" height="30" class="d-inline-block align-top" alt="">
+          <span>${App.settings.name} | ${App.settings.companyName}</span>
         </a>
         <div id="locale-switcher"></div>
       </nav>

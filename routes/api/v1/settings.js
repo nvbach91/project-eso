@@ -18,10 +18,10 @@ router.get('/settings', (req, res) => {
   Registers.findOne({ _id: req.user.regId }).select('-__v').then((register) => {
     settings = { ...register._doc };
 
-    return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence companyName bank');
+    return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence companyName bank theme img');
   }).then((company) => {
-    const { residence, tin, vat, vatRegistered, companyName, bank } = company._doc;
-    settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank };
+    const { residence, tin, vat, vatRegistered, companyName, bank, theme, img } = company._doc;
+    settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank, theme, img };
 
     return Users.find({ companyId: req.user.companyId }).select('username name');
   }).then((users) => {
