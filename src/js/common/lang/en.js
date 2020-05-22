@@ -64,7 +64,7 @@ App.GLocaleEN = {
   "modal_timeout_stay_btn"                  : "Yes, gimme a minute",
   "modal_timeout_leave_btn"                 : "No, I'll leave",
 
-  "modal_payment_failed_title"              : "Warning",
+  "modal_info"                              : "Info",
   "modal_payment_failed_p1"                 : "There was a problem in processing your request",
   "modal_payment_failed_p2"                 : "Please contact our staff",
 

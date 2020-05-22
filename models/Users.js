@@ -7,6 +7,7 @@ const Users = new Schema({
   email: String,
   token: String,
   name: String,
+  role: String,
   regId: Schema.ObjectId,
   companyId: Schema.ObjectId,
 });

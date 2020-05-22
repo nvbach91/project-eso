@@ -2,6 +2,8 @@ require('./App.js');
 
 $(document).ready(() => {
   $('body').bootstrapMaterialDesign();
-  //document.addEventListener('contextmenu', event => event.preventDefault());
+  if (!location.origin.includes('vcap.me:')) {
+    document.addEventListener('contextmenu', event => event.preventDefault());
+  }
   App.init();
 });

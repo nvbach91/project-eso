@@ -15,8 +15,17 @@ router.get('/themes', (req, res) => {
 });
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  Companies.findOne({ subdomain: req.get('host').split('.')[0] }).select('companyName theme img').then((company) => {
+router.get('/', (req, res) => {
+  const subdomain = req.get('host').split('.')[0];
+  if (subdomain === 'registration') {
+    return res.render('registration', {
+      title: appName,
+      theme: themes.teal,
+      icon: defaultCompanyImg,
+      recaptchaApiUrl: `https://www.google.com/recaptcha/api.js?render=${req.get('host').includes('vcap.me:') ? '6LdxvfoUAAAAAJKKOOh1aVzl09Zr9PC1HmjhUfEN' : '6LePvPoUAAAAAMDCrKvC8LZVkqO4uCRXQbJw8Rbm'}`,
+    });
+  }
+  Companies.findOne({ subdomain }).select('companyName theme img').then((company) => {
     if (!company) {
       throw 'srv_company_not_found';
     }
@@ -30,7 +39,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.get('/admin', (req, res, next) => {
+router.get('/admin', (req, res) => {
   Companies.findOne({ subdomain: req.get('host').split('.')[0] }).select('companyName theme img').then((company) => {
     if (!company) {
       throw 'srv_company_not_found';

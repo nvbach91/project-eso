@@ -7,6 +7,7 @@ require('../common/auth.js');
 require('../common/localStorage.js');
 require('../common/network.js');
 require('../common/receipt.js');
+require('../common/form.js');
 require('./screens/controlPanelScreen.js');
 require('./screens/productsScreen.js');
 require('./screens/modsScreen.js');
@@ -18,7 +19,6 @@ require('./screens/transactionScreen.js');
 require('./screens/dashboardScreen.js');
 require('./components/header.js');
 require('./components/main.js');
-require('./components/form.js');
 
 App.render = () => {
   App.renderHeader(App.createLocaleSwitcher({ direction: 'dropdown' }));

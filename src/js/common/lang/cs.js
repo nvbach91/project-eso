@@ -64,7 +64,7 @@ App.GLocaleCS = {
   "modal_timeout_stay_btn"                  : "Ano, stále vybírám",
   "modal_timeout_leave_btn"                 : "Ne, odejdu",
 
-  "modal_payment_failed_title"              : "Varování",
+  "modal_info"                              : "Info",
   "modal_payment_failed_p1"                 : "Vyskytl se problém při zpracovávání vaší žádosti",
   "modal_payment_failed_p2"                 : "Prosíme zkontaktuje personál",
 

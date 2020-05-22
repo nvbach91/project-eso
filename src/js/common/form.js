@@ -1,5 +1,6 @@
 App.generateFormInput = (args) => {
-  const { label, name, value, optional, disabled, type, step, width, min, max, hidden, accept, placeholder, autocomplete } = args;
+  const { label, name, value, optional, disabled, type, step } = args;
+  const { width, min, max, hidden, accept, placeholder, autocomplete, pattern } = args;
   const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
@@ -14,6 +15,7 @@ App.generateFormInput = (args) => {
         ${max !== undefined ? ` max="${max}"` : ''}
         class="form-control"
         name="${name}"
+        ${pattern ? `pattern="${pattern.source.replace(/^\^/, '').replace(/\$$/, '')}"` : ''}
         ${value !== undefined ? `value="${value}"` : ''}
         ${placeholder ? `placeholder="${placeholder}"` : ''}
         ${optional ? '' : ' required'}
@@ -95,7 +97,7 @@ App.bindForm = (form, endpoint) => {
       data.paymentMethods = App.settings.paymentMethods;
     }
     $.post({
-      url: `${App.apiPrefix}${endpoint}`,
+      url: `${endpoint !== '/registration' ? App.apiPrefix : ''}${endpoint}`,
       beforeSend: App.attachToken,
       contentType: 'application/json',
       data: JSON.stringify(data),
@@ -104,6 +106,16 @@ App.bindForm = (form, endpoint) => {
       const changes = resp.msg === 'srv_success' ? data : resp.msg;
       if (endpoint === '/slides') {
         App.settings.slides[changes._id] = changes;
+      } else if (endpoint === '/registration') {
+        if (resp.success === false) {
+          App.showWarning(resp.msg);
+        } else {
+          App.showWarning(`
+            <p>Registration successful. You can now access your account here:</p>
+            <a class="btn btn-primary btn-raised" href="https://${data.subdomain}.${App.domain}.${App.realm}/admin">Access your account</a>
+          `);
+          form.remove();
+        }
       } else {
         Object.keys(changes).forEach((key) => {
           if (key.includes('.')) {
@@ -120,7 +132,9 @@ App.bindForm = (form, endpoint) => {
       }
     }).fail((resp) => {
       App.ajaxSaveFail(btnSave)();
-      App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
+      if (resp.responseJSON) {
+        App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
+      }
     });
     
     // set the payment terminal type at localhost

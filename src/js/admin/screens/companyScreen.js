@@ -56,7 +56,7 @@ App.renderCompanyScreen = () => {
       </div>
     </form>
   `).appendTo(cpBody);
-  form.find('select[name=theme]').change(function () {
+  form.find('select[name="theme"]').change(function () {
     const t = $(this);
     const selectedTheme = App.availableThemes[t.children('option:selected').val()];
     if (selectedTheme) {
@@ -65,7 +65,7 @@ App.renderCompanyScreen = () => {
   })
   App.bindCloudinaryFileUpload(
     form.find('input.cloudinary-fileupload[type=file]'), 
-    form.find('input[name=img]'), 
+    form.find('input[name="img"]'), 
     form.find('.img-holder')
   );
   App.bindForm(form, '/company');

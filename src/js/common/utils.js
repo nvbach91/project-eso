@@ -147,7 +147,7 @@ App.closeModal = () => {
 App.showWarning = (msg) => {
   const warning = $(`<p>${msg}</p>`);
   App.jModal.find('.cs-cancel').remove();
-  App.showInModal(warning, App.lang.modal_payment_failed_title);
+  App.showInModal(warning, App.lang.modal_info);
 };
 
 App.createInlineSpinner = () => {
@@ -531,4 +531,8 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
       $(this).siblings(className).click();
     });
   }
+};
+
+App.regex = {
+  tin: { regex: /^\d{8}$/, desc: '7-8 digits' },
 };

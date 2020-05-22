@@ -25,6 +25,7 @@ const scss = () => {
         './src/scss/cart.scss',
         './src/scss/mediaqueries.scss',
         './src/scss/admin.scss',
+        './src/scss/registration.scss',
     ])
         .pipe(plumber())
         .pipe(concat('styles.scss'))
@@ -66,6 +67,8 @@ const kioskjs = () => js('kiosk');
 
 const adminjs = () => js('admin');
 
+const registrationjs = () => js('registration');
+
 const browserSync = (cb) => {
     bs.init({
         proxy: 'https://eso.vcap.me:2000',
@@ -95,6 +98,7 @@ const watch = (cb) => {
     gulp.watch('./src/themes/**/*.css', themes);
     gulp.watch('./src/js/**/*.js', kioskjs);
     gulp.watch('./src/js/**/*.js', adminjs);
+    gulp.watch('./src/js/**/*.js', registrationjs);
     gulp.watch('./views/**/*.pug', pug);
     cb();
 };
@@ -118,5 +122,5 @@ const monitor = (cb) => {
     });
 };
 
-exports.build = gulp.parallel(kioskjs, adminjs, themes, scss);
-exports.default = gulp.parallel(kioskjs, adminjs, themes, scss, monitor, browserSync, watch);
+exports.build = gulp.parallel(kioskjs, adminjs, registrationjs, themes, scss);
+exports.default = gulp.parallel(kioskjs, adminjs, registrationjs, themes, scss, monitor, browserSync, watch);

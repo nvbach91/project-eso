@@ -12,7 +12,7 @@ const Companies = new Schema({
   bank: String,
   note: String,
   residence: Object, // { street, city, zip, country }
-  email: { type: String, index: { unique: true } },
+  email: String,
   phone: String,
   registrationDate: Date,
   language: String,

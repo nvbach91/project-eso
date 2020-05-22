@@ -108,7 +108,7 @@ const showEditForm = (number) => {
   `);
   App.bindCloudinaryFileUpload(
     form.find('input.cloudinary-fileupload[type=file]'), 
-    form.find('input[name=img]'), 
+    form.find('input[name="img"]'), 
     form.find('.img-holder')
   );
   const btnSave = form.find('.btn-save');

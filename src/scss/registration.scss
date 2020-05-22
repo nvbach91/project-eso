@@ -1,0 +1,13 @@
+.registration-screen {
+    .form-col {
+        display: flex;
+        width: 50%;
+    }
+    .form-group {
+        flex-grow: 1;
+    }
+}
+
+button.hidden {
+    visibility: hidden;
+}
