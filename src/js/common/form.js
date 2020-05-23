@@ -34,16 +34,16 @@ App.generateFormSelect = (args) => {
       <label>${label}</label>
       <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}>
         ${options.map((o) => {
-          const { label, value } = o;
-          return `<option value="${value}"${selected == value ? ' selected' : ''}>${label}</option>`;
-        }).join('')}
+    const { label, value } = o;
+    return `<option value="${value}"${selected == value ? ' selected' : ''}>${label}</option>`;
+  }).join('')}
       </select>
     </div>
   `;
 };
 
 App.binarySelectOptions = [
-  { label: 'Yes', value: true }, 
+  { label: 'Yes', value: true },
   { label: 'No', value: false }
 ];
 
@@ -93,6 +93,10 @@ App.bindForm = (form, endpoint) => {
         data['currency.' + key] = currency[key];
       });
     }
+    if (endpoint === '/registration') {
+      data.subdomain = data.subdomain.toLowerCase();
+      data.email = data.email.toLowerCase();
+    }
     if (endpoint === '/settings') {
       data.paymentMethods = App.settings.paymentMethods;
     }
@@ -103,45 +107,46 @@ App.bindForm = (form, endpoint) => {
       data: JSON.stringify(data),
     }).done((resp) => {
       App.ajaxSaveDone(btnSave)();
+      if (endpoint === '/registration') {
+        if (resp.success === false) {
+          return App.showWarning(resp.msg);
+        }
+        App.showWarning(`
+          <p>Registration successful. You can now access your account here:</p>
+          <a class="btn btn-primary btn-raised" href="https://${data.subdomain}.${App.domain}.${App.realm}/admin">Access your account</a>
+        `);
+        form.remove();
+        return;
+      }
       const changes = resp.msg === 'srv_success' ? data : resp.msg;
       if (endpoint === '/slides') {
         App.settings.slides[changes._id] = changes;
-      } else if (endpoint === '/registration') {
-        if (resp.success === false) {
-          App.showWarning(resp.msg);
-        } else {
-          App.showWarning(`
-            <p>Registration successful. You can now access your account here:</p>
-            <a class="btn btn-primary btn-raised" href="https://${data.subdomain}.${App.domain}.${App.realm}/admin">Access your account</a>
-          `);
-          form.remove();
-        }
-      } else {
-        Object.keys(changes).forEach((key) => {
-          if (key.includes('.')) {
-            const kps = key.split('.');
-            App.settings[kps[0]][kps[1]] = changes[key];
-          } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
-            App.settings[key] = changes[key];
-          }
-        });
+        return;
       }
       if (endpoint === '/ors') {
         form.find('input[name="_upload_date"]').val(moment(resp.msg['ors.upload_date']).format(App.formats.dateTime));
         form.find('input[name="_valid_until"]').val(moment(resp.msg['ors.valid_until']).format(App.formats.dateTime));
       }
+      Object.keys(changes).forEach((key) => {
+        if (key.includes('.')) {
+          const kps = key.split('.');
+          App.settings[kps[0]][kps[1]] = changes[key];
+        } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
+          App.settings[key] = changes[key];
+        }
+      });
     }).fail((resp) => {
       App.ajaxSaveFail(btnSave)();
       if (resp.responseJSON) {
         App.showWarning(App.lang[resp.responseJSON.msg] || resp.responseJSON.msg);
       }
     });
-    
+
     // set the payment terminal type at localhost
     if (data['terminal.port'] && App.paymentTerminalTypesByPort[data['terminal.port']]) {
       $.post(App.localhostServerURL + '/set-payment-terminal-config', {
         config: JSON.stringify({
-            type: App.paymentTerminalTypesByPort[data['terminal.port']]
+          type: App.paymentTerminalTypesByPort[data['terminal.port']]
         })
       });
     }
@@ -194,7 +199,7 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
     imgHolder.empty().attr('style', App.getBackgroundImage(data.result.public_id).slice(8, -1));
     //uncomment to allow reupload of the same file in the same fileupload instance
     //App.resetFileInput(cloudinaryFileUploadInput);
-    
+
     // bind again to allow change of file
     App.bindCloudinaryFileUpload(cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder);
     return true;
@@ -202,7 +207,7 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
 };
 
 App.getCloudinaryUploadTag = (options) => {
-  let tags = [ App.settings._id ];
+  let tags = [App.settings._id];
   if (options && options.tags) {
     options.tags.forEach((tag) => tags.push(tag));
   }
