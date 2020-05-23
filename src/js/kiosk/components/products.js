@@ -75,7 +75,7 @@ App.showProductDetail = (ean) => {
           }).map((type) => {
             return (`
               <div class="product-mods">
-                <label class="bmd-label-static">${type}</label>
+                <!--label class="bmd-label-static">${type}</label-->
                 <div class="horizontal-scroll">
                   ${Object.keys(App.mods).filter((modNumber) => {
                     return App.modTypes[type].includes(Number(modNumber));
@@ -98,7 +98,7 @@ App.showProductDetail = (ean) => {
                 </div>
               </div>
             `)
-          }).join('')}
+          }).join('<hr>')}
         </div>
         <div class="pd-control">
           <div class="pd-row justify-content-center">
