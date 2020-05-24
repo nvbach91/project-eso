@@ -12,7 +12,7 @@ App.renderLoginForm = () => {
         </div>
         <div class="input-group">
           <span class="input-group-addon">${App.getIcon('person')}</span>
-          <input type="email" name="username" class="form-control" placeholder="Username / Email address" required autofocus>
+          <input name="username" class="form-control" placeholder="Username / Email address" required autofocus>
         </div>
         <div class="input-group">
           <span class="input-group-addon">${App.getIcon('lock')}</span>
