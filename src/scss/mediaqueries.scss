@@ -5,6 +5,9 @@
     }
 }
 @media screen and (min-width: 720px) {
+    #tabs {
+        min-width: 180px;
+    }
     .form-signin {
         min-width: 480px;
     }
