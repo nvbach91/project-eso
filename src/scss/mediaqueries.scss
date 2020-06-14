@@ -62,6 +62,9 @@
     }
 }
 @media screen and (min-width: 1024px) {
+    #tabs {
+        min-width: 220px;
+    }
     .tab {
         width: 180px;
         height: 180px;
