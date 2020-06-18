@@ -450,7 +450,7 @@ App.getNumberOfProductsInGroup = (groupNumber) => {
 };
 
 App.getBackgroundImage = (img) => {
-  return img ? ` style="background-image: url(${img.startsWith('http') ? '' : App.imageUrlBase}${img})"` : '';
+  return img ? ` style="background-image: url(${img.startsWith('http') ? '' : App.imageUrlBase}${img})${img.includes('flaticon') ? ';background-size:75%' : ''}"` : '';
 };
 
 App.createLocaleSwitcher = (options) => {

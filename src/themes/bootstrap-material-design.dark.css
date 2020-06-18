@@ -23,9 +23,10 @@
     --white:#fff;
     --gray:#6c757d;
     --gray-dark:#343a40;
-    --primary:#2f3c48;
-    --primary-darker:#202931;
-    --primary-transparent: #2029318c;
+    --primary:#2a2d30;
+    --primary-darker:#232629;
+    --primary-transparent: #1f22248c;
+    --primary-darker-transparent: #101011be;
     --secondary:#6c757d;
     --success:#3e4d59;
     --success-darker: #2e3942;
@@ -12181,4 +12182,22 @@ h6 {
     .snackbar {
         min-width: 280px
     }
+}
+
+#main {
+    background-color: var(--dark);
+    color: var(--light);
+}
+.card, .tab {
+    background-color: var(--primary);
+    border-radius: 3px !important;
+}
+.card.form-signin {
+    background-color: inherit;
+}
+.product-offer {
+    background-color: var(--primary) !important;
+}
+.product-offer .po-price {
+    color: var(--light);
 }

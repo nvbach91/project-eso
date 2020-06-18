@@ -26,18 +26,19 @@
     align-items: center;
     justify-content: center;
     z-index: -2;
-    background-size: 75%;
+    background-size: cover;
 }
 .tab-name {
     opacity: 0.5;
-    background-color: $primaryThemeColor;
+    background-color: $primaryThemeColorDarkerTransparent;
     color: white;
     width: 100%;
     bottom: 0;
     position: absolute;
     transition: opacity ease .3s;
+    padding: 5px 0;
 }
-.tab.active {
+.tab.selected {
     opacity: 1;
     .tab-name {
         opacity: 1;
@@ -46,7 +47,7 @@
 .tab-overlay {
     filter: grayscale(1);
 }
-.tab.active .tab-overlay {
+.tab.selected .tab-overlay {
     filter: grayscale(0);
 }
 .tab .cart-quantity-indicator {

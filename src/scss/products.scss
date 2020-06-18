@@ -23,9 +23,8 @@
     span, i { padding: 10px 0; }
 }
 .product-offer {
-    border-radius: $borderRadius;
-    background-color: #fff;
-    padding: 10px 10px 0 10px;
+    background-color: white;
+    border-radius: 0;
     height: 260px;
     display: flex;
     flex-direction: column;
@@ -81,7 +80,7 @@
     right: 0;
 }
 .po-name {
-    padding: 10px 0;
+    padding: 10px;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: bold;
@@ -97,7 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 0;
+    padding: 5px 10px;
 }
 .po-control {
     display: flex;
@@ -164,6 +163,7 @@
     span {
         padding: 5px;
         position: absolute;
+        bottom: 0;
         width: 100%;
         background-color: $primaryThemeColorTransparent;
         color: white;
