@@ -55,7 +55,7 @@ App.renderProductsScreen = () => {
     for (let i = 0; i < productKeys.length; i++) {
       const ean = productKeys[i];
       const { name, price, group, vat, img } = App.products[ean];
-      if (!searchValue || name.indexOf(searchValue) >= 0 || ean.indexOf(searchValue) >= 0) {
+      if (!searchValue || name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0 || ean.indexOf(searchValue) >= 0) {
         const groupName = App.groups[group] ? App.groups[group].name : '';
         const item = $(`
             <div class="tr">
