@@ -12201,3 +12201,13 @@ h6 {
 .product-offer .po-price {
     color: var(--light);
 }
+#cp-tab-screen {
+    background-color: white;
+    color: #434343;
+}
+#cp-tabs {
+    background-color: #cecece;
+}
+.mi-body {
+    background-color: white;
+}
