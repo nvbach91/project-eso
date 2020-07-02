@@ -89,7 +89,7 @@ App.showProductDetail = (ean) => {
                       <div class="pm-img"${imgStyle}>
                         ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
                       </div>
-                      <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-number="${modNumber}">
+                      <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-type="${type}" data-active="${active}" data-number="${modNumber}">
                         ${mod.name}
                       </button>
                     </div>

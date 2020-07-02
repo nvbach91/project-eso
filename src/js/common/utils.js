@@ -509,7 +509,18 @@ App.getIcon = (url, size) => {
 App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) => {
   form.find(className).click(function () {
     const t = $(this);
+    const type = t.data('type');
     const active = t.data('active');
+    
+    if (type.includes('.')) {
+      var typeButtons = form.find(`${className}[data-type="${type}"]`).removeClass('btn-raised btn-primary').addClass('btn-secondary');
+      if (checkMarkContainerSelector) {
+        typeButtons.siblings(checkMarkContainerSelector).find('i').remove();
+      } else {
+        typeButtons.find('i').remove();
+      }
+      typeButtons.data('active', false);
+    }
     t.removeClass(active ? 'btn-raised btn-primary' : 'btn-secondary').addClass(!active ? 'btn-raised btn-primary' : 'btn-secondary');
     t.data('active', !active);
     if (active) {
