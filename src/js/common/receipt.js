@@ -99,8 +99,8 @@ App.renderReceiptText = (transaction) => {
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
-    `\n${App.getDeliveryMethod(transaction.delivery)}` +
+    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
+    `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
     `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
     `\n${transaction.items.map((item) => {
       let itemPrice = parseFloat(item.price);
@@ -177,18 +177,18 @@ App.renderReceiptText = (transaction) => {
 
 App.renderKitchenReceiptText = (transaction) => {
   const text =
-    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}` +
-    `\n${App.getDeliveryMethod(transaction.delivery)}` +
+    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
+    `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.map((item) => {
-      const quantityPadded = App.addPadding(item.quantity, 7);
+      // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
       let mods = '';
       if (item.mods) {
-        mods = item.mods.map((mod) => `  *${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       }
-      return `${App.ESCPOS.quadrupleSize(itemName)}${mods ? `\n${mods}` : ''}\n${App.ESCPOS.quadrupleSize(`${quantityPadded} x`)}`;
+      return `${App.ESCPOS.quadrupleSize(`${item.quantity} x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
     }).join('\n')}` +
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
     `\n\n\n\n.`;

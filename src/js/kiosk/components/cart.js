@@ -110,7 +110,11 @@ App.removeAllFromCart = () => {
 App.calculateCartSummaryValues = () => {
   let nItems = 0;
   let totalPrice = 0;
+  let nTakeouts = 0;
   Object.keys(App.cart).forEach((ean) => {
+    if (ean === 'T') {
+      nTakeouts += App.cart[ean].quantity;
+    }
     const product = App.products[ean];
     const cartItem = App.cart[ean];
     let itemPrice = parseFloat(product.price);
@@ -124,7 +128,7 @@ App.calculateCartSummaryValues = () => {
     nItems += cartItem.quantity;
   });
   // console.log(totalPrice);
-  return { nItems, totalPrice };
+  return { nItems, totalPrice, nTakeouts };
 };
 
 App.calculateCart = () => {
@@ -137,6 +141,16 @@ App.calculateCart = () => {
 };
 
 App.showCart = () => {
+  if (App.deliveryMethod === 'takeout') {
+    const { nItems, nTakeouts } = App.calculateCartSummaryValues();
+    if (nItems > nTakeouts * 2) {
+      App.addToCart('T', null, nItems - nTakeouts * 2);
+    } else if (nItems < nTakeouts * 2) {
+      for(let i = 0; i < nTakeouts * 2 - nItems; i++) {
+        App.decrementFromCart('T');
+      }
+    }
+  }
   const element = $(`<div class="cart"></div>`);
   const cartItems = $(`<div class="cart-items"></div>`);
   const cartKeys = Object.keys(App.cart);
@@ -167,12 +181,12 @@ App.showCart = () => {
               ).join(', ')}`
             : ''}
         </div>
-        <button class="btn btn-primary btn-dec">-</button>
+        <button class="btn btn-primary btn-dec"${ean === 'T' ? ' disabled' : ''}>-</button>
         <div class="ci-quantity" data-id="${ean}">${cartItem.quantity}</div>
-        <button class="btn btn-primary btn-inc">+</button>
+        <button class="btn btn-primary btn-inc"${ean === 'T' ? ' disabled' : ''}>+</button>
         <div class="ci-price">${finalPrice.formatMoney()}</div>
         <!--div class="ci-total">${thisTotal.formatMoney()}</div-->
-        <button class="btn btn-primary ci-remove">&times;</button>
+        <button class="btn btn-primary ci-remove"${ean === 'T' ? ' disabled' : ''}>&times;</button>
       </div>
     `);
     el.find('.ci-remove').click(() => {

@@ -38,7 +38,7 @@ App.GLocaleEN = {
   "receipt_header_vat"                      : "VAT",
   "receipt_header_residence"                : "Residence",
   "receipt_header_premise"                  : "Premise",
-  "receipt_body_vat_invoice"                : "VAT Invoice",
+  "receipt_body_vat_invoice"                : "Simplified VAT Invoice",
   "receipt_body_invoice"                    : "Invoice",
   "receipt_payment_total"                   : "Total",
   "receipt_payment_method"                  : "Payment method",

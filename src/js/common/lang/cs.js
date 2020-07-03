@@ -38,7 +38,7 @@ App.GLocaleCS = {
   "receipt_header_vat"                      : "DIČ",
   "receipt_header_residence"                : "Adresa",
   "receipt_header_premise"                  : "Provozovna",
-  "receipt_body_vat_invoice"                : "Daňový doklad",
+  "receipt_body_vat_invoice"                : "Zjednodušený daňový doklad",
   "receipt_body_invoice"                    : "Doklad",
   "receipt_payment_total"                   : "Celkem",
   "receipt_payment_method"                  : "Způsob úhrady",

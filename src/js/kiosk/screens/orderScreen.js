@@ -74,8 +74,8 @@ App.createOrderPreviewItem = (ean) => {
         </button>
       </div>
       <div class="op-control">
-        <button class="btn btn-primary op-inc">${App.getIcon('add')}</button>
-        <button class="btn btn-primary op-dec">${App.getIcon('remove')}</button>
+        <button class="btn btn-primary op-inc"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('add')}</button>
+        <button class="btn btn-primary op-dec"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('remove')}</button>
       </div>
     </div>
   `);
