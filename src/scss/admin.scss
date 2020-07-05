@@ -141,8 +141,11 @@ span.match {
 .sr-ean, .sr-price, .sr-number, .sr-order, .sr-products {
     text-align: right;
 }
-.sr-vat, .sr-edit {
+.sr-vat, .sr-edit, .sr-display {
     text-align: center;
+}
+.sr-display, .sr-products, .sr-order, .sr-number {
+    width: 80px;
 }
 .sr-name, .sr-img, .sr-number {
     cursor: pointer;

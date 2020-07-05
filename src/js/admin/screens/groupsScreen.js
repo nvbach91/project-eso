@@ -4,6 +4,7 @@ const tableHeader = `
     <div class="td sr-number">Number</div>
     <div class="td sr-order">Order</div>
     <div class="td sr-name">Name</div>
+    <div class="td sr-display">Display</div>
     <div class="td sr-products">Products</div>
     <div class="td sr-edit">Edit</div>
   </div>
@@ -61,7 +62,7 @@ const renderTable = () => {
   table.empty();
   table.append(tableHeader, keys.map((key) => {
     const i = App.groups[key];
-    const { name, number, order, img } = i || {};
+    const { name, number, order, img, display } = i || {};
     const nProducts = App.getNumberOfProductsInGroup(number);
     const item = $(`
       <div class="tr">
@@ -69,6 +70,7 @@ const renderTable = () => {
         <div class="td sr-number">${number}</div>
         <div class="td sr-order">${order}</div>
         <div class="td sr-name">${name}</div>
+        <div class="td sr-display">${display ? 'Yes' : 'No'}</div>
         <div class="td sr-products">${nProducts}</div>
         <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
       </div>
@@ -80,7 +82,7 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.groups[number];
-  const { name, order, img } = item || {};
+  const { name, order, img, display } = item || {};
   const imgStyle = App.getBackgroundImage(img);
   const modalTitle = `${item ? 'Edit' : 'Create'} group - ${number}`;
   const form = $(`
@@ -97,7 +99,10 @@ const showEditForm = (number) => {
             ${App.generateFormInput({ label: 'Number', name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
             ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
           </div>
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
+          <div class="form-row">
+            ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
+            ${App.generateFormSelect({ label: 'Display', name: 'display', value: display || true, options: App.binarySelectOptions, width: 80 })}
+          </div>
         </div>
       </div>
       <div class="mi-control">

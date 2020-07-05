@@ -223,7 +223,8 @@ const createSlideFormRow = (slide) => {
   App.bindCloudinaryFileUpload(
     formRow.find('input.cloudinary-fileupload[type="file"]'), 
     formRow.find('input[name="img"]'), 
-    formRow.find('.img-holder')
+    formRow.find('.img-holder'),
+    true // originalSize = no resizing
   );
   const btnDelete = formRow.find('.btn-delete');
   btnDelete.click(() => {

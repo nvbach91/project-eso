@@ -50,8 +50,8 @@ App.renderOrderPreview = () => {
   App.jItemsCount = orderPreview.find('#items-count');
 
   const cartKeys = Object.keys(App.cart);
-  cartKeys.forEach((ean) => {
-    const el = App.createOrderPreviewItem(ean);
+  cartKeys.forEach((id) => {
+    const el = App.createOrderPreviewItem(id, App.cart[id].ean);
     App.jOrderPreviewList.append(el);
   });
   orderPreview.find('#cart-indicator').click(() => {
@@ -63,30 +63,30 @@ App.renderOrderPreview = () => {
   }
 };
 
-App.createOrderPreviewItem = (ean) => {
+App.createOrderPreviewItem = (id, ean) => {
   const { img } = App.products[ean];
   const el = $(`
     <div class="op-item">
       <div class="op-img"${App.getBackgroundImage(img)}>
-        <button class="btn btn-primary btn-raised${App.cart[ean] ? '' : ' hidden'} cart-quantity-indicator" data-id="${ean}">
+        <button class="btn btn-primary btn-raised${App.cart[id] ? '' : ' hidden'} cart-quantity-indicator" data-id="${id}" data-ean="${ean}">
           ${App.getIcon('shopping_cart')}
-          <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
+          <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
         </button>
       </div>
       <div class="op-control">
-        <button class="btn btn-primary op-inc"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('add')}</button>
+        <!--button class="btn btn-primary op-inc"${ean === 'T' ? ' disabled' : ' disabled'}>${App.getIcon('add')}</button-->
         <button class="btn btn-primary op-dec"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('remove')}</button>
       </div>
     </div>
   `);
   el.find('.op-img').click(() => {
-    App.showProductDetail(ean);
+    App.showProductDetail(id, ean);
   });
-  el.find('.op-inc').click(() => {
-    App.addToCart(ean);
-  });
+  // el.find('.op-inc').click(() => {
+  //   App.addToCart(ean);
+  // });
   el.find('.op-dec').click(() => {
-    App.decrementFromCart(ean);
+    App.decrementFromCart(id, ean);
   });
   return el;
 };

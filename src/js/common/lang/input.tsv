@@ -23,7 +23,7 @@ checkout_return_btn	Go back	Vrátit se
 		
 card_payment_title	Information	Informace
 card_payment_desc	Please follow instructions on the payment terminal screen	Prosíme následujte instrukce na platebním terminálu
-
+		
 payment_method_cash	Cash	Hotově
 payment_method_card	Card	Kartou
 		
@@ -32,13 +32,13 @@ finish_header_btn	Start a new order	Začněte novou objednávku
 finish_body_title	Please take your receipt and wait for your number to be called	Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno
 finish_body_question	Did you know?	Věděli jste?
 		
-
-receipt_header_order	Order no	Objednávka č.
+		
+receipt_header_order	Order	Objednávka
 receipt_header_tin	TIN	IČO
 receipt_header_vat	VAT	DIČ
 receipt_header_residence	Residence	Adresa
 receipt_header_premise	Premise	Provozovna
-receipt_body_vat_invoice	VAT Invoice	Daňový doklad
+receipt_body_vat_invoice	Simplified VAT Invoice	Zjedn. daňový doklad
 receipt_body_invoice	Invoice	Doklad
 receipt_payment_total	Total	Celkem
 receipt_payment_method	Payment method	Způsob úhrady
@@ -52,8 +52,9 @@ receipt_summary_pos	POS	Pokl.
 receipt_summary_bkp	BKP	BKP
 receipt_summary_fik	FIK	FIK
 receipt_footer_clerk	Clerk	Vydal
+receipt_not_paid	PAY AT CHECKOUT	ZAPLAŤTE U POKLADNY
 		
-modal_product_detail_title	Product details	Detail produktu
+modal_product_detail_title	Product details	Podrobnosti produktu
 		
 modal_cart_title	Your order	Vaše objednávka
 modal_cart_cancel_btn	Cancel order	Zrušit objednávku
@@ -73,5 +74,6 @@ misc_items	items	položky
 misc_itemss	items	položek
 		
 misc_close_btn	Close	Zavřít
+misc_go_back	Go back	Zpět
 		
 __END_OF_FILE__		

@@ -52,6 +52,7 @@ App.GLocaleEN = {
   "receipt_summary_bkp"                     : "BKP",
   "receipt_summary_fik"                     : "FIK",
   "receipt_footer_clerk"                    : "Clerk",
+  "receipt_not_paid"                        : "PAY AT CHECKOUT",
 
   "modal_product_detail_title"              : "Product details",
 

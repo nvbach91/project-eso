@@ -21,13 +21,18 @@ App.createTransaction = () => {
     return App.getLastTransaction();
   }).then((lastTransaction) => {
     const newTransactionNumber = App.createNewTransactionNumber(lastTransaction);
+    const cartKeys = Object.keys(App.cart);
+    if (cartKeys.includes('T')) {
+      cartKeys.push(cartKeys.splice(cartKeys.indexOf('T'), 1)[0]);
+    }
     const transaction = {
       number: newTransactionNumber,
       order: App.maskOrderNumber(newTransactionNumber),
       date: new Date().toISOString(),
-      items: Object.keys(App.cart).map((ean) => {
+      items: cartKeys.map((id) => {
+        const { ean } = App.cart[id];
         const { group, price, vat } = App.products[ean];
-        const { quantity, discount, mods } = App.cart[ean];
+        const { quantity, discount, mods } = App.cart[id];
         const item = { quantity, ean, price, group, vat };
         if (discount) {
           item.discount = discount;
@@ -101,6 +106,7 @@ App.renderReceiptText = (transaction) => {
   const body =
     `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
     `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
+    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
     `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
     `\n${transaction.items.map((item) => {
       let itemPrice = parseFloat(item.price);
@@ -119,7 +125,7 @@ App.renderReceiptText = (transaction) => {
       const itemName = product ? product.name : ('EAN: ' + item.ean);
       let mods = '';
       if (item.mods) {
-        mods = item.mods.map((mod) => `  *${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
+        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
       }
       return `${App.ESCPOS.bold(itemName)}${mods ? `\n${mods}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
@@ -179,6 +185,7 @@ App.renderKitchenReceiptText = (transaction) => {
   const text =
     `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
     `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
+    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);

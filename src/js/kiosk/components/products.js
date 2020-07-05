@@ -14,10 +14,11 @@ App.renderProducts = (group) => {
     const element = $(`
       <div class="product-offer${highlight ? ' highlight' : ''}" title="${ean} - ${order || 0}">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
-          <button class="btn btn-primary btn-raised${App.cart[ean] ? '': ' hidden'} cart-quantity-indicator" data-id="${ean}">
+          <!--button class="btn btn-primary btn-raised${App.cart[ean] ? '': ' hidden'} cart-quantity-indicator" data-id="${ean}">
             ${App.getIcon('shopping_cart')}
             <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
-          </button>
+          </button-->
+          ${App.productMods[ean] ? `<div class="po-ribbon">M</div>` : ''}
         </div>
         <div class="po-name">${name}</div>
         <div class="po-row">
@@ -32,7 +33,7 @@ App.renderProducts = (group) => {
     `);
     element.hide();
     element.find('.po-img').click(() => {
-      App.showProductDetail(ean);
+      App.showProductDetail(null, ean);
     });
     element.find('.add').click((e) => {
       e.stopPropagation();
@@ -54,7 +55,7 @@ App.renderProducts = (group) => {
   App.hideSpinner();
 };
 
-App.showProductDetail = (ean) => {
+App.showProductDetail = (id, ean) => {
   const { img, name, price, desc } = App.products[ean];
   const element = $(`
     <div class="product-details">
@@ -82,7 +83,7 @@ App.showProductDetail = (ean) => {
                   }).map((modNumber) => {
                     const mod = App.mods[modNumber];
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
-                    const active = App.cart[ean] && App.cart[ean].mods ? !!App.cart[ean].mods.filter((m) => m.number === Number(modNumber)).length : false;
+                    const active = App.cart[id] && App.cart[id].mods ? !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length : false;
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (!display ? '' : `
                     <div class="product-mod-wrapper">
@@ -102,12 +103,12 @@ App.showProductDetail = (ean) => {
         </div>
         <div class="pd-control">
           <div class="pd-row justify-content-center">
-            <button class="btn btn-primary${App.cart[ean] ? '': ' hidden'} remove">${App.getIcon('remove')}</button>
-            <button class="btn btn-primary cart-quantity-indicator" data-id="${ean}">
+            <!--button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove">${App.getIcon('remove')}</button-->
+            <!--button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
               ${App.getIcon('shopping_cart')}
-              <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
-            </button>
-            <button class="btn btn-primary add">${App.getIcon('add')}</button>
+              <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
+            </button-->
+            <!--button class="btn btn-primary add">${App.getIcon('add')}</button-->
           </div>
           <button class="btn btn-raised btn-primary order">
             <span>${App.lang.order_products_order_btn}</span>&nbsp;
@@ -125,20 +126,20 @@ App.showProductDetail = (ean) => {
   element.find('.cart-quantity-indicator').click((e) => {
     App.showCart();
   });
-  element.find('.remove').click(() => {
-    App.decrementFromCart(ean);
-    if (!App.cart[ean]) {
-      setTimeout(() => {
-        App.closeModal();
-      }, App.getAnimationTime());
-    }
-  });
-  element.find('.add').click(() => {
-    App.addToCart(ean, getMods(element));
-    element.find('.remove').removeClass('hidden');
-  });
+  // element.find('.remove').click(() => {
+  //   App.decrementFromCart(id, ean);
+  //   if (!App.cart[id]) {
+  //     setTimeout(() => {
+  //       App.closeModal();
+  //     }, App.getAnimationTime());
+  //   }
+  // });
+  // element.find('.add').click(() => {
+  //   App.addToCart(ean, getMods(element));
+  //   element.find('.remove').removeClass('hidden');
+  // });
   element.find('.order').click(() => {
-    App.addToCart(ean, getMods(element), !App.cart[ean] ? 1 : 0);
+    App.addToCart(ean, getMods(element), !App.cart[id] ? 1 : 0, id);
     App.closeModal();
     App.nextTab();
   });
@@ -157,5 +158,5 @@ const getMods = (container) => {
       mods.push({ number, price: App.mods[number].price });
     }
   });
-  return mods;
+  return mods.length ? mods : null;
 };

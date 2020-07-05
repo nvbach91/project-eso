@@ -38,7 +38,7 @@ App.GLocaleCS = {
   "receipt_header_vat"                      : "DIČ",
   "receipt_header_residence"                : "Adresa",
   "receipt_header_premise"                  : "Provozovna",
-  "receipt_body_vat_invoice"                : "Zjednodušený daňový doklad",
+  "receipt_body_vat_invoice"                : "Zjedn. daňový doklad",
   "receipt_body_invoice"                    : "Doklad",
   "receipt_payment_total"                   : "Celkem",
   "receipt_payment_method"                  : "Způsob úhrady",
@@ -52,6 +52,7 @@ App.GLocaleCS = {
   "receipt_summary_bkp"                     : "BKP",
   "receipt_summary_fik"                     : "FIK",
   "receipt_footer_clerk"                    : "Vydal",
+  "receipt_not_paid"                        : "ZAPLAŤTE U POKLADNY",
 
   "modal_product_detail_title"              : "Podrobnosti produktu",
 

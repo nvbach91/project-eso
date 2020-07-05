@@ -1,37 +1,55 @@
-App.addToCart = (ean, mods, quantity) => {
-  App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[ean]) {
-    App.cart[ean].quantity += typeof quantity === 'number' ? quantity : 1;
-  } else {
-    App.cart[ean] = {
-      quantity: typeof quantity === 'number' ? quantity : 1,
-    };
-    const orderPreviewItem = App.createOrderPreviewItem(ean);
-    App.jOrderPreviewList.append(orderPreviewItem.addClass('last').hide().fadeIn());
-    
-    App.jOrderPreviewList.animate({
-      scrollLeft: orderPreviewItem.offset().left
-    }, App.getAnimationTime());
+App.addToCart = (ean, mods, quantity, orderedId) => {
+  if (ean === 'T' && (!App.products[ean] || parseFloat(App.products[ean].price) <= 0)) {
+    // dont add takeaway product if it doesn't exists or has zero price
+    return false;
   }
-  if (mods) {
-    App.cart[ean].mods = mods;
+  let id = orderedId ? orderedId : ean === 'T' ? ean : Math.random().toString(36).substr(2, 9);
+  if (!App.productMods[ean]) {
+    const existingCartItemId = Object.keys(App.cart).find((cid) => App.cart[cid].ean === ean);
+    id = existingCartItemId ? existingCartItemId : id;
+  }
+  App.jOrderPreviewList.children().removeClass('last');
+  if (App.cart[id] && (id === 'T' || !App.productMods[ean])) {
+    App.cart[id].quantity += typeof quantity === 'number' ? quantity : 1;
+  } else if (App.cart[id]) {
+    App.cart[id].mods = mods;
+  } else {
+    const cartItem = {
+      id,
+      ean,
+      quantity: typeof quantity === 'number' ? quantity : 1,
+    }
+    if (mods) {
+      cartItem.mods = mods;
+    }
+    App.cart[id] = cartItem;
+    const orderPreviewItem = App.createOrderPreviewItem(id, ean).addClass('last').hide().fadeIn();
+    if (ean === 'T') {
+      App.jOrderPreviewList.append(orderPreviewItem);
+    } else {
+      App.jOrderPreviewList.prepend(orderPreviewItem);
+    }
+    
+    // App.jOrderPreviewList.animate({
+    //   scrollRight: orderPreviewItem.offset().right
+    // }, App.getAnimationTime());
   }
   App.jOrderPreview.fadeIn();
-  const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${ean}"]`).fadeIn().parent().parent().addClass('last');
-  /*App.jOrderPreviewList.animate({
-    scrollLeft: existingOrderPreviewItem.offset().left
-  }, App.getAnimationTime());*/
-  existingOrderPreviewItem.find('span').text(App.cart[ean].quantity);
-  App.jProducts.find(`[data-id="${ean}"]`).fadeIn().find('span').text(App.cart[ean].quantity);
-  App.jModal.find(`.product-details [data-id="${ean}"]`).fadeIn().find('span').text(App.cart[ean].quantity);
-  App.jModal.find(`.cart [data-id="${ean}"]`).text(App.cart[ean].quantity);
-  const groupNumber = App.products[ean].group;
-  if (App.cartCategoryQuantities[groupNumber]) {
-    App.cartCategoryQuantities[groupNumber] += typeof quantity === 'number' ? quantity : 1;
-  } else {
-    App.cartCategoryQuantities[groupNumber] = typeof quantity === 'number' ? quantity : 1;
-  }
-  App.jTabs.find(`[data-id=${groupNumber}]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupNumber]);
+  const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
+  // App.jOrderPreviewList.animate({
+  //   scrollLeft: existingOrderPreviewItem.offset().left
+  // }, App.getAnimationTime());
+  existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
+  // App.jProducts.find(`[data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
+  // App.jModal.find(`.product-details [data-id="${id}"]`).fadeIn().find('span').text(App.cart[id].quantity);
+  // App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
+  // const groupNumber = App.products[id].group;
+  // if (App.cartCategoryQuantities[groupNumber]) {
+  //   App.cartCategoryQuantities[groupNumber] += typeof quantity === 'number' ? quantity : 1;
+  // } else {
+  //   App.cartCategoryQuantities[groupNumber] = typeof quantity === 'number' ? quantity : 1;
+  // }
+  // App.jTabs.find(`[data-id="${groupNumber}"]`).fadeIn().find('span').text(App.cartCategoryQuantities[groupNumber]);
   App.calculateCart();
   App.saveLocalCart();
 
@@ -40,24 +58,27 @@ App.addToCart = (ean, mods, quantity) => {
       App.jCheckoutButton.css({ display: 'flex' });
     });
   }
+  if (App.deliveryMethod === 'takeout' && ean !== 'T') {
+    App.addToCart('T', null, quantity);
+  }
 };
 
-App.decrementFromCart = (ean) => {
+App.decrementFromCart = (id, ean) => {
   App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[ean]) {
-    App.cart[ean].quantity--;
-    const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${ean}"]`).fadeIn().parent().parent().addClass('last');
+  if (App.cart[id]) {
+    App.cart[id].quantity--;
+    const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
     /*App.jOrderPreviewList.animate({
       scrollLeft: existingOrderPreviewItem.offset().left
     }, App.getAnimationTime());*/
-    existingOrderPreviewItem.find('span').text(App.cart[ean].quantity);
-    App.jProducts.find(`[data-id="${ean}"]`).find('span').text(App.cart[ean].quantity);
-    App.jModal.find(`.cart [data-id="${ean}"]`).text(App.cart[ean].quantity);
-    App.jModal.find(`.cart-quantity-indicator[data-id="${ean}"] span`).text(App.cart[ean].quantity);
-    if (App.cart[ean].quantity <= 0) {
-      delete App.cart[ean];
-      App.jProducts.find(`[data-id="${ean}"]`).fadeOut();
-      App.jOrderPreviewList.find(`[data-id="${ean}"]`).parent().parent().fadeOut(function () {
+    existingOrderPreviewItem.find('span').text(App.cart[id].quantity);
+    // App.jProducts.find(`[data-id="${id}"]`).find('span').text(App.cart[id].quantity);
+    // App.jModal.find(`.cart [data-id="${id}"]`).text(App.cart[id].quantity);
+    // App.jModal.find(`.cart-quantity-indicator[data-id="${id}"] span`).text(App.cart[id].quantity);
+    if (App.cart[id].quantity <= 0) {
+      delete App.cart[id];
+      // App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+      App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
         $(this).remove();
         if (!Object.keys(App.cart).length) {
           App.jCheckoutButton.fadeOut();
@@ -65,29 +86,37 @@ App.decrementFromCart = (ean) => {
         }
       });
     }
-    const groupNumber = App.products[ean].group;
-    App.cartCategoryQuantities[groupNumber]--;
-    if (App.cartCategoryQuantities[groupNumber] <= 0) {
-      App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
-    } else {
-      App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
-    }
+    // const groupNumber = App.products[ean].group;
+    // App.cartCategoryQuantities[groupNumber]--;
+    // if (App.cartCategoryQuantities[groupNumber] <= 0) {
+    //   App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
+    // } else {
+    //   App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
+    // }
     App.saveLocalCart();
     App.calculateCart();
   }
+  if (App.cart['T'] && id !== 'T') {
+    App.decrementFromCart('T');
+  }
 };
 
-App.removeFromCart = (ean) => {
-  App.jProducts.find(`[data-id="${ean}"]`).fadeOut();
-  App.jOrderPreviewList.find(`[data-id="${ean}"]`).parent().parent().fadeOut(function () {
+App.removeFromCart = (id, ean) => {
+  // App.jProducts.find(`[data-id="${id}"]`).fadeOut();
+  App.jOrderPreviewList.find(`[data-id="${id}"]`).parent().parent().fadeOut(function () {
     $(this).remove();
   });
-  const groupNumber = App.products[ean].group;
-  App.cartCategoryQuantities[groupNumber] -= App.cart[ean].quantity;
-  if (App.cartCategoryQuantities[groupNumber] <= 0) {
-    App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
-  } else {
-    App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
+  // const groupNumber = App.products[ean].group;
+  // App.cartCategoryQuantities[groupNumber] -= App.cart[id].quantity;
+  // if (App.cartCategoryQuantities[groupNumber] <= 0) {
+  //   App.jTabs.find(`[data-id=${groupNumber}]`).fadeOut();
+  // } else {
+  //   App.jTabs.find(`[data-id=${groupNumber}]`).find('span').text(App.cartCategoryQuantities[groupNumber]);
+  // }
+  if (App.cart['T'] && id !== 'T') {
+    for (let i = 0; i < App.cart[id].quantity; i++) {
+      App.decrementFromCart('T');
+    }
   }
   delete App.cart[ean];
   App.saveLocalCart();
@@ -111,21 +140,21 @@ App.calculateCartSummaryValues = () => {
   let nItems = 0;
   let totalPrice = 0;
   let nTakeouts = 0;
-  Object.keys(App.cart).forEach((ean) => {
+  Object.keys(App.cart).forEach((id) => {
+    const { ean, quantity, mods } = App.cart[id];
     if (ean === 'T') {
-      nTakeouts += App.cart[ean].quantity;
+      nTakeouts += quantity;
     }
     const product = App.products[ean];
-    const cartItem = App.cart[ean];
     let itemPrice = parseFloat(product.price);
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
-    if (cartItem.mods) {
-      cartItem.mods.forEach((mod) => {
+    if (mods) {
+      mods.forEach((mod) => {
         itemPrice += parseFloat(mod.price);
       });
     }
-    totalPrice += cartItem.quantity * itemPrice;
-    nItems += cartItem.quantity;
+    totalPrice += quantity * itemPrice;
+    nItems += quantity;
   });
   // console.log(totalPrice);
   return { nItems, totalPrice, nTakeouts };
@@ -134,8 +163,8 @@ App.calculateCartSummaryValues = () => {
 App.calculateCart = () => {
   const { nItems, totalPrice } = App.calculateCartSummaryValues();
   const itemText = App.getNumeralForm('misc_item', nItems);
-  App.jModal.find('.cs-quantity').text(`${nItems} ${itemText}`);
-  App.jModal.find('.cs-price').find('span').text(`${totalPrice.formatMoney()} ${App.settings.currency.symbol}`);
+  // App.jModal.find('.cs-quantity').text(`${nItems} ${itemText}`);
+  // App.jModal.find('.cs-price').find('span').text(`${totalPrice.formatMoney()} ${App.settings.currency.symbol}`);
   App.jItemsCount.text(`${nItems} ${itemText}`);
   App.jTotal.text(totalPrice.formatMoney());
 };
@@ -154,71 +183,74 @@ App.showCart = () => {
   const element = $(`<div class="cart"></div>`);
   const cartItems = $(`<div class="cart-items"></div>`);
   const cartKeys = Object.keys(App.cart);
+  if (cartKeys.includes('T')) {
+    cartKeys.push(cartKeys.splice(cartKeys.indexOf('T'), 1)[0]);
+  }
   if (!cartKeys.length) {
     const emptyCartButton = $(`<button class="btn btn-lg">${App.getIcon('apps')}</button>`).click(() => {
       App.closeModal();
     });
     cartItems.append(emptyCartButton);
   }
-  cartKeys.forEach((ean) => {
+  cartKeys.forEach((id) => {
+    const { mods, quantity, ean } = App.cart[id];
     const { price, name, img } = App.products[ean];
-    const cartItem = App.cart[ean];
     let finalPrice = parseFloat(price);
-    if (cartItem.mods) {
-      cartItem.mods.forEach((mod) => {
+    if (mods) {
+      mods.forEach((mod) => {
         finalPrice += parseFloat(mod.price);
       });
     }
-    let thisTotal = cartItem.quantity * finalPrice;
+    let thisTotal = quantity * finalPrice;
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
         <div class="ci-name">
           ${name} 
-          ${cartItem.mods ? 
-            `- ${cartItem.mods.map((m) => 
+          ${mods ? 
+            `- ${mods.map((m) => 
                 `${App.mods[m.number] ? App.mods[m.number].name : `${m.number} - N/A`}${parseFloat(m.price) ? ` +${m.price} ${App.settings.currency.symbol}` : ''}`
               ).join(', ')}`
             : ''}
         </div>
-        <button class="btn btn-primary btn-dec"${ean === 'T' ? ' disabled' : ''}>-</button>
-        <div class="ci-quantity" data-id="${ean}">${cartItem.quantity}</div>
-        <button class="btn btn-primary btn-inc"${ean === 'T' ? ' disabled' : ''}>+</button>
-        <div class="ci-price">${finalPrice.formatMoney()}</div>
+        <!--button class="btn btn-primary btn-dec"${ean === 'T' ? ' disabled' : ''}>-</button-->
+        <div class="ci-quantity" data-id="${id}" data-ean="${ean}">&times; ${quantity}</div>
+        <!--button class="btn btn-primary btn-inc"${ean === 'T' ? ' disabled' : ''}>+</button-->
+        <div class="ci-price">${finalPrice.formatMoney()} ${App.settings.currency.symbol}</div>
         <!--div class="ci-total">${thisTotal.formatMoney()}</div-->
-        <button class="btn btn-primary ci-remove"${ean === 'T' ? ' disabled' : ''}>&times;</button>
+        <!--button class="btn btn-primary ci-remove"${ean === 'T' ? ' disabled' : ''}>&times;</button-->
       </div>
     `);
-    el.find('.ci-remove').click(() => {
-      App.removeFromCart(ean);
-      el.find('button').prop('disabled', true);
-      el.slideUp(App.getAnimationTime(), () => {
-        el.remove();
-        if (!Object.keys(App.cart).length) {
-          App.closeModal();
-          App.jCheckoutButton.fadeOut();
-          App.jOrderPreview.fadeOut();
-        }
-      });
-    });
-    el.find('.btn-dec').click(() => {
-      App.decrementFromCart(ean);
-      if (!App.cart[ean]) {
-        el.find('button').prop('disabled', true);
-        el.fadeOut(() => {
-          el.remove();
-          if (!Object.keys(App.cart).length) {
-            App.closeModal();
-            App.jCheckoutButton.fadeOut();
-            App.jOrderPreview.fadeOut();
-          }
-        });
-      }
-    });
-    el.find('.btn-inc').click(() => {
-      App.addToCart(ean);
-      App.calculateCart();
-    });
+    // el.find('.ci-remove').click(() => {
+    //   App.removeFromCart(ean);
+    //   el.find('button').prop('disabled', true);
+    //   el.slideUp(App.getAnimationTime(), () => {
+    //     el.remove();
+    //     if (!Object.keys(App.cart).length) {
+    //       App.closeModal();
+    //       App.jCheckoutButton.fadeOut();
+    //       App.jOrderPreview.fadeOut();
+    //     }
+    //   });
+    // });
+    // el.find('.btn-dec').click(() => {
+    //   App.decrementFromCart(ean);
+    //   if (!App.cart[ean]) {
+    //     el.find('button').prop('disabled', true);
+    //     el.fadeOut(() => {
+    //       el.remove();
+    //       if (!Object.keys(App.cart).length) {
+    //         App.closeModal();
+    //         App.jCheckoutButton.fadeOut();
+    //         App.jOrderPreview.fadeOut();
+    //       }
+    //     });
+    //   }
+    // });
+    // el.find('.btn-inc').click(() => {
+    //   App.addToCart(ean);
+    //   App.calculateCart();
+    // });
     cartItems.append(el);
   });
   const { nItems, totalPrice } = App.calculateCartSummaryValues();

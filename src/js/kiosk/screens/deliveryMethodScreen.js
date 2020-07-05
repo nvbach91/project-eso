@@ -47,9 +47,19 @@ App.renderDeliveryMethodScreen = () => {
     </main>
   `);
   screen.find('.selection .card').click(function () {
+    const newDeliveryMethod = $(this).data('method');
+    const deliveryMethodChanged = App.deliveryMethod && App.deliveryMethod !== newDeliveryMethod;
     App.deliveryMethod = $(this).data('method');
     App.jDeliveryMethodIndicator.find('span').text(App.deliveryMethods[App.deliveryMethod].title);
+    // if (App.deliveryMethod === 'eatin' && App.cart['T']) {
+    //   for (let i = 0; i < App.cart['T'].quantity; i++) {
+    //     App.decrementFromCart('T');
+    //   }
+    // }
     App.renderOrderScreen();
+    if (deliveryMethodChanged) {
+      App.removeAllFromCart();
+    }
   });
   App.jBackButton.fadeIn().off('click').click(() => {
     App.reset();

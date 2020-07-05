@@ -182,18 +182,21 @@ App.serializeForm = (form) => {
   return data;
 };
 
-App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder) => {
+App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder, originalSize) => {
   imgHolder.off('click').click(() => {
     cloudinaryFileUploadInput.click();
   });
-  cloudinaryFileUploadInput.cloudinary_fileupload({
+  const uploadOptions = {
     disableImageResize: false,
-    imageMaxWidth: 800,                   // 800 is an example value - no default
-    imageMaxHeight: 600,                  // 600 is an example value - no default
     maxFileSize: 3000000,                 // 20MB is an example value - no default
     loadImageMaxFileSize: 10000000,       // default is 10MB
     acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i
-  });
+  };
+  if (!originalSize) {
+    uploadOptions.imageMaxWidth = 800;                   // 800 is an example value - no default
+    uploadOptions.imageMaxHeight = 600;                  // 600 is an example value - no default
+  }
+  cloudinaryFileUploadInput.cloudinary_fileupload(uploadOptions);
   cloudinaryFileUploadInput.bind('cloudinarydone', (e, data) => {
     cloudinaryPublicIdHolder.val(data.result.public_id);
     imgHolder.empty().attr('style', App.getBackgroundImage(data.result.public_id).slice(8, -1));
