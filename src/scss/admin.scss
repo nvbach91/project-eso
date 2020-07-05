@@ -141,6 +141,18 @@ span.match {
 .sr-ean, .sr-price, .sr-number, .sr-order, .sr-products {
     text-align: right;
 }
+.sr-price {
+    width: 100px;
+}
+.sr-group, .sr-type {
+    white-space: nowrap;
+    max-width: 140px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.sr-vat {
+    width: 60px;
+}
 .sr-vat, .sr-edit, .sr-display {
     text-align: center;
 }
@@ -149,6 +161,9 @@ span.match {
 }
 .sr-name, .sr-img, .sr-number {
     cursor: pointer;
+}
+.sr-name {
+    font-weight: bold;
 }
 .sr-name:hover, .sr-number:hover {
     text-decoration: underline;
