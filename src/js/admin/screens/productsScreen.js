@@ -124,7 +124,7 @@ const showEditForm = (ean, cb) => {
       </div>
       <div class="form-row">
         ${App.generateFormInput({ label: 'Price', name: 'price', value: price || '' })}
-        ${App.generateFormSelect({ label: 'Group', name: 'group', value: group.toString() || '', options: groupOptions, type: 'number' })}
+        ${App.generateFormSelect({ label: 'Group', name: 'group', value: group === undefined ? '' : group.toString(), options: groupOptions, type: 'number' })}
         ${App.generateFormSelect({ label: 'VAT', name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
       </div>
         ${Object.keys(App.modTypes).map((type) => {
