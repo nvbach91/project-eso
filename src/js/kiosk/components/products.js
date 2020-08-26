@@ -24,9 +24,7 @@ App.renderProducts = (group) => {
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
-            <button class="btn btn-raised btn-primary add">
-              ${App.getIcon('playlist_add')}
-            </button>
+            <button class="btn btn-raised btn-primary add">${App.getIcon('playlist_add')}</button>
           </div>
         </div>
       </div>
@@ -37,8 +35,12 @@ App.renderProducts = (group) => {
     });
     element.find('.add').click((e) => {
       e.stopPropagation();
-      App.addToCart(ean);
-      App.nextTab();
+      if (App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length) {
+        App.showProductDetail(null, ean);
+      } else {
+        App.addToCart(ean);
+        App.nextTab();
+      }
     });
     const cartQuantityIndicator = element.find('.cart-quantity-indicator');
     cartQuantityIndicator.click((e) => {
@@ -80,10 +82,13 @@ App.showProductDetail = (id, ean) => {
                 <div class="horizontal-scroll">
                   ${Object.keys(App.mods).filter((modNumber) => {
                     return App.modTypes[type].includes(Number(modNumber));
-                  }).map((modNumber) => {
+                  }).map((modNumber, index) => {
                     const mod = App.mods[modNumber];
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
-                    const active = App.cart[id] && App.cart[id].mods ? !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length : false;
+                    let active = App.cart[id] && App.cart[id].mods ? !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length : false;
+                    if (index === 0 && type.endsWith('.') && !active && !App.cart[id]) {
+                      active = true;
+                    }
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (!display ? '' : `
                     <div class="product-mod-wrapper">

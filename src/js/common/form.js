@@ -50,8 +50,8 @@ App.binarySelectOptions = [
 
 App.bindForm = (form, endpoint) => {
   if (endpoint === '/ors') {
-    var certificateUploadInput = form.find('input[name="ors.file"]');
-    var encodedDataHolder = form.find('input[name="_content"]');
+    const certificateUploadInput = form.find('input[name="ors.file"]');
+    const encodedDataHolder = form.find('input[name="_content"]');
     const certificateUploadButton = form.find('input[name="ors.file_name"]').click((e) => {
       App.resetFileInput(certificateUploadInput);
       certificateUploadInput.click();

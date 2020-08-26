@@ -511,9 +511,11 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     const t = $(this);
     const type = t.data('type');
     const active = t.data('active');
-    
-    if (type && type.includes('.')) {
-      var typeButtons = form.find(`${className}[data-type="${type}"]`).removeClass('btn-raised btn-primary').addClass('btn-secondary');
+    if (type && type.endsWith('.') && active) {
+      return false;
+    }
+    if (type && type.endsWith('.')) {
+      const typeButtons = form.find(`${className}[data-type="${type}"]`).removeClass('btn-raised btn-primary').addClass('btn-secondary');
       if (checkMarkContainerSelector) {
         typeButtons.siblings(checkMarkContainerSelector).find('i').remove();
       } else {
