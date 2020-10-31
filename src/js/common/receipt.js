@@ -97,7 +97,7 @@ App.renderReceiptText = (transaction) => {
     `\t${App.ESCPOS.doubleHeight(App.settings.name)}\t` +
     `\n${App.lang.receipt_header_premise}: ${App.settings.residence.street}` +
     `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
-    `\t${App.settings.companyName}\t` +
+    `\n\t${App.settings.companyName}\t` +
     `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} | ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
     `\n${App.lang.receipt_header_residence}: ${App.settings.address.street}` +
     `\n${App.settings.address.zip} ${App.settings.address.city}` +
