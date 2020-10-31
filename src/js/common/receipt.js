@@ -108,12 +108,12 @@ App.renderReceiptText = (transaction) => {
     `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
     `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
     `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
-    `\n${transaction.filter((item) => {
+    `\n${transaction.items.filter((item) => {
         if (!App.settings.printer.groups) {
           return true;
         }
         return App.settings.printer.groups.split(',').includes(item.group.toString());
-      }).items.map((item) => {
+      }).map((item) => {
       let itemPrice = parseFloat(item.price);
       if (item.mods) {
         item.mods.forEach((mod) => {
