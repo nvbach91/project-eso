@@ -14,12 +14,14 @@ App.renderPeripheralsScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormSelect({ label: 'Kiosk printer name', name: 'printer.name', value: App.settings.printer.name, options: printerOptions })}
+          ${App.generateFormInput({ label: 'Print groups', name: 'printer.groups', value: App.settings.printer.groups, width: 120, optional: true, pattern: /^\d+(,\d+)*$/ })}
           ${App.generateFormSelect({ label: 'Diacritics', name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ label: 'Direct print', name: 'printer.direct', value: App.settings.printer.direct, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormInput({ label: 'Print columns', name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 32, max: 48 })}
         </div>
         <div class="form-row"> 
           ${App.generateFormSelect({ label: 'Kitchen printer name', name: 'kitchenPrinter.name', value: App.settings.kitchenPrinter.name, options: printerOptions, optional: true })}
+          ${App.generateFormInput({ label: 'Print groups', name: 'kitchenPrinter.groups', value: App.settings.kitchenPrinter.groups, width: 120, optional: true, pattern: /^\d+(,\d+)*$/ })}
           ${App.generateFormSelect({ label: 'Diacritics', name: 'kitchenPrinter.diacritics', value: App.settings.kitchenPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ label: 'Direct print', name: 'kitchenPrinter.direct', value: App.settings.kitchenPrinter.direct, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormInput({ label: 'Print columns', name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 32, max: 48 })}

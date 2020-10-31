@@ -26,13 +26,13 @@ App.generateFormInput = (args) => {
 };
 
 App.generateFormSelect = (args) => {
-  const { label, name, value, options, optional, type, width } = args;
+  const { label, name, value, options, optional, type, width, multiple } = args;
   const selected = value;
   const style = `${width ? `max-width: ${width}px;` : ''}`;
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
       <label>${label}</label>
-      <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}>
+      <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}${multiple ? ' multiple' : ''}>
         ${options.map((o) => {
     const { label, value } = o;
     return `<option value="${value}"${selected == value ? ' selected' : ''}>${label}</option>`;

@@ -108,7 +108,12 @@ App.renderReceiptText = (transaction) => {
     `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
     `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
     `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
-    `\n${transaction.items.map((item) => {
+    `\n${transaction.filter((item) => {
+        if (!App.settings.printer.groups) {
+          return true;
+        }
+        return App.settings.printer.groups.split(',').includes(item.group.toString());
+      }).items.map((item) => {
       let itemPrice = parseFloat(item.price);
       if (item.mods) {
         item.mods.forEach((mod) => {
@@ -187,7 +192,12 @@ App.renderKitchenReceiptText = (transaction) => {
     `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
     `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
-    `\n${transaction.items.map((item) => {
+    `\n${transaction.items.filter((item) => {
+        if (!App.settings.kitchenPrinter.groups) {
+          return true;
+        }
+        return App.settings.kitchenPrinter.groups.split(',').includes(item.group.toString());
+      }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
