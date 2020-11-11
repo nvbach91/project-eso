@@ -41,37 +41,45 @@ App.renderCardPaymentScreen = () => {
   App.jMain.find('.card').slideDown(App.getAnimationTime());
 
   const { totalPrice } = App.calculateCartSummaryValues();
-  App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, 0).done((resp) => {
-    if (resp.msg && /^R00\d|R010$/.test(resp.msg.responseCode)) {
-      const appendix = resp.msg.dataFields.t;
-      App.renderFinishScreen();
-      App.createTransaction().done((resp) => {
-        App.transactions.push(resp);
-        App.printReceipt(resp, appendix);
-        App.printKitchenReceipt(resp);
-      }).fail((resp) => {
+  App.fetchTransactions(0, 1).then((transactions) => {
+    if (transactions.length) {
+      return transactions[0];
+    }
+    return App.getLastTransaction();
+  }).then((lastTransaction) => {
+    const newTransactionNumber = App.createNewTransactionNumber(lastTransaction);
+    App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, newTransactionNumber).done((resp) => {
+      if (resp.msg && /^R00\d|R010$/.test(resp.msg.responseCode)) {
+        const appendix = resp.msg.dataFields.t;
+        App.renderFinishScreen();
+        App.createTransaction().done((resp) => {
+          App.transactions.push(resp);
+          App.printReceipt(resp, appendix);
+          App.printKitchenReceipt(resp);
+        }).fail((resp) => {
+          App.showWarning(`
+            <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
+            <p>${App.lang.modal_payment_failed_p2}</p>
+          `);
+        });
+      } else {
         App.showWarning(`
-          <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
+          <p>${App.lang.modal_payment_failed_p1}</p>
+          ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
           <p>${App.lang.modal_payment_failed_p2}</p>
         `);
-      });
-    } else {
+        App.renderCheckoutScreen();
+      }
+    }).fail((resp) => {
       App.showWarning(`
         <p>${App.lang.modal_payment_failed_p1}</p>
         ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
         <p>${App.lang.modal_payment_failed_p2}</p>
       `);
       App.renderCheckoutScreen();
-    }
-  }).fail((resp) => {
-    App.showWarning(`
-      <p>${App.lang.modal_payment_failed_p1}</p>
-      ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
-      <p>${App.lang.modal_payment_failed_p2}</p>
-    `);
-    App.renderCheckoutScreen();
-  }).always(() => {
-    inlineSpinner.remove();
+    }).always(() => {
+      inlineSpinner.remove();
+    });
   });
   
   App.hideSpinner();
