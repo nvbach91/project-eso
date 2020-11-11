@@ -80,6 +80,7 @@ App.renderCardPaymentScreen = () => {
     }).always(() => {
       inlineSpinner.remove();
     });
+    App.hideSpinner();
   });
   
   App.hideSpinner();
