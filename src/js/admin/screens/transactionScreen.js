@@ -3,7 +3,7 @@ const createTransactiontable = () => $(`
     <div class="tr transaction-item">
       <div class="td ti-number">Receipt number</div>
       <div class="td ti-date">Date</div>
-      <div class="td ti-order">Order</div>
+      <div class="td ti-order">${App.lang.form_order}</div>
       <div class="td ti-payment">Payment</div>
       <div class="td ti-delivery">Delivery</div>
       <div class="td ti-total">Total price</div>
@@ -38,7 +38,7 @@ const renderTransactions = (transactions) => {
       table.append(item);
     });
   } else {
-    table = $(`<button class="btn">There is no data in the selected time period</div>`);
+    table = $(`<button class="btn">${App.lang.tip_no_data_in_selected_period}</div>`);
   }
   App.jControlPanelBody.replaceWith(table);
   App.jControlPanelBody = table;
@@ -59,7 +59,7 @@ App.renderTransactionScreen = () => {
   App.destroyDatePickers();
   const header = $(`
     <div id="cp-header" class="card-header">
-      <div class="cp-name">Transactions</div>
+      <div class="cp-name">${App.lang.admin_transactions}</div>
       <div class="cp-control">
         <button class="btn btn-primary date-nav" id="date-prev">${App.getIcon('keyboard_arrow_left')}</button>
         <button class="btn btn-primary datepicker-btn" data-id="datepicker">${App.getIcon('date_range')}</button>

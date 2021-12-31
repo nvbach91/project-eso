@@ -53,8 +53,9 @@ router.post('/registration', (req, res) => {
     newRegister.activityTimeout = 60000;
     newRegister.activityCheckTimeout = 25000;
     newRegister.autoNextTab = false;
-    newRegister.printer = { name: '', diacritics: true, direct: true, columns: 42 };
-    newRegister.kitchenPrinter = { name: '', diacritics: true, direct: true, columns: 42 };
+    newRegister.printer = { name: '', ip: '', diacritics: true, direct: true, columns: 42, groups: '' };
+    newRegister.kitchenPrinter = { name: '', ip: '', diacritics: true, direct: true, columns: 42, groups: '' };
+    newRegister.labelPrinter = { name: '', ip: '', diacritics: true, direct: true, columns: 42, groups: '' };
     newRegister.paymentMethods = { card: { img: 'credit-card-min_aoqb3h', enabled: true }, cash: { img: 'cash-min_lautl6', enabled: true } };
     newRegister.terminal = { ip: '', port: 2050, password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP', endpoint: 'https://localhost:3443/pt', id: '' };
     return new Registers(newRegister).save();
@@ -69,7 +70,7 @@ router.post('/registration', (req, res) => {
     newUser.token = '';
     return new Users(newUser).save();
   }).then((newUser) => {
-    return new Groups({ number: 1, order: 0, regId: newRegisterId, img: 'https://image.flaticon.com/icons/svg/193/193552.svg', name: 'Starters' }).save();
+    return new Groups({ number: 1, order: 0, regId: newRegisterId, img: 'https://res.cloudinary.com/itakecz/image/upload/362272_tqkx9x', name: 'Starters' }).save();
   }).then((newGroup) => {
     return new Products({ ean: '1', name: 'Special offer', price: '240', img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', group: 1, vat: 15, desc: '', order: 0, regId: newRegisterId }).save();
   }).then((newProduct) => {

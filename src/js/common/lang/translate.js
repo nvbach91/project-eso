@@ -6,7 +6,7 @@ var readline = require('readline');
 
 // the language codes to translate, must be sorted alphabetically,
 // columns in the input file must correspond to these codes in this order
-var langContents = { en: '',cs: ''/*, da: '', de: '', 'de-at': '', fi: '', no: '', sv: ''*/ };
+var langContents = { en: '', cs: ''/*, da: '', de: '', 'de-at': '', fi: '', no: '', sv: ''*/ };
 
 var generateIndent = function(field) {
   var fieldLength = field.length;

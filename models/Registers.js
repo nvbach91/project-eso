@@ -27,6 +27,7 @@ const Registers = new Schema({
   },
   printer: { 
     name: String, 
+    ip: String, 
     diacritics: Boolean, 
     direct: Boolean, 
     columns: Number, 
@@ -34,6 +35,15 @@ const Registers = new Schema({
   },
   kitchenPrinter: { 
     name: String, 
+    ip: String, 
+    diacritics: Boolean, 
+    direct: Boolean, 
+    columns: Number, 
+    groups: String, 
+  }, 
+  labelPrinter: { 
+    name: String, 
+    ip: String, 
     diacritics: Boolean, 
     direct: Boolean, 
     columns: Number, 

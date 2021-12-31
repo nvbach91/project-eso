@@ -245,6 +245,22 @@ App.loadLocale = () => {
       App.lang[key] = (App['GLocale' + App.settings.currency.locale.toUpperCase()] || App.GLocaleEN)[key];
     });
   }
+  
+  App.binarySelectOptions = [
+    { label: App.lang.misc_yes, value: true },
+    { label: App.lang.misc_no, value: false }
+  ];
+
+  App.vatRegisterationOptions = [
+    { label: App.lang.misc_registered, value: true, },
+    { label: App.lang.misc_not_registered, value: false, }
+  ];
+  
+  App.themeOptions = [
+    { label: 'TEAL', value: 'teal', },
+    { label: 'DARK', value: 'dark', }
+  ];
+
 };
 
 App.printQRCode = (data) => {
@@ -548,4 +564,5 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
 
 App.regex = {
   tin: { regex: /^\d{8}$/, desc: '7-8 digits' },
+  ip: { regex: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, desc: 'A valid IPv4 address' }
 };

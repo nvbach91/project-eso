@@ -72,8 +72,135 @@ modal_payment_failed_p2	Please contact our staff	Prosíme zkontaktuje personál
 misc_item	item	položka
 misc_items	items	položky
 misc_itemss	items	položek
-		
 misc_close_btn	Close	Zavřít
 misc_go_back	Go back	Zpět
+misc_save	Save	Uložit
+misc_delete	Delete	Odstranit
+misc_registered	Registered	Registrován
+misc_not_registered	Not registered	Neregistrován
+misc_yes	Yes	Ano
+misc_no	No	Ne
+misc_edit	Edit	Editovat
+misc_products	Products	Produkty
+misc_add	Add	Přidat
+misc_search	Search	Hledat
+misc_saving	Saving...	Ukládá se...
+misc_saved	Saved	Uloženo
+misc_save_failed	Failed to save	Nepodařilo se uložit
+misc_deleting	Deleting...	Odstraňuje se...
+misc_deleted	Deleted	Odstraněno
+misc_delete_failed	Failed to delete	Nepodařilo se odstranit
+		
+form_terminal.endpoint	Endpoint	Endpoint
+form_terminal.id	Terminal ID	ID Terminálu
+form_terminal.ip	IP address	IP adresa
+form_terminal.port	Port	Port
+form_terminal.password	Password	Heslo
+form_printer.name	Kiosk printer name	Název tiskárny kiosku
+form_printer.ip	IP address	IP adresa
+form_printer.groups	Print groups	Skupiny pro tisk
+form_printer.diacritics	Diacritics	Diakritika
+form_printer.direct	Direct print	Přímý tisk
+form_printer.columns	Print columns	Počet sloupců
+form_kitchenPrinter.name	Kitchen printer name	Název tiskárny v kuchyni
+form_kitchenPrinter.ip	IP address	IP adresa
+form_kitchenPrinter.groups	Print groups	Skupiny pro tisk
+form_kitchenPrinter.diacritics	Diacritics	Diakritika
+form_kitchenPrinter.direct	Direct print	Přímý tisk
+form_kitchenPrinter.columns	Print columns	Počet sloupců
+form_labelPrinter.name	Label printer name	Název tiskárny etiket
+form_labelPrinter.ip	IP address	IP adresa
+form_labelPrinter.groups	Print groups	Skupiny pro tisk
+form_labelPrinter.diacritics	Diacritics	Diakritika
+form_labelPrinter.direct	Direct print	Přímý tisk
+form_labelPrinter.columns	Print columns	Počet sloupců
+form_companyName	Company name	Název firmy
+form_subdomain	Subdomain	Subdoména
+form_vat	VAT	DIČ
+form_tin	TIN	IČ
+form_residence.street	Street	Ulice, č.p.
+form_residence.city	City	Město
+form_residence.zip	ZIP	PSČ
+form_residence.country	Country	Země
+form_address.street	Street	Ulice, č.p.
+form_address.city	City	Město
+form_address.zip	ZIP	PSČ
+form_address.country	Country	Země
+form_vatRegistered	VAT registration status	Plátce DPH
+form_bank	Bank	Bankovní spojení
+form_theme	Color theme	Barevný motiv
+form_image	Image	Obrázek
+form_name	Name	Název
+form_number	Number	Číslo
+form_currency	Currency	Měna
+form_order	Order	Pořadí
+form_display	Display	Zobrazit
+form_ors.vat	VAT	DIČ
+form_ors.store_id	Store ID	ID provozovny
+form__password	Password	Heslo
+form_ors.file_name	Certificate file	Certifikační soubor
+form__content	-	-
+form__upload_date	Upload date	Datum nahrávání
+form__valid_until	Valid until	Platnost do
+form_receipt.extraPadding	Extra column padding	Extra vnitřní ohraničení sloupců
+form_receipt.header	Header	Záhlaví
+form_receipt.footer	Footer	Zápatí
+form_text	Text	Text
+form_type	Type	Typ
+form_price	Price	Cena
+form_eans	Codes/EANs	Kódy/EAN
+form_ean	Code/EAN	Kód/EAN
+form_highlight	Highlight	Zvýraznit
+form_group	Group	Skupina
+form_vat	VAT	DPH
+form_email	Email	E-mail
+form_phone	Phone	Telefon
+form_password	Password	Heslo
+form_language	Language	Jazyk
+form_activityCheckTimeout	Activity Check Timeout (ms)	Doba pro kontrolu aktivity (ms)
+form_activityTimeout	Activity Timeout (ms)	Doba pro ukončení aktivity (ms)
+form_carouselInterval	Carousel Interval (ms)	Doba pro zobrazování jednoho snímku (ms)
+form_autoNextTab	Automatically jump tp next order tab	Automaticky skočit na další záložku při objednávání
+		
+admin_dashboard	Dashboard	Úvodní přehled
+admin_transactions	Transactions	Transakce
+admin_products	Products	Produkty
+admin_modifications	Modifications	Modifikace
+admin_groups	Groups	Skupiny
+admin_company	Company	Firma
+admin_kiosk	Kiosk	Kiosk
+admin_peripherals	Peripherals	Periferní zařízení
+		
+dashboard_total_revenue	Total revenue	Tržby celkem
+dashboard_revenues_by_vat		
+dashboard_revenues_by_groups		
+dashboard_top_products		
+dashboard_		
+dashboard_		
+dashboard_transactions	Transactions	Transakce
+dashboard_products_sold	Products sold	Prodáno produktů
+dashboard_average_revenue	Average revenue	Průměrná tržba
+dashboard_hour_total_revenues	hour total revenues	hodinové tržby
+dashboard_hour_transactions count	hour transactions count	hodinové transakce
+		
+settings_printer	Printers	Tiskárny
+settings_payment_terminal	Payment terminal	Platební terminál
+settings_general	General settings	Obecné nastavení
+settings_fiscal	Fiscal settings (EET)	Fiskální nastavení (EET)
+settings_interface	Interface settings	Nastavení rozhraní
+settings_receipt	Receipt settings	Nastavení účtenky
+settings_slides	Slide settings	Úvodní snímky
+settings_company	Company details	Firemní údaje
+settings_payment_methods	Payment methods	Platební metody
+		
+tip_enter_group_number	Enter group number	Zadejte číslo skupiny
+tip_groups_settings	Tip: Add or edit group by entering its number	Tip: Přidejte či editujte skupinu podle jejího čísla
+tip_enter_modification_number	Enter modification number	Zadejte číslo modifikace
+tip_modifications_settings	Tip: Add or edit modification by entering its number	Tip: Přidejte či editujte modifikace podle jejího čísla
+tip_search_by_name_or_code	Search by name or code/EAN	Zadejte název nebo kód/EAN produktu
+tip_products_settings	Tip: Search for a product by its name or code	Tip: Vyhledejte produkt podle názvu či kódu/EAN
+tip_no_data_in_selected_period	There is no data in the selected time period	Ve vybraném časovém období nejsou žádná data
+		
+		
 		
 __END_OF_FILE__		

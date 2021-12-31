@@ -22,7 +22,7 @@ App.renderDashboardScreen = () => {
   App.destroyDatePickers();
   const header = $(`
     <div id="cp-header" class="card-header">
-      <div class="cp-name">Dashboard</div>
+      <div class="cp-name">${App.lang.admin_dashboard}</div>
       <div class="cp-control">
         <button class="btn btn-primary date-nav" id="date-prev">${App.getIcon('keyboard_arrow_left')}</button>
         <button class="btn btn-primary datepicker-btn" data-id="datepicker-start">${App.getIcon('date_range')}</button>
@@ -60,22 +60,22 @@ const renderDashboard = () => {
     <div class="dashboard">
       <div class="btn db-card" id="db-total-revenue">
         <div class="db-value">${App.sumObjectValues(App.aggregates.revByVat).formatMoney()}</div>
-        <div class="db-label">Total revenue</div>
+        <div class="db-label">${App.lang.dashboard_total_revenue}</div>
       </div>
       <div class="btn db-card" id="db-transactions">
         <div class="db-value">${App.aggregates.nTrans}</div>
-        <div class="db-label">Transactions</div>
+        <div class="db-label">${App.lang.dashboard_transactions}</div>
       </div>
       <div class="btn db-card" id="db-sold-products">
         <div class="db-value">${App.aggregates.nProdSold}</div>
-        <div class="db-label">Products sold</div>
+        <div class="db-label">${App.lang.dashboard_products_sold}</div>
       </div>
       <div class="db-card" id="db-hour-chart">
         <canvas></canvas>
       </div>
       <div class="btn db-card" id="db-average-revenue">
         <div class="db-value">${(App.sumObjectValues(App.aggregates.revByVat) / App.aggregates.nTrans).formatMoney()}</div>
-        <div class="db-label">Average revenue</div>
+        <div class="db-label">${App.lang.dashboard_average_revenue}</div>
       </div>
       ${generateRevByVat()}
       ${generateRevByGroup()}
@@ -88,7 +88,7 @@ const renderDashboard = () => {
 };
 
 const clearDashboard = () => {
-  const dashboard = $(`<button class="btn">There is no data in the selected time period</button>`);
+  const dashboard = $(`<button class="btn">${App.lang.tip_no_data_in_selected_period}</button>`);
   App.jControlPanelBody.replaceWith(dashboard);
   App.jControlPanelBody = dashboard;
 };
@@ -100,13 +100,13 @@ const generateHourChart = (container) => {
         '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
       datasets: [{
         data: mapHourValues(App.aggregates.hourSales),
-        label: 'hour total revenues',
+        label: App.lang.dashboard_hour_total_revenues,
         yAxisID: 'y-axis-1',
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,0.4)'
       }, {
         data: mapHourValues(App.aggregates.hourTrans),
-        label: 'hour transactions count',
+        label: App.lang.dashboard_hour_transactions_count,
         yAxisID: 'y-axis-2',
         backgroundColor: 'rgba(192,75,75,0.4)',
         borderColor: 'rgba(192,75,75,0.4)'

@@ -1,12 +1,12 @@
-const tableHeader = `
+const tableHeader = () => `
   <div class="tr table-header">
-    <div class="td sr-img">Image</div>
-    <div class="td sr-number">Number</div>
-    <div class="td sr-order">Order</div>
-    <div class="td sr-name">Name</div>
-    <div class="td sr-price">Price</div>
-    <div class="td sr-type">Type</div>
-    <div class="td sr-edit">Edit</div>
+    <div class="td sr-img">${App.lang.form_image}</div>
+    <div class="td sr-number">${App.lang.form_number}</div>
+    <div class="td sr-order">${App.lang.form_order}</div>
+    <div class="td sr-name">${App.lang.form_name}</div>
+    <div class="td sr-price">${App.lang.form_price}</div>
+    <div class="td sr-type">${App.lang.form_type}</div>
+    <div class="td sr-edit">${App.lang.misc_edit}</div>
   </div>
 `;
 
@@ -16,7 +16,7 @@ App.renderModsScreen = () => {
   const keys = Object.keys(App.mods);
   const header = $(`
     <div id="cp-header" class="card-header">
-      <div class="cp-name">Modifications</div>
+      <div class="cp-name">${App.lang.admin_modifications}</div>
       <div class="d-flex justify-content-flex-end">
         <div class="cp-control">${keys.length}&nbsp;${App.getIcon('storage')}</div>
         <button class="btn btn-primary">${App.getIcon('import_export')}&nbsp;Import/Export</button>
@@ -27,11 +27,11 @@ App.renderModsScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`
     <div class="card-body">
-      <div class="card-text">Tip: Add or edit modification by entering its number</div>
+      <div class="card-text">${App.lang.tip_modifications_settings}</div>
       <form class="search-form">
         <div class="input-group">
-          <input class="form-control" placeholder="Enter modification number" title="Key 1-20 digits" required>
-          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;Search</button>
+          <input class="form-control" placeholder="${App.lang.tip_enter_modification_number}" title="Key 1-20 digits" required>
+          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search}</button>
         </div>
       </form>
       <div class="table"></div>
@@ -60,7 +60,7 @@ const renderTable = () => {
   keys.sort((a, b) => App.mods[a].order - App.mods[b].order); // Ascending order
 
   table.empty();
-  table.append(tableHeader, keys.map((key) => {
+  table.append(tableHeader(), keys.map((key) => {
     const i = App.mods[key];
     const { name, type, number, order, img, price } = i || {};
     const item = $(`
@@ -90,27 +90,27 @@ const showEditForm = (number) => {
     <form class="mod-item">
       <div class="form-row">
         <div class="img-upload">
-          <label class="bmd-label-static">Image</label>
+          <label class="bmd-label-static">${App.lang.form_image}</label>
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
           <input class="hidden" name="img" value="${img || ''}">
           ${App.getCloudinaryUploadTag({ tags: ['mod'] })}
         </div>
         <div class="form-col">
           <div class="form-row">
-            ${App.generateFormInput({ label: 'Number', name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
-            ${App.generateFormInput({ label: 'Order', name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
+            ${App.generateFormInput({ name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
+            ${App.generateFormInput({ name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
           </div>
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
+          ${App.generateFormInput({ name: 'name', value: name || '' })}
           <div class="form-row">
-            ${App.generateFormInput({ label: 'Type', name: 'type', value: type || '' })}
-            ${App.generateFormInput({ label: 'Price', name: 'price', value: price || Number(0).formatMoney() })}
+            ${App.generateFormInput({ name: 'type', value: type || '' })}
+            ${App.generateFormInput({ name: 'price', value: price || Number(0).formatMoney() })}
           </div>
-          ${App.generateFormInput({ label: 'EANs', name: 'eans', value: eans ? Object.keys(eans) : '', optional: true })}
+          ${App.generateFormInput({ name: 'eans', value: eans ? Object.keys(eans) : '', optional: true })}
         </div>
       </div>
       <div class="mi-control">
         ${item ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
-        <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
+        <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
       </div>
     </form>
   `);

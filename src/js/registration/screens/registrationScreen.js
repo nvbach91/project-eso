@@ -13,31 +13,31 @@ App.renderRegistrationScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           <div class="form-col"> 
-            ${App.generateFormInput({ label: 'TIN', name: 'tin', pattern: App.regex.tin.regex })}
+            ${App.generateFormInput({ name: 'tin', pattern: App.regex.tin.regex })}
             <button type="button" class="btn btn-primary" id="ares-btn">${App.getIcon('search')}</button>
           </div>
           <div class="form-col">
-            ${App.generateFormInput({ label: 'VAT', name: 'vat', optional: true })}
+            ${App.generateFormInput({ name: 'vat', optional: true })}
           </div>
         </div>
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Company name', name: 'companyName' })}
-          ${App.generateFormInput({ label: 'Subdomain', name: 'subdomain' })}
+          ${App.generateFormInput({ name: 'companyName' })}
+          ${App.generateFormInput({ name: 'subdomain' })}
         </div>
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Email', name: 'email', type: 'email' })}
-          ${App.generateFormInput({ label: 'Phone', name: 'phone' })}
-          ${App.generateFormInput({ label: 'Password', name: 'password', type: 'password' })}
+          ${App.generateFormInput({ name: 'email', type: 'email' })}
+          ${App.generateFormInput({ name: 'phone' })}
+          ${App.generateFormInput({ name: 'password', type: 'password' })}
         </div>
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Street', name: 'residence.street' })}
-          ${App.generateFormInput({ label: 'City', name: 'residence.city' })}
-          ${App.generateFormInput({ label: 'ZIP', name: 'residence.zip' })}
+          ${App.generateFormInput({ name: 'residence.street' })}
+          ${App.generateFormInput({ name: 'residence.city' })}
+          ${App.generateFormInput({ name: 'residence.zip' })}
         </div>
         <div class="form-row"> 
-          ${App.generateFormInput({ label: 'Country', name: 'residence.country' })}
-          ${App.generateFormSelect({ label: 'Prefered language', name: 'language', value: App.locale, options: languageOptions, width: 160 })}
-          ${App.generateFormSelect({ label: 'Currency', name: 'currency', value: 'CZK', options: currencyOptions, width: 160 })}
+          ${App.generateFormInput({ name: 'residence.country' })}
+          ${App.generateFormSelect({ name: 'language', value: App.locale, options: languageOptions, width: 160 })}
+          ${App.generateFormSelect({ name: 'currency', value: 'CZK', options: currencyOptions, width: 160 })}
         </div>
         <input type="hidden" name="token">
         <button class="hidden" id="submit">Submit</button>

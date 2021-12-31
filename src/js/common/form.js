@@ -4,7 +4,7 @@ App.generateFormInput = (args) => {
   const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
-      <label>${label}</label>
+      <label>${label || App.lang[`form_${name}`] || name}</label>
       <input
         ${type ? ` type="${type}"` : ''}
         ${type === 'password' && !autocomplete ? ` autocomplete="new-password"` : ''}
@@ -31,7 +31,7 @@ App.generateFormSelect = (args) => {
   const style = `${width ? `max-width: ${width}px;` : ''}`;
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
-      <label>${label}</label>
+      <label>${label || App.lang[`form_${name}`] || name}</label>
       <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}${multiple ? ' multiple' : ''}>
         ${options.map((o) => {
     const { label, value } = o;
@@ -41,11 +41,6 @@ App.generateFormSelect = (args) => {
     </div>
   `;
 };
-
-App.binarySelectOptions = [
-  { label: 'Yes', value: true },
-  { label: 'No', value: false }
-];
 
 
 App.bindForm = (form, endpoint) => {
@@ -223,28 +218,28 @@ App.getCloudinaryUploadTag = (options) => {
 };
 
 App.ajaxSaving = (btn) => {
-  btn.prop('disabled', true).text('Saving...').removeClass('btn-success btn-danger');
+  btn.prop('disabled', true).text(App.lang.misc_saving).removeClass('btn-success btn-danger');
 };
 
 App.ajaxSaveDone = (btn) => () => {
-  btn.prop('disabled', false).text('Saved').addClass('btn-success');
+  btn.prop('disabled', false).text(App.lang.misc_saved).addClass('btn-success');
 };
 
 App.ajaxSaveFail = (btn) => () => {
-  btn.prop('disabled', false).text('Failed to save').addClass('btn-danger');
+  btn.prop('disabled', false).text(App.lang.misc_save_failed).addClass('btn-danger');
 };
 
 App.ajaxDeleting = (btn) => {
-  btn.prop('disabled', true).text('Deleting...').removeData('ready');
+  btn.prop('disabled', true).text(App.lang.misc_deleting).removeData('ready');
 };
 
 App.ajaxDeleteDone = (btn) => () => {
-  btn.prop('disabled', false).text('Deleted').addClass('btn-success');
+  btn.prop('disabled', false).text(App.lang.misc_deleted).addClass('btn-success');
   App.closeModal();
 };
 
 App.ajaxDeleteFail = (btn) => () => {
-  btn.prop('disabled', false).text('Failed to delete').addClass('btn-danger');
+  btn.prop('disabled', false).text(App.lang.misc_delete_failed).addClass('btn-danger');
 };
 
 App.resetFileInput = (input) => {

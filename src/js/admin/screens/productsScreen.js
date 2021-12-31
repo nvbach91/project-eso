@@ -1,12 +1,12 @@
-const tableHeader = `
+const tableHeader = () => `
   <div class="tr table-header">
-    <div class="td sr-img">Image</div>
-    <div class="td sr-number">Code</div>
-    <div class="td sr-name">Name</div>
-    <div class="td sr-price">Price</div>
-    <div class="td sr-group">Group</div>
-    <div class="td sr-vat">VAT</div>
-    <div class="td sr-edit">Edit</div>
+    <div class="td sr-img">${App.lang.form_image}</div>
+    <div class="td sr-number">${App.lang.form_ean}</div>
+    <div class="td sr-name">${App.lang.form_name}</div>
+    <div class="td sr-price">${App.lang.form_price}</div>
+    <div class="td sr-group">${App.lang.form_group}</div>
+    <div class="td sr-vat">${App.lang.form_vat}</div>
+    <div class="td sr-edit">${App.lang.misc_edit}</div>
   </div>
 `;
 
@@ -14,7 +14,7 @@ App.renderProductsScreen = () => {
   const productKeys = Object.keys(App.products);
   const header = $(`
     <div id="cp-header" class="card-header">
-      <div class="cp-name">Products</div>
+      <div class="cp-name">${App.lang.admin_products}</div>
       <div class="d-flex justify-content-flex-end">
         <div class="cp-control">${productKeys.length}&nbsp;${App.getIcon('storage')}</div>
         <button class="btn btn-primary">${App.getIcon('import_export')}&nbsp;Import/Export</button>
@@ -25,11 +25,11 @@ App.renderProductsScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`
     <div class="card-body">
-      <div class="card-text">Tip: Search for a product by its name or code</div>
+      <div class="card-text">${App.lang.tip_products_settings}</div>
       <form class="search-form">
         <div class="input-group">
-          <input class="form-control" placeholder="Search by name or code" title="PLU EAN code 1-20 digits" required>
-          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;Search</button>
+          <input class="form-control" placeholder="${App.lang.tip_search_by_name_or_code}" title="PLU EAN code 1-20 digits" required>
+          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search}</button>
         </div>
       </form>
       <div class="table"></div>
@@ -78,7 +78,7 @@ App.renderProductsScreen = () => {
       }
     }
     if (searchResults.length) {
-      searchResultsContainer.append(tableHeader);
+      searchResultsContainer.append(tableHeader());
       searchResultsContainer.append(searchResults);
     } else {
       searchResultsContainer.append(`<div class="tr">No products found. ${/^\d+$/.test(searchValue) ? `Press Enter to create product <span class="match">${searchValue}</span>.` : ''}</div>`);
@@ -108,24 +108,24 @@ const showEditForm = (ean, cb) => {
     <form class="mod-item">
       <div class="form-row">
         <div class="img-upload">
-          <label class="bmd-label-static">Image</label>
+          <label class="bmd-label-static">${App.lang.form_image}</label>
           <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
           <input class="hidden" name="img" value="${img || ''}">
           ${App.getCloudinaryUploadTag({ tags: ['product'] })}
         </div>
         <div class="form-col">
           <div class="form-row">
-            ${App.generateFormInput({ label: 'Code', name: 'ean', value: ean || '', disabled: true })}
-            ${App.generateFormInput({ label: 'Order', name: 'order', value: order || 0, type: 'number', min: 0, width: 50 })}
-            ${App.generateFormSelect({ label: 'Highlight', name: 'highlight', value: highlight || false, options: App.binarySelectOptions })}
+            ${App.generateFormInput({ name: 'ean', value: ean || '', disabled: true })}
+            ${App.generateFormInput({ name: 'order', value: order || 0, type: 'number', min: 0, width: 50 })}
+            ${App.generateFormSelect({ name: 'highlight', value: highlight || false, options: App.binarySelectOptions })}
           </div>
-          ${App.generateFormInput({ label: 'Name', name: 'name', value: name || '' })}
+          ${App.generateFormInput({ name: 'name', value: name || '' })}
         </div>
       </div>
       <div class="form-row">
-        ${App.generateFormInput({ label: 'Price', name: 'price', value: price || '' })}
-        ${App.generateFormSelect({ label: 'Group', name: 'group', value: group === undefined ? '' : group.toString(), options: groupOptions, type: 'number' })}
-        ${App.generateFormSelect({ label: 'VAT', name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
+        ${App.generateFormInput({ name: 'price', value: price || '' })}
+        ${App.generateFormSelect({ name: 'group', value: group === undefined ? '' : group.toString(), options: groupOptions, type: 'number' })}
+        ${App.generateFormSelect({ name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
       </div>
         ${Object.keys(App.modTypes).map((type) => {
           return (`
@@ -153,7 +153,7 @@ const showEditForm = (ean, cb) => {
       </div>
       <div class="mi-control">
         ${product ? `<button type="button" class="btn btn-danger btn-delete">Delete</button>` : ''}
-        <button class="btn btn-primary btn-raised btn-save">Save ${App.getIcon('save')}</button>
+        <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
       </div>
     </form>
   `);

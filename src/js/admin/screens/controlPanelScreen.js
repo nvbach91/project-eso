@@ -1,13 +1,13 @@
 App.renderControlPanelTabs = () => {
   const cpTabs = [
-    { icon: 'dashboard', name: 'Dashboard', render: App.renderDashboardScreen },
-    { icon: 'history', name: 'Transactions', render: App.renderTransactionScreen },
-    { icon: 'view_module', name: 'Products', render: App.renderProductsScreen },
-    { icon: 'style', name: 'Modifications', render: App.renderModsScreen },
-    { icon: 'category', name: 'Groups', render: App.renderGroupsScreen },
-    { icon: 'business', name: 'Company', render: App.renderCompanyScreen },
-    { icon: 'web_asset', name: 'Kiosk', render: App.renderKioskScreen },
-    { icon: 'device_hub', name: 'Peripherals', render: App.renderPeripheralsScreen },
+    { icon: 'dashboard', name: App.lang.admin_dashboard, render: App.renderDashboardScreen },
+    { icon: 'history', name: App.lang.admin_transactions, render: App.renderTransactionScreen },
+    { icon: 'view_module', name: App.lang.admin_products, render: App.renderProductsScreen },
+    { icon: 'style', name: App.lang.admin_modifications, render: App.renderModsScreen },
+    { icon: 'category', name: App.lang.admin_groups, render: App.renderGroupsScreen },
+    { icon: 'business', name: App.lang.admin_company, render: App.renderCompanyScreen },
+    { icon: 'web_asset', name: App.lang.admin_kiosk, render: App.renderKioskScreen },
+    { icon: 'device_hub', name: App.lang.admin_peripherals, render: App.renderPeripheralsScreen },
   ];
   const container = $('<div>');
   cpTabs.forEach((tab) => {
