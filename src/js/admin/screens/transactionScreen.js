@@ -1,5 +1,5 @@
 const createTransactiontable = () => $(`
-  <div class="table card-body">
+  <div class="table card-body transactions">
     <div class="tr transaction-item">
       <div class="td ti-number">Receipt number</div>
       <div class="td ti-date">Date</div>

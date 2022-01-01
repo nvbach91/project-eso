@@ -105,6 +105,9 @@
 .tr:hover {
     background-color: #f1f1f1;
 }
+.table.transactions {
+    flex: initial;
+}
 .transaction-item .ti-number {
     border-left: 2px solid transparent;
 }
