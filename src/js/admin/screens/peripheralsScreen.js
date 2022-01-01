@@ -35,6 +35,9 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormSelect({ name: 'labelPrinter.diacritics', value: App.settings.labelPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ name: 'labelPrinter.direct', value: App.settings.labelPrinter.direct, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormInput({ name: 'labelPrinter.columns', value: App.settings.labelPrinter.columns, type: 'number', width: 80, min: 32, max: 48 })}
+          ${App.generateFormInput({ name: 'labelPrinter.top', value: App.settings.labelPrinter.top, type: 'number', width: 80, min: 0, optional: true })}
+          ${App.generateFormInput({ name: 'labelPrinter.left', value: App.settings.labelPrinter.left, type: 'number', width: 80, min: 0, optional: true })}
+          ${App.generateFormInput({ name: 'labelPrinter.fontSize', value: App.settings.labelPrinter.fontSize, type: 'number', width: 80, min: 8, optional: true })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

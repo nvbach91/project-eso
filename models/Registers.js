@@ -48,6 +48,9 @@ const Registers = new Schema({
     direct: Boolean, 
     columns: Number, 
     groups: String, 
+    top: Number,
+    left: Number,
+    fontSize: Number,
   }, 
   terminal: { 
     ip: String, 

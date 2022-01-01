@@ -133,7 +133,7 @@ const showEditForm = (number) => {
         <div class="table">
           <div class="tr table-header">
             <div class="td sr-order">${App.lang.form_order}</div>
-            <div class="td sr-ean">${App.lang.form_code}</div>
+            <div class="td sr-ean">${App.lang.form_ean}</div>
             <div class="td sr-name">${App.lang.form_name}</div>
           </div>
           ${Object.keys(App.products).filter((ean) => {

@@ -163,16 +163,16 @@ App.createInlineSpinner = () => {
   `);
 };
 
-App.printDirect = (content, printer) => {
-  if (!printer) {
+App.printDirect = (args) => {
+  if (!args) {
+    return false;
+  }
+  if (!args.printer && !args.ip) {
     return false;
   }
   $.post({
     url: App.localhostServerURL + '/printdirect',
-    data: {
-      printer,
-      content,
-    }
+    data: args
   });
 };;
 

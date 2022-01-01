@@ -114,6 +114,9 @@ form_labelPrinter.groups	Print groups	Skupiny pro tisk
 form_labelPrinter.diacritics	Diacritics	Diakritika
 form_labelPrinter.direct	Direct print	Přímý tisk
 form_labelPrinter.columns	Print columns	Počet sloupců
+form_labelPrinter.left	Left padding	Levý okraj
+form_labelPrinter.top	Top padding	Horní okraj
+form_labelPrinter.fontSize	Font size	Velikost písmene
 form_companyName	Company name	Název firmy
 form_subdomain	Subdomain	Subdoména
 form_vat	VAT	DIČ

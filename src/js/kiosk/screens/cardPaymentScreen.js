@@ -56,6 +56,7 @@ App.renderCardPaymentScreen = () => {
           App.transactions.push(resp);
           App.printReceipt(resp, appendix);
           App.printKitchenReceipt(resp);
+          App.printLabelReceipt(resp);
         }).fail((resp) => {
           App.showWarning(`
             <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
@@ -92,6 +93,7 @@ App.payInCash = () => {
     App.transactions.push(resp);
     App.printReceipt(resp);
     App.printKitchenReceipt(resp);
+    App.printLabelReceipt(resp);
   }).fail((resp) => {
     App.showWarning(`
       <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>

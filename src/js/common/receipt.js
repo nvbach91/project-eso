@@ -60,7 +60,12 @@ App.printReceipt = (transaction, appendix) => {
   const receiptText = App.renderReceiptText(transaction);
   if (App.settings.printer.direct) {
     const text = receiptText + (appendix ? `\n${appendix}` : '');
-    App.printDirect(App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.printer.name);
+    App.printDirect(Object.assign({},
+      App.settings.printer,
+      {
+        content: App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+      }
+    ));
   } else {
     App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
     App.jModal.find('.cs-cancel').remove();
@@ -71,11 +76,33 @@ App.printKitchenReceipt = (transaction) => {
   const receiptText = App.renderKitchenReceiptText(transaction);
   if (App.settings.kitchenPrinter.direct) {
     const text = App.renderKitchenReceiptText(transaction);
-    App.printDirect(App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text), App.settings.kitchenPrinter.name);
+    App.printDirect(Object.assign({},
+      App.settings.kitchenPrinter,
+      {
+        content: App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+      }
+    ));
   } else {
     App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
     App.jModal.find('.cs-cancel').remove();
   }
+};
+
+App.printLabelReceipt = (transaction) => {
+  transaction.items.forEach((item, index) => {
+    if (App.settings.labelPrinter.direct) {
+      const text = App.renderLabelReceiptText(transaction, item, index);
+      App.printDirect(Object.assign({},
+        App.settings.labelPrinter,
+        {
+          content: App.settings.labelPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+        }
+      ));
+    } else {
+      App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
+      App.jModal.find('.cs-cancel').remove();
+    }
+  });
 };
 
 App.renderReceiptText = (transaction) => {
@@ -128,7 +155,7 @@ App.renderReceiptText = (transaction) => {
       vatSummary[item.vat].total += itemTotal;
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? product.name : ('EAN: ' + item.ean);
+      const itemName = product ? product.name : `${App.lang.form_ean}: ${item.ean}`;
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
@@ -201,7 +228,7 @@ App.renderKitchenReceiptText = (transaction) => {
       }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean}: ${product.name}` : `EAN: ${item.ean}`;
+      const itemName = product ? `${item.ean}: ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
@@ -210,6 +237,24 @@ App.renderKitchenReceiptText = (transaction) => {
     }).join('\n')}` +
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
     `\n\n\n\n.`;
+
+  const result = App.alignReceiptText(text);
+  return result;
+};
+
+App.renderLabelReceiptText = (transaction, item, index) => {
+  const text =
+    `${App.lang.receipt_header_order} K#${transaction.order}\t${App.getDeliveryMethod(transaction.delivery)}` +
+    `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
+    `\n${(() => {
+      const product = App.products[item.ean];
+      const itemName = product ? `${item.ean}: ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      let mods = '';
+      if (item.mods) {
+        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      }
+      return `${item.quantity} x ${itemName}${mods ? `\n${mods}` : ''}`;
+    })()}\n`;
 
   const result = App.alignReceiptText(text);
   return result;
