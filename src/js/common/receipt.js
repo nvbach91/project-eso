@@ -64,6 +64,7 @@ App.printReceipt = (transaction, appendix) => {
       App.settings.printer,
       {
         content: App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+        printer: App.settings.printer.name,
       }
     ));
   } else {
@@ -80,6 +81,7 @@ App.printKitchenReceipt = (transaction) => {
       App.settings.kitchenPrinter,
       {
         content: App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+        printer: App.settings.kitchenPrinter.name,
       }
     ));
   } else {
@@ -96,6 +98,7 @@ App.printLabelReceipt = (transaction) => {
         App.settings.labelPrinter,
         {
           content: App.settings.labelPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+          printer: App.settings.labelPrinter.name,
         }
       ));
     } else {
