@@ -231,7 +231,7 @@ App.renderKitchenReceiptText = (transaction) => {
       }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean}: ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
@@ -251,7 +251,7 @@ App.renderLabelReceiptText = (transaction, item, index) => {
     `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
     `\n${(() => {
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean}: ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
