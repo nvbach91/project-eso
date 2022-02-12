@@ -26,7 +26,7 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormInput({ name: 'kitchenPrinter.groups', value: App.settings.kitchenPrinter.groups, width: 120, optional: true, pattern: /^\d+(,\d+)*$/ })}
           ${App.generateFormSelect({ name: 'kitchenPrinter.diacritics', value: App.settings.kitchenPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ name: 'kitchenPrinter.direct', value: App.settings.kitchenPrinter.direct, options: App.binarySelectOptions, width: 80 })}
-          ${App.generateFormInput({ name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 32, max: 48 })}
+          ${App.generateFormInput({ name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 24, max: 48 })}
         </div>
         <div class="form-row">
           ${App.generateFormInput({ name: 'labelPrinter.name', value: App.settings.labelPrinter.name, optional: true })}
@@ -34,7 +34,7 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormInput({ name: 'labelPrinter.groups', value: App.settings.labelPrinter.groups, width: 120, optional: true, pattern: /^\d+(,\d+)*$/ })}
           ${App.generateFormSelect({ name: 'labelPrinter.diacritics', value: App.settings.labelPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ name: 'labelPrinter.direct', value: App.settings.labelPrinter.direct, options: App.binarySelectOptions, width: 80 })}
-          ${App.generateFormInput({ name: 'labelPrinter.columns', value: App.settings.labelPrinter.columns, type: 'number', width: 80, min: 32, max: 48 })}
+          ${App.generateFormInput({ name: 'labelPrinter.columns', value: App.settings.labelPrinter.columns, type: 'number', width: 80, min: 24, max: 48 })}
           ${App.generateFormInput({ name: 'labelPrinter.top', value: App.settings.labelPrinter.top, type: 'number', width: 80, min: 0, optional: true })}
           ${App.generateFormInput({ name: 'labelPrinter.left', value: App.settings.labelPrinter.left, type: 'number', width: 80, min: 0, optional: true })}
           ${App.generateFormInput({ name: 'labelPrinter.fontSize', value: App.settings.labelPrinter.fontSize, type: 'number', width: 80, min: 8, optional: true })}
