@@ -18,7 +18,7 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormInput({ name: 'printer.groups', value: App.settings.printer.groups, width: 120, optional: true, pattern: /^\d+(,\d+)*$/ })}
           ${App.generateFormSelect({ name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions, width: 80 })}
           ${App.generateFormSelect({ name: 'printer.direct', value: App.settings.printer.direct, options: App.binarySelectOptions, width: 80 })}
-          ${App.generateFormInput({ name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 32, max: 48 })}
+          ${App.generateFormInput({ name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
         </div>
         <div class="form-row"> 
           ${App.generateFormSelect({ name: 'kitchenPrinter.name', value: App.settings.kitchenPrinter.name, options: printerOptions, optional: true })}
