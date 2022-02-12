@@ -213,7 +213,7 @@ App.renderReceiptText = (transaction) => {
 
   const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n\n\n.`;
   //const text = `${body}`;
-  const result = App.alignReceiptText(text);
+  const result = App.alignReceiptText(text, App.settings.printer.columns);
   return result;
 };
 
@@ -241,7 +241,7 @@ App.renderKitchenReceiptText = (transaction) => {
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
     `\n\n\n\n.`;
 
-  const result = App.alignReceiptText(text);
+  const result = App.alignReceiptText(text, App.settings.kitchenPrinter.columns);
   return result;
 };
 
@@ -263,11 +263,11 @@ App.renderLabelReceiptText = (transaction, item, index) => {
       return `${item.quantity} x ${itemName}${mods ? `\n${mods}` : ''}`;
     })()}\n`;
 
-  const result = App.alignReceiptText(text);
+  const result = App.alignReceiptText(text, App.settings.labelPrinter.columns);
   return result;
 };
 
-App.alignReceiptText = (text) => {
+App.alignReceiptText = (text, columns) => {
   return text.split('\n').map((line) => {
     const tabs = line.match(/\t|\\t/g);
     if (tabs) {
@@ -288,14 +288,14 @@ App.alignReceiptText = (text) => {
         lineLength -= 2;
         lineLength += lineLength;
       }
-      const remainingSpaceCount = Math.floor((App.settings.printer.columns - lineLength) / tabs.length) + 1;
+      const remainingSpaceCount = Math.floor((columns - lineLength) / tabs.length) + 1;
       if (remainingSpaceCount > 0) {
         line = line.replace(/\t|\\t/g, ' '.repeat(remainingSpaceCount));
       } else {
         line = line.replace(/\t|\\t/g, '');
       }
     }
-    if (App.settings.printer.columns - line.length === 1) {
+    if (columns - line.length === 1) {
       line = line.replace('   ', '    ');
     }
     return line;
