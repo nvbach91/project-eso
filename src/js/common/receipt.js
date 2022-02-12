@@ -245,13 +245,17 @@ App.renderKitchenReceiptText = (transaction) => {
   return result;
 };
 
+App.shortenTextByColumns = (text, columns) => {
+  const regex = new RegExp(`.{1,${columns}}`,'g')
+  return text.match(regex).join('\n');
+};
 App.renderLabelReceiptText = (transaction, item, index) => {
   const text =
     `${App.lang.receipt_header_order} K#${transaction.order}\t${App.getDeliveryMethod(transaction.delivery)}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
     `\n${(() => {
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, App.settings.labelPrinter.columns);
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
