@@ -149,6 +149,7 @@ App.GLocaleCS = {
   "form_receipt.header"                     : "Záhlaví",
   "form_receipt.footer"                     : "Zápatí",
   "form_text"                               : "Text",
+  "form_video"                              : "Video URL",
   "form_type"                               : "Typ",
   "form_price"                              : "Cena",
   "form_eans"                               : "Kódy/EAN",

@@ -17,12 +17,19 @@ App.renderStandbyScreen = () => {
           </ol>
           <div class="carousel-inner bg-info" role="listbox">
             ${slideIds.map((slideId, index) => {
-              const { img, text } = App.settings.slides[slideId];
+              const { img, text, video } = App.settings.slides[slideId];
               return `
                 <div class="carousel-item${index === App.currentSlidePosition ? ' active' : ''}">
-                  <div class="d-flex align-items-center justify-content-center min-vh-100"${App.getBackgroundImage(img)}>
-                    ${text ? `<button class="btn btn-primary btn-raised btn-lg btn-xlg">${text}</button>` : ''}
-                  </div>
+                  ${video ? `
+                    <video style="width: 100%" autoplay muted loop>
+                      <source src="${video}">
+                      Your browser does not support the video tag.
+                    </video>
+                  ` : `
+                    <div class="d-flex align-items-center justify-content-center min-vh-100"${App.getBackgroundImage(img)}>
+                      ${text ? `<button class="btn btn-primary btn-raised btn-lg btn-xlg">${text}</button>` : ''}
+                    </div>
+                  `}
                 </div>
               `;
             }).join('')}

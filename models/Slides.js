@@ -6,6 +6,7 @@ const Slides = new Schema({
   order: Number,
   text: String,
   img: String,
+  video: String,
 });
 
 Slides.index({ regId: 1 });

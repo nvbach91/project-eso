@@ -207,11 +207,12 @@ const createSlideFormRow = (slide) => {
         <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
         <input class="hidden" name="img" value="${slide.img || ''}">
         <input class="hidden" name="_id" value="${slide._id || ''}">
-        ${App.getCloudinaryUploadTag({ tags: ['slide'] })}
+        ${App.getCloudinaryUploadTag({ tags: ['slide'] })} 
       </div>
-      <div class="form-col">
+      <div class="form-row">
         ${App.generateFormInput({ type: 'number', min: 0, name: 'order', value: slide.order })}
         ${App.generateFormInput({ name: 'text', value: slide.text, optional: true })}
+        ${App.generateFormInput({ name: 'video', value: slide.video, optional: true })}
       </div>
       <div class="mi-control">
         <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

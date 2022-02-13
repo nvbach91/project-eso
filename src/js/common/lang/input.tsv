@@ -149,6 +149,7 @@ form_receipt.extraPadding	Extra column padding	Extra vnitřní ohraničení slou
 form_receipt.header	Header	Záhlaví
 form_receipt.footer	Footer	Zápatí
 form_text	Text	Text
+form_video	Video URL	Video URL
 form_type	Type	Typ
 form_price	Price	Cena
 form_eans	Codes/EANs	Kódy/EAN

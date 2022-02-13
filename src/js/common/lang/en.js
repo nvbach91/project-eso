@@ -149,6 +149,7 @@ App.GLocaleEN = {
   "form_receipt.header"                     : "Header",
   "form_receipt.footer"                     : "Footer",
   "form_text"                               : "Text",
+  "form_video"                              : "Video URL",
   "form_type"                               : "Type",
   "form_price"                              : "Price",
   "form_eans"                               : "Codes/EANs",
