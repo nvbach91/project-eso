@@ -191,8 +191,8 @@ const createSlidesSettingsForm = () => {
   const slideIds = Object.keys(App.settings.slides);
   slideIds.sort((a, b) => App.settings.slides[a].order - App.settings.slides[b].order);
   slideIds.forEach((_id) => {
-    const { text, img, order } = App.settings.slides[_id];
-    const formRow = createSlideFormRow({ _id, text, img, order });
+    const { text, img, order, video } = App.settings.slides[_id];
+    const formRow = createSlideFormRow({ _id, text, img, order, video });
     miBody.append(formRow);
   });
   return form;
@@ -204,6 +204,7 @@ const createSlideFormRow = (slide) => {
     <form class="form-row">
       <div class="img-upload">
         <label class="bmd-label-static">${App.lang.form_image}</label>
+        <video class="img-holder" autoplay muted loop src="${slide.video || ''}"></video>
         <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
         <input class="hidden" name="img" value="${slide.img || ''}">
         <input class="hidden" name="_id" value="${slide._id || ''}">
@@ -212,7 +213,7 @@ const createSlideFormRow = (slide) => {
       <div class="form-row">
         ${App.generateFormInput({ type: 'number', min: 0, name: 'order', value: slide.order })}
         ${App.generateFormInput({ name: 'text', value: slide.text, optional: true })}
-        ${App.generateFormInput({ name: 'video', value: slide.video, optional: true })}
+        ${App.generateFormInput({ type: 'url', name: 'video', optional: true })}
       </div>
       <div class="mi-control">
         <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
@@ -220,6 +221,13 @@ const createSlideFormRow = (slide) => {
       </div>
     </form>
   `);
+  if (slide.video) {
+    console.log(slide);
+    formRow.find('input[name="video"]').val(slide.video);
+    formRow.find('.btn.img-holder').hide();
+  } else {
+    formRow.find('video.img-holder').hide();
+  }
   App.bindForm(formRow, '/slides');
   App.bindCloudinaryFileUpload(
     formRow.find('input.cloudinary-fileupload[type="file"]'), 

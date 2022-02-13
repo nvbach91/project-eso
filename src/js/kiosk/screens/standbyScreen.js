@@ -21,10 +21,7 @@ App.renderStandbyScreen = () => {
               return `
                 <div class="carousel-item${index === App.currentSlidePosition ? ' active' : ''}">
                   ${video ? `
-                    <video style="width: 100%" autoplay muted loop>
-                      <source src="${video}">
-                      Your browser does not support the video tag.
-                    </video>
+                    <video autoplay muted loop src="${video}"></video>
                   ` : `
                     <div class="d-flex align-items-center justify-content-center min-vh-100"${App.getBackgroundImage(img)}>
                       ${text ? `<button class="btn btn-primary btn-raised btn-lg btn-xlg">${text}</button>` : ''}

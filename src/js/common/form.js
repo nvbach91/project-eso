@@ -145,6 +145,15 @@ App.bindForm = (form, endpoint) => {
         })
       });
     }
+    if (endpoint === '/slides') {
+      if (data.video.trim()) {
+        form.find('video.img-holder').show().attr('src', data.video);
+        form.find('div.btn.img-holder').hide();
+      } else {
+        form.find('video.img-holder').hide().attr('src', '');
+        form.find('div.btn.img-holder').show();
+      }
+    }
   });
 };
 
