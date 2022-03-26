@@ -20,7 +20,7 @@ App.realm = realm;
 
 App.provider = 'Ethereals United';
 
-App.credits = new Date().getFullYear() + ' © ' + App.provider;
+App.credits = new Date().getFullYear() + ' © www.itake.cz';
 
 App.supportedCurrencies = {
   CZK: {

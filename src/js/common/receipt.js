@@ -124,13 +124,13 @@ App.renderReceiptText = (transaction) => {
   let subTotal = 0;
 
   const header =
-    `\t${App.ESCPOS.doubleHeight(App.settings.name)}\t` +
+    `\t${App.ESCPOS.bold(App.settings.name)}\t` +
     `\n${App.lang.receipt_header_premise}: ${App.settings.residence.street}` +
     `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
     `\n\t${App.settings.companyName}\t` +
-    `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} | ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
-    `\n${App.lang.receipt_header_residence}: ${App.settings.address.street}` +
-    `\n${App.settings.address.zip} ${App.settings.address.city}` +
+    `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
+    `\n${App.settings.address.street || ''}` +
+    `\n${App.settings.address.zip || ''} ${App.settings.address.city || ''}` +
     //`\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
@@ -231,12 +231,12 @@ App.renderKitchenReceiptText = (transaction) => {
       }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = product ? `#${item.ean} ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       let mods = '';
       if (item.mods) {
         mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       }
-      return `${App.ESCPOS.quadrupleSize(`${item.quantity} x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
+      return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
     }).join('\n')}` +
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
     `\n\n\n\n.`;
