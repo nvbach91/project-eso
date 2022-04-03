@@ -37,6 +37,9 @@ App.renderCheckoutScreen = () => {
     </main>
   `);
   screen.find('.payment-method').click(function () {
+    if (Offline.state === 'down') {
+      return App.showWarning(App.lang.misc_device_is_offline);
+    }
     App.paymentMethod = $(this).data('method');
     if (App.paymentMethod === 'card') {
       App.renderCardPaymentScreen();

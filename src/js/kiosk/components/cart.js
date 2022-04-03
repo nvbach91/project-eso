@@ -261,6 +261,9 @@ App.showCart = () => {
     </div>
   `);
   cartSummary.find('.cs-price').click(() => {
+    if (Offline.state === 'down') {
+      return App.showWarning(App.lang.misc_device_is_offline);
+    }
     App.closeModal();
     App.renderCheckoutScreen();
   });

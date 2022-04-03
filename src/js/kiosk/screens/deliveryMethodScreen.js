@@ -47,6 +47,9 @@ App.renderDeliveryMethodScreen = () => {
     </main>
   `);
   screen.find('.selection .card').click(function () {
+    if (Offline.state === 'down') {
+      return App.showWarning(App.lang.misc_device_is_offline);
+    }
     const newDeliveryMethod = $(this).data('method');
     const deliveryMethodChanged = App.deliveryMethod && App.deliveryMethod !== newDeliveryMethod;
     App.deliveryMethod = $(this).data('method');
