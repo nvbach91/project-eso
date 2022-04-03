@@ -16,7 +16,9 @@ const Registers = new Schema({
     img: String, 
     header: String, 
     footer: String, 
-    extraPadding: Number 
+    extraPadding: Number, 
+    orderInitial: Number,
+    masking: Boolean
   },
   carouselInterval: Number,
   currency: { 
@@ -119,6 +121,8 @@ const settings = {
     footer: '\\tThank you for coming\\t\n\\telusivecamel.co.uk\\t',
     width: 80, // 48
     extraPadding: 4, // 0
+    masking: true,
+    orderInitial: 500,
   },
   tin: '12345678',
   vat: 'CZ12345678',

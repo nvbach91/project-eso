@@ -147,6 +147,8 @@ const createReceiptSettingsForm = () => {
             ${App.generateFormInput({ type: 'number', min: 0, name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
             ${App.generateFormInput({ name: 'receipt.header', value: App.settings.receipt.header, optional: true })}
             ${App.generateFormInput({ name: 'receipt.footer', value: App.settings.receipt.footer, optional: true })}
+            ${App.generateFormInput({ name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
+            ${App.generateFormSelect({ name: 'receipt.masking', value: App.settings.receipt.masking, options: App.binarySelectOptions })}
           </div>
         </div>
         <div class="mi-control">
@@ -222,7 +224,7 @@ const createSlideFormRow = (slide) => {
     </form>
   `);
   if (slide.video) {
-    console.log(slide);
+    // console.log(slide);
     formRow.find('input[name="video"]').val(slide.video);
     formRow.find('.btn.img-holder').hide();
   } else {

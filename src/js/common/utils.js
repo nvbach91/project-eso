@@ -258,7 +258,8 @@ App.loadLocale = () => {
   
   App.themeOptions = [
     { label: 'TEAL', value: 'teal', },
-    { label: 'DARK', value: 'dark', }
+    { label: 'DARK', value: 'dark', },
+    { label: 'RED', value: 'red', },
   ];
 
 };

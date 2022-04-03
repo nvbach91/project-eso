@@ -90,6 +90,7 @@ App.GLocaleCS = {
   "misc_deleting"                           : "Odstraňuje se...",
   "misc_deleted"                            : "Odstraněno",
   "misc_delete_failed"                      : "Nepodařilo se odstranit",
+  "misc_device_is_offline"                  : "Zařízení je offline",
 
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "ID Terminálu",
@@ -146,6 +147,8 @@ App.GLocaleCS = {
   "form__upload_date"                       : "Datum nahrávání",
   "form__valid_until"                       : "Platnost do",
   "form_receipt.extraPadding"               : "Extra vnitřní ohraničení sloupců",
+  "form_receipt.orderInitial"               : "Počáteční číslo objednávek",
+  "form_receipt.masking"                    : "Maskovat čísla objednávek",
   "form_receipt.header"                     : "Záhlaví",
   "form_receipt.footer"                     : "Zápatí",
   "form_text"                               : "Text",

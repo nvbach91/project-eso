@@ -4,6 +4,7 @@ const themes = {
   //default: 'https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css',
   teal: '/css/bootstrap-material-design.min.css',
   dark: '/css/bootstrap-material-design.dark.min.css',
+  red: '/css/bootstrap-material-design.red.min.css',
 };
 const imageUrlBase = 'https://res.cloudinary.com/itakecz/image/upload/';
 const defaultCompanyImg = 'favicon_zuuuf9';

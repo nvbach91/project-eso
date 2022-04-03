@@ -90,6 +90,7 @@ App.GLocaleEN = {
   "misc_deleting"                           : "Deleting...",
   "misc_deleted"                            : "Deleted",
   "misc_delete_failed"                      : "Failed to delete",
+  "misc_device_is_offline"                  : "Device is offline",
 
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "Terminal ID",
@@ -146,6 +147,8 @@ App.GLocaleEN = {
   "form__upload_date"                       : "Upload date",
   "form__valid_until"                       : "Valid until",
   "form_receipt.extraPadding"               : "Extra column padding",
+  "form_receipt.orderInitial"               : "Initial order number",
+  "form_receipt.masking"                    : "Mask order number",
   "form_receipt.header"                     : "Header",
   "form_receipt.footer"                     : "Footer",
   "form_text"                               : "Text",

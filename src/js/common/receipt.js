@@ -307,9 +307,21 @@ App.getReceiptHorizontalLine = () => {
   return '-'.repeat(App.settings.printer.columns);
 };
 
-App.createRandomNumberArray = (n) => {
-  const array = [];
-  for (let i = 0; i < n; i++) {
+App.randomOrderNumbersCount = 100;
+
+App.createRandomNumberArray = () => {
+  const date = moment().format(App.formats.datePrefix);
+  const existingDate = localStorage.getItem('randomOrderNumbersDate');
+  let array = [];
+  if (date === existingDate) {
+    try {
+      array = JSON.parse(localStorage.getItem('randomOrderNumbers'));
+    } catch (e) {}
+  }
+  if (array.length === App.randomOrderNumbersCount) {
+    return array;
+  }
+  for (let i = 0; i < App.randomOrderNumbersCount; i++) {
     array.push(i)
   }
   let counter = array.length, temp, index;
@@ -320,11 +332,26 @@ App.createRandomNumberArray = (n) => {
     array[counter] = array[index];
     array[index] = temp;
   }
+  localStorage.setItem('randomOrderNumbers', JSON.stringify(array));
+  localStorage.setItem('randomOrderNumbersDate', date);
   return array;
 };
 
-App.randomOrderNumbers = App.createRandomNumberArray(100);
+App.randomOrderNumbers = App.createRandomNumberArray();
 
-App.maskOrderNumber = (number) => {
-  return App.randomOrderNumbers[parseInt(number.toString().slice(-2))];
+App.maskOrderNumber = (receiptNumber) => {
+  if (App.settings.receipt.masking) {
+    const orderNumber = parseInt(receiptNumber.toString().slice(-(App.randomOrderNumbersCount - 1).toString().length));
+    return (App.settings.receipt.orderInitial || 0) + App.randomOrderNumbers[orderNumber];
+  }
+
+  const lastOrderNumberDate = localStorage.getItem('lastOrderNumberDate');
+  const datePrefix = moment().format(App.formats.datePrefix);
+  let lastOrderNumber = -1;
+  if (datePrefix === lastOrderNumberDate) {
+    lastOrderNumber = parseInt(localStorage.getItem('lastOrderNumber') || '-1');
+  }
+  localStorage.setItem('lastOrderNumber', lastOrderNumber + 1);
+  localStorage.setItem('lastOrderNumberDate', datePrefix);
+  return (App.settings.receipt.orderInitial || 0) + lastOrderNumber + 1;
 };
