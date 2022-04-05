@@ -125,20 +125,18 @@ App.renderReceiptText = (transaction) => {
 
   const header =
     `\t${App.ESCPOS.bold(App.settings.name)}\t` +
-    `\n${App.lang.receipt_header_premise}: ${App.settings.residence.street}` +
-    `\n${App.settings.residence.zip} ${App.settings.residence.city}` +
+    `\n\t${App.lang.receipt_header_premise}: ${App.settings.residence.street} ${App.settings.residence.zip} ${App.settings.residence.city}` +
     `\n\t${App.settings.companyName}\t` +
     `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
-    `\n${App.settings.address.street || ''}` +
-    `\n${App.settings.address.zip || ''} ${App.settings.address.city || ''}` +
+    `\n\t${App.settings.address.street} ${App.settings.address.zip} ${App.settings.address.city}\t` +
     //`\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
-    `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
-    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
-    `\n${`${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}`}` +
+    `\t${App.ESCPOS.invert(App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `))}\t` +
+    `\n\t${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}\t` +
+    `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
+    `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
     `\n${transaction.items.filter((item) => {
         if (!App.settings.printer.groups) {
           return true;
@@ -211,7 +209,7 @@ App.renderReceiptText = (transaction) => {
     //`\n${App.getReceiptHorizontalLine()}` +
     `\n\t${App.credits}\t`;
 
-  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n\n\n.`;
+  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n.`;
   //const text = `${body}`;
   const result = App.alignReceiptText(text, App.settings.printer.columns);
   return result;
@@ -219,9 +217,9 @@ App.renderReceiptText = (transaction) => {
 
 App.renderKitchenReceiptText = (transaction) => {
   const text =
-    `${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} K#${transaction.order}`)}` +
-    `\n${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}` +
-    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}` : ''}` +
+    `\t${App.ESCPOS.invert(App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order}` ))}\t` +
+    `\n\t${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}\t` +
+    `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.filter((item) => {
         if (!App.settings.kitchenPrinter.groups) {
@@ -239,7 +237,7 @@ App.renderKitchenReceiptText = (transaction) => {
       return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
     }).join('\n')}` +
     //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
-    `\n\n\n\n.`;
+    `\n\n.`;
 
   const result = App.alignReceiptText(text, App.settings.kitchenPrinter.columns);
   return result;
