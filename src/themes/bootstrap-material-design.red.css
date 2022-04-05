@@ -31,7 +31,7 @@
     --success:#3e4d59;
     --success-darker: #2e3942;
     --info:#03a9f4;
-    --warning:#b0d4d9;
+    --warning: #6c757d;
     --warning-darker:#56848a;
     --danger:#f44336;
     --light:#f5f5f5;
@@ -12184,22 +12184,8 @@ h6 {
     }
 }
 
-#main {
-    background-color: var(--dark);
-    color: var(--light);
-}
-.card, .tab {
-    background-color: var(--primary);
-    border-radius: 3px !important;
-}
 .card.form-signin {
     background-color: inherit;
-}
-.product-offer {
-    background-color: var(--primary) !important;
-}
-.product-offer .po-price {
-    color: var(--light);
 }
 #cp-tab-screen {
     background-color: white;
