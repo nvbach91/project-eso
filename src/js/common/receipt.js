@@ -133,7 +133,7 @@ App.renderReceiptText = (transaction) => {
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    `\t${App.ESCPOS.invert(App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `))}\t` +
+    `\t${App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `)}\t` +
     `\n\t${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}\t` +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
@@ -217,7 +217,7 @@ App.renderReceiptText = (transaction) => {
 
 App.renderKitchenReceiptText = (transaction) => {
   const text =
-    `\t${App.ESCPOS.invert(App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `))}\t` +
+    `\t${App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `)}\t` +
     `\n\t${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}\t` +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
