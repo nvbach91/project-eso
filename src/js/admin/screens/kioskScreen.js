@@ -149,6 +149,7 @@ const createReceiptSettingsForm = () => {
             ${App.generateFormInput({ name: 'receipt.footer', value: App.settings.receipt.footer, optional: true })}
             ${App.generateFormInput({ name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
             ${App.generateFormSelect({ name: 'receipt.masking', value: App.settings.receipt.masking, options: App.binarySelectOptions })}
+            ${App.generateFormSelect({ name: 'receipt.highlightOrderNumber', value: App.settings.receipt.highlightOrderNumber, options: App.binarySelectOptions })}
           </div>
         </div>
         <div class="mi-control">

@@ -18,7 +18,8 @@ const Registers = new Schema({
     footer: String, 
     extraPadding: Number, 
     orderInitial: Number,
-    masking: Boolean
+    masking: Boolean,
+    highlightOrderNumber: Boolean,
   },
   carouselInterval: Number,
   currency: { 
@@ -123,6 +124,7 @@ const settings = {
     extraPadding: 4, // 0
     masking: true,
     orderInitial: 500,
+    highlightOrderNumber: true,
   },
   tin: '12345678',
   vat: 'CZ12345678',

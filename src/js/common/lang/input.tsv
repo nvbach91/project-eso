@@ -148,6 +148,7 @@ form__upload_date	Upload date	Datum nahrávání
 form__valid_until	Valid until	Platnost do
 form_receipt.extraPadding	Extra column padding	Extra vnitřní ohraničení sloupců
 form_receipt.orderInitial	Initial order number	Počáteční číslo objednávek
+form_receipt.highlightOrderNumber	Highlight order number	Zvýraznit číslo objednávek
 form_receipt.masking	Mask order number	Maskovat čísla objednávek
 form_receipt.header	Header	Záhlaví
 form_receipt.footer	Footer	Zápatí
