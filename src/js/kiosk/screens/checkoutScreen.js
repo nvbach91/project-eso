@@ -48,8 +48,12 @@ App.renderCheckoutScreen = () => {
     }
   });
   screen.find('.go-back').click(() => {
-    App.renderOrderScreen();
-    App.showCart();
+    if (App.deliveryMethod === 'eatin' && App.settings.tableMarkers.active) {
+      App.renderTableMarkerScreen();
+    } else {
+      App.renderOrderScreen();
+      App.showCart();
+    }
   });
   screen.find('.card').hide();
   App.jBackButton.fadeOut();

@@ -11,6 +11,8 @@ App.GLocaleCS = {
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
 
+  "table_markers_title"                     : "Vyberte značku stolu",
+
   "checkout_title"                          : "Platba",
   "checkout_card_pay_title"                 : "Platba kartou",
   "checkout_card_pay_desc"                  : "Chci zaplatit přes kreditní kartu",
@@ -91,6 +93,7 @@ App.GLocaleCS = {
   "misc_deleted"                            : "Odstraněno",
   "misc_delete_failed"                      : "Nepodařilo se odstranit",
   "misc_device_is_offline"                  : "Zařízení je offline",
+  "misc_skip"                               : "Přeskočit",
 
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "ID Terminálu",
@@ -148,6 +151,7 @@ App.GLocaleCS = {
   "form__valid_until"                       : "Platnost do",
   "form_receipt.extraPadding"               : "Extra vnitřní ohraničení sloupců",
   "form_receipt.orderInitial"               : "Počáteční číslo objednávek",
+  "form_receipt.highlightOrderNumber"       : "Zvýraznit číslo objednávek",
   "form_receipt.masking"                    : "Maskovat čísla objednávek",
   "form_receipt.header"                     : "Záhlaví",
   "form_receipt.footer"                     : "Zápatí",
@@ -168,6 +172,8 @@ App.GLocaleCS = {
   "form_activityTimeout"                    : "Doba pro ukončení aktivity (ms)",
   "form_carouselInterval"                   : "Doba pro zobrazování jednoho snímku (ms)",
   "form_autoNextTab"                        : "Automaticky skočit na další záložku při objednávání",
+  "form_tableMarkers.img"                   : "Obrázek pro značky stolů",
+  "form_tableMarkers.active"                : "Používat značky stolů",
 
   "admin_dashboard"                         : "Úvodní přehled",
   "admin_transactions"                      : "Transakce",

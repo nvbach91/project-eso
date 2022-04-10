@@ -27,13 +27,15 @@ App.renderGroupsScreen = () => {
   App.jControlPanelHeader = header;
   const cpBody = $(`
     <div class="card-body">
-      <div class="card-text">${App.lang.tip_groups_settings}</div>
-      <form class="search-form">
-        <div class="input-group">
-          <input class="form-control" placeholder="${App.lang.tip_enter_group_number}" title="Key 1-20 digits" required>
-          <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search}</button>
-        </div>
-      </form>
+      <div class="card-header">
+        <div class="card-text">${App.lang.tip_groups_settings}</div>
+        <form class="search-form">
+          <div class="input-group">
+            <input class="form-control" placeholder="${App.lang.tip_enter_group_number}" title="Key 1-20 digits" required>
+            <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search}</button>
+          </div>
+        </form>
+      </div>
       <div class="table"></div>
     </div>
   `);

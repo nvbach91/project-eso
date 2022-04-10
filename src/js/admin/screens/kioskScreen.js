@@ -108,6 +108,7 @@ const createOrsSettingsForm = () => {
 };
 
 const createInterfaceSettingsForm = () => {
+  const tableMarkersImgStyle = App.getBackgroundImage(App.settings.tableMarkers.img);
   const form = $(`
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_interface}</div>
@@ -119,6 +120,13 @@ const createInterfaceSettingsForm = () => {
         </div>
         <div class="form-row">
           ${App.generateFormSelect({ name: 'autoNextTab', value: App.settings.autoNextTab, options: App.binarySelectOptions })}
+          ${App.generateFormSelect({ name: 'tableMarkers.active', value: App.settings.tableMarkers.active, options: App.binarySelectOptions })}
+          <div class="img-upload">
+            <label class="bmd-label-static">${App.lang['form_tableMarkers.img']}</label>
+            <div class="btn img-holder"${tableMarkersImgStyle}>${tableMarkersImgStyle ? '' : App.getIcon('file_upload')}</div>
+            <input class="hidden" name="tableMarkers.img" value="${App.settings.tableMarkers.img || ''}">
+            ${App.getCloudinaryUploadTag({ tags: ['tableMarkersImg'] })}
+          </div>
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
@@ -126,6 +134,11 @@ const createInterfaceSettingsForm = () => {
       </div>
     </form>
   `);
+  App.bindCloudinaryFileUpload(
+    form.find('input.cloudinary-fileupload[type=file]'), 
+    form.find('input[name="tableMarkers.img"]'), 
+    form.find('.img-holder')
+  );
   App.bindForm(form, '/settings');
   return form;
 };
@@ -144,12 +157,16 @@ const createReceiptSettingsForm = () => {
             ${App.getCloudinaryUploadTag({ tags: ['receipt'] })}
           </div>
           <div class="form-col">
-            ${App.generateFormInput({ type: 'number', min: 0, name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
+            <div class="form-row">
             ${App.generateFormInput({ name: 'receipt.header', value: App.settings.receipt.header, optional: true })}
             ${App.generateFormInput({ name: 'receipt.footer', value: App.settings.receipt.footer, optional: true })}
-            ${App.generateFormInput({ name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
-            ${App.generateFormSelect({ name: 'receipt.masking', value: App.settings.receipt.masking, options: App.binarySelectOptions })}
-            ${App.generateFormSelect({ name: 'receipt.highlightOrderNumber', value: App.settings.receipt.highlightOrderNumber, options: App.binarySelectOptions })}
+            </div>
+            <div class="form-row">
+              ${App.generateFormInput({ type: 'number', min: 0, name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
+              ${App.generateFormInput({ name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
+              ${App.generateFormSelect({ name: 'receipt.masking', value: App.settings.receipt.masking, options: App.binarySelectOptions })}
+              ${App.generateFormSelect({ name: 'receipt.highlightOrderNumber', value: App.settings.receipt.highlightOrderNumber, options: App.binarySelectOptions })}
+            </div>
           </div>
         </div>
         <div class="mi-control">

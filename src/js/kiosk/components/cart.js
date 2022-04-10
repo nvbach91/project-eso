@@ -265,7 +265,11 @@ App.showCart = () => {
       return App.showWarning(App.lang.misc_device_is_offline);
     }
     App.closeModal();
-    App.renderCheckoutScreen();
+    if (App.deliveryMethod === 'eatin' && App.settings.tableMarkers.active) {
+      App.renderTableMarkerScreen();
+    } else {
+      App.renderCheckoutScreen();
+    }
   });
   element.append(cartItems);
   element.append(cartSummary);
@@ -278,6 +282,7 @@ App.showCart = () => {
     App.closeModal();
     App.jCheckoutButton.fadeOut();
     App.jTabs.children().eq(0).click();
+    App.tableMarkerValue = '';
   });
   if (App.jModal.find('.cs-cancel').length) {
     App.jModal.find('.cs-cancel').replaceWith(cancelButton);

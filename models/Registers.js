@@ -83,7 +83,11 @@ const Registers = new Schema({
   }, 
   activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
   activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
-  autoNextTab: Boolean
+  autoNextTab: Boolean,
+  tableMarkers: {
+    active: Boolean,
+    img: String,
+  },
 });
 
 module.exports = mongoose.model('registers', Registers);

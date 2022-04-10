@@ -8,6 +8,7 @@ require('../common/network.js');
 require('../common/receipt.js');
 require('./screens/standbyScreen.js');
 require('./screens/orderScreen.js');
+require('./screens/tableMarkersScreen.js');
 require('./screens/checkoutScreen.js');
 require('./screens/deliveryMethodScreen.js');
 require('./screens/cardPaymentScreen.js')

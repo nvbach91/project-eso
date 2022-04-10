@@ -71,6 +71,7 @@ App.reset = () => {
   clearInterval(App.activityCheckInterval);
   App.activityCheckInterval = 0;
   App.isCheckingActivity = false;
+  App.tableMarkerValue = '';
   App.saveLocalCart();
   App.calculateCart();
   App.jCheckoutButton.fadeOut();
@@ -210,11 +211,11 @@ App.ESCPOS = {
 };
 
 App.getPaymentMethod = (code) => {
-  return App.lang['payment_method_' + code];
+  return App.lang[`payment_method_${code}`];
 };
 
 App.getDeliveryMethod = (code) => {
-  return App.lang['delivery_method_' + code];
+  return App.lang[`delivery_method_${code}`];
 };
 
 App.loadLocale = () => {

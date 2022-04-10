@@ -11,6 +11,8 @@ App.GLocaleEN = {
   "order_products_order_btn"                : "Order",
   "order_checkout_btn"                      : "Checkout",
 
+  "table_markers_title"                     : "Choose your table marker",
+
   "checkout_title"                          : "Payment",
   "checkout_card_pay_title"                 : "Pay by card",
   "checkout_card_pay_desc"                  : "Simply use your credit card to pay",
@@ -91,6 +93,7 @@ App.GLocaleEN = {
   "misc_deleted"                            : "Deleted",
   "misc_delete_failed"                      : "Failed to delete",
   "misc_device_is_offline"                  : "Device is offline",
+  "misc_skip"                               : "Skip",
 
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "Terminal ID",
@@ -148,6 +151,7 @@ App.GLocaleEN = {
   "form__valid_until"                       : "Valid until",
   "form_receipt.extraPadding"               : "Extra column padding",
   "form_receipt.orderInitial"               : "Initial order number",
+  "form_receipt.highlightOrderNumber"       : "Highlight order number",
   "form_receipt.masking"                    : "Mask order number",
   "form_receipt.header"                     : "Header",
   "form_receipt.footer"                     : "Footer",
@@ -168,6 +172,8 @@ App.GLocaleEN = {
   "form_activityTimeout"                    : "Activity Timeout (ms)",
   "form_carouselInterval"                   : "Carousel Interval (ms)",
   "form_autoNextTab"                        : "Automatically jump tp next order tab",
+  "form_tableMarkers.img"                   : "Table markers image",
+  "form_tableMarkers.active"                : "Use table markers",
 
   "admin_dashboard"                         : "Dashboard",
   "admin_transactions"                      : "Transactions",
