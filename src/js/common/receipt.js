@@ -219,7 +219,7 @@ App.renderKitchenReceiptText = (transaction) => {
   const orderNumberRow = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
   const text =
     `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumberRow) : orderNumberRow}\t` +
-    `\n\t${App.ESCPOS.quadrupleSize(App.getDeliveryMethod(transaction.delivery))}${App.tableMarkerValue ? `[${App.tableMarkerValue}]` : ''}\t` +
+    `\n\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t` +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.filter((item) => {
