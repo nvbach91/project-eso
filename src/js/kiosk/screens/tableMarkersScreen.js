@@ -7,7 +7,7 @@ App.renderTableMarkerScreen = () => {
    'd', 0, 'o',
   ];
   const keyboardMasks = {
-    'd': '⇦',
+    'd': App.getIcon('backspace'),
     'o': 'OK',
   };
   const screen = $(`
@@ -29,7 +29,7 @@ App.renderTableMarkerScreen = () => {
           </div>
           <div class="card table-marker"${App.getBackgroundImage(App.settings.tableMarkers.img)}">
             <button class="btn btn-raised btn-danger" id="skip-table-marker">${App.lang.misc_skip}</button>
-            <div class="table-marker-text">${App.tableMarkerValue || ''}</div>
+            <button class="btn btn-primary table-marker-text">${App.tableMarkerValue || ''}</button>
           </div>
         </div>
         <br>

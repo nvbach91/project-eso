@@ -250,7 +250,6 @@ i.icon {
     align-items: center;
     height: 100%;
     justify-content: center;
-    font-size: 160px;
 }
 .keyboard {
     flex-direction: row;
@@ -268,10 +267,12 @@ i.icon {
 //     border-radius: 50%;
 // }
 .table-marker-text {
+    font-size: 160px;
     line-height: 180px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8) !important;
     width: 100%;
     text-align: center;
+    padding: 0;
 }
 #skip-table-marker {
     height: 100px;

@@ -11,7 +11,7 @@ App.GLocaleCS = {
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
 
-  "table_markers_title"                     : "Vyberte značku stolu",
+  "table_markers_title"                     : "Zadejte značku stolu",
 
   "checkout_title"                          : "Platba",
   "checkout_card_pay_title"                 : "Platba kartou",
