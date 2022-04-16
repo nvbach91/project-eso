@@ -20,6 +20,7 @@ const Registers = new Schema({
     orderInitial: Number,
     masking: Boolean,
     highlightOrderNumber: Boolean,
+    deliveryMethodPosition: String,
   },
   carouselInterval: Number,
   currency: { 
@@ -129,6 +130,7 @@ const settings = {
     masking: true,
     orderInitial: 500,
     highlightOrderNumber: true,
+    deliveryMethodPosition: 'middle',
   },
   tin: '12345678',
   vat: 'CZ12345678',
