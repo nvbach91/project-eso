@@ -26,13 +26,15 @@ const renderTransactions = (transactions) => {
           <div class="td ti-payment">${App.getPaymentMethod(payment)}</div>
           <div class="td ti-delivery">${App.getDeliveryMethod(delivery)}</div>
           <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currency.symbol}</div>
-          <button class="td btn btn-primary ti-print">${App.getIcon('print')}</button>
+          <div class="td ti-print">
+            <button class="btn btn-primary">${App.getIcon('print')}</button>
+          </div>
         </div>
       `);
       item.children('.ti-number').click(() => {
         App.showInModal(`<pre class="receipt-preview">${App.renderReceiptText(transaction).replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`);
       });
-      item.children('.ti-print').click(() => {
+      item.children('.ti-print').find('button').click(() => {
         App.printReceipt(transaction);
       });
       table.append(item);

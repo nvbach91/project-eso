@@ -123,7 +123,10 @@ App.renderReceiptText = (transaction) => {
   }
   let subTotal = 0;
 
+  const orderNumber = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
+  const deliveryMethodRow = `\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t`;
   const header =
+    (App.settings.receipt.deliveryMethodPosition === 'top' ? `${deliveryMethodRow}\n` : '') +
     `\t${App.ESCPOS.bold(App.settings.name)}\t` +
     `\n\t${App.lang.receipt_header_premise}: ${App.settings.residence.street} ${App.settings.residence.zip} ${App.settings.residence.city}` +
     `\n\t${App.settings.companyName}\t` +
@@ -131,10 +134,10 @@ App.renderReceiptText = (transaction) => {
     `\n\t${App.settings.address.street} ${App.settings.address.zip} ${App.settings.address.city}\t` +
     //`\n${App.getReceiptHorizontalLine()}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
-  const orderNumberRow = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
+
   const body =
-    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumberRow) : orderNumberRow}\t` +
-    `\n\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t` +
+    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumber) : orderNumber}\t` +
+    (App.settings.receipt.deliveryMethodPosition === 'middle' ? `\n${deliveryMethodRow}` : '') +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
     `\n${transaction.items.filter((item) => {
@@ -207,7 +210,8 @@ App.renderReceiptText = (transaction) => {
     //`\n${App.getReceiptHorizontalLine()}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +
     //`\n${App.getReceiptHorizontalLine()}` +
-    `\n\t${App.credits}\t`;
+    `\n\t${App.credits}\t` + 
+    (App.settings.receipt.deliveryMethodPosition === 'bottom' ? `\n${deliveryMethodRow}` : '');
 
   const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n.`;
   //const text = `${body}`;
@@ -216,9 +220,9 @@ App.renderReceiptText = (transaction) => {
 };
 
 App.renderKitchenReceiptText = (transaction) => {
-  const orderNumberRow = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
+  const orderNumber = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
   const text =
-    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumberRow) : orderNumberRow}\t` +
+    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumber) : orderNumber}\t` +
     `\n\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t` +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +

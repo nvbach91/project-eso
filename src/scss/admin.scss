@@ -105,8 +105,12 @@
 .tr:hover {
     background-color: #f1f1f1;
 }
-.table.transactions {
+.card-body.table.transactions {
     flex: initial;
+    display: table;
+}
+.transaction-item {
+    width: 100%;
 }
 .transaction-item .ti-number {
     border-left: 2px solid transparent;

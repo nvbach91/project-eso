@@ -82,6 +82,9 @@ misc_registered	Registered	Registrován
 misc_not_registered	Not registered	Neregistrován
 misc_yes	Yes	Ano
 misc_no	No	Ne
+misc_top	Top	Nahoře
+misc_middle	Middle	Uprostřed
+misc_bottom	Bottom	Dole
 misc_edit	Edit	Editovat
 misc_products	Products	Produkty
 misc_add	Add	Přidat
@@ -140,7 +143,7 @@ form_image	Image	Obrázek
 form_name	Name	Název
 form_number	Number	Číslo
 form_currency	Currency	Měna
-form_order	Order	Pořadí
+form_order	Order	Objednávka
 form_display	Display	Zobrazit
 form_ors.vat	VAT	DIČ
 form_ors.store_id	Store ID	ID provozovny
@@ -152,6 +155,7 @@ form__valid_until	Valid until	Platnost do
 form_receipt.extraPadding	Extra column padding	Extra vnitřní ohraničení sloupců
 form_receipt.orderInitial	Initial order number	Počáteční číslo objednávek
 form_receipt.highlightOrderNumber	Highlight order number	Zvýraznit číslo objednávek
+form_receipt.deliveryMethodPosition	Delivery method position	Pozice způsobu doručení
 form_receipt.masking	Mask order number	Maskovat čísla objednávek
 form_receipt.header	Header	Záhlaví
 form_receipt.footer	Footer	Zápatí

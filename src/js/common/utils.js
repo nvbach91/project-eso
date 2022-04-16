@@ -249,12 +249,12 @@ App.loadLocale = () => {
   
   App.binarySelectOptions = [
     { label: App.lang.misc_yes, value: true },
-    { label: App.lang.misc_no, value: false }
+    { label: App.lang.misc_no, value: false },
   ];
 
   App.vatRegisterationOptions = [
     { label: App.lang.misc_registered, value: true, },
-    { label: App.lang.misc_not_registered, value: false, }
+    { label: App.lang.misc_not_registered, value: false, },
   ];
   
   App.themeOptions = [
@@ -263,6 +263,11 @@ App.loadLocale = () => {
     { label: 'RED', value: 'red', },
   ];
 
+  App.verticalPositionSelectOptions = [
+    { label: App.lang.misc_top, value: 'top' },
+    { label: App.lang.misc_middle, value: 'middle' },
+    { label: App.lang.misc_bottom, value: 'bottom' },
+  ];
 };
 
 App.printQRCode = (data) => {
