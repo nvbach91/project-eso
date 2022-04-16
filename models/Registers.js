@@ -160,18 +160,18 @@ const settings = {
 
 create slides in slides collection
   slides: [
-    { regId: '', order: 0,img: 'bg09_hjz6no-min_sgc2il', text: "Touch to start" }, 
-    { regId: '', order: 9,img: 'bg06_gmmeqj-min_nsxd6e', text: "Touch to start" },
+    { regId: '', position: 0,img: 'bg09_hjz6no-min_sgc2il', text: "Touch to start" }, 
+    { regId: '', position: 9,img: 'bg06_gmmeqj-min_nsxd6e', text: "Touch to start" },
   ]
 
   slides: [
-    { regId: '', order: 1,img: 'bg10_coyfml-min_fcywew', text: "Touch to start" },
-    { regId: '', order: 2,img: 'bg01_mog1lh-min_fbiyp4', text: "Touch to start" },
-    { regId: '', order: 3,img: 'bg05_osoyo0-min_l20vdt', text: "Touch to start" },
-    { regId: '', order: 4,img: 'bg04_i3fq68-min_ezecgd', text: "Touch to start" },
-    { regId: '', order: 5,img: 'bg08_hsajsa-min_rcwj9g', text: "Touch to start" },
-    { regId: '', order: 6,img: 'bg02_komziq-min_js6pl0', text: "Touch to start" },
-    { regId: '', order: 7,img: 'bg03_tdlabn-min_xwllb6', text: "Touch to start" },
-    { regId: '', order: 8,img: 'bg07_wrsdxe-min_vi4wot', text: "Touch to start" },
+    { regId: '', position: 1,img: 'bg10_coyfml-min_fcywew', text: "Touch to start" },
+    { regId: '', position: 2,img: 'bg01_mog1lh-min_fbiyp4', text: "Touch to start" },
+    { regId: '', position: 3,img: 'bg05_osoyo0-min_l20vdt', text: "Touch to start" },
+    { regId: '', position: 4,img: 'bg04_i3fq68-min_ezecgd', text: "Touch to start" },
+    { regId: '', position: 5,img: 'bg08_hsajsa-min_rcwj9g', text: "Touch to start" },
+    { regId: '', position: 6,img: 'bg02_komziq-min_js6pl0', text: "Touch to start" },
+    { regId: '', position: 7,img: 'bg03_tdlabn-min_xwllb6', text: "Touch to start" },
+    { regId: '', position: 8,img: 'bg07_wrsdxe-min_vi4wot', text: "Touch to start" },
   ]
 */

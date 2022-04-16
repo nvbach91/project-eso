@@ -210,14 +210,14 @@ const createSlidesSettingsForm = () => {
   `);
   const miBody = form.find('.mi-body');
   form.find('.btn-add').click(() => {
-    const formRow = createSlideFormRow({ order: 0, img: '', text: '' });
+    const formRow = createSlideFormRow({ position: 0, img: '', text: '' });
     miBody.prepend(formRow);
   });
   const slideIds = Object.keys(App.settings.slides);
-  slideIds.sort((a, b) => App.settings.slides[a].order - App.settings.slides[b].order);
+  slideIds.sort((a, b) => App.settings.slides[a].position - App.settings.slides[b].position);
   slideIds.forEach((_id) => {
-    const { text, img, order, video } = App.settings.slides[_id];
-    const formRow = createSlideFormRow({ _id, text, img, order, video });
+    const { text, img, position, video } = App.settings.slides[_id];
+    const formRow = createSlideFormRow({ _id, text, img, position, video });
     miBody.append(formRow);
   });
   return form;
@@ -236,7 +236,7 @@ const createSlideFormRow = (slide) => {
         ${App.getCloudinaryUploadTag({ tags: ['slide'] })} 
       </div>
       <div class="form-row">
-        ${App.generateFormInput({ type: 'number', min: 0, name: 'order', value: slide.order })}
+        ${App.generateFormInput({ type: 'number', min: 0, name: 'position', value: slide.position })}
         ${App.generateFormInput({ name: 'text', value: slide.text, optional: true })}
         ${App.generateFormInput({ type: 'url', name: 'video', optional: true })}
       </div>

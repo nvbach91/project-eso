@@ -2,7 +2,7 @@ const tableHeader = () => `
   <div class="tr table-header">
     <div class="td sr-img">${App.lang.form_image}</div>
     <div class="td sr-number">${App.lang.form_number}</div>
-    <div class="td sr-order">${App.lang.form_order}</div>
+    <div class="td sr-position">${App.lang.form_position}</div>
     <div class="td sr-name">${App.lang.form_name}</div>
     <div class="td sr-price">${App.lang.form_price}</div>
     <div class="td sr-type">${App.lang.form_type}</div>
@@ -59,17 +59,17 @@ App.renderModsScreen = () => {
 
 const renderTable = () => {
   const keys = Object.keys(App.mods);
-  keys.sort((a, b) => App.mods[a].order - App.mods[b].order); // Ascending order
+  keys.sort((a, b) => App.mods[a].position - App.mods[b].position); // Ascending position
 
   table.empty();
   table.append(tableHeader(), keys.map((key) => {
     const i = App.mods[key];
-    const { name, type, number, order, img, price } = i || {};
+    const { name, type, number, position, img, price } = i || {};
     const item = $(`
       <div class="tr">
         <div class="td sr-img"${App.getBackgroundImage(img)}></div>
         <div class="td sr-number">${number}</div>
-        <div class="td sr-order">${order}</div>
+        <div class="td sr-position">${position}</div>
         <div class="td sr-name">${name}</div>
         <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
         <div class="td sr-type">${type}</div>
@@ -85,7 +85,7 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.mods[number];
-  const { name, type, order, img, eans, price } = item || { };
+  const { name, type, position, img, eans, price } = item || { };
   const imgStyle = App.getBackgroundImage(img);
   const modalTitle = `${item ? 'Edit' : 'Create'} modification - ${number}`;
   const form = $(`
@@ -100,7 +100,7 @@ const showEditForm = (number) => {
         <div class="form-col">
           <div class="form-row">
             ${App.generateFormInput({ name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
-            ${App.generateFormInput({ name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
+            ${App.generateFormInput({ name: 'position', value: isNaN(position) ? 0 : position, type: 'number', min: 0 })}
           </div>
           ${App.generateFormInput({ name: 'name', value: name || '' })}
           <div class="form-row">

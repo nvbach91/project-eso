@@ -71,11 +71,11 @@ router.post('/registration', (req, res) => {
     newUser.token = '';
     return new Users(newUser).save();
   }).then((newUser) => {
-    return new Groups({ number: 1, order: 0, regId: newRegisterId, img: 'https://res.cloudinary.com/itakecz/image/upload/362272_tqkx9x', name: 'Starters' }).save();
+    return new Groups({ number: 1, position: 0, regId: newRegisterId, img: 'https://res.cloudinary.com/itakecz/image/upload/362272_tqkx9x', name: 'Starters' }).save();
   }).then((newGroup) => {
-    return new Products({ ean: '1', name: 'Special offer', price: '240', img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', group: 1, vat: 15, desc: '', order: 0, regId: newRegisterId }).save();
+    return new Products({ ean: '1', name: 'Special offer', price: '240', img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', group: 1, vat: 15, desc: '', position: 0, regId: newRegisterId }).save();
   }).then((newProduct) => {
-    return new Slides({ img: 'bg01_mog1lh-min_fbiyp4', text: 'Touch to start', order: 0, regId: newRegisterId }).save();
+    return new Slides({ img: 'bg01_mog1lh-min_fbiyp4', text: 'Touch to start', position: 0, regId: newRegisterId }).save();
   }).then((newSlide) => {
     res.json({ msg: 'srv_registration_success' });
   }).catch(utils.handleError(res));

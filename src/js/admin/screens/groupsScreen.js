@@ -2,7 +2,7 @@ const tableHeader = () => `
   <div class="tr table-header">
     <div class="td sr-img">${App.lang.form_image}</div>
     <div class="td sr-number">${App.lang.form_number}</div>
-    <div class="td sr-order">${App.lang.form_order}</div>
+    <div class="td sr-position">${App.lang.form_position}</div>
     <div class="td sr-name">${App.lang.form_name}</div>
     <div class="td sr-display">${App.lang.form_display}</div>
     <div class="td sr-products">${App.lang.misc_products}</div>
@@ -59,18 +59,18 @@ App.renderGroupsScreen = () => {
 
 const renderTable = () => {
   const keys = Object.keys(App.groups);
-  keys.sort((a, b) => App.groups[a].order - App.groups[b].order); // Ascending order
+  keys.sort((a, b) => App.groups[a].position - App.groups[b].position); // Ascending position
 
   table.empty();
   table.append(tableHeader(), keys.map((key) => {
     const i = App.groups[key];
-    const { name, number, order, img, display } = i || {};
+    const { name, number, position, img, display } = i || {};
     const nProducts = App.getNumberOfProductsInGroup(number);
     const item = $(`
       <div class="tr">
         <div class="td sr-img"${App.getBackgroundImage(img)}></div>
         <div class="td sr-number">${number}</div>
-        <div class="td sr-order">${order}</div>
+        <div class="td sr-position">${position}</div>
         <div class="td sr-name">${name}</div>
         <div class="td sr-display">${display ? 'Yes' : 'No'}</div>
         <div class="td sr-products">${nProducts}</div>
@@ -84,7 +84,7 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.groups[number];
-  const { name, order, img, display } = item || {};
+  const { name, position, img, display } = item || {};
   const imgStyle = App.getBackgroundImage(img);
   const modalTitle = `${item ? 'Edit' : 'Create'} group - ${number}`;
   const form = $(`
@@ -99,7 +99,7 @@ const showEditForm = (number) => {
         <div class="form-col">
           <div class="form-row">
             ${App.generateFormInput({ name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
-            ${App.generateFormInput({ name: 'order', value: isNaN(order) ? 0 : order, type: 'number', min: 0 })}
+            ${App.generateFormInput({ name: 'position', value: isNaN(position) ? 0 : position, type: 'number', min: 0 })}
           </div>
           <div class="form-row">
             ${App.generateFormInput({ name: 'name', value: name || '' })}
@@ -134,17 +134,17 @@ const showEditForm = (number) => {
         <div>You must delete all products (${nProductsInGroup}) of this group first</div>
         <div class="table">
           <div class="tr table-header">
-            <div class="td sr-order">${App.lang.form_order}</div>
+            <div class="td sr-position">${App.lang.form_position}</div>
             <div class="td sr-ean">${App.lang.form_ean}</div>
             <div class="td sr-name">${App.lang.form_name}</div>
           </div>
           ${Object.keys(App.products).filter((ean) => {
             return number == App.products[ean].group;
-          }).sort((a, b) => App.products[a].order - App.products[b].order).map((ean) => {
-            const { name, order } = App.products[ean];
+          }).sort((a, b) => App.products[a].position - App.products[b].position).map((ean) => {
+            const { name, position } = App.products[ean];
             return `
               <div class="tr">
-                <div class="td sr-order">${order || 0}</div>
+                <div class="td sr-position">${position || 0}</div>
                 <div class="td sr-number">${ean}</div>
                 <div class="td sr-name">${name}</div>
               </div>

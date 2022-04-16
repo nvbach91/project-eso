@@ -1,6 +1,6 @@
 App.renderTabs = () => {
   const container = $('<div>');
-  Object.keys(App.groups).sort((a, b) => App.groups[a].order - App.groups[b].order).forEach((groupNumber) => {
+  Object.keys(App.groups).sort((a, b) => App.groups[a].position - App.groups[b].position).forEach((groupNumber) => {
     const { img, name, display } = App.groups[groupNumber];
     if (!display) {
       return false;

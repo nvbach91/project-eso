@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Mods = new Schema({
   regId: Schema.ObjectId,
-  order: Number,
+  position: Number,
   number: Number,
   name: String,
   price: String,

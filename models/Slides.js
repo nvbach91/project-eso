@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Slides = new Schema({
   regId: Schema.ObjectId,
-  order: Number,
+  position: Number,
   text: String,
   img: String,
   video: String,

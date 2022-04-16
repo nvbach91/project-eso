@@ -31,8 +31,8 @@ router.get('/settings', (req, res) => {
     return Slides.find({ regId: req.user.regId }).select('-__v -regId');
   }).then((slides) => {
     settings.slides = {};
-    slides.forEach(({ _id, text, img, order, video }) => {
-      settings.slides[_id.toString()] = { text, img, order, video };
+    slides.forEach(({ _id, text, img, position, video }) => {
+      settings.slides[_id.toString()] = { text, img, position, video };
     });
 
     res.json(settings);

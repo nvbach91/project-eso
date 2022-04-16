@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Groups = new Schema({
   regId: Schema.ObjectId,
   number: Number,
-  order: Number,
+  position: Number,
   name: String,
   img: String,
   display: Boolean,

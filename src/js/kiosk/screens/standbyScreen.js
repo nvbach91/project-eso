@@ -5,7 +5,7 @@ const progress = `
 `;
 App.renderStandbyScreen = () => {
   const slideIds = Object.keys(App.settings.slides);
-  slideIds.sort((a, b) => App.settings.slides[a].order - App.settings.slides[b].order);
+  slideIds.sort((a, b) => App.settings.slides[a].position - App.settings.slides[b].position);
   const screen = $(`
     <main id="main">
       <div class="container-fluid px-0">

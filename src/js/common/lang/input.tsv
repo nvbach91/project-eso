@@ -144,6 +144,7 @@ form_name	Name	Název
 form_number	Number	Číslo
 form_currency	Currency	Měna
 form_order	Order	Objednávka
+form_position	Position	Pořadí
 form_display	Display	Zobrazit
 form_ors.vat	VAT	DIČ
 form_ors.store_id	Store ID	ID provozovny

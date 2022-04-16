@@ -146,7 +146,7 @@ span.match {
     width: 60px;
     background-size: contain;
 }
-.sr-ean, .sr-price, .sr-number, .sr-order, .sr-products {
+.sr-ean, .sr-price, .sr-number, .sr-order, .sr-position, .sr-products {
     text-align: right;
 }
 .sr-price {
@@ -164,7 +164,7 @@ span.match {
 .sr-vat, .sr-edit, .sr-display {
     text-align: center;
 }
-.sr-display, .sr-products, .sr-order, .sr-number {
+.sr-display, .sr-products, .sr-order, .sr-position, .sr-number {
     width: 80px;
 }
 .sr-name, .sr-img, .sr-number {

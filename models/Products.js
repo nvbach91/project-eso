@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Products = new Schema({
   regId: Schema.ObjectId,
-  order: Number,
+  position: Number,
   highlight: Boolean,
   ean: String,
   name: String,

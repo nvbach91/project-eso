@@ -144,6 +144,7 @@ App.GLocaleCS = {
   "form_number"                             : "Číslo",
   "form_currency"                           : "Měna",
   "form_order"                              : "Objednávka",
+  "form_position"                           : "Pořadí",
   "form_display"                            : "Zobrazit",
   "form_ors.vat"                            : "DIČ",
   "form_ors.store_id"                       : "ID provozovny",

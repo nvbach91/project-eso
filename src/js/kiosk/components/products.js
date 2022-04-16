@@ -9,10 +9,10 @@ App.renderProducts = (group) => {
   header.appendTo(container);
   Object.keys(App.products).filter((ean) => {
     return group == App.products[ean].group;
-  }).sort((a, b) => App.products[a].order - App.products[b].order).forEach((ean) => {
-    const { highlight, img, name, price, order } = App.products[ean];
+  }).sort((a, b) => App.products[a].position - App.products[b].position).forEach((ean) => {
+    const { highlight, img, name, price, position } = App.products[ean];
     const element = $(`
-      <div class="product-offer${highlight ? ' highlight' : ''}" title="${ean} - ${order || 0}">
+      <div class="product-offer${highlight ? ' highlight' : ''}" title="#${ean} [${position || 0}]">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
           <!--button class="btn btn-primary btn-raised${App.cart[ean] ? '': ' hidden'} cart-quantity-indicator" data-id="${ean}">
             ${App.getIcon('shopping_cart')}

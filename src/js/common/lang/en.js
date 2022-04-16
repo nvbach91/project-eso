@@ -144,6 +144,7 @@ App.GLocaleEN = {
   "form_number"                             : "Number",
   "form_currency"                           : "Currency",
   "form_order"                              : "Order",
+  "form_position"                           : "Position",
   "form_display"                            : "Display",
   "form_ors.vat"                            : "VAT",
   "form_ors.store_id"                       : "Store ID",
