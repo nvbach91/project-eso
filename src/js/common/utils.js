@@ -534,6 +534,9 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     const t = $(this);
     const type = t.data('type');
     const active = t.data('active');
+    if (type && type.endsWith('!')) { // mandatory mod (takeout box)
+      return false;
+    }
     if (type && type.endsWith('.') && active) {
       return false;
     }

@@ -11,6 +11,7 @@ App.renderProducts = (group) => {
     return group == App.products[ean].group;
   }).sort((a, b) => App.products[a].position - App.products[b].position).forEach((ean) => {
     const { highlight, img, name, price, position } = App.products[ean];
+    const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
     const element = $(`
       <div class="product-offer${highlight ? ' highlight' : ''}" title="#${ean} [${position || 0}]">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
@@ -18,7 +19,7 @@ App.renderProducts = (group) => {
             ${App.getIcon('shopping_cart')}
             <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
           </button-->
-          ${App.productMods[ean] ? `<div class="po-ribbon">M</div>` : ''}
+          ${App.productMods[ean] ? `<div class="po-ribbon${productHasMandatoryMod ? ' mandatory' : ''}">M</div>` : ''}
         </div>
         <div class="po-name">${name}</div>
         <div class="po-row">
@@ -35,7 +36,7 @@ App.renderProducts = (group) => {
     });
     element.find('.add').click((e) => {
       e.stopPropagation();
-      if (App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length) {
+      if (App.productMods[ean] && productHasMandatoryMod) {
         App.showProductDetail(null, ean);
       } else {
         App.addToCart(ean);
@@ -75,6 +76,11 @@ App.showProductDetail = (id, ean) => {
             }).filter((modNumber) => {
               return !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
             }).filter((display) => display).length > 0;
+          }).filter((type) => {
+            if (type.endsWith('!') && App.deliveryMethod !== 'takeout') {
+              return false;
+            }
+            return true;
           }).map((type) => {
             return (`
               <div class="product-mods">
@@ -87,6 +93,9 @@ App.showProductDetail = (id, ean) => {
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                     let active = App.cart[id] && App.cart[id].mods ? !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length : false;
                     if (index === 0 && type.endsWith('.') && !active && !App.cart[id]) {
+                      active = true;
+                    }
+                    if (type.endsWith('!')) {
                       active = true;
                     }
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
