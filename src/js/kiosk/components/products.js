@@ -135,7 +135,7 @@ App.showProductDetail = (id, ean) => {
   if (desc) { // resizing the description textbox
     const descriptionContainer = element.find('.pd-description')[0];
     const nLines = desc.split(/\r\n/).length;
-    descriptionContainer.style.height = `${nLines * 24}px`;
+    descriptionContainer.style.minHeight = `${nLines * 24}px`;
   }
   element.find('.cart-quantity-indicator').click((e) => {
     App.showCart();
