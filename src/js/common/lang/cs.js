@@ -140,6 +140,7 @@ App.GLocaleCS = {
   "form_bank"                               : "Bankovní spojení",
   "form_theme"                              : "Barevný motiv",
   "form_image"                              : "Obrázek",
+  "form_description"                        : "Popis",
   "form_name"                               : "Název",
   "form_number"                             : "Číslo",
   "form_currency"                           : "Měna",

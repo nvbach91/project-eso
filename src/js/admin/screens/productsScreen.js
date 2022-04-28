@@ -150,7 +150,7 @@ const showEditForm = (ean, cb) => {
           `)
         }).join('')}
       <div class="form-group">
-        <label>Description</label>
+        <label>${App.lang.form_description}</label>
         <textarea name="desc" class="form-control" rows="6">${desc || ''}</textarea>
       </div>
       <div class="mi-control">

@@ -123,8 +123,10 @@ App.renderReceiptText = (transaction) => {
   }
   let subTotal = 0;
 
-  const orderNumber = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
-  const deliveryMethodRow = `\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t`;
+  
+  const orderNumber = `${App.lang.receipt_header_order} K#${transaction.order}`;
+  const orderNumberLine = App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(` ${orderNumber} `) : orderNumber;
+  const deliveryMethodRow = App.ESCPOS.quadrupleSize(`\t${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}\t`);
   const header =
     (App.settings.receipt.deliveryMethodPosition === 'top' ? `${deliveryMethodRow}\n` : '') +
     `\t${App.ESCPOS.bold(App.settings.name)}\t` +
@@ -136,7 +138,7 @@ App.renderReceiptText = (transaction) => {
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumber) : orderNumber}\t` +
+    `${App.ESCPOS.quadrupleSize(`\t${orderNumberLine}\t`)}` +
     (App.settings.receipt.deliveryMethodPosition === 'middle' ? `\n${deliveryMethodRow}` : '') +
     `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
     `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
@@ -213,7 +215,7 @@ App.renderReceiptText = (transaction) => {
     `\n\t${App.credits}\t` + 
     (App.settings.receipt.deliveryMethodPosition === 'bottom' ? `\n${deliveryMethodRow}` : '');
 
-  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n\n.`;
+  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n.`;
   //const text = `${body}`;
   const result = App.alignReceiptText(text, App.settings.printer.columns);
   return result;
@@ -242,8 +244,7 @@ App.renderKitchenReceiptText = (transaction) => {
       }
       return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
     }).join('\n')}` +
-    //`\n${App.ESCPOS.quadrupleSize(`${App.lang.receipt_header_order} #${transaction.order}`)}`
-    `\n\n.`;
+    `\n.`;
 
   const result = App.alignReceiptText(text, App.settings.kitchenPrinter.columns);
   return result;

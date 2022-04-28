@@ -140,6 +140,7 @@ form_vatRegistered	VAT registration status	Plátce DPH
 form_bank	Bank	Bankovní spojení
 form_theme	Color theme	Barevný motiv
 form_image	Image	Obrázek
+form_description	Description	Popis
 form_name	Name	Název
 form_number	Number	Číslo
 form_currency	Currency	Měna

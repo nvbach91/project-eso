@@ -140,6 +140,7 @@ App.GLocaleEN = {
   "form_bank"                               : "Bank",
   "form_theme"                              : "Color theme",
   "form_image"                              : "Image",
+  "form_description"                        : "Description",
   "form_name"                               : "Name",
   "form_number"                             : "Number",
   "form_currency"                           : "Currency",
