@@ -220,11 +220,12 @@ App.renderReceiptText = (transaction) => {
 };
 
 App.renderKitchenReceiptText = (transaction) => {
-  const orderNumber = App.ESCPOS.quadrupleSize(` ${App.lang.receipt_header_order} K#${transaction.order} `);
+  const orderNumber = `${App.lang.receipt_header_order} K#${transaction.order}`;
+  const orderNumberLine = App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(` ${orderNumber} `) : orderNumber;
   const text =
-    `\t${App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(orderNumber) : orderNumber}\t` +
-    `\n\t${App.ESCPOS.quadrupleSize(`${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`)}\t` +
-    `${transaction.payment === 'cash' ? `\n\t${App.ESCPOS.quadrupleSize(App.lang.receipt_not_paid)}\t` : ''}` +
+    `${App.ESCPOS.quadrupleSize(`\t${orderNumberLine}\t`)}` +
+    `\n${App.ESCPOS.quadrupleSize(`\t${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}\t`)}` +
+    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(`\t${App.lang.receipt_not_paid}\t`)}` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.filter((item) => {
         if (!App.settings.kitchenPrinter.groups) {
@@ -293,7 +294,7 @@ App.alignReceiptText = (text, columns) => {
       }
       const remainingSpaceCount = Math.floor((columns - lineLength) / tabs.length) + 1;
       if (remainingSpaceCount > 0) {
-        line = line.replace(/\t|\\t/g, ' '.repeat(remainingSpaceCount));
+        line = line.replace(/\t|\\t/g, ' '.repeat(remainingSpaceCount / (line.includes('^') && line.includes('ˇ') ? 2 : 1)));
       } else {
         line = line.replace(/\t|\\t/g, '');
       }
