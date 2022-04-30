@@ -98,6 +98,7 @@ App.GLocaleCS = {
   "misc_device_is_offline"                  : "Zařízení je offline",
   "misc_skip"                               : "Přeskočit",
 
+  "form_gokasa.ip"                          : "IP adresa OPS",
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "ID Terminálu",
   "form_terminal.ip"                        : "IP adresa",
@@ -199,6 +200,7 @@ App.GLocaleCS = {
 
   "settings_printer"                        : "Tiskárny",
   "settings_payment_terminal"               : "Platební terminál",
+  "settings_gokasa"                         : "Nastavení Gokasa",
   "settings_general"                        : "Obecné nastavení",
   "settings_fiscal"                         : "Fiskální nastavení (EET)",
   "settings_interface"                      : "Nastavení rozhraní",

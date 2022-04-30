@@ -89,6 +89,9 @@ const Registers = new Schema({
     active: Boolean,
     img: String,
   },
+  gokasa: {
+    ip: String,
+  }
 });
 
 module.exports = mongoose.model('registers', Registers);

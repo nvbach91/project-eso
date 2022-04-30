@@ -98,6 +98,7 @@ misc_delete_failed	Failed to delete	Nepodařilo se odstranit
 misc_device_is_offline	Device is offline	Zařízení je offline
 misc_skip	Skip	Přeskočit
 		
+form_gokasa.ip	OPS IP address	IP adresa OPS
 form_terminal.endpoint	Endpoint	Endpoint
 form_terminal.id	Terminal ID	ID Terminálu
 form_terminal.ip	IP address	IP adresa
@@ -204,6 +205,7 @@ dashboard_hour_transactions count	hour transactions count	hodinové transakce
 		
 settings_printer	Printers	Tiskárny
 settings_payment_terminal	Payment terminal	Platební terminál
+settings_gokasa	Gokasa settings	Nastavení Gokasa
 settings_general	General settings	Obecné nastavení
 settings_fiscal	Fiscal settings (EET)	Fiskální nastavení (EET)
 settings_interface	Interface settings	Nastavení rozhraní

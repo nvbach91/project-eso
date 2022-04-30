@@ -98,6 +98,7 @@ App.GLocaleEN = {
   "misc_device_is_offline"                  : "Device is offline",
   "misc_skip"                               : "Skip",
 
+  "form_gokasa.ip"                          : "OPS IP address",
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "Terminal ID",
   "form_terminal.ip"                        : "IP address",
@@ -199,6 +200,7 @@ App.GLocaleEN = {
 
   "settings_printer"                        : "Printers",
   "settings_payment_terminal"               : "Payment terminal",
+  "settings_gokasa"                         : "Gokasa settings",
   "settings_general"                        : "General settings",
   "settings_fiscal"                         : "Fiscal settings (EET)",
   "settings_interface"                      : "Interface settings",

@@ -71,6 +71,21 @@ App.renderPeripheralsScreen = () => {
   `).appendTo(cpBody);
   App.bindForm(paymentTerminalForm, '/settings');
 
+  const gokasaSettingsForm = $(`
+    <form class="mod-item card">
+      <div class="mi-header">${App.lang.settings_gokasa}</div>
+      <div class="mi-body">
+        <div class="form-row"> 
+          ${App.generateFormInput({ name: 'gokasa.ip', value: App.settings.gokasa.ip, optional: true, pattern: App.regex.ip.regex })}
+        </div>
+        <div class="mi-control">
+          <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
+        </div>
+      </div>
+    </form>
+  `).appendTo(cpBody);
+  App.bindForm(gokasaSettingsForm, '/settings');
+
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
 };
