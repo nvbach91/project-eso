@@ -65,7 +65,8 @@ App.renderOrderPreview = () => {
 
 App.createOrderPreviewItem = (id, ean) => {
   const { img } = App.products[ean];
-  const productHasMod = !!App.productMods[ean];// && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
+  const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
+  const itemHasMod = !!id && App.cart[id].mods && App.cart[id].mods.length;
   const el = $(`
     <div class="op-item">
       <div class="op-img"${App.getBackgroundImage(img)}>
@@ -75,7 +76,7 @@ App.createOrderPreviewItem = (id, ean) => {
         </button>
       </div>
       <div class="op-control">
-        ${!productHasMod ? 
+        ${!productHasMandatoryMod && !itemHasMod ? 
           `<button class="btn btn-primary op-inc"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('add')}</button>` : ''}
         <button class="btn btn-primary op-dec"${ean === 'T' ? ' disabled' : ''}>${App.getIcon('remove')}</button>
       </div>
@@ -85,7 +86,7 @@ App.createOrderPreviewItem = (id, ean) => {
     App.showProductDetail(id, ean);
   });
   el.find('.op-inc').click(() => {
-    App.addToCart(ean);
+    App.addToCart(ean, [], 1, id);
   });
   el.find('.op-dec').click(() => {
     App.decrementFromCart(id, ean);

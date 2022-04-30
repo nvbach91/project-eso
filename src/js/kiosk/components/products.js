@@ -25,7 +25,7 @@ App.renderProducts = (group) => {
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
-            <button class="btn btn-raised btn-primary add">${App.getIcon('playlist_add')}</button>
+            <!--button class="btn btn-raised btn-primary add">${App.getIcon('playlist_add')}</button-->
           </div>
         </div>
       </div>

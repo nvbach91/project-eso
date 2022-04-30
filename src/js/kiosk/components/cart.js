@@ -4,12 +4,12 @@ App.addToCart = (ean, mods, quantity, orderedId) => {
     return false;
   }
   let id = orderedId ? orderedId : ean === 'T' ? ean : Math.random().toString(36).substr(2, 9);
-  if (!App.productMods[ean]) {
+  if (!App.productMods[ean] || (orderedId && !App.cart[orderedId].mods) || (orderedId && !App.cart[id].mods.length)) {
     const existingCartItemId = Object.keys(App.cart).find((cid) => App.cart[cid].ean === ean);
     id = existingCartItemId ? existingCartItemId : id;
   }
   App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[id] && (id === 'T' || !App.productMods[ean])) {
+  if (App.cart[id] && (id === 'T' || !App.productMods[ean] || !App.cart[id].mods || !App.cart[id].mods.length)) {
     App.cart[id].quantity += typeof quantity === 'number' ? quantity : 1;
   } else if (App.cart[id]) {
     App.cart[id].mods = mods;
