@@ -66,10 +66,11 @@ App.renderOrderPreview = () => {
 App.createOrderPreviewItem = (id, ean) => {
   const { img } = App.products[ean];
   const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
-  const itemHasMod = !!id && App.cart[id].mods && App.cart[id].mods.length;
+  const itemHasMod = id && App.cart[id].mods.length;
   const el = $(`
     <div class="op-item">
       <div class="op-img"${App.getBackgroundImage(img)}>
+        ${itemHasMod ? `<div class="po-ribbon mandatory">M${App.cart[id].mods.length}</div>` : ''}
         <button class="btn btn-primary btn-raised${App.cart[id] ? '' : ' hidden'} cart-quantity-indicator" data-id="${id}" data-ean="${ean}">
           ${App.getIcon('shopping_cart')}
           <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
@@ -86,7 +87,7 @@ App.createOrderPreviewItem = (id, ean) => {
     App.showProductDetail(id, ean);
   });
   el.find('.op-inc').click(() => {
-    App.addToCart(ean, [], 1, id);
+    App.addToCart(ean, [], 1, id, true);
   });
   el.find('.op-dec').click(() => {
     App.decrementFromCart(id, ean);

@@ -1,29 +1,31 @@
-App.addToCart = (ean, mods, quantity, orderedId) => {
+App.addToCart = (ean, mods, quantity, orderedId, inc) => {
   if (ean === 'T' && (!App.products[ean] || parseFloat(App.products[ean].price) <= 0)) {
-    // dont add takeaway product if it doesn't exists or has zero price
+    // dont add takeaway product if it doesn't exist or has zero price
+    // a takeaway product is a special article with the ean === 'T'
+    // it is automatically added if the delivery method is takeaway
+    // with the same quantity as the added article's 
     return false;
   }
-  let id = orderedId ? orderedId : ean === 'T' ? ean : Math.random().toString(36).substr(2, 9);
-  if (!App.productMods[ean] || (orderedId && !App.cart[orderedId].mods) || (orderedId && !App.cart[id].mods.length)) {
-    const existingCartItemId = Object.keys(App.cart).find((cid) => App.cart[cid].ean === ean);
-    id = existingCartItemId ? existingCartItemId : id;
+  const randomId = Math.random().toString(36).slice(-10);
+  let id = orderedId ? orderedId : ean === 'T' ? ean : randomId;
+  if (!orderedId) {
+  // find an existing item that doesn't have any mod
+    const existingCartItemId = Object.keys(App.cart)
+      .filter((cid) => !App.cart[cid].mods.length)
+      .find((cid) => App.cart[cid].ean === ean);
+    id = existingCartItemId || id;
   }
   App.jOrderPreviewList.children().removeClass('last');
-  if (App.cart[id] && (id === 'T' || !App.productMods[ean] || !App.cart[id].mods || !App.cart[id].mods.length)) {
-    App.cart[id].quantity += typeof quantity === 'number' ? quantity : 1;
-  } else if (App.cart[id]) {
-    App.cart[id].mods = mods;
-  } else {
+
+  const createNewPreviewItem = (_id) => {
     const cartItem = {
-      id,
+      id: _id,
       ean,
       quantity: typeof quantity === 'number' ? quantity : 1,
+      mods,
     }
-    if (mods) {
-      cartItem.mods = mods;
-    }
-    App.cart[id] = cartItem;
-    const orderPreviewItem = App.createOrderPreviewItem(id, ean).addClass('last').hide().fadeIn();
+    App.cart[_id] = cartItem;
+    const orderPreviewItem = App.createOrderPreviewItem(_id, ean).addClass('last').hide().fadeIn();
     if (ean === 'T') {
       App.jOrderPreviewList.append(orderPreviewItem);
     } else {
@@ -33,6 +35,27 @@ App.addToCart = (ean, mods, quantity, orderedId) => {
     // App.jOrderPreviewList.animate({
     //   scrollRight: orderPreviewItem.offset().right
     // }, App.getAnimationTime());
+  };
+
+  if (App.cart[id]) { // there is an item
+    if (orderedId) { // previewItem clicked = modify, or inc clicked = increment
+      if (inc) {
+        App.cart[id].quantity += typeof quantity === 'number' ? quantity : 1;
+      }
+      App.cart[id].mods = mods;
+    } else {
+      if (!mods.length) {
+        App.cart[id].quantity += typeof quantity === 'number' ? quantity : 1;
+      } else {
+        createNewPreviewItem(randomId);
+      }
+    }
+
+    // if (id !== 'T' && mods.length) {
+    //   App.cart[id].mods = mods;
+    // }
+  } else {
+    createNewPreviewItem(id);
   }
   App.jOrderPreview.fadeIn();
   const existingOrderPreviewItem = App.jOrderPreviewList.find(`[data-id="${id}"]`).fadeIn().parent().parent().addClass('last');
@@ -59,7 +82,7 @@ App.addToCart = (ean, mods, quantity, orderedId) => {
     });
   }
   if (App.deliveryMethod === 'takeout' && ean !== 'T') {
-    App.addToCart('T', null, quantity);
+    App.addToCart('T', [], quantity);
   }
 };
 
@@ -148,11 +171,9 @@ App.calculateCartSummaryValues = () => {
     const product = App.products[ean];
     let itemPrice = parseFloat(product.price);
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
-    if (mods) {
-      mods.forEach((mod) => {
-        itemPrice += parseFloat(mod.price);
-      });
-    }
+    mods.forEach((mod) => {
+      itemPrice += parseFloat(mod.price);
+    });
     totalPrice += quantity * itemPrice;
     nItems += quantity;
   });
@@ -173,7 +194,7 @@ App.showCart = () => {
   if (App.deliveryMethod === 'takeout') {
     const { nItems, nTakeouts } = App.calculateCartSummaryValues();
     if (nItems > nTakeouts * 2) {
-      App.addToCart('T', null, nItems - nTakeouts * 2);
+      App.addToCart('T', [], nItems - nTakeouts * 2);
     } else if (nItems < nTakeouts * 2) {
       for(let i = 0; i < nTakeouts * 2 - nItems; i++) {
         App.decrementFromCart('T');
@@ -196,18 +217,16 @@ App.showCart = () => {
     const { mods, quantity, ean } = App.cart[id];
     const { price, name, img } = App.products[ean];
     let finalPrice = parseFloat(price);
-    if (mods) {
-      mods.forEach((mod) => {
-        finalPrice += parseFloat(mod.price);
-      });
-    }
+    mods.forEach((mod) => {
+      finalPrice += parseFloat(mod.price);
+    });
     let thisTotal = quantity * finalPrice;
     const el = $(`
       <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
         <div class="ci-name">
           ${name} 
-          ${mods ? 
+          ${mods.length ? 
             `- ${mods.map((m) => 
                 `${App.mods[m.number] ? App.mods[m.number].name : `${m.number} - N/A`}${parseFloat(m.price) ? ` +${m.price} ${App.settings.currency.symbol}` : ''}`
               ).join(', ')}`

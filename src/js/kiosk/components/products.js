@@ -25,7 +25,7 @@ App.renderProducts = (group) => {
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
-            <!--button class="btn btn-raised btn-primary add">${App.getIcon('playlist_add')}</button-->
+            <button class="btn btn-raised btn-primary add">${App.getIcon('playlist_add')}</button>
           </div>
         </div>
       </div>
@@ -36,12 +36,12 @@ App.renderProducts = (group) => {
     });
     element.find('.add').click((e) => {
       e.stopPropagation();
-      if (App.productMods[ean] && productHasMandatoryMod) {
+      // if (App.productMods[ean] && productHasMandatoryMod) {
         App.showProductDetail(null, ean);
-      } else {
-        App.addToCart(ean);
-        App.nextTab();
-      }
+      // } else {
+      //   App.addToCart(ean);
+      //   App.nextTab();
+      // }
     });
     const cartQuantityIndicator = element.find('.cart-quantity-indicator');
     cartQuantityIndicator.click((e) => {
@@ -91,7 +91,7 @@ App.showProductDetail = (id, ean) => {
                   }).map((modNumber, index) => {
                     const mod = App.mods[modNumber];
                     const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
-                    let active = App.cart[id] && App.cart[id].mods ? !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length : false;
+                    let active = !!App.cart[id] && !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length;
                     if (index === 0 && type.endsWith('.') && !active && !App.cart[id]) {
                       active = true;
                     }
@@ -124,10 +124,12 @@ App.showProductDetail = (id, ean) => {
             </button-->
             <!--button class="btn btn-primary add">${App.getIcon('add')}</button-->
           </div>
-          <button class="btn btn-raised btn-primary order">
-            <span>${App.lang.order_products_order_btn}</span>&nbsp;
-            ${App.getIcon('playlist_add')}
-          </button>
+          ${App.cart[id] ? '' : 
+            `<button class="btn btn-raised btn-primary order">
+              <span>${App.lang.order_products_order_btn}</span>&nbsp;
+              ${App.getIcon('playlist_add')}
+            </button>`
+          }
         </div>
       </div>
     </div>
@@ -153,11 +155,13 @@ App.showProductDetail = (id, ean) => {
   //   element.find('.remove').removeClass('hidden');
   // });
   element.find('.order').click(() => {
-    App.addToCart(ean, getMods(element), !App.cart[id] ? 1 : 0, id);
+    App.addToCart(ean, getMods(element), 1, id);
     App.closeModal();
     App.nextTab();
   });
-  App.bindToggleButtons(element, '.product-mod', 24, '.pm-img');
+  if (!id) {
+    App.bindToggleButtons(element, '.product-mod', 24, '.pm-img');
+  }
   App.showInModal(element, App.lang.modal_product_detail_title);
   App.jModal.find('.cs-cancel').remove();
   
@@ -172,5 +176,5 @@ const getMods = (container) => {
       mods.push({ number, price: App.mods[number].price });
     }
   });
-  return mods.length ? mods : null;
+  return mods;
 };

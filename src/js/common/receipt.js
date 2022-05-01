@@ -33,12 +33,9 @@ App.createTransaction = () => {
         const { ean } = App.cart[id];
         const { group, price, vat } = App.products[ean];
         const { quantity, discount, mods } = App.cart[id];
-        const item = { quantity, ean, price, group, vat };
+        const item = { quantity, ean, price, group, vat, mods };
         if (discount) {
           item.discount = discount;
-        }
-        if (mods) {
-          item.mods = mods;
         }
         return item;
       }),
@@ -149,11 +146,9 @@ App.renderReceiptText = (transaction) => {
         return App.settings.printer.groups.split(',').includes(item.group.toString());
       }).map((item) => {
       let itemPrice = parseFloat(item.price);
-      if (item.mods) {
-        item.mods.forEach((mod) => {
-          itemPrice += parseFloat(mod.price);
-        });
-      }
+      item.mods.forEach((mod) => {
+        itemPrice += parseFloat(mod.price);
+      });
       const itemTotal = item.quantity * itemPrice;
       subTotal += itemTotal;
       const vat = App.calculateTaxFromPrice(itemTotal, item.vat);
@@ -162,11 +157,8 @@ App.renderReceiptText = (transaction) => {
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? product.name : `${App.lang.form_ean}: ${item.ean}`;
-      let mods = '';
-      if (item.mods) {
-        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
-      }
-      return `${App.ESCPOS.bold(itemName)}${mods ? `\n${mods}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
+      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
+      return `${App.ESCPOS.bold(itemName)}${modText ? `\n${modText}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
     //`\n${App.getReceiptHorizontalLine()}`;
 
@@ -238,11 +230,8 @@ App.renderKitchenReceiptText = (transaction) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `#${item.ean} ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
-      let mods = '';
-      if (item.mods) {
-        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
-      }
-      return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${mods ? `\n${mods}` : ''}`;
+      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${modText ? `\n${modText}` : ''}`;
     }).join('\n')}` +
     `\n.`;
 
@@ -261,11 +250,8 @@ App.renderLabelReceiptText = (transaction, item, index) => {
     `\n${(() => {
       const product = App.products[item.ean];
       const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, App.settings.labelPrinter.columns);
-      let mods = '';
-      if (item.mods) {
-        mods = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
-      }
-      return `${item.quantity} x ${itemName}${mods ? `\n${mods}` : ''}`;
+      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      return `${item.quantity} x ${itemName}${modText ? `\n${modText}` : ''}`;
     })()}\n`;
 
   const result = App.alignReceiptText(text, App.settings.labelPrinter.columns);
