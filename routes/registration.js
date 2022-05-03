@@ -42,13 +42,13 @@ router.post('/registration', (req, res) => {
     newCompany.theme = 'teal';
     newCompany.img = '';
     return new Companies(newCompany).save();
-  }).then((newCompany) => {
+  }).then(() => {
     const newRegister = JSON.parse(JSON.stringify(req.body).replace(/"residence\./g, '"address.').replace('"companyName"', '"name"'));
     newRegister._id = newRegisterId;
     newRegister.number = 0;
     newRegister.name = 'Kiosk #0';
     newRegister.vatRates = [0, 10, 15, 21];
-    newRegister.receipt = { img: '', header: '', footer: '', extraPadding: 4, orderInitial: 0, masking: true, highlightOrderNumber: true, deliveryMethodPosition: 'middle', };
+    newRegister.receipt = { img: '', header: '', footer: '', extraPadding: 4, orderInitial: 0, masking: true, highlightOrderNumber: true, deliveryMethodPosition: 'middle' };
     newRegister.carouselInterval = 20000;
     newRegister.activityTimeout = 60000;
     newRegister.activityCheckTimeout = 25000;
@@ -60,8 +60,9 @@ router.post('/registration', (req, res) => {
     newRegister.terminal = { ip: '', port: 2050, password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP', endpoint: 'https://localhost:3443/pt', id: '' };
     newRegister.tableMarkers = { active: false, img: 'table-markers_utbjfb' };
     newRegister.gokasa = { ip: '', url: '' };
+    newRegister.finishMessage = '';
     return new Registers(newRegister).save();
-  }).then((newRegister) => {
+  }).then(() => {
     const newUser = JSON.parse(JSON.stringify(req.body));
     newUser.name = 'Admin';
     newUser.role = 'admin';
@@ -71,14 +72,37 @@ router.post('/registration', (req, res) => {
     newUser.regId = newRegisterId;
     newUser.token = '';
     return new Users(newUser).save();
-  }).then((newUser) => {
-    return new Groups({ number: 1, position: 0, regId: newRegisterId, img: 'https://res.cloudinary.com/itakecz/image/upload/362272_tqkx9x', name: 'Starters' }).save();
-  }).then((newGroup) => {
-    return new Products({ ean: '1', name: 'Special offer', price: '240', img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe', group: 1, vat: 15, desc: '', position: 0, regId: newRegisterId }).save();
-  }).then((newProduct) => {
-    return new Slides({ img: 'bg01_mog1lh-min_fbiyp4', text: 'Touch to start', position: 0, regId: newRegisterId }).save();
-  }).then((newSlide) => {
-    res.json({ msg: 'srv_registration_success' });
+  }).then(() => {
+    return new Groups({
+      number: 1,
+      position: 0,
+      regId: newRegisterId,
+      img: 'https://res.cloudinary.com/itakecz/image/upload/362272_tqkx9x',
+      name: 'Starters',
+      description: '',
+      display: true,
+    }).save();
+  }).then(() => {
+    return new Products({
+      ean: '1',
+      name: 'Special offer',
+      price: '240',
+      img: 'https://res.cloudinary.com/ceny24/image/upload/bg07_wrsdxe',
+      group: 1,
+      vat: 15,
+      desc: '',
+      position: 0,
+      regId: newRegisterId
+    }).save();
+  }).then(() => {
+    return new Slides({
+      img: 'bg01_mog1lh-min_fbiyp4',
+      text: 'Touch to start',
+      position: 0,
+      regId: newRegisterId,
+    }).save();
+  }).then(() => {
+    return res.json({ msg: 'srv_registration_success' });
   }).catch(utils.handleError(res));
 });
 

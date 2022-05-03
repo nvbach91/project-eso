@@ -11,7 +11,7 @@ App.GLocaleCS = {
   "order_products_order_btn"                : "Vybrat",
   "order_checkout_btn"                      : "Přejít k objednávce",
 
-  "table_markers_title"                     : "Zadejte značku stolu",
+  "table_markers_title"                     : "Odeberte číslo stolu ze stojánku a zadejte ho zde",
 
   "checkout_title"                          : "Platba",
   "checkout_card_pay_title"                 : "Platba kartou",
@@ -182,6 +182,7 @@ App.GLocaleCS = {
   "form_autoNextTab"                        : "Automaticky skočit na další záložku při objednávání",
   "form_tableMarkers.img"                   : "Obrázek pro značky stolů",
   "form_tableMarkers.active"                : "Používat značky stolů",
+  "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
 
   "admin_dashboard"                         : "Úvodní přehled",
   "admin_transactions"                      : "Transakce",

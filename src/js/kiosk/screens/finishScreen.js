@@ -1,3 +1,11 @@
+const createFinishMessage = () => {
+  return !App.settings.finishMessage ? '' : `
+    <div class="card-body">
+      <h2 class="text-center">${App.settings.finishMessage}</h2>
+    </div>
+  `;
+};
+
 App.renderFinishScreen = () => {
   const screen = $(`
     <main id="main">
@@ -8,8 +16,11 @@ App.renderFinishScreen = () => {
             <button class="btn btn-primary btn-raised start-new">${App.lang.finish_header_btn}</button>
           </h5>
           <div class="card-body">
-            <p class="text-center">${App.getIcon(`${App.imageUrlBase}${App.settings.theme === 'dark' ? 'rec_irraiu' : 'receipt_rkkwuo'}`, 200)} ${App.lang.finish_body_title}</p>
+            <p class="text-center">
+              ${App.getIcon(`${App.imageUrlBase}${App.settings.theme === 'dark' ? 'rec_irraiu' : 'receipt_rkkwuo'}`, 200)} ${App.lang.finish_body_title}
+            </p>
           </div>
+          ${createFinishMessage()}
         </div>
       </div>
     </main>

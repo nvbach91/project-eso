@@ -92,7 +92,8 @@ const Registers = new Schema({
   gokasa: {
     ip: String,
     url: String,
-  }
+  },
+  finishMessage: '',
 });
 
 module.exports = mongoose.model('registers', Registers);

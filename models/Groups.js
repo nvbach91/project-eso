@@ -8,6 +8,7 @@ const Groups = new Schema({
   name: String,
   img: String,
   display: Boolean,
+  description: String,
 });
 
 Groups.index({ regId: 1, number: 1 }, { unique: true });

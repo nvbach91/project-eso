@@ -11,7 +11,7 @@ delivery_method_takeout_btn	I'll take it home	Zabalit s sebou
 order_products_order_btn	Order	Vybrat
 order_checkout_btn	Checkout	Přejít k objednávce
 		
-table_markers_title	Choose your table marker	Zadejte značku stolu
+table_markers_title	Take a table marker and write the number here	Odeberte číslo stolu ze stojánku a zadejte ho zde
 
 checkout_title	Payment	Platba
 checkout_card_pay_title	Pay by card	Platba kartou
@@ -182,6 +182,7 @@ form_carouselInterval	Carousel Interval (ms)	Doba pro zobrazování jednoho sní
 form_autoNextTab	Automatically jump tp next order tab	Automaticky skočit na další záložku při objednávání
 form_tableMarkers.img	Table markers image	Obrázek pro značky stolů
 form_tableMarkers.active	Use table markers	Používat značky stolů
+form_finishMessage	Finish message	Závěrečná zpráva po objednávání
 
 admin_dashboard	Dashboard	Úvodní přehled
 admin_transactions	Transactions	Transakce

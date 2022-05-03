@@ -84,7 +84,7 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.groups[number];
-  const { name, position, img, display } = item || {};
+  const { name, position, img, display, description } = item || {};
   const imgStyle = App.getBackgroundImage(img);
   const modalTitle = `${item ? 'Edit' : 'Create'} group - ${number}`;
   const form = $(`
@@ -103,7 +103,10 @@ const showEditForm = (number) => {
           </div>
           <div class="form-row">
             ${App.generateFormInput({ name: 'name', value: name || '' })}
-            ${App.generateFormSelect({ name: 'display', value: display || true, options: App.binarySelectOptions, width: 80 })}
+            ${App.generateFormSelect({ name: 'display', value: display, options: App.binarySelectOptions, width: 80 })}
+          </div>
+          <div class="form-row">
+            ${App.generateFormInput({ name: 'description', value: description || '' })}
           </div>
         </div>
       </div>

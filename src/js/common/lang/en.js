@@ -11,7 +11,7 @@ App.GLocaleEN = {
   "order_products_order_btn"                : "Order",
   "order_checkout_btn"                      : "Checkout",
 
-  "table_markers_title"                     : "Choose your table marker",
+  "table_markers_title"                     : "Take a table marker and write the number here",
 
   "checkout_title"                          : "Payment",
   "checkout_card_pay_title"                 : "Pay by card",
@@ -182,6 +182,7 @@ App.GLocaleEN = {
   "form_autoNextTab"                        : "Automatically jump tp next order tab",
   "form_tableMarkers.img"                   : "Table markers image",
   "form_tableMarkers.active"                : "Use table markers",
+  "form_finishMessage"                      : "Finish message",
 
   "admin_dashboard"                         : "Dashboard",
   "admin_transactions"                      : "Transactions",

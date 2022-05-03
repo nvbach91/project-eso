@@ -7,9 +7,13 @@ App.renderProducts = (group) => {
     </div>
   `);
   header.appendTo(container);
-  Object.keys(App.products).filter((ean) => {
+  if (App.groups[group].description) {
+    container.append(`<div class="btn btn-primary products-description"><h2>${App.groups[group].description}</h2></div>`)
+  }
+  const products = Object.keys(App.products).filter((ean) => {
     return group == App.products[ean].group;
-  }).sort((a, b) => App.products[a].position - App.products[b].position).forEach((ean) => {
+  }).sort((a, b) => App.products[a].position - App.products[b].position);
+  products.forEach((ean) => {
     const { highlight, img, name, price, position } = App.products[ean];
     const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
     const element = $(`

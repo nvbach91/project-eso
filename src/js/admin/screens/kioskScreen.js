@@ -128,6 +128,9 @@ const createInterfaceSettingsForm = () => {
             ${App.getCloudinaryUploadTag({ tags: ['tableMarkersImg'] })}
           </div>
         </div>
+        <div class="form-row">
+          ${App.generateFormInput({ name: 'finishMessage', value: App.settings.finishMessage })}
+        </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
         </div>
