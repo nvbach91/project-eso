@@ -27,7 +27,7 @@ App.attachToken = (xhr) => {
 
 App.fetchSettings = () => {
   return $.get({
-    url: App.apiPrefix + '/settings',
+    url: `${App.apiPrefix}/settings`,
     beforeSend: App.attachToken,
   }).done((resp) => {
     App.settings = resp;
@@ -39,6 +39,10 @@ App.fetchSettings = () => {
     $.get('/themes').done((res) => {
       App.availableThemes = res;
     });
+
+    if (App.settings.gokasa.url) {
+      App.socket = io(App.settings.gokasa.url);
+    }
   });
 };
 

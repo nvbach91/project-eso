@@ -246,7 +246,7 @@ App.loadLocale = () => {
       App.lang[key] = (App['GLocale' + App.settings.currency.locale.toUpperCase()] || App.GLocaleEN)[key];
     });
   }
-  
+
   App.binarySelectOptions = [
     { label: App.lang.misc_yes, value: true },
     { label: App.lang.misc_no, value: false },
@@ -256,7 +256,7 @@ App.loadLocale = () => {
     { label: App.lang.misc_registered, value: true, },
     { label: App.lang.misc_not_registered, value: false, },
   ];
-  
+
   App.themeOptions = [
     { label: 'TEAL', value: 'teal', },
     { label: 'DARK', value: 'dark', },
@@ -481,27 +481,27 @@ App.createLocaleSwitcher = (options) => {
     <li class="nav-item" id="locale-switcher">
       <div class="btn-group ${options.direction || 'dropup'}">
         ${Object.keys(App.supportedLocales).filter((locale) => locale === App.locale).map((locale) => {
-          return `
+    return `
             <button class="btn locale-button" data-locale="${locale}" data-toggle="dropdown">
               <div class="flag locale-${locale}"></div>
               <span>${App.supportedLocales[locale]}</span>
             </button>
           `;
-        }).join('')}
+  }).join('')}
         <div class="dropdown-menu">
           ${Object.keys(App.supportedLocales).filter((locale) => locale !== App.locale).map((locale) => {
-            return `
+    return `
               <button class="btn locale-button" data-locale="${locale}">
                 <div class="flag locale-${locale}"></div>
                 <span>${App.supportedLocales[locale]}</span>
               </button>
             `;
-          }).join('')}
+  }).join('')}
         </div>
       </div>
     </li>
   `);
-  
+
   const menu = switcher.find('.dropdown-menu');
   const dropdown = switcher.children('.dropup');
   switcher.find('.locale-button').click(function () {
@@ -515,7 +515,7 @@ App.createLocaleSwitcher = (options) => {
     const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
     menu.prepend(currentLocaleButton);
 
-    t.attr({'data-toggle': 'dropdown'});
+    t.attr({ 'data-toggle': 'dropdown' });
     dropdown.prepend(t);
   });
   return switcher;
@@ -574,5 +574,40 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
 
 App.regex = {
   tin: { regex: /^\d{8}$/, desc: '7-8 digits' },
-  ip: { regex: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, desc: 'A valid IPv4 address' }
+  ip: { regex: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, desc: 'A valid IPv4 address' },
+  url: { regex: /^https:\/\/sync\.vcap\.me:2443$/, desc: 'A valid URL address' },
+};
+
+App.generateRandomPassword = (passwordLength) => {
+  const digits = '123456789';                 // omitted 0 (looks like o and O)
+  const lowercase = 'abcdefghijklmnpqrstuvwxyz'; // omitted o (looks like 0)
+  // const uppercase = 'ABCDEFGHIJKLMNPQRSTUVWXYZ'; // omitted O (looks like 0)
+  //const special   = '!@#$%*()_+-';
+  const allCharSets = [digits, lowercase/*, uppercase*/];//, special];
+  let result = '';
+
+  for (let i = 0; i < allCharSets.length; i++) {
+    const charSet = allCharSets[i];
+    result += charSet[Math.floor(Math.random() * charSet.length)];
+  }
+
+  const remainingCharsCnt = (passwordLength || 8) - result.length;
+  const allChars = allCharSets.join('');
+  for (let i = 0; i < remainingCharsCnt; i++) {
+    //result += allChars[Math.floor(Math.random() * (allChars.length - special.length))];
+    result += allChars[Math.floor(Math.random() * allChars.length)];
+  }
+
+  // shuffle the string
+  const a = result.split(''),
+    n = a.length;
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+  result = a.join('');
+
+  return result;
 };

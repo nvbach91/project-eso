@@ -98,6 +98,7 @@ App.GLocaleCS = {
   "misc_device_is_offline"                  : "Zařízení je offline",
   "misc_skip"                               : "Přeskočit",
 
+  "form_gokasa.url"                         : "URL adresa OPS",
   "form_gokasa.ip"                          : "IP adresa OPS",
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "ID Terminálu",

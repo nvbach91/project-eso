@@ -77,6 +77,7 @@ App.renderPeripheralsScreen = () => {
       <div class="mi-body">
         <div class="form-row"> 
           ${App.generateFormInput({ name: 'gokasa.ip', value: App.settings.gokasa.ip, optional: true, pattern: App.regex.ip.regex })}
+          ${App.generateFormInput({ name: 'gokasa.url', value: App.settings.gokasa.url, optional: true, pattern: App.regex.url.regex })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

@@ -98,6 +98,7 @@ misc_delete_failed	Failed to delete	Nepodařilo se odstranit
 misc_device_is_offline	Device is offline	Zařízení je offline
 misc_skip	Skip	Přeskočit
 		
+form_gokasa.url	OPS URL address	URL adresa OPS
 form_gokasa.ip	OPS IP address	IP adresa OPS
 form_terminal.endpoint	Endpoint	Endpoint
 form_terminal.id	Terminal ID	ID Terminálu

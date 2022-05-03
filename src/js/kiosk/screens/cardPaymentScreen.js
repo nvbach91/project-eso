@@ -66,7 +66,7 @@ App.renderCardPaymentScreen = () => {
       } else {
         App.showWarning(`
           <p>${App.lang.modal_payment_failed_p1}</p>
-          ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
+          ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>` : ''}
           <p>${App.lang.modal_payment_failed_p2}</p>
         `);
         App.renderCheckoutScreen();
@@ -74,7 +74,7 @@ App.renderCardPaymentScreen = () => {
     }).fail((resp) => {
       App.showWarning(`
         <p>${App.lang.modal_payment_failed_p1}</p>
-        ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>`: ''}
+        ${resp.msg ? `<p><strong>${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></p>` : ''}
         <p>${App.lang.modal_payment_failed_p2}</p>
       `);
       App.renderCheckoutScreen();
@@ -83,7 +83,7 @@ App.renderCardPaymentScreen = () => {
     });
     App.hideSpinner();
   });
-  
+
   App.hideSpinner();
 };
 
@@ -94,6 +94,34 @@ App.payInCash = () => {
     App.printReceipt(resp);
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
+    if (App.socket) {
+      const emitData = {};
+      emitData[App.generateRandomPassword()] = {
+        number: resp.number,
+        date: resp.date,
+        data: resp.items.map((item) => ({
+          id: App.generateRandomPassword(),
+          _id: App.generateRandomPassword(),
+          ean: item.ean,
+          quantity: item.quantity,
+          price: item.price,
+          printed: false,
+          group: item.group.toString(),
+          name: App.products[item.ean].name,
+          name2: '',
+          notes: item.mods.map((m) => App.mods[m.number].name).join(' | '),
+          mods: '',
+        })),
+        items: '',
+        username: App.user.username,
+        tableName: '',
+        mask: resp.order,
+        bistro: true
+      };
+      // console.log(resp);
+      // console.log(emitData);
+      App.socket.emit('server:table-sync', emitData);
+    }
   }).fail((resp) => {
     App.showWarning(`
       <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>

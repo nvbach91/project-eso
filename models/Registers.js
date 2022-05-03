@@ -91,6 +91,7 @@ const Registers = new Schema({
   },
   gokasa: {
     ip: String,
+    url: String,
   }
 });
 

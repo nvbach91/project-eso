@@ -98,6 +98,7 @@ App.GLocaleEN = {
   "misc_device_is_offline"                  : "Device is offline",
   "misc_skip"                               : "Skip",
 
+  "form_gokasa.url"                         : "OPS URL address",
   "form_gokasa.ip"                          : "OPS IP address",
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "Terminal ID",
