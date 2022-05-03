@@ -109,7 +109,7 @@ App.payInCash = () => {
           group: item.group.toString(),
           name: App.products[item.ean].name,
           name2: '',
-          notes: item.mods.map((m) => App.mods[m.number].name).join(' | '),
+          notes: item.mods.map((m) => `- ${App.mods[m.number].name}`).join('<br>'),
           mods: '',
         })),
         items: '',
