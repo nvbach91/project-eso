@@ -106,7 +106,7 @@ const showEditForm = (number) => {
             ${App.generateFormSelect({ name: 'display', value: display, options: App.binarySelectOptions, width: 80 })}
           </div>
           <div class="form-row">
-            ${App.generateFormInput({ name: 'description', value: description || '' })}
+            ${App.generateFormInput({ name: 'description', value: description || '', optional: true })}
           </div>
         </div>
       </div>
