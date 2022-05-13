@@ -45,10 +45,10 @@
     }
 }
 .tab-overlay {
-    filter: grayscale(1);
+    // filter: grayscale(1);
 }
 .tab.selected .tab-overlay {
-    filter: grayscale(0);
+    // filter: grayscale(0);
 }
 .tab .cart-quantity-indicator {
     min-width: 70px;
