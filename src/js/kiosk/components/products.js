@@ -104,14 +104,14 @@ App.showProductDetail = (id, ean) => {
                     }
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (!display ? '' : `
-                    <div class="product-mod-wrapper">
-                      <div class="pm-img"${imgStyle}>
-                        ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
+                      <div class="product-mod-wrapper">
+                        <div class="pm-img"${imgStyle}>
+                          ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
+                        </div>
+                        <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-type="${type}" data-active="${active}" data-number="${modNumber}">
+                          ${mod.name}
+                        </button>
                       </div>
-                      <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-type="${type}" data-active="${active}" data-number="${modNumber}">
-                        ${mod.name}
-                      </button>
-                    </div>
                     `);
                   }).join('')}
                 </div>

@@ -57,7 +57,7 @@ const js = (prefix) => {
             debug : argv.dev ? true : false
         }))
         .pipe(rename({basename: `${prefix}.build`, suffix: '.min', extname: '.js'}))
-        .pipe(!argv.dev ? uglify() : tap(() => {}))
+        // .pipe(!argv.dev ? uglify() : tap(() => {}))
         //.pipe(!argv.dev ? obfuscate() : tap(() => {}))
         .pipe(gulp.dest('./public/js/'))
         .pipe(bs.reload({ stream: true }));

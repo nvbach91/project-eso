@@ -171,9 +171,11 @@ App.calculateCartSummaryValues = () => {
     const product = App.products[ean];
     let itemPrice = parseFloat(product.price);
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
-    mods.forEach((mod) => {
-      itemPrice += parseFloat(mod.price);
-    });
+    if (mods) {
+      mods.forEach((mod) => {
+        itemPrice += parseFloat(mod.price);
+      });
+    }
     totalPrice += quantity * itemPrice;
     nItems += quantity;
   });
