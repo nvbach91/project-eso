@@ -126,6 +126,7 @@ App.GLocaleCS = {
   "form_labelPrinter.left"                  : "Levý okraj",
   "form_labelPrinter.top"                   : "Horní okraj",
   "form_labelPrinter.fontSize"              : "Velikost písmene",
+  "form_labelPrinter.style"                 : "Styl tisku",
   "form_companyName"                        : "Název firmy",
   "form_subdomain"                          : "Subdoména",
   "form_vat"                                : "DIČ",

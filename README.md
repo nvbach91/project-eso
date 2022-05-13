@@ -19,7 +19,7 @@ A cross-platform self-ordering system for browsers
 - Run with **cmd** at **project folder**
 ```bash
     npm install
-    npm run dev
+    npm run dev / yarn dev
 ``` 
 
 #### 3) Open the website 

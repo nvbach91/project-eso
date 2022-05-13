@@ -55,6 +55,7 @@ const Registers = new Schema({
     top: Number,
     left: Number,
     fontSize: Number,
+    style: String,
   }, 
   terminal: { 
     ip: String, 

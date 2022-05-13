@@ -244,14 +244,17 @@ App.shortenTextByColumns = (text, columns) => {
   return text.match(regex).join('\n');
 };
 App.renderLabelReceiptText = (transaction, item, index) => {
+  const orderLine = `${App.lang.receipt_header_order} K#${transaction.order}`;
+  const deliveryLine = `${App.getDeliveryMethod(transaction.delivery)}`;
   const text =
-    `${App.lang.receipt_header_order} K#${transaction.order}\t${App.getDeliveryMethod(transaction.delivery)}` +
+    (App.settings.labelPrinter.style === 'kitchen' ? `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryLine)}` : `${orderLine}\t${deliveryLine}`) +
     `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
     `\n${(() => {
       const product = App.products[item.ean];
       const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, App.settings.labelPrinter.columns);
-      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
-      return `${item.quantity} x ${itemName}${modText ? `\n${modText}` : ''}`;
+      const modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      const itemLine = `${item.quantity} x ${itemName}`;
+      return (App.settings.labelPrinter.style === 'kitchen' ? App.ESCPOS.quadrupleSize(itemLine) : itemLine) + (modText ? `\n${modText}` : '');
     })()}\n`;
 
   const result = App.alignReceiptText(text, App.settings.labelPrinter.columns);

@@ -268,6 +268,11 @@ App.loadLocale = () => {
     { label: App.lang.misc_middle, value: 'middle' },
     { label: App.lang.misc_bottom, value: 'bottom' },
   ];
+
+  App.labelPrinterStyleOptions = [
+    { label: 'PLAIN', value: 'plain', },
+    { label: 'KITCHEN', value: 'kitchen', },
+  ];
 };
 
 App.printQRCode = (data) => {
