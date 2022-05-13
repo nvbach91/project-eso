@@ -91,10 +91,10 @@ App.showProductDetail = (id, ean) => {
                 <!--label class="bmd-label-static">${type}</label-->
                 <div class="horizontal-scroll">
                   ${Object.keys(App.mods).filter((modNumber) => {
-                    return App.modTypes[type].includes(Number(modNumber));
+                    return App.modTypes[type].includes(Number(modNumber)) && !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                   }).map((modNumber, index) => {
                     const mod = App.mods[modNumber];
-                    const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+                    // const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                     let active = !!App.cart[id] && !!App.cart[id].mods.filter((m) => m.number === Number(modNumber)).length;
                     if (index === 0 && type.endsWith('.') && !active && !App.cart[id]) {
                       active = true;
@@ -103,7 +103,7 @@ App.showProductDetail = (id, ean) => {
                       active = true;
                     }
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
-                    return (!display ? '' : `
+                    return (`
                       <div class="product-mod-wrapper">
                         <div class="pm-img"${imgStyle}>
                           ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
