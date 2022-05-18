@@ -2,7 +2,7 @@
 A cross-platform self-ordering system for browsers
 
 ## Technologies
-- Node.js (v12.7.0, also works with 6.17.0)
+- Node.js (v16.13.0)
 - Express (4.16.0)
 - MongoDB (4.0.9) TBI
 
@@ -18,7 +18,7 @@ A cross-platform self-ordering system for browsers
 #### 2) Npm repository setup
 - Run with **cmd** at **project folder**
 ```bash
-    npm install
+    npm install / yarn
     npm run dev / yarn dev
 ``` 
 

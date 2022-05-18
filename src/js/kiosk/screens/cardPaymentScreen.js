@@ -94,9 +94,8 @@ App.payInCash = () => {
     App.printReceipt(resp);
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
-    if (App.socket) {
-      const emitData = {};
-      emitData[App.generateRandomPassword()] = {
+    if (App.settings.gokasa.url) {
+      App.tablesSet[App.generateRandomPassword()] = {
         number: resp.number,
         date: resp.date,
         data: resp.items.map((item) => ({
@@ -105,22 +104,22 @@ App.payInCash = () => {
           ean: item.ean,
           quantity: item.quantity,
           price: item.price,
-          printed: false,
-          group: item.group.toString(),
           name: App.products[item.ean].name,
+          group: item.group.toString(),
+          printed: false,
           name2: '',
           notes: item.mods.map((m) => `- ${App.mods[m.number].name}`).join('<br>'),
           mods: '',
         })),
         items: '',
         username: App.user.username,
-        tableName: '',
+        tableName: 'KIOSK',
         mask: resp.order,
         bistro: true
       };
       // console.log(resp);
       // console.log(emitData);
-      App.socket.emit('server:table-sync', emitData);
+      $.ajax({ type: 'POST', url: `${App.settings.gokasa.url}/tables`, data: JSON.stringify(App.tablesSet), contentType: 'application/json' })
     }
   }).fail((resp) => {
     App.showWarning(`

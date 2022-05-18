@@ -616,3 +616,11 @@ App.generateRandomPassword = (passwordLength) => {
 
   return result;
 };
+
+App.randomIntegerBetween = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+App.getRandomPollingTime = (min, max) => {
+  return App.randomIntegerBetween(min || 1500, max || 2500);
+};
