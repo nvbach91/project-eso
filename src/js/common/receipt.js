@@ -245,9 +245,13 @@ App.shortenTextByColumns = (text, columns) => {
 };
 App.renderLabelReceiptText = (transaction, item, index) => {
   const orderLine = `${App.lang.receipt_header_order} K#${transaction.order}`;
-  const deliveryLine = `${App.getDeliveryMethod(transaction.delivery)}`;
+  const deliveryMethod = `${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`;
   const text =
-    (App.settings.labelPrinter.style === 'kitchen' ? `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryLine)}` : `${orderLine}\t${deliveryLine}`) +
+    (
+      App.settings.labelPrinter.style === 'kitchen' ?
+        `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryMethod)}` :
+        `${orderLine}\t${deliveryMethod}`
+    ) +
     `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
     `\n${(() => {
       const product = App.products[item.ean];
