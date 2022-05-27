@@ -28,7 +28,7 @@ App.renderTableMarkerScreen = () => {
             }).join('')}
           </div>
           <div class="card table-marker"${App.getBackgroundImage(App.settings.tableMarkers.img)}">
-            <button class="btn btn-raised btn-danger" id="skip-table-marker">${App.lang.misc_skip}</button>
+            ${App.settings.tableMarkers.required ? '' : `<button class="btn btn-raised btn-danger" id="skip-table-marker">${App.lang.misc_skip}</button>`}
             <button class="btn btn-primary table-marker-text">${App.tableMarkerValue || ''}</button>
           </div>
         </div>

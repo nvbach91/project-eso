@@ -183,6 +183,7 @@ App.GLocaleEN = {
   "form_autoNextTab"                        : "Automatically jump tp next order tab",
   "form_tableMarkers.img"                   : "Table markers image",
   "form_tableMarkers.active"                : "Use table markers",
+  "form_tableMarkers.required"              : "Required table markers",
   "form_finishMessage"                      : "Finish message",
 
   "admin_dashboard"                         : "Dashboard",

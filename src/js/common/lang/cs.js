@@ -183,6 +183,7 @@ App.GLocaleCS = {
   "form_autoNextTab"                        : "Automaticky skočit na další záložku při objednávání",
   "form_tableMarkers.img"                   : "Obrázek pro značky stolů",
   "form_tableMarkers.active"                : "Používat značky stolů",
+  "form_tableMarkers.required"              : "Povinné table markers",
   "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
 
   "admin_dashboard"                         : "Úvodní přehled",

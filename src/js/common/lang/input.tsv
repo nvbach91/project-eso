@@ -183,6 +183,7 @@ form_carouselInterval	Carousel Interval (ms)	Doba pro zobrazování jednoho sní
 form_autoNextTab	Automatically jump tp next order tab	Automaticky skočit na další záložku při objednávání
 form_tableMarkers.img	Table markers image	Obrázek pro značky stolů
 form_tableMarkers.active	Use table markers	Používat značky stolů
+form_tableMarkers.required	Required table markers	Povinné table markers
 form_finishMessage	Finish message	Závěrečná zpráva po objednávání
 
 admin_dashboard	Dashboard	Úvodní přehled

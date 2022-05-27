@@ -121,6 +121,7 @@ const createInterfaceSettingsForm = () => {
         <div class="form-row">
           ${App.generateFormSelect({ name: 'autoNextTab', value: App.settings.autoNextTab, options: App.binarySelectOptions })}
           ${App.generateFormSelect({ name: 'tableMarkers.active', value: App.settings.tableMarkers.active, options: App.binarySelectOptions })}
+          ${App.generateFormSelect({ name: 'tableMarkers.required', value: App.settings.tableMarkers.required, options: App.binarySelectOptions })}
           <div class="img-upload">
             <label class="bmd-label-static">${App.lang['form_tableMarkers.img']}</label>
             <div class="btn img-holder"${tableMarkersImgStyle}>${tableMarkersImgStyle ? '' : App.getIcon('file_upload')}</div>

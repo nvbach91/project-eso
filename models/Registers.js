@@ -89,6 +89,7 @@ const Registers = new Schema({
   tableMarkers: {
     active: Boolean,
     img: String,
+    required: Boolean,
   },
   gokasa: {
     ip: String,
