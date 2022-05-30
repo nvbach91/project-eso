@@ -88,9 +88,16 @@ App.printKitchenReceipt = (transaction) => {
 };
 
 App.printLabelReceipt = (transaction) => {
-  transaction.items.forEach((item, index) => {
+  const printGroups = App.settings.labelPrinter.groups;
+  const toPrintItems = transaction.items.filter((item) => {
+    if (!printGroups) {
+      return true;
+    }
+    return printGroups.split(',').includes(item.group.toString());
+  });
+  toPrintItems.forEach((item, index) => {
     if (App.settings.labelPrinter.direct) {
-      const text = App.renderLabelReceiptText(transaction, item, index);
+      const text = App.renderLabelReceiptText(transaction, item, index, toPrintItems.length);
       App.printDirect(Object.assign({},
         App.settings.labelPrinter,
         {
@@ -243,7 +250,7 @@ App.shortenTextByColumns = (text, columns) => {
   const regex = new RegExp(`.{1,${columns}}`,'g')
   return text.match(regex).join('\n');
 };
-App.renderLabelReceiptText = (transaction, item, index) => {
+App.renderLabelReceiptText = (transaction, item, index, totalItems) => {
   const orderLine = `${App.lang.receipt_header_order} K#${transaction.order}`;
   const deliveryMethod = `${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`;
   const text =
@@ -252,7 +259,7 @@ App.renderLabelReceiptText = (transaction, item, index) => {
         `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryMethod)}` :
         `${orderLine}\t${deliveryMethod}`
     ) +
-    `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${transaction.items.length}` +
+    `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${totalItems}` +
     `\n${(() => {
       const product = App.products[item.ean];
       const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, App.settings.labelPrinter.columns);
