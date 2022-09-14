@@ -158,10 +158,10 @@ span.match {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.sr-vat {
+.sr-vat, .sr-active {
     width: 60px;
 }
-.sr-vat, .sr-edit, .sr-display {
+.sr-vat, .sr-edit, .sr-display, .sr-active {
     text-align: center;
 }
 .sr-display, .sr-products, .sr-order, .sr-position, .sr-number {

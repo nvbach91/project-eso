@@ -12,6 +12,7 @@ const Products = new Schema({
   desc: String,
   group: Number,
   vat: Number,
+  active: Boolean,
 });
 
 Products.index({ regId: 1, ean: 1 }, { unique: true });

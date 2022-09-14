@@ -526,11 +526,18 @@ App.createLocaleSwitcher = (options) => {
   return switcher;
 };
 
-App.getIcon = (url, size) => {
+App.getIcon = (url, size, color) => {
   if (/^(\/|http)/.test(url)) {
     return `<i class="icon" style="background-image: url(${url}); width: ${size}px; height: ${size}px;"></i>`;
   }
-  return `<i class="material-icons" ${size ? ` style="font-size: ${size}px"` : ''}>${url}</i>`;
+  const styles = [];
+  if (size) {
+    styles.push(`font-size: ${size}px;`);
+  }
+  if (color) {
+    styles.push(`color: ${color};`);
+  }
+  return `<i class="material-icons" style="${styles.join('')}">${url}</i>`;
 };
 
 

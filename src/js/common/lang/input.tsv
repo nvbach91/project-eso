@@ -145,6 +145,7 @@ form_theme	Color theme	Barevný motiv
 form_image	Image	Obrázek
 form_description	Description	Popis
 form_name	Name	Název
+form_active	Active	Aktivní
 form_number	Number	Číslo
 form_currency	Currency	Měna
 form_order	Order	Objednávka

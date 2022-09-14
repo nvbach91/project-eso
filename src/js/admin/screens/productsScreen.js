@@ -6,6 +6,7 @@ const tableHeader = () => `
     <div class="td sr-price">${App.lang.form_price}</div>
     <div class="td sr-group">${App.lang.form_group}</div>
     <div class="td sr-vat">${App.lang.form_vat}</div>
+    <div class="td sr-active">${App.lang.form_active}</div>
     <div class="td sr-edit">${App.lang.misc_edit}</div>
   </div>
 `;
@@ -56,7 +57,7 @@ App.renderProductsScreen = () => {
     const productKeys = Object.keys(App.products);
     for (let i = 0; i < productKeys.length; i++) {
       const ean = productKeys[i];
-      const { name, price, group, vat, img } = App.products[ean];
+      const { name, price, group, vat, img, active } = App.products[ean];
       if (!searchValue || name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0 || ean.indexOf(searchValue) >= 0) {
         const groupName = App.groups[group] ? App.groups[group].name : '';
         const item = $(`
@@ -67,6 +68,7 @@ App.renderProductsScreen = () => {
               <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
               <div class="td sr-group${groupName ? '' : ' text-danger'}">${group} - ${groupName ? groupName : 'N/A'}</div>
               <div class="td sr-vat">${vat} %</div>
+              <div class="td sr-active" title="${active ? App.lang.misc_yes : App.lang.misc_no}">${active ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}</div>
               <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
             </div>
           `);
@@ -96,7 +98,7 @@ App.renderProductsScreen = () => {
 const showEditForm = (ean, cb) => {
   if (!cb) cb = () => { };
   const product = App.products[ean];
-  const { name, price, group, img, vat, highlight, position, desc } = product || {};
+  const { name, price, group, img, vat, highlight, position, desc, active } = product || {};
   const imgStyle = App.getBackgroundImage(img);
   const groupOptions = Object.keys(App.groups).map((group) => {
     return { label: `${group} - ${App.groups[group].name}`, value: group };
@@ -121,7 +123,10 @@ const showEditForm = (ean, cb) => {
             ${App.generateFormInput({ name: 'position', value: isNaN(position) ? 0 : position, type: 'number', min: 0, width: 50 })}
             ${App.generateFormSelect({ name: 'highlight', value: highlight || false, options: App.binarySelectOptions })}
           </div>
-          ${App.generateFormInput({ name: 'name', value: name || '' })}
+          <div class="form-row">
+            ${App.generateFormInput({ name: 'name', value: name || '' })}
+            ${App.generateFormSelect({ name: 'active', value: active || false, options: App.binarySelectOptions })}
+          </div>
         </div>
       </div>
       <div class="form-row">

@@ -145,6 +145,7 @@ App.GLocaleCS = {
   "form_image"                              : "Obrázek",
   "form_description"                        : "Popis",
   "form_name"                               : "Název",
+  "form_active"                             : "Aktivní",
   "form_number"                             : "Číslo",
   "form_currency"                           : "Měna",
   "form_order"                              : "Objednávka",

@@ -11,7 +11,7 @@ App.renderProducts = (group) => {
     container.append(`<div class="btn btn-primary products-description"><h2>${App.groups[group].description}</h2></div>`)
   }
   const products = Object.keys(App.products).filter((ean) => {
-    return group == App.products[ean].group;
+    return App.products[ean].active && group == App.products[ean].group;
   }).sort((a, b) => App.products[a].position - App.products[b].position);
   products.forEach((ean) => {
     const { highlight, img, name, price, position } = App.products[ean];

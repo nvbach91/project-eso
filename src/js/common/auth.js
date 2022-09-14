@@ -20,7 +20,7 @@ App.renderLoginForm = () => {
         </div>
         <br>
         <button class="btn btn-raised btn-primary btn-lg btn-block">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">${App.credits}</p>
+        <p class="mt-5 mb-3 text-muted">${App.credits}<br>${App.provider}</p>
       </form>
     <div>
   `);
