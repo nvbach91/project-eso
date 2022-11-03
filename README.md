@@ -2,7 +2,7 @@
 A cross-platform self-ordering system for browsers
 
 ## Technologies
-- Node.js (v16.13.0)
+- Node.js (v16.18.0)
 - Express (4.16.0)
 - MongoDB (4.0.9) TBI
 
