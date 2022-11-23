@@ -32,12 +32,13 @@ app.use('/', require('./routes/registration'));
 
 const apiPrefix = '/api/v1';
 app.use(apiPrefix, passport.authenticate('jwt', { session: false }));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/settings'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/transactions'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/products'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/groups'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/mods'));
-app.use(apiPrefix, require('./routes' + apiPrefix + '/aggregates'));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/settings`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/transactions`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/products`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/groups`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/mods`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/aggregates`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/registers`));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

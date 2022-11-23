@@ -23,7 +23,7 @@ $(document).ajaxStart(() => {
 App.attachToken = (xhr) => {
   const token = localStorage.getItem('jwt');
   if (token) {
-    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
   }
 };
 
@@ -65,7 +65,7 @@ App.startTablesSync = () => {
 
 App.fetchProducts = () => {
   return $.get({
-    url: App.apiPrefix + '/products',
+    url: `${App.apiPrefix}/products`,
     beforeSend: App.attachToken,
   }).done((resp) => {
     resp.forEach((product) => {
@@ -81,7 +81,7 @@ App.fetchProducts = () => {
 
 App.fetchGroups = () => {
   return $.get({
-    url: App.apiPrefix + '/groups',
+    url: `${App.apiPrefix}/groups`,
     beforeSend: App.attachToken,
   }).done((resp) => {
     resp.forEach((item) => {
@@ -92,7 +92,7 @@ App.fetchGroups = () => {
 
 App.fetchMods = () => {
   return $.get({
-    url: App.apiPrefix + '/mods',
+    url: `${App.apiPrefix}/mods`,
     beforeSend: App.attachToken,
   }).done((resp) => {
     App.mods = {};

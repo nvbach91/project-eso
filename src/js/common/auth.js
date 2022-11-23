@@ -28,7 +28,7 @@ App.renderLoginForm = () => {
   loginForm.find('#launch').click(() => {
     loginForm.toggleClass('full-width');
   });
-  const subdomainInput = loginForm.find('[name="subdomain"]').val(location.protocol + '//' + location.hostname);
+  const subdomainInput = loginForm.find('[name="subdomain"]').val(`${location.protocol}//${location.hostname}`);
   const usernameInput = loginForm.find('[name="username"]');//.val('demo@gmail.com');
   const passwordInput = loginForm.find('[name="password"]');//.val('demo@gmail.com');
   loginForm.submit((e) => {

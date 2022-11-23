@@ -6,9 +6,9 @@ Number.prototype.formatMoney = function (c, d, t) {
     d = d === undefined ? '.' : d,
     t = t === undefined ? '' : t,
     s = n < 0 ? '-' : '',
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + '',
+    i = `${parseInt(n = Math.abs(+n || 0).toFixed(c))}`,
     j = (j = i.length) > 3 ? j % 3 : 0;
-  var retval = s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+  var retval = s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, `$1${t}`) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
   if (retval === '-0.00') {
     retval = '0.00';
   }
@@ -16,7 +16,7 @@ Number.prototype.formatMoney = function (c, d, t) {
 };
 
 App.round = (value, decimals) => {
-  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+  return Number(Math.round(`${value}e${decimals}`) + `e-${decimals}`);
 };
 
 App.showInModal = (element, title, cb) => {
@@ -59,10 +59,6 @@ App.hideSpinner = () => {
   App.jSpinner.hide();
 };
 
-// App.fetchJoke = () => {
-//   return $.get('https://geek-jokes.sameerkumar.website/api');
-// };
-
 App.reset = () => {
   App.cart = {};
   App.cartCategoryQuantities = {};
@@ -92,7 +88,7 @@ App.startActivitySession = () => {
   //console.log('Activity session started');
   App.activityCheckInterval = setInterval(() => {
     const idleTime = new Date() - App.lastActivityTime;
-    //console.log('idle time = ' + idleTime);
+    //console.log('idle time = ', idleTime);
     if (idleTime > App.settings.activityTimeout && !App.isCheckingActivity) {
       //console.log('checking activity');
       App.checkActivity();
@@ -107,7 +103,7 @@ App.startActivitySession = () => {
 $(window).click(() => {
   if (App.activityCheckInterval) {
     App.lastActivityTime = new Date();
-    //console.log('refreshing activity: last activity = ' + App.lastActivityTime.getSeconds());
+    //console.log('refreshing activity: last activity = ', App.lastActivityTime.getSeconds());
   }
 });
 
@@ -172,7 +168,7 @@ App.printDirect = (args) => {
     return false;
   }
   $.post({
-    url: App.localhostServerURL + '/printdirect',
+    url: `${App.localhostServerURL}/printdirect`,
     data: args
   });
 };;
@@ -188,7 +184,7 @@ App.getClerk = (username) => {
 App.addPadding = (value, maxLength) => {
   let v = value.toString();
   while (v.length < maxLength) {
-    v = ' ' + v;
+    v = ` ${v}`;
   }
   return v;
 };
@@ -197,19 +193,19 @@ App.addPadding = (value, maxLength) => {
 // where these szmbols are replaced with buffers
 App.ESCPOS = {
   bold: (s) => {
-    return '{' + s + '}';
+    return `{${s}}`;
   },
   doubleHeight: (s) => {
-    return '`' + s + '´';
+    return `\`${s}´`;
   },
   quadrupleSize: (s, style) => {
     if (style === 'plain') {
       return s;
     }
-    return '^' + s + 'ˇ';
+    return `^${s}ˇ`;
   },
   invert: (s) => {
-    return '\x1d\x421' + s + '\x1d\x420';
+    return `\x1d\x421${s}\x1d\x420`;
   },
 };
 
@@ -222,7 +218,7 @@ App.getDeliveryMethod = (code) => {
 };
 
 App.loadLocale = () => {
-  App.lang = JSON.parse(JSON.stringify(App['GLocale' + App.locale.toUpperCase()] || App.GLocaleEN));
+  App.lang = JSON.parse(JSON.stringify(App[`GLocale${App.locale.toUpperCase()}`] || App.GLocaleEN));
   if (App.settings.currency) {
     const currencyLocaleLangKeys = [
       'receipt_header_order',
@@ -246,7 +242,7 @@ App.loadLocale = () => {
       'receipt_footer_clerk',
     ];
     currencyLocaleLangKeys.forEach((key) => {
-      App.lang[key] = (App['GLocale' + App.settings.currency.locale.toUpperCase()] || App.GLocaleEN)[key];
+      App.lang[key] = (App[`GLocale${App.settings.currency.locale.toUpperCase()}`] || App.GLocaleEN)[key];
     });
   }
 
@@ -282,7 +278,7 @@ App.printQRCode = (data) => {
   const qrcodeContainer = $('<div>');
   qrcodeContainer.qrcode(data.toString());
   $.post({
-    url: App.localhostServerURL + '/printdirectimage',
+    url: `${App.localhostServerURL}/printdirectimage`,
     data: {
       image: qrcodeContainer.find('canvas')[0].toDataURL(),
       cut: true,
@@ -291,7 +287,7 @@ App.printQRCode = (data) => {
 };
 
 App.getNumeralForm = (key, n) => {
-  return n === 1 ? App.lang[key] : n > 4 || n === 0 ? App.lang[key + 'ss'] : App.lang[key + 's'];
+  return n === 1 ? App.lang[key] : n > 4 || n === 0 ? App.lang[`${key}ss`] : App.lang[`${key}s`];
 };
 
 App.detectBrowserLanguage = () => {
@@ -392,7 +388,7 @@ App.highlightMatchedText = (text, search) => {
   const startMatchIndex = text.toLowerCase().indexOf(search.toLowerCase());
   const displayContent = startMatchIndex >= 0 ? (
     text.slice(0, startMatchIndex) +
-    '<span class="match">' + text.slice(startMatchIndex, startMatchIndex + search.length) + '</span>' +
+    `<span class="match">${text.slice(startMatchIndex, startMatchIndex + search.length)}</span>` +
     text.slice(startMatchIndex + search.length)
   ) : text;
   return displayContent;
@@ -462,8 +458,8 @@ App.removeVietnameseDiacritics = (s) => {
 };
 
 const diaDict = {};
-const dia = 'ěščřžýáíéóúůďťňľäĚŠČŘŽÝÁÍÉÓÚŮĎŤŇĽÄ' + vi_dia;
-const non = 'escrzyaieouudtnlaESCRZYAIEOUUDTNLA' + vi_non;
+const dia = `ěščřžýáíéóúůďťňľäĚŠČŘŽÝÁÍÉÓÚŮĎŤŇĽÄ${vi_dia}`;
+const non = `escrzyaieouudtnlaESCRZYAIEOUUDTNLA${vi_non}`;
 for (let i = 0; i < dia.length; i++) {
   diaDict[dia[i]] = non[i];
 }

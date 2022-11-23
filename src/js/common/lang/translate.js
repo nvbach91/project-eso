@@ -28,12 +28,12 @@ var translate = function(line) {
     var endComma = field === '__END_OF_FILE__' ? '' : ',';
     Object.keys(langValues).forEach(function(code) {
       if (langValues[code]) {
-        langValues[code] = '"' + langs[code].slice(0, langs[code].length) + '"' + endComma;
+        langValues[code] = `"${langs[code].slice(0, langs[code].length)}"${endComma}`;
       }
     });
     Object.keys(langContents).forEach(function(code) {
       if (langValues[code]) {
-        langContents[code] += '  "' + field + '"' + generateIndent(field) + ': ' + (langValues[code][1] !== '"' ? langValues[code] : langValues['en']) + '\n';
+        langContents[code] += `  "${field}"${generateIndent(field)}: ${(langValues[code][1] !== '"' ? langValues[code] : langValues['en'])}\n`;
       }
     });
   } else {
@@ -46,7 +46,7 @@ var inputFileName = process.argv[2];
 var lineCnt = -1;
 
 Object.keys(langContents).forEach(function(code) {
-  fs.writeFileSync(code + '.js', 'App.GLocale' + code.toUpperCase() + ' = {\n', { encoding: 'utf8', flag: 'w' });
+  fs.writeFileSync(`${code}.js`, `App.GLocale${code.toUpperCase()} = {\n`, { encoding: 'utf8', flag: 'w' });
 });
 
 var lineReader = readline.createInterface({
@@ -62,6 +62,6 @@ lineReader.on('line', function(line) {
 
 lineReader.on('close', function() {
   Object.keys(langContents).forEach(function(code) {
-    fs.writeFileSync(code + '.js', langContents[code] + '};\n', { encoding: 'utf8', flag: 'a' });
+    fs.writeFileSync(`${code}.js`, `${langContents[code]}};\n`, { encoding: 'utf8', flag: 'a' });
   });
 });

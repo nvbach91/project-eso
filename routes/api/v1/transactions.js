@@ -89,8 +89,8 @@ const updateAggregates = (t) => {
   $inc[`nTrans`] = 1;
   $inc[`nProdSold`] = nProdSold;
   const hour = new Date(date).getHours();
-  $inc['hourSales.' + hour] = total;
-  $inc['hourTrans.' + hour] = 1;
+  $inc[`hourSales.${hour}`] = total;
+  $inc[`hourTrans.${hour}`] = 1;
 
   //console.log($inc);
   Aggregates.updateOne({ date: d, regId }, { $inc }, { upsert: true }).then((info) => {

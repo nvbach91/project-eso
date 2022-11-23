@@ -85,7 +85,7 @@ App.bindForm = (form, endpoint) => {
       delete data.currency;
       const currency = App.supportedCurrencies[currencyCode];
       Object.keys(currency).forEach((key) => {
-        data['currency.' + key] = currency[key];
+        data[`currency.${key}`] = currency[key];
       });
     }
     if (endpoint === '/registration') {
@@ -139,7 +139,7 @@ App.bindForm = (form, endpoint) => {
 
     // set the payment terminal type at localhost
     if (data['terminal.port'] && App.paymentTerminalTypesByPort[data['terminal.port']]) {
-      $.post(App.localhostServerURL + '/set-payment-terminal-config', {
+      $.post(`${App.localhostServerURL}/set-payment-terminal-config`, {
         config: JSON.stringify({
           type: App.paymentTerminalTypesByPort[data['terminal.port']]
         })

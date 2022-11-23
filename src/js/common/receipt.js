@@ -1,14 +1,14 @@
 App.createNewTransactionNumber = (lastTransaction) => {
   const thisYearPrefix = new Date().getFullYear().toString().slice(2);
-  const registerNumber = App.settings.number < 10 ? '0' + App.settings.number : App.settings.number;
+  const registerNumber = App.settings.number < 10 ? `0${App.settings.number}` : App.settings.number;
   const lastTransactionNumber =
     lastTransaction ?
       lastTransaction.number :
-      (parseInt(thisYearPrefix + registerNumber + '0000000') - 1);
+      (parseInt(`${thisYearPrefix}${registerNumber}0000000`) - 1);
   let newTransactionNumber = parseInt(lastTransactionNumber) + 1;
   // creating new year prefix based on the current time prefix and last receipt prefix
   if (thisYearPrefix !== lastTransactionNumber.toString().slice(0, 2)) {
-    newTransactionNumber = parseInt(thisYearPrefix + registerNumber + '0000000');
+    newTransactionNumber = parseInt(`${thisYearPrefix}${registerNumber}0000000`);
   }
   return newTransactionNumber;
 };
@@ -45,7 +45,7 @@ App.createTransaction = () => {
       clerk: App.user.username.split(':')[1],
     };
     return $.post({
-      url: App.apiPrefix + '/transactions',
+      url: `${App.apiPrefix}/transactions`,
       beforeSend: App.attachToken,
       contentType: 'application/json',
       data: JSON.stringify(transaction),
@@ -201,11 +201,11 @@ App.renderReceiptText = (transaction) => {
       const thisNet = vatSummary[vatRate].total - vatSummary[vatRate].vat;
       const thisVat = vatSummary[vatRate].vat.formatMoney();
       return (
-        App.vatMarks[vatRate] + ' ' +
-        App.addPadding(vatRate, 2) + '%' +
+        `${App.vatMarks[vatRate]} ` +
+        `${App.addPadding(vatRate, 2)}%` +
         App.addPadding(thisNet.formatMoney(), 8 + extraPadding) +
-        (receiptLargeEnough ? App.addPadding(thisVat, 8 + extraPadding) : ('\t' + thisVat)) +
-        (receiptLargeEnough ? ('\t' + vatSummary[vatRate].total.formatMoney()) : '')
+        (receiptLargeEnough ? App.addPadding(thisVat, 8 + extraPadding) : `\t${thisVat}`) +
+        (receiptLargeEnough ? `\t${vatSummary[vatRate].total.formatMoney()}` : '')
       );
     }).join('\n')}` +
     `${transaction.bkp ?
@@ -223,7 +223,7 @@ App.renderReceiptText = (transaction) => {
     `\n\t${App.credits}\t` + 
     (App.settings.receipt.deliveryMethodPosition === 'bottom' ? `\n${deliveryMethodRow}` : '');
 
-  const text = `${header}\n${body}\n${payment ? payment + '\n' : ''}${summary}\n${footer}\n.`;
+  const text = `${header}\n${body}\n${payment ? `${payment}\n` : ''}${summary}\n${footer}\n.`;
   //const text = `${body}`;
   const result = App.alignReceiptText(text, App.settings.printer.columns);
   return result;

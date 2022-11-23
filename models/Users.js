@@ -10,6 +10,7 @@ const Users = new Schema({
   role: String,
   regId: Schema.ObjectId,
   companyId: Schema.ObjectId,
+  subdomain: String,
 });
 
 module.exports = mongoose.model('users', Users);
