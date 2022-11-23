@@ -12,7 +12,7 @@ order_products_order_btn	Order	Vybrat
 order_checkout_btn	Checkout	Přejít k objednávce
 		
 table_markers_title	Take a table marker and write the number here	Odeberte číslo stolu ze stojánku a zadejte ho zde
-
+		
 checkout_title	Payment	Platba
 checkout_card_pay_title	Pay by card	Platba kartou
 checkout_card_pay_desc	Simply use your credit card to pay	Chci zaplatit přes kreditní kartu
@@ -97,6 +97,7 @@ misc_deleted	Deleted	Odstraněno
 misc_delete_failed	Failed to delete	Nepodařilo se odstranit
 misc_device_is_offline	Device is offline	Zařízení je offline
 misc_skip	Skip	Přeskočit
+misc_create	Create	Vytvořit
 		
 form_gokasa.url	OPS URL address	URL adresa OPS
 form_gokasa.ip	OPS IP address	IP adresa OPS
@@ -111,12 +112,14 @@ form_printer.groups	Print groups	Skupiny pro tisk
 form_printer.diacritics	Diacritics	Diakritika
 form_printer.direct	Direct print	Přímý tisk
 form_printer.columns	Print columns	Počet sloupců
+form_printer.style	Print style	Styl tisku
 form_kitchenPrinter.name	Kitchen printer name	Název tiskárny v kuchyni
 form_kitchenPrinter.ip	IP address	IP adresa
 form_kitchenPrinter.groups	Print groups	Skupiny pro tisk
 form_kitchenPrinter.diacritics	Diacritics	Diakritika
 form_kitchenPrinter.direct	Direct print	Přímý tisk
 form_kitchenPrinter.columns	Print columns	Počet sloupců
+form_kitchenPrinter.style	Print style	Styl tisku
 form_labelPrinter.name	Label printer name	Název tiskárny etiket
 form_labelPrinter.ip	IP address	IP adresa
 form_labelPrinter.groups	Print groups	Skupiny pro tisk
@@ -165,6 +168,7 @@ form_receipt.deliveryMethodPosition	Delivery method position	Pozice způsobu dor
 form_receipt.masking	Mask order number	Maskovat čísla objednávek
 form_receipt.header	Header	Záhlaví
 form_receipt.footer	Footer	Zápatí
+form_receipt.orderPrefix	Order prefix	Prefix objednávek
 form_text	Text	Text
 form_video	Video URL	Video URL
 form_type	Type	Typ
@@ -186,7 +190,7 @@ form_tableMarkers.img	Table markers image	Obrázek pro značky stolů
 form_tableMarkers.active	Use table markers	Používat značky stolů
 form_tableMarkers.required	Required table markers	Povinné table markers
 form_finishMessage	Finish message	Závěrečná zpráva po objednávání
-
+		
 admin_dashboard	Dashboard	Úvodní přehled
 admin_transactions	Transactions	Transakce
 admin_products	Products	Produkty
@@ -219,10 +223,12 @@ settings_slides	Slide settings	Úvodní snímky
 settings_company	Company details	Firemní údaje
 settings_payment_methods	Payment methods	Platební metody
 		
+tip_gokasa_sync	Connect to OPS to enable sending orders to Gokasa Kitchen and Gokasa Quantum	Připojit k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum
+tip_gokasa_sync_url	Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. sync.vcap.me 127.0.0.1	Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1
 tip_enter_group_number	Enter group number	Zadejte číslo skupiny
 tip_groups_settings	Tip: Add or edit group by entering its number	Tip: Přidejte či editujte skupinu podle jejího čísla
 tip_enter_modification_number	Enter modification number	Zadejte číslo modifikace
-tip_modifications_settings	Tip: Add or edit modification by entering its number	Tip: Přidejte či editujte modifikace podle jejího čísla
+tip_modifications_settings	Tip: Add or edit modification by entering its number. Use a dot (.) at the end of the modification type name to make it mandatory. Use an exclamation mark (!) at the end of the modification type name to make it mandatory in takeout mode.	Tip: Přidejte či editujte modifikace podle jejího čísla. Použijte tečku (.) na konci názvu typu modifikace, aby se stala povinnou modifikací. Použijte výkřičník (!) na konci názvu typu modifikace, aby se stala povinnou modifikací při prodeji s sebou.
 tip_search_by_name_or_code	Search by name or code/EAN	Zadejte název nebo kód/EAN produktu
 tip_products_settings	Tip: Search for a product by its name or code	Tip: Vyhledejte produkt podle názvu či kódu/EAN
 tip_no_data_in_selected_period	There is no data in the selected time period	Ve vybraném časovém období nejsou žádná data

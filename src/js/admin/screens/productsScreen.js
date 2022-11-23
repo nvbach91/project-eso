@@ -31,7 +31,7 @@ App.renderProductsScreen = () => {
         <form class="search-form">
           <div class="input-group">
             <input class="form-control" placeholder="${App.lang.tip_search_by_name_or_code}" title="PLU EAN code 1-20 digits" required>
-            <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search}</button>
+            <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search} / ${App.lang.misc_create}</button>
           </div>
         </form>
       </div>

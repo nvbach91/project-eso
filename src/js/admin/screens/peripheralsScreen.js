@@ -22,6 +22,7 @@ App.renderPeripheralsScreen = () => {
             ${App.generateFormSelect({ name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions, width: 80 })}
             ${App.generateFormSelect({ name: 'printer.direct', value: App.settings.printer.direct, options: App.binarySelectOptions, width: 80 })}
             ${App.generateFormInput({ name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
+            ${App.generateFormSelect({ name: 'printer.style', value: App.settings.printer.style, width: 120, options: App.printerStyleOptions })}
           </div>
         </div>
         <div class="card">
@@ -34,6 +35,7 @@ App.renderPeripheralsScreen = () => {
             ${App.generateFormSelect({ name: 'kitchenPrinter.diacritics', value: App.settings.kitchenPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
             ${App.generateFormSelect({ name: 'kitchenPrinter.direct', value: App.settings.kitchenPrinter.direct, options: App.binarySelectOptions, width: 80 })}
             ${App.generateFormInput({ name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 24, max: 48 })}
+            ${App.generateFormSelect({ name: 'kitchenPrinter.style', value: App.settings.kitchenPrinter.style, width: 120, options: App.printerStyleOptions })}
           </div>
         </div>
         <div class="card">
@@ -51,7 +53,7 @@ App.renderPeripheralsScreen = () => {
             ${App.generateFormInput({ name: 'labelPrinter.top', value: App.settings.labelPrinter.top, type: 'number', width: 80, min: 0, optional: true })}
             ${App.generateFormInput({ name: 'labelPrinter.left', value: App.settings.labelPrinter.left, type: 'number', width: 80, min: 0, optional: true })}
             ${App.generateFormInput({ name: 'labelPrinter.fontSize', value: App.settings.labelPrinter.fontSize, type: 'number', width: 80, min: 8, optional: true })}
-            ${App.generateFormSelect({ name: 'labelPrinter.style', value: App.settings.labelPrinter.style, width: 120, options: App.labelPrinterStyleOptions })}
+            ${App.generateFormSelect({ name: 'labelPrinter.style', value: App.settings.labelPrinter.style, width: 120, options: App.printerStyleOptions })}
           </div>
         </div>
         <div class="mi-control">
@@ -90,9 +92,10 @@ App.renderPeripheralsScreen = () => {
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_gokasa}</div>
       <div class="mi-body">
-        <div class="form-row"> 
-          ${App.generateFormInput({ name: 'gokasa.ip', value: App.settings.gokasa.ip, optional: true, pattern: App.regex.ip.regex })}
+        <div class="form-row">${App.lang.tip_gokasa_sync}. <abbr title="${App.lang.tip_gokasa_sync_url}">https://sync.vcap.me:2443</abbr></div>
+        <div class="form-row">
           ${App.generateFormInput({ name: 'gokasa.url', value: App.settings.gokasa.url, optional: true, pattern: App.regex.url.regex })}
+          ${App.generateFormInput({ name: 'gokasa.ip', value: App.settings.gokasa.ip, optional: true, pattern: App.regex.ip.regex })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

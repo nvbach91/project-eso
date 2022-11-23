@@ -23,7 +23,7 @@ A cross-platform self-ordering system for browsers
 ``` 
 
 #### 3) Open the website 
-- Open https://eso.vcap.me:9000 in a browser.
+- Open https://eso.vcap.me:9000 in a browser (The hosts file `C:\Windows\System32\drivers\etc\hosts` must include line `127.0.0.1 eso.vcap.me`)
 
 ## Preview
 https://eso.itake.cz

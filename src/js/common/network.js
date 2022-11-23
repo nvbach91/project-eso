@@ -42,7 +42,7 @@ App.fetchSettings = () => {
       App.availableThemes = res;
     });
 
-    if (App.settings.gokasa.url) {
+    if (App.settings.gokasa.url && location.pathname === '/') {
       App.lastTablesSetHash = '';
       App.tablesSet = {};
       App.startTablesSync();

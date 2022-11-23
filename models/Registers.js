@@ -36,6 +36,7 @@ const Registers = new Schema({
     direct: Boolean, 
     columns: Number, 
     groups: String, 
+    style: String,
   },
   kitchenPrinter: { 
     name: String, 
@@ -44,6 +45,7 @@ const Registers = new Schema({
     direct: Boolean, 
     columns: Number, 
     groups: String, 
+    style: String,
   }, 
   labelPrinter: { 
     name: String, 

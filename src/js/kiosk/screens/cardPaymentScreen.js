@@ -114,7 +114,7 @@ App.payInCash = () => {
         items: '',
         username: App.user.username,
         tableName: 'KIOSK',
-        mask: resp.order,
+        mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
         bistro: true
       };
       // console.log(resp);

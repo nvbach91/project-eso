@@ -202,7 +202,10 @@ App.ESCPOS = {
   doubleHeight: (s) => {
     return '`' + s + '´';
   },
-  quadrupleSize: (s) => {
+  quadrupleSize: (s, style) => {
+    if (style === 'plain') {
+      return s;
+    }
     return '^' + s + 'ˇ';
   },
   invert: (s) => {
@@ -269,9 +272,9 @@ App.loadLocale = () => {
     { label: App.lang.misc_bottom, value: 'bottom' },
   ];
 
-  App.labelPrinterStyleOptions = [
+  App.printerStyleOptions = [
     { label: 'PLAIN', value: 'plain', },
-    { label: 'KITCHEN', value: 'kitchen', },
+    { label: 'ESCPOS', value: 'escpos', },
   ];
 };
 
@@ -546,10 +549,10 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     const t = $(this);
     const type = t.data('type');
     const active = t.data('active');
-    if (type && type.endsWith('!')) { // mandatory mod (takeout box)
+    if (type && type.endsWith('!')) { // mandatory mod (for takeout box)
       return false;
     }
-    if (type && type.endsWith('.') && active) {
+    if (type && type.endsWith('.') && active) { // mandatory mod
       return false;
     }
     if (type && type.endsWith('.')) {

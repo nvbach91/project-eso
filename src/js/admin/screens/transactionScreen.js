@@ -22,7 +22,7 @@ const renderTransactions = (transactions) => {
         <div class="tr transaction-item">
           <div class="td ti-number">${number}</div>
           <div class="td ti-date">${moment(date).format(App.formats.dateTime)}</div>
-          <div class="td ti-order">${order}</div>
+          <div class="td ti-order">#${App.settings.receipt.orderPrefix}${order}</div>
           <div class="td ti-payment">${App.getPaymentMethod(payment)}</div>
           <div class="td ti-delivery">${App.getDeliveryMethod(delivery)}</div>
           <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currency.symbol}</div>

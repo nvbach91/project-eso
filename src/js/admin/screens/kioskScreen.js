@@ -167,7 +167,7 @@ const createReceiptSettingsForm = () => {
             </div>
             <div class="form-row">
               ${App.generateFormInput({ type: 'number', min: 0, name: 'receipt.extraPadding', value: App.settings.receipt.extraPadding })}
-              ${App.generateFormInput({ name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
+              ${App.generateFormInput({ type: 'number', min: 0, name: 'receipt.orderInitial', value: App.settings.receipt.orderInitial, optional: true })}
             </div>
             <div class="form-row">
               ${App.generateFormSelect({ name: 'receipt.masking', value: App.settings.receipt.masking, options: App.binarySelectOptions })}
@@ -175,6 +175,7 @@ const createReceiptSettingsForm = () => {
             </div>
             <div class="form-row">
               ${App.generateFormSelect({ name: 'receipt.deliveryMethodPosition', value: App.settings.receipt.deliveryMethodPosition, options: App.verticalPositionSelectOptions })}
+              ${App.generateFormInput({ name: 'receipt.orderPrefix', value: App.settings.receipt.orderPrefix, optional: true, pattern: /^[A-Z]$/ })}
             </div>
           </div>
         </div>
