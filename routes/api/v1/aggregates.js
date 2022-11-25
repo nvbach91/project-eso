@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const ObjectId = require('mongoose').Types.ObjectId;
 const utils = require('../../../utils');
 const Aggregates = require('../../../models/Aggregates');
 
@@ -16,10 +17,11 @@ const aggregateKeys = [
   'revByEmp',
 ];
 
-router.get('/aggregates/:keys/:start/:end', (req, res) => {
-  const { start, end, keys } = req.params;
+router.get('/aggregates/:keys/:start/:end/:regIds?', (req, res) => {
+  const { start, end, keys, regIds } = req.params;
   const select = keys === 'all' ? aggregateKeys.join(' ') : keys.split(',').join(' ');
-  const query = { regId: req.user.regId, date: { $gte: start, $lte: end } };
+  const regIdFilter = regIds ? { $in: regIds.split(',').filter((regId) => ObjectId.isValid(regId)) } : req.user.regId;
+  const query = { regId: regIdFilter, date: { $gte: start, $lte: end } };
   Aggregates.find(query).select(`${select} -_id`).then((aggregates) => {
     if (!aggregates.length) {
       return res.sendStatus(404);
