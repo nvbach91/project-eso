@@ -209,8 +209,8 @@ dashboard_
 dashboard_transactions	Transactions	Transakce
 dashboard_products_sold	Products sold	Prodáno produktů
 dashboard_average_revenue	Average revenue	Průměrná tržba
-dashboard_hour_total_revenues	hour total revenues	hodinové tržby
-dashboard_hour_transactions_count	hour transactions count	hodinové transakce
+dashboard_hour_total_revenues	hourly total revenues	hodinové tržby
+dashboard_hour_transactions_count	hourly transactions count	hodinové transakce
 		
 settings_printer	Printers	Tiskárny
 settings_payment_terminal	Payment terminal	Platební terminál
