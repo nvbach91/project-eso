@@ -205,7 +205,7 @@ App.GLocaleCS = {
   "dashboard_products_sold"                 : "Prodáno produktů",
   "dashboard_average_revenue"               : "Průměrná tržba",
   "dashboard_hour_total_revenues"           : "hodinové tržby",
-  "dashboard_hour_transactions count"       : "hodinové transakce",
+  "dashboard_hour_transactions_count"       : "hodinové transakce",
 
   "settings_printer"                        : "Tiskárny",
   "settings_payment_terminal"               : "Platební terminál",

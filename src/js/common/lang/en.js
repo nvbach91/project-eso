@@ -205,7 +205,7 @@ App.GLocaleEN = {
   "dashboard_products_sold"                 : "Products sold",
   "dashboard_average_revenue"               : "Average revenue",
   "dashboard_hour_total_revenues"           : "hour total revenues",
-  "dashboard_hour_transactions count"       : "hour transactions count",
+  "dashboard_hour_transactions_count"       : "hour transactions count",
 
   "settings_printer"                        : "Printers",
   "settings_payment_terminal"               : "Payment terminal",
