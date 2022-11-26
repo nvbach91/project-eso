@@ -152,7 +152,7 @@ const generateTopSoldCard = () => {
   const card = `
     <div class="db-card" id="db-top-sold">
       <div class="db-label">Top products</div>
-      ${Object.keys(App.aggregates.soldCnt).map((ean) => {
+      ${Object.keys(App.aggregates.soldCnt).sort((a, b) => App.aggregates.soldCnt[b] - App.aggregates.soldCnt[a]).map((ean) => {
         const product = App.products[ean];
         return `
           <div class="db-item">
@@ -162,7 +162,7 @@ const generateTopSoldCard = () => {
         `;
       }).join('')}
     </div>
-  `
+  `;
   return card;
 };
 
@@ -179,7 +179,7 @@ const generateRevByVat = () => {
         `;
       }).join('')}
     </div>
-  `
+  `;
   return card;
 };
 
@@ -197,6 +197,6 @@ const generateRevByGroup = () => {
         `;
       }).join('')}
     </div>
-  `
+  `;
   return card;
 };
