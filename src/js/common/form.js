@@ -2,9 +2,14 @@ App.generateFormInput = (args) => {
   const { label, name, value, optional, disabled, type, step } = args;
   const { width, min, max, hidden, accept, placeholder, autocomplete, pattern } = args;
   const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
+  // some name values will include the index, such as 'labelPrinters.0.ip', 'labelPrinters.1.ip'
+  let finalLabel = label || App.lang[`form_${name}`] || name;
+  if (/.+s\.[a-z0-9]+\..+/.test(finalLabel)) {
+    finalLabel = App.lang[`form_${finalLabel.replace(/s\.[a-z0-9]+\./, '.')}`];
+  }
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
-      <label>${label || App.lang[`form_${name}`] || name}</label>
+      <label>${finalLabel}</label>
       <input
         ${type ? ` type="${type}"` : ''}
         ${type === 'password' && !autocomplete ? ` autocomplete="new-password"` : ''}
@@ -29,9 +34,14 @@ App.generateFormSelect = (args) => {
   const { label, name, value, options, optional, type, width, multiple } = args;
   const selected = value;
   const style = `${width ? `max-width: ${width}px;` : ''}`;
+  // some name values will include the index, such as 'labelPrinters.0.ip', 'labelPrinters.1.ip'
+  let finalLabel = label || App.lang[`form_${name}`] || name;
+  if (/.+s\.[a-z0-9]+\..+/.test(finalLabel)) {
+    finalLabel = App.lang[`form_${finalLabel.replace(/s\.[a-z0-9]+\./, '.')}`];
+  }
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
-      <label>${label || App.lang[`form_${name}`] || name}</label>
+      <label>${finalLabel}</label>
       <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}${multiple ? ' multiple' : ''}>
         ${options.map((o) => {
     const { label, value } = o;
@@ -125,7 +135,11 @@ App.bindForm = (form, endpoint) => {
       Object.keys(changes).forEach((key) => {
         if (key.includes('.')) {
           const kps = key.split('.');
-          App.settings[kps[0]][kps[1]] = changes[key];
+          if (kps.length === 2) {
+            App.settings[kps[0]][kps[1]] = changes[key];
+          } else if (kps.length === 3) {
+            App.settings[kps[0]][kps[1]][kps[2]] = changes[key];
+          }
         } else if (!key.startsWith('_')) { // keys that start with a underscore are ignored
           App.settings[key] = changes[key];
         }

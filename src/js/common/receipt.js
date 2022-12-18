@@ -57,72 +57,81 @@ App.removeReceiptFormatting = (text) => {
   return text.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '');
 };
 
-App.printReceipt = (transaction, appendix) => {
-  const receiptText = App.renderReceiptText(transaction);
-  if (App.settings.printer.direct) {
-    let text = receiptText + (appendix ? `\n${appendix}` : '');
-    if (App.settings.printer.style === 'plain') {
-      text = App.removeReceiptFormatting(text);
-    }
-    App.printDirect(Object.assign({},
-      App.settings.printer,
-      {
-        content: App.settings.printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
-        printer: App.settings.printer.name,
+App.printKioskReceipt = (transaction, appendix) => {
+  Object.keys(App.settings.kioskPrinters).forEach((id) => {
+    const printer = App.settings.kioskPrinters[id];
+    const receiptText = App.renderKioskReceipt(transaction, printer);
+    if (printer.direct) {
+      let text = receiptText + (appendix ? `\n${appendix}` : '');
+      if (printer.style === 'plain') {
+        text = App.removeReceiptFormatting(text);
       }
-    ));
-  } else {
-    App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
-    App.jModal.find('.cs-cancel').remove();
-  }
-};
-
-App.printKitchenReceipt = (transaction) => {
-  const receiptText = App.renderKitchenReceiptText(transaction);
-  if (App.settings.kitchenPrinter.direct) {
-    let text = App.renderKitchenReceiptText(transaction);
-    if (App.settings.kitchenPrinter.style === 'plain') {
-      text = App.removeReceiptFormatting(text);
-    }
-    App.printDirect(Object.assign({},
-      App.settings.kitchenPrinter,
-      {
-        content: App.settings.kitchenPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
-        printer: App.settings.kitchenPrinter.name,
-      }
-    ));
-  } else {
-    App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
-    App.jModal.find('.cs-cancel').remove();
-  }
-};
-
-App.printLabelReceipt = (transaction) => {
-  const printGroups = App.settings.labelPrinter.groups;
-  const toPrintItems = transaction.items.filter((item) => {
-    if (!printGroups) {
-      return true;
-    }
-    return printGroups.split(',').includes(item.group.toString());
-  });
-  toPrintItems.forEach((item, index) => {
-    if (App.settings.labelPrinter.direct) {
-      const text = App.renderLabelReceiptText(transaction, item, index, toPrintItems.length);
       App.printDirect(Object.assign({},
-        App.settings.labelPrinter,
+        printer,
         {
-          content: App.settings.labelPrinter.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
-          printer: App.settings.labelPrinter.name,
+          content: printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+          printer: printer.name,
         }
       ));
     } else {
-      App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
+      App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
       App.jModal.find('.cs-cancel').remove();
     }
   });
 };
 
-App.renderReceiptText = (transaction) => {
+App.printKitchenReceipt = (transaction) => {
+  Object.keys(App.settings.kitchenPrinters).forEach((id) => {
+    const printer = App.settings.kitchenPrinters[id];
+    const receiptText = App.renderKitchenReceiptText(transaction, printer);
+    if (printer.direct) {
+      let text = App.renderKitchenReceiptText(transaction, printer);
+      if (printer.style === 'plain') {
+        text = App.removeReceiptFormatting(text);
+      }
+      App.printDirect(Object.assign({},
+        printer,
+        {
+          content: printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+          printer: printer.name,
+        }
+      ));
+    } else {
+      App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
+      App.jModal.find('.cs-cancel').remove();
+    }
+  });
+};
+
+App.printLabelReceipt = (transaction) => {
+  Object.keys(App.settings.labelPrinters).forEach((id) => {
+    const printer = App.settings.labelPrinters[id];
+    const printGroups = printer.groups;
+    const toPrintItems = transaction.items.filter((item) => {
+      if (!printGroups) {
+        return true;
+      }
+      return printGroups.split(',').includes(item.group.toString());
+    });
+    toPrintItems.forEach((item, index) => {
+      if (printer.direct) {
+        const text = App.renderLabelReceiptText(transaction, item, index, toPrintItems.length, printer);
+        App.printDirect(Object.assign({},
+          printer,
+          {
+            content: printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
+            printer: printer.name,
+          }
+        ));
+      } else {
+        App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
+        App.jModal.find('.cs-cancel').remove();
+      }
+    });
+  });
+};
+
+App.renderKioskReceipt = (transaction, printer) => {
   let transactionHasTax = false;
   const vatSummary = {};
   for (let i = 0; i < App.settings.vatRates.length; i++) {
@@ -140,7 +149,7 @@ App.renderReceiptText = (transaction) => {
   
   const orderNumber = `${App.lang.receipt_header_order} #${App.settings.receipt.orderPrefix}${transaction.order}`;
   const orderNumberLine = App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(` ${orderNumber} `) : orderNumber;
-  const deliveryMethodRow = App.ESCPOS.quadrupleSize(`\t${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}\t`, App.settings.printer.style);
+  const deliveryMethodRow = App.ESCPOS.quadrupleSize(`\t${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}\t`, printer.style);
   const header =
     (App.settings.receipt.deliveryMethodPosition === 'top' ? `${deliveryMethodRow}\n` : '') +
     `\t${App.ESCPOS.bold(App.settings.name)}\t` +
@@ -148,19 +157,19 @@ App.renderReceiptText = (transaction) => {
     `\n\t${App.settings.companyName}\t` +
     `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
     `\n\t${App.settings.address.street} ${App.settings.address.zip} ${App.settings.address.city}\t` +
-    //`\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine(printer)}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
   const body =
-    App.ESCPOS.quadrupleSize(`\t${orderNumberLine}\t`, App.settings.printer.style) +
+    App.ESCPOS.quadrupleSize(`\t${orderNumberLine}\t`, printer.style) +
     (App.settings.receipt.deliveryMethodPosition === 'middle' ? `\n${deliveryMethodRow}` : '') +
-    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(`\t${App.lang.receipt_not_paid}\t`, App.settings.printer.style)}` : ''}` +
+    `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(`\t${App.lang.receipt_not_paid}\t`, printer.style)}` : ''}` +
     `\n${`\t${transactionHasTax ? App.lang.receipt_body_vat_invoice : App.lang.receipt_body_invoice} #${App.ESCPOS.bold(transaction.number)}\t`}` +
     `\n${transaction.items.filter((item) => {
-        if (!App.settings.printer.groups) {
+        if (!printer.groups) {
           return true;
         }
-        return App.settings.printer.groups.split(',').includes(item.group.toString());
+        return printer.groups.split(',').includes(item.group.toString());
       }).map((item) => {
       let itemPrice = parseFloat(item.price);
       item.mods.forEach((mod) => {
@@ -177,7 +186,7 @@ App.renderReceiptText = (transaction) => {
       let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
       return `${App.ESCPOS.bold(itemName)}${modText ? `\n${modText}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
-    //`\n${App.getReceiptHorizontalLine()}`;
+    //`\n${App.getReceiptHorizontalLine(printer)}`;
 
   const total = App.round(subTotal, 2);
   //const change = transaction.tendered - total;
@@ -187,7 +196,7 @@ App.renderReceiptText = (transaction) => {
      `\n${App.lang.receipt_payment_tendered}:\t${transaction.tendered.formatMoney()}` +
      `${change ? `\n${App.lang.receipt_payment_change}:\t${change.formatMoney()}` : ''}`*/;
 
-  const receiptLargeEnough = App.settings.printer.columns >= 38;
+  const receiptLargeEnough = printer.columns >= 38;
   const extraPadding = App.settings.receipt.extraPadding;
   const summary =
     App.lang.receipt_summary_rates +
@@ -209,7 +218,7 @@ App.renderReceiptText = (transaction) => {
       );
     }).join('\n')}` +
     `${transaction.bkp ?
-      //`\n${App.getReceiptHorizontalLine()}` +
+      //`\n${App.getReceiptHorizontalLine(printer)}` +
       `\n${App.lang.receipt_summary_pre}: ${App.settings.ors.store_id}, ${App.lang.receipt_summary_pos}: ${App.settings.number}` +
       `\n${App.lang.receipt_summary_bkp}:${transaction.bkp}` +
       `\n${App.lang.receipt_summary_fik}:${transaction.fik}` : ''
@@ -217,19 +226,19 @@ App.renderReceiptText = (transaction) => {
 
   const footer =
     `${App.lang.receipt_footer_clerk}: ${App.getClerk(transaction.clerk)}` + `\t` + `${moment(transaction.date).format(App.formats.dateTime)}` +
-    //`\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine(printer)}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +
-    //`\n${App.getReceiptHorizontalLine()}` +
+    //`\n${App.getReceiptHorizontalLine(printer)}` +
     `\n\t${App.credits}\t` + 
     (App.settings.receipt.deliveryMethodPosition === 'bottom' ? `\n${deliveryMethodRow}` : '');
 
   const text = `${header}\n${body}\n${payment ? `${payment}\n` : ''}${summary}\n${footer}\n.`;
   //const text = `${body}`;
-  const result = App.alignReceiptText(text, App.settings.printer.columns);
+  const result = App.alignReceiptText(text, printer.columns);
   return result;
 };
 
-App.renderKitchenReceiptText = (transaction) => {
+App.renderKitchenReceiptText = (transaction, printer) => {
   const orderNumber = `${App.lang.receipt_header_order} #${App.settings.receipt.orderPrefix}${transaction.order}`;
   const orderNumberLine = App.settings.receipt.highlightOrderNumber ? App.ESCPOS.invert(` ${orderNumber} `) : orderNumber;
   const text =
@@ -238,10 +247,10 @@ App.renderKitchenReceiptText = (transaction) => {
     `${transaction.payment === 'cash' ? `\n${App.ESCPOS.quadrupleSize(`\t${App.lang.receipt_not_paid}\t`)}` : ''}` +
     `\n${moment(transaction.date).format(App.formats.dateTime)}` +
     `\n${transaction.items.filter((item) => {
-        if (!App.settings.kitchenPrinter.groups) {
+        if (!printer.groups) {
           return true;
         }
-        return App.settings.kitchenPrinter.groups.split(',').includes(item.group.toString());
+        return printer.groups.split(',').includes(item.group.toString());
       }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
@@ -251,7 +260,7 @@ App.renderKitchenReceiptText = (transaction) => {
     }).join('\n')}` +
     `\n\n.`;
 
-  const result = App.alignReceiptText(text, App.settings.kitchenPrinter.columns);
+  const result = App.alignReceiptText(text, printer.columns);
   return result;
 };
 
@@ -259,25 +268,25 @@ App.shortenTextByColumns = (text, columns) => {
   const regex = new RegExp(`.{1,${columns}}`,'g')
   return text.match(regex).join('\n');
 };
-App.renderLabelReceiptText = (transaction, item, index, totalItems) => {
+App.renderLabelReceiptText = (transaction, item, index, totalItems, labelPrinter) => {
   const orderLine = `${App.lang.receipt_header_order} #${App.settings.receipt.orderPrefix}${transaction.order}`;
   const deliveryMethod = `${App.getDeliveryMethod(transaction.delivery)}${App.tableMarkerValue ? ` /${App.tableMarkerValue}/` : ''}`;
   const text =
     (
-      App.settings.labelPrinter.style === 'plain' ?
+      labelPrinter.style === 'plain' ?
         `${orderLine}\t${deliveryMethod}` :
         `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryMethod)}`
     ) +
     `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${totalItems}` +
     `\n${(() => {
       const product = App.products[item.ean];
-      const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, App.settings.labelPrinter.columns);
+      const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, labelPrinter.columns);
       const modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       const itemLine = `${item.quantity} x ${itemName}`;
-      return App.ESCPOS.quadrupleSize(itemLine, App.settings.labelPrinter.style) + (modText ? `\n${modText}` : '');
+      return App.ESCPOS.quadrupleSize(itemLine, labelPrinter.style) + (modText ? `\n${modText}` : '');
     })()}\n`;
 
-  const result = App.alignReceiptText(text, App.settings.labelPrinter.columns);
+  const result = App.alignReceiptText(text, labelPrinter.columns);
   return result;
 };
 
@@ -317,8 +326,8 @@ App.alignReceiptText = (text, columns) => {
 };
 
 
-App.getReceiptHorizontalLine = () => {
-  return '-'.repeat(App.settings.printer.columns);
+App.getReceiptHorizontalLine = (printer) => {
+  return '-'.repeat(printer.columns);
 };
 
 App.randomOrderNumbersCount = 100;

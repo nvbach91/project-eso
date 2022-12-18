@@ -3,8 +3,7 @@ A cross-platform self-ordering system for browsers
 
 ## Pre-requisites
 - Node.js (v16.18.0)
-- Express (4.16.0)
-- MongoDB (4.0.9) TBI
+- MongoDB (4.0.28)
 
 ## Quickstart
 #### 1) MongoDB local database setup

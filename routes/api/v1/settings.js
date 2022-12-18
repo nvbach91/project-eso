@@ -96,6 +96,24 @@ router.delete('/slides/:_id', (req, res) => {
   }).catch(utils.handleError(res));
 });
 
+router.delete('/settings/kioskPrinters/:id', (req, res) => {
+  Registers.updateOne({ _id: req.user.regId }, { $unset: { [`kioskPrinters.${req.params.id}`]: true } }).then(() => {
+    res.json({ msg: 'srv_success' });
+  }).catch(utils.handleError(res));
+});
+
+router.delete('/settings/kitchenPrinters/:id', (req, res) => {
+  Registers.updateOne({ _id: req.user.regId }, { $unset: { [`kitchenPrinters.${req.params.id}`]: true } }).then(() => {
+    res.json({ msg: 'srv_success' });
+  }).catch(utils.handleError(res));
+});
+
+router.delete('/settings/labelPrinters/:id', (req, res) => {
+  Registers.updateOne({ _id: req.user.regId }, { $unset: { [`labelPrinters.${req.params.id}`]: true } }).then(() => {
+    res.json({ msg: 'srv_success' });
+  }).catch(utils.handleError(res));
+});
+
 /* test
 var vat = 'CZ00000019';
 var store_id = '11';

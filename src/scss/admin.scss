@@ -318,6 +318,10 @@ input.hidden {
     margin-bottom: 10px;
     padding: 10px;
 }
+.card.printer .dropdown {
+    justify-content: flex-end;
+    display: flex;
+}
 .mi-header {
     font-weight: bold;
     font-size: 14px;

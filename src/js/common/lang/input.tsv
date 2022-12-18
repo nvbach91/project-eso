@@ -78,6 +78,7 @@ misc_close_btn	Close	Zavřít
 misc_go_back	Go back	Zpět
 misc_save	Save	Uložit
 misc_delete	Delete	Odstranit
+misc_duplicate	Duplicate	Duplikovat
 misc_registered	Registered	Registrován
 misc_not_registered	Not registered	Neregistrován
 misc_yes	Yes	Ano
@@ -106,13 +107,15 @@ form_terminal.id	Terminal ID	ID Terminálu
 form_terminal.ip	IP address	IP adresa
 form_terminal.port	Port	Port
 form_terminal.password	Password	Heslo
-form_printer.name	Kiosk printer name	Název tiskárny kiosku
-form_printer.ip	IP address	IP adresa
-form_printer.groups	Print groups	Skupiny pro tisk
-form_printer.diacritics	Diacritics	Diakritika
-form_printer.direct	Direct print	Přímý tisk
-form_printer.columns	Print columns	Počet sloupců
-form_printer.style	Print style	Styl tisku
+form_kioskPrinters	Kiosk printer	Tiskárny na kiosku
+form_kioskPrinter.name	Kiosk printer name	Název tiskárny na kiosku
+form_kioskPrinter.ip	IP address	IP adresa
+form_kioskPrinter.groups	Print groups	Skupiny pro tisk
+form_kioskPrinter.diacritics	Diacritics	Diakritika
+form_kioskPrinter.direct	Direct print	Přímý tisk
+form_kioskPrinter.columns	Print columns	Počet sloupců
+form_kioskPrinter.style	Print style	Styl tisku
+form_kitchenPrinters	Kitchen printers	Tiskárny do kuchyně
 form_kitchenPrinter.name	Kitchen printer name	Název tiskárny v kuchyni
 form_kitchenPrinter.ip	IP address	IP adresa
 form_kitchenPrinter.groups	Print groups	Skupiny pro tisk
@@ -120,6 +123,7 @@ form_kitchenPrinter.diacritics	Diacritics	Diakritika
 form_kitchenPrinter.direct	Direct print	Přímý tisk
 form_kitchenPrinter.columns	Print columns	Počet sloupců
 form_kitchenPrinter.style	Print style	Styl tisku
+form_labelPrinters	Label printers	Tiskárny etiket
 form_labelPrinter.name	Label printer name	Název tiskárny etiket
 form_labelPrinter.ip	IP address	IP adresa
 form_labelPrinter.groups	Print groups	Skupiny pro tisk
@@ -204,8 +208,6 @@ dashboard_total_revenue	Total revenue	Tržby celkem
 dashboard_revenues_by_vat		
 dashboard_revenues_by_groups		
 dashboard_top_products		
-dashboard_		
-dashboard_		
 dashboard_transactions	Transactions	Transakce
 dashboard_products_sold	Products sold	Prodáno produktů
 dashboard_average_revenue	Average revenue	Průměrná tržba

@@ -54,7 +54,7 @@ App.renderCardPaymentScreen = () => {
         App.renderFinishScreen();
         App.createTransaction().done((resp) => {
           App.transactions.push(resp);
-          App.printReceipt(resp, appendix);
+          App.printKioskReceipt(resp, appendix);
           App.printKitchenReceipt(resp);
           App.printLabelReceipt(resp);
         }).fail((resp) => {
@@ -91,7 +91,7 @@ App.payInCash = () => {
   App.createTransaction().done((resp) => {
     App.renderFinishScreen();
     App.transactions.push(resp);
-    App.printReceipt(resp);
+    App.printKioskReceipt(resp);
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
     if (App.settings.gokasa.url) {

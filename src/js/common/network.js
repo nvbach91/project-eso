@@ -228,6 +228,20 @@ App.deleteSlide = (_id, btn) => {
   }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
 
+App.deletePrinter = (id, btn, type) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/settings/${type}/${id}`,
+    beforeSend: App.attachToken,
+  }).done(() => {
+    delete App.settings[type][id];
+    btn.parents('.card.printer').slideUp(function () {
+      $(this).remove();
+    });
+  }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
+};
+
 App.connect = () => {
   return $.when(
     App.fetchSettings(),

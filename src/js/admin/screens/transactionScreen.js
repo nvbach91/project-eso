@@ -35,7 +35,7 @@ const renderTransactions = (transactions) => {
         App.showInModal(`<pre class="receipt-preview">${App.renderReceiptText(transaction).replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`);
       });
       item.children('.ti-print').find('button').click(() => {
-        App.printReceipt(transaction);
+        App.printKioskReceipt(transaction);
       });
       table.append(item);
     });

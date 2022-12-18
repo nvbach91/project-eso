@@ -1,3 +1,116 @@
+const generatePrinterSettingsDropdown = (type, id) => `
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" title="${id}">
+      ${App.getIcon('settings')}
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item btn btn-info" data-action="duplicate-printer" data-type="${type}" data-id="${id}" type="button">${App.lang.misc_duplicate}</button>
+      <button class="dropdown-item btn btn-danger" data-action="delete-printer" data-type="${type}" data-id="${id}" type="button">${App.lang.misc_delete}</button>
+    </div>
+  </div>
+`;
+
+const renderKioskPrinterSettings = (type, printer, id) => {
+  const printerOptions = App.supportedPrinters.map((p) => ({ label: p, value: p }));
+  return `
+    <div class="card printer">
+      <div class="form-row">
+        ${App.generateFormSelect({ name: `${type}.${id}.name`, value: printer.name, options: printerOptions, optional: true })}
+        ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
+        ${App.generateFormInput({ name: `${type}.${id}.groups`, value: printer.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
+      </div>
+      <div class="form-row">
+        ${App.generateFormSelect({ name: `${type}.${id}.diacritics`, value: printer.diacritics, options: App.binarySelectOptions, width: 80 })}
+        ${App.generateFormSelect({ name: `${type}.${id}.direct`, value: printer.direct, options: App.binarySelectOptions, width: 80 })}
+        ${App.generateFormInput({ name: `${type}.${id}.columns`, value: printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
+        ${App.generateFormSelect({ name: `${type}.${id}.style`, value: printer.style, width: 120, options: App.printerStyleOptions })}
+        ${generatePrinterSettingsDropdown(type, id)}
+      </div>
+    </div>
+  `;
+};
+
+const renderKitchenPrinterSettings = (type, printer, id) => {
+  const printerOptions = App.supportedPrinters.map((p) => ({ label: p, value: p }));
+  return `
+    <div class="card printer">
+      <div class="form-row">
+        ${App.generateFormSelect({ name: `${type}.${id}.name`, value: printer.name, options: printerOptions, optional: true })}
+        ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
+        ${App.generateFormInput({ name: `${type}.${id}.groups`, value: printer.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
+      </div>
+      <div class="form-row">
+        ${App.generateFormSelect({ name: `${type}.${id}.diacritics`, value: printer.diacritics, options: App.binarySelectOptions, width: 80 })}
+        ${App.generateFormSelect({ name: `${type}.${id}.direct`, value: printer.direct, options: App.binarySelectOptions, width: 80 })}
+        ${App.generateFormInput({ name: `${type}.${id}.columns`, value: printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
+        ${App.generateFormSelect({ name: `${type}.${id}.style`, value: printer.style, width: 120, options: App.printerStyleOptions })}
+        ${generatePrinterSettingsDropdown(type, id)}
+      </div>
+    </div>
+  `;
+};
+
+const renderLabelPrinterSettings = (type, printer, id) => `
+  <div class="card printer">
+    <div class="form-row">
+      ${App.generateFormInput({ name: `${type}.${id}.name`, value: printer.name, optional: true })}
+      ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
+      ${App.generateFormInput({ name: `${type}.${id}.groups`, value: printer.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
+    </div>
+    <div class="form-row">
+      ${App.generateFormSelect({ name: `${type}.${id}.diacritics`, value: printer.diacritics, options: App.binarySelectOptions, width: 80 })}
+      ${App.generateFormSelect({ name: `${type}.${id}.direct`, value: printer.direct, options: App.binarySelectOptions, width: 80 })}
+      ${App.generateFormInput({ name: `${type}.${id}.columns`, value: printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
+    </div>
+    <div class="form-row">
+      ${App.generateFormInput({ name: `${type}.${id}.top`, value: printer.top, type: 'number', width: 80, min: 0, optional: true })}
+      ${App.generateFormInput({ name: `${type}.${id}.left`, value: printer.left, type: 'number', width: 80, min: 0, optional: true })}
+      ${App.generateFormInput({ name: `${type}.${id}.fontSize`, value: printer.fontSize, type: 'number', width: 80, min: 8, optional: true })}
+      ${App.generateFormSelect({ name: `${type}.${id}.style`, value: printer.style, width: 120, options: App.printerStyleOptions })}
+      ${generatePrinterSettingsDropdown(type, id)}
+    </div>
+  </div>
+`;
+
+const renderPrinterSettings = (type, id) => {
+  const printer = App.settings[type][id];
+  if (type === 'kioskPrinters') {
+    return renderKioskPrinterSettings(type, printer, id);
+  }
+  if (type === 'kitchenPrinters') {
+    return renderKitchenPrinterSettings(type, printer, id);
+  }
+  if (type === 'labelPrinters') {
+    return renderLabelPrinterSettings(type, printer, id);
+  }
+};
+
+const duplicatePrinter = function () {
+  const t = $(this);
+  const id = t.data('id');
+  const type = t.data('type');
+  const printers = App.settings[type];
+  const printerToDuplicate = JSON.parse(JSON.stringify(printers[id]));
+  const newId = App.generateRandomPassword();
+  printers[newId] = printerToDuplicate;
+  const newPrinterCard = $(renderPrinterSettings(type, newId));
+  newPrinterCard.find('button[data-action="duplicate-printer"]').click(duplicatePrinter);
+  newPrinterCard.find('button[data-action="delete-printer"]').click(deletePrinter);
+  t.parents('.card.printer').after(newPrinterCard);
+  t.parents('form').submit();
+};
+
+const deletePrinter = function () {
+  const t = $(this);
+  const type = t.data('type');
+  const printers = App.settings[type];
+  if (Object.keys(printers).length === 1) {
+    return App.showWarning('Delete the printer name instead');
+  }
+  const id = t.data('id');
+  App.deletePrinter(id, t, type);
+};
+
 App.renderPeripheralsScreen = () => {
   const header = $(`
     <div id="cp-header" class="card-header">
@@ -6,55 +119,24 @@ App.renderPeripheralsScreen = () => {
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
-  const printerOptions = App.supportedPrinters.map((printer) => ({ label: printer, value: printer }));
   const cpBody = $(`<div class="card-body"></div>`);
   const printerForm = $(`
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_printer}</div>
       <div class="mi-body">
-        <div class="card">
-          <div class="form-row">
-            ${App.generateFormSelect({ name: 'printer.name', value: App.settings.printer.name, options: printerOptions, optional: true })}
-            ${App.generateFormInput({ name: 'printer.ip', value: App.settings.printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
-            ${App.generateFormInput({ name: 'printer.groups', value: App.settings.printer.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
-          </div>
-          <div class="form-row">
-            ${App.generateFormSelect({ name: 'printer.diacritics', value: App.settings.printer.diacritics, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormSelect({ name: 'printer.direct', value: App.settings.printer.direct, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormInput({ name: 'printer.columns', value: App.settings.printer.columns, type: 'number', width: 80, min: 24, max: 48 })}
-            ${App.generateFormSelect({ name: 'printer.style', value: App.settings.printer.style, width: 120, options: App.printerStyleOptions })}
-          </div>
-        </div>
-        <div class="card">
-          <div class="form-row"> 
-            ${App.generateFormSelect({ name: 'kitchenPrinter.name', value: App.settings.kitchenPrinter.name, options: printerOptions, optional: true })}
-            ${App.generateFormInput({ name: 'kitchenPrinter.ip', value: App.settings.kitchenPrinter.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
-            ${App.generateFormInput({ name: 'kitchenPrinter.groups', value: App.settings.kitchenPrinter.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
-          </div>
-          <div class="form-row">
-            ${App.generateFormSelect({ name: 'kitchenPrinter.diacritics', value: App.settings.kitchenPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormSelect({ name: 'kitchenPrinter.direct', value: App.settings.kitchenPrinter.direct, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormInput({ name: 'kitchenPrinter.columns', value: App.settings.kitchenPrinter.columns, type: 'number', width: 80, min: 24, max: 48 })}
-            ${App.generateFormSelect({ name: 'kitchenPrinter.style', value: App.settings.kitchenPrinter.style, width: 120, options: App.printerStyleOptions })}
-          </div>
-        </div>
-        <div class="card">
-          <div class="form-row">
-            ${App.generateFormInput({ name: 'labelPrinter.name', value: App.settings.labelPrinter.name, optional: true })}
-            ${App.generateFormInput({ name: 'labelPrinter.ip', value: App.settings.labelPrinter.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
-            ${App.generateFormInput({ name: 'labelPrinter.groups', value: App.settings.labelPrinter.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
-          </div>
-          <div class="form-row">
-            ${App.generateFormSelect({ name: 'labelPrinter.diacritics', value: App.settings.labelPrinter.diacritics, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormSelect({ name: 'labelPrinter.direct', value: App.settings.labelPrinter.direct, options: App.binarySelectOptions, width: 80 })}
-            ${App.generateFormInput({ name: 'labelPrinter.columns', value: App.settings.labelPrinter.columns, type: 'number', width: 80, min: 24, max: 48 })}
-          </div>
-          <div class="form-row">
-            ${App.generateFormInput({ name: 'labelPrinter.top', value: App.settings.labelPrinter.top, type: 'number', width: 80, min: 0, optional: true })}
-            ${App.generateFormInput({ name: 'labelPrinter.left', value: App.settings.labelPrinter.left, type: 'number', width: 80, min: 0, optional: true })}
-            ${App.generateFormInput({ name: 'labelPrinter.fontSize', value: App.settings.labelPrinter.fontSize, type: 'number', width: 80, min: 8, optional: true })}
-            ${App.generateFormSelect({ name: 'labelPrinter.style', value: App.settings.labelPrinter.style, width: 120, options: App.printerStyleOptions })}
-          </div>
+        <ul class="nav nav-tabs" role="tablist">
+          ${['kioskPrinters', 'kitchenPrinters', 'labelPrinters'].map((type, index) => `
+            <li class="nav-item" role="presentation">
+              <button type="button" class="nav-link${index === 0 ? ' active' : ''}" role="tab" data-toggle="tab" data-target="#${type}">${App.lang[`form_${type}`]}</button>
+            </li>
+          `).join('')}
+        </ul>
+        <div class="tab-content">
+          ${['kioskPrinters', 'kitchenPrinters', 'labelPrinters'].map((type, index) => `
+            <div class="tab-pane fade${index === 0 ? ' show active' : ''}" role="tabpabnel" id="${type}">
+              ${Object.keys(App.settings[type]).map((id) => renderPrinterSettings(type, id)).join('')}
+            </div>
+          `).join('')}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
@@ -63,6 +145,9 @@ App.renderPeripheralsScreen = () => {
     </form>
   `).appendTo(cpBody);
   App.bindForm(printerForm, '/settings');
+
+  printerForm.find('button[data-action="duplicate-printer"]').click(duplicatePrinter);
+  printerForm.find('button[data-action="delete-printer"]').click(deletePrinter);
 
   const paymentTerminalForm = $(`
     <form class="mod-item card">
