@@ -100,8 +100,8 @@ App.GLocaleCS = {
   "misc_skip"                               : "Přeskočit",
   "misc_create"                             : "Vytvořit",
 
-  "form_gokasa.url"                         : "URL adresa OPS",
-  "form_gokasa.ip"                          : "IP adresa OPS",
+  "form_tablesync.url"                      : "URL adresa OPS synchronizace stolů",
+  "form_tablesync.ip"                       : "IP adresa OPS synchronizace stolů",
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "ID Terminálu",
   "form_terminal.ip"                        : "IP adresa",
@@ -213,7 +213,7 @@ App.GLocaleCS = {
 
   "settings_printer"                        : "Tiskárny",
   "settings_payment_terminal"               : "Platební terminál",
-  "settings_gokasa"                         : "Nastavení Gokasa",
+  "settings_tablesync"                      : "Nastavení synchronizace stolů",
   "settings_general"                        : "Obecné nastavení",
   "settings_fiscal"                         : "Fiskální nastavení (EET)",
   "settings_interface"                      : "Nastavení rozhraní",
@@ -222,8 +222,8 @@ App.GLocaleCS = {
   "settings_company"                        : "Firemní údaje",
   "settings_payment_methods"                : "Platební metody",
 
-  "tip_gokasa_sync"                         : "Připojit k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum",
-  "tip_gokasa_sync_url"                     : "Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1",
+  "tip_tablesync_sync"                      : "Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum",
+  "tip_tablesync_sync_url"                  : "Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1",
   "tip_enter_group_number"                  : "Zadejte číslo skupiny",
   "tip_groups_settings"                     : "Tip: Přidejte či editujte skupinu podle jejího čísla",
   "tip_enter_modification_number"           : "Zadejte číslo modifikace",

@@ -41,26 +41,7 @@ App.fetchSettings = () => {
     $.get('/themes').done((res) => {
       App.availableThemes = res;
     });
-
-    if (App.settings.gokasa.url && location.pathname === '/') {
-      App.lastTablesSetHash = '';
-      App.tablesSet = {};
-      App.startTablesSync();
-    }
   });
-};
-
-App.startTablesSync = () => {
-  axios.get(`${App.settings.gokasa.url}/tables-hash`, { timeout: 1000 }).then((resp) => {
-    if (App.lastTablesSetHash === resp.data.msg) {
-      return false;
-    }
-    App.lastTablesSetHash = resp.data.msg;
-    axios.get(`${App.settings.gokasa.url}/tables`, { timeout: 1000 }).then((resp) => {
-      App.tablesSet = resp.data.msg;
-    });
-  });
-  setTimeout(App.startTablesSync, App.getRandomPollingTime())
 };
 
 App.fetchProducts = () => {

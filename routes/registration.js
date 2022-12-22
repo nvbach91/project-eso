@@ -65,7 +65,7 @@ router.post('/registration', (req, res) => {
     newRegister.paymentMethods = { card: { img: 'credit-card-min_aoqb3h', enabled: true }, cash: { img: 'cash-min_lautl6', enabled: true } };
     newRegister.terminal = { ip: '', port: 2050, password: 'sJ8niYXknkLAdlM3s8WnFLNR2GdCMGaM8G8JxC7SizwIbu7QztAzY44y4A8Z1rMcwS9kvBH11QsA7LLP', endpoint: 'https://localhost:3443/pt', id: '' };
     newRegister.tableMarkers = { active: false, img: 'table-markers_utbjfb', required: false };
-    newRegister.gokasa = { ip: '', url: '' };
+    newRegister.tablesync = { ip: '', url: '' };
     newRegister.finishMessage = '';
     return new Registers(newRegister).save();
   }).then(() => {

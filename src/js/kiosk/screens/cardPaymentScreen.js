@@ -94,9 +94,11 @@ App.payInCash = () => {
     App.printKioskReceipt(resp);
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
-    if (App.settings.gokasa.url) {
-      App.tablesSet[App.generateRandomPassword()] = {
+    if (App.settings.tablesync.url) {
+      // console.log(resp.items);
+      const order = {
         number: resp.number,
+        mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
         date: resp.date,
         data: resp.items.map((item) => ({
           id: App.generateRandomPassword(),
@@ -104,22 +106,35 @@ App.payInCash = () => {
           ean: item.ean,
           quantity: item.quantity,
           price: item.price,
+          tax: item.vat,
           name: App.products[item.ean].name,
           group: item.group.toString(),
-          printed: false,
+          printed: true,
           name2: '',
-          notes: item.mods.map((m) => `- ${App.mods[m.number].name}`).join('<br>'),
+          note: item.mods.map((m) => `- ${App.mods[m.number].name}`).join('<br>'),
           mods: '',
         })),
-        items: '',
         username: App.user.username,
+        status: 'pending',
+        paid: true,
+        receipt: resp.number,
+        tableId: App.generateRandomPassword(16),
         tableName: 'KIOSK',
-        mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
-        bistro: true
+        online: true,
       };
-      // console.log(resp);
-      // console.log(emitData);
-      $.ajax({ type: 'POST', url: `${App.settings.gokasa.url}/tables`, data: JSON.stringify(App.tablesSet), contentType: 'application/json' })
+      order.data = JSON.stringify(order.data);
+      $.ajax({
+        method: 'POST',
+        url: `${App.settings.tablesync.url}/order`,
+        data: order,
+      }).done(() => {
+        // console.log('Your order was successfully placed');
+      }).fail(() => {
+        App.showWarning(`
+          <p>Your order <strong>#${order.mask}</strong> was not successfully placed, please contact staff</p>
+          <p>Vaše objednávka <strong>#${order.mask}</strong> nebyla úspěšně založena, prosím kontaktujte obsluhu</p>
+        `);
+      });
     }
   }).fail((resp) => {
     App.showWarning(`

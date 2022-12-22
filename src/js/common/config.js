@@ -6,7 +6,6 @@ App.imageUrlBase = `https://res.cloudinary.com/${App.cloudinaryCloudName}/image/
 
 App.paymentTerminalServerURL = `${window.location.protocol}//localhost:3443`;
 App.localhostServerURL = `${window.location.protocol}//localhost:2443`;
-App.tableSyncServerURL = `${window.location.protocol}//sync.vcap.me:2443`;
 
 App.paymentTerminalTypesByPort = {
   '2050': 'payment-terminal-ingenico',

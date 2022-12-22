@@ -100,8 +100,8 @@ misc_device_is_offline	Device is offline	Zařízení je offline
 misc_skip	Skip	Přeskočit
 misc_create	Create	Vytvořit
 		
-form_gokasa.url	OPS URL address	URL adresa OPS
-form_gokasa.ip	OPS IP address	IP adresa OPS
+form_tablesync.url	OPS tablesync URL address	URL adresa OPS synchronizace stolů
+form_tablesync.ip	OPS tablesync IP address	IP adresa OPS synchronizace stolů
 form_terminal.endpoint	Endpoint	Endpoint
 form_terminal.id	Terminal ID	ID Terminálu
 form_terminal.ip	IP address	IP adresa
@@ -211,12 +211,12 @@ dashboard_top_products
 dashboard_transactions	Transactions	Transakce
 dashboard_products_sold	Products sold	Prodáno produktů
 dashboard_average_revenue	Average revenue	Průměrná tržba
-dashboard_hour_total_revenues	hourly total revenues	hodinové tržby
-dashboard_hour_transactions_count	hourly transactions count	hodinové transakce
+dashboard_hour_total_revenues	hour total revenues	hodinové tržby
+dashboard_hour_transactions_count	hour transactions count	hodinové transakce
 		
 settings_printer	Printers	Tiskárny
 settings_payment_terminal	Payment terminal	Platební terminál
-settings_gokasa	Gokasa settings	Nastavení Gokasa
+settings_tablesync	Table sync settings	Nastavení synchronizace stolů
 settings_general	General settings	Obecné nastavení
 settings_fiscal	Fiscal settings (EET)	Fiskální nastavení (EET)
 settings_interface	Interface settings	Nastavení rozhraní
@@ -225,8 +225,8 @@ settings_slides	Slide settings	Úvodní snímky
 settings_company	Company details	Firemní údaje
 settings_payment_methods	Payment methods	Platební metody
 		
-tip_gokasa_sync	Connect to OPS to enable sending orders to Gokasa Kitchen and Gokasa Quantum	Připojit k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum
-tip_gokasa_sync_url	Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. sync.vcap.me 127.0.0.1	Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1
+tip_tablesync_sync	Connect to OPS tablesync to enable sending orders to Gokasa Kitchen and Gokasa Quantum	Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum
+tip_tablesync_sync_url	Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. sync.vcap.me 127.0.0.1	Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1
 tip_enter_group_number	Enter group number	Zadejte číslo skupiny
 tip_groups_settings	Tip: Add or edit group by entering its number	Tip: Přidejte či editujte skupinu podle jejího čísla
 tip_enter_modification_number	Enter modification number	Zadejte číslo modifikace

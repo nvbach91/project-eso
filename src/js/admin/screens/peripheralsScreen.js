@@ -173,14 +173,14 @@ App.renderPeripheralsScreen = () => {
   `).appendTo(cpBody);
   App.bindForm(paymentTerminalForm, '/settings');
 
-  const gokasaSettingsForm = $(`
+  const tablesyncSettingsForm = $(`
     <form class="mod-item card">
-      <div class="mi-header">${App.lang.settings_gokasa}</div>
+      <div class="mi-header">${App.lang.settings_tablesync}</div>
       <div class="mi-body">
-        <div class="form-row">${App.lang.tip_gokasa_sync}. <abbr title="${App.lang.tip_gokasa_sync_url}">https://sync.vcap.me:2443</abbr></div>
+        <div class="form-row">${App.lang.tip_tablesync_sync}.<br><br><abbr title="${App.lang.tip_tablesync_sync_url}">URL: https://sync.vcap.me:2443</abbr></div>
         <div class="form-row">
-          ${App.generateFormInput({ name: 'gokasa.url', value: App.settings.gokasa.url, optional: true, pattern: App.regex.url.regex })}
-          ${App.generateFormInput({ name: 'gokasa.ip', value: App.settings.gokasa.ip, optional: true, pattern: App.regex.ip.regex })}
+          ${App.generateFormInput({ name: 'tablesync.url', value: App.settings.tablesync.url, optional: true, pattern: App.regex.url.regex })}
+          ${App.generateFormInput({ name: 'tablesync.ip', value: App.settings.tablesync.ip, optional: true, pattern: App.regex.ip.regex })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
@@ -188,7 +188,7 @@ App.renderPeripheralsScreen = () => {
       </div>
     </form>
   `).appendTo(cpBody);
-  App.bindForm(gokasaSettingsForm, '/settings');
+  App.bindForm(tablesyncSettingsForm, '/settings');
 
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;

@@ -99,7 +99,7 @@ const Registers = new Schema({
     img: String,
     required: Boolean,
   },
-  gokasa: {
+  tablesync: {
     ip: String,
     url: String,
   },
