@@ -21,6 +21,7 @@ const Registers = new Schema({
     masking: Boolean,
     highlightOrderNumber: Boolean,
     deliveryMethodPosition: String,
+    orderPrefix: String,
   },
   carouselInterval: Number,
   currency: {

@@ -156,10 +156,10 @@ App.renderKioskReceipt = (transaction, printer) => {
   const header =
     (App.settings.receipt.deliveryMethodPosition === 'top' ? `${deliveryMethodRow}\n` : '') +
     `\t${App.ESCPOS.bold(App.settings.name)}\t` +
-    `\n\t${App.lang.receipt_header_premise}: ${App.settings.address.street} ${App.settings.address.zip} ${App.settings.address.city}` +
+    `\n\t${App.lang.receipt_header_premise}: ${App.settings.address.street.replace(/\\n/g, '\n')} ${App.settings.address.zip} ${App.settings.address.city}` +
     `\n\t${App.settings.companyName}\t` +
     `\n\t${App.lang.receipt_header_tin}: ${App.settings.tin} ${App.lang.receipt_header_vat}: ${App.settings.vat}\t` +
-    `\n\t${App.settings.residence.street} ${App.settings.residence.zip} ${App.settings.residence.city}\t` +
+    `\n\t${App.settings.residence.street.replace(/\\n/g, '\n')} ${App.settings.residence.zip} ${App.settings.residence.city}\t` +
     //`\n${App.getReceiptHorizontalLine(printer)}` +
     `${App.settings.receipt.header ? `\n\t${App.settings.receipt.header}\t` : ''}`;
 
