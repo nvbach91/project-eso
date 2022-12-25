@@ -127,7 +127,7 @@ App.printLabelReceipt = (transaction) => {
           }
         ));
       } else {
-        App.showInModal(`<pre class="receipt-preview">${receiptText.replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`, '', window.print);
+        App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
         App.jModal.find('.cs-cancel').remove();
       }
     });
