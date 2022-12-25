@@ -235,7 +235,7 @@ App.renderKioskReceipt = (transaction, printer) => {
     `\n\t${App.credits}\t` + 
     (App.settings.receipt.deliveryMethodPosition === 'bottom' ? `\n${deliveryMethodRow}` : '');
 
-  const text = `${header}\n${body}\n${payment ? `${payment}\n` : ''}${summary}\n${footer}\n.`;
+  const text = `${header}\n${body}\n${payment ? `${payment}\n` : ''}${summary}\n${footer}\n\n\n.`;
   //const text = `${body}`;
   const result = App.alignReceiptText(text, printer.columns);
   return result;
