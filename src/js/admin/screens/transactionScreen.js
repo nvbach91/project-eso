@@ -32,7 +32,10 @@ const renderTransactions = (transactions) => {
         </div>
       `);
       item.children('.ti-number').click(() => {
-        App.showInModal(`<pre class="receipt-preview">${App.renderReceiptText(transaction).replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>`);
+        App.showInModal(`
+          <div class="receipt-image" style="background-image:url(${App.settings.receipt.img});"></div>
+          <pre class="receipt-preview">${App.renderReceiptText(transaction).replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>
+        `);
       });
       item.children('.ti-print').find('button').click(() => {
         App.printKioskReceipt(transaction);

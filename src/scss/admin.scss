@@ -134,6 +134,11 @@
 .ti-number {
     color: $primaryThemeColor;
 }
+.receipt-image {
+    height: 120px;
+    background-size: contain;
+    background-position: center;
+}
 .receipt-preview {
     margin: 0 auto;
     width: fit-content;

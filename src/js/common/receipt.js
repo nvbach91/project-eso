@@ -74,7 +74,10 @@ App.printKioskReceipt = (transaction, appendix) => {
         }
       ));
     } else {
-      App.showInModal(`<pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>`, '', window.print);
+      App.showInModal(`
+        <div class="receipt-image" style="background-image:url(${App.settings.receipt.img});"></div>
+        <pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>
+      `, '', window.print);
       App.jModal.find('.cs-cancel').remove();
     }
   });
