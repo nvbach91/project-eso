@@ -33,7 +33,7 @@ const renderTransactions = (transactions) => {
       `);
       item.children('.ti-number').click(() => {
         App.showInModal(`
-          <div class="receipt-image" style="background-image:url(${App.settings.receipt.img});"></div>
+          <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
           <pre class="receipt-preview">${App.renderReceiptText(transaction).replace(/[`´^ˇ<>{}\[\]]|\x1d\x421|\x1d\x420/g, '')}</pre>
         `);
       });
