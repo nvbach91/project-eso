@@ -241,7 +241,8 @@ App.renderKioskReceipt = (transaction, printer, useAlign) => {
       const thisVat = vatSummary[vatRate].vat.formatMoney();
       return (
         `${App.vatMarks[vatRate]}` +
-        `${App.addPadding(vatRate, 2)}%` +
+        // `${App.addPadding(vatRate, 2)}%` +
+        `${vatRate}%` +
         App.addPadding(thisNet.formatMoney(), 8 + extraPadding) +
         (receiptLargeEnough ? App.addPadding(thisVat, 8 + extraPadding) : `\t${thisVat}`) +
         (receiptLargeEnough ? `\t${vatSummary[vatRate].total.formatMoney()}` : '')
