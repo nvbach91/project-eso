@@ -60,9 +60,9 @@ App.removeReceiptFormatting = (text) => {
 App.printKioskReceipt = (transaction, appendix) => {
   Object.keys(App.settings.kioskPrinters).forEach((id) => {
     const printer = App.settings.kioskPrinters[id];
-    const receiptText = App.renderKioskReceipt(transaction, printer);
     if (printer.direct) {
-      let text = receiptText + (appendix ? `\n${appendix}` : '');
+      const alignedReceiptText = App.renderKioskReceipt(transaction, printer, true);
+      let text = alignedReceiptText + (appendix ? `\n${appendix}` : '');
       if (printer.style === 'plain') {
         text = App.removeReceiptFormatting(text);
       }
@@ -74,9 +74,36 @@ App.printKioskReceipt = (transaction, appendix) => {
         }
       ));
     } else {
+      const unAlignedReceiptText = App.renderKioskReceipt(transaction, printer, false) + (appendix ? `\n${appendix}` : '');
+      const determineLargeFontLine = (line) => {
+        const keys = ['receipt_payment_total', 'receipt_header_order', 'receipt_not_paid', 'delivery_method_eatin', 'delivery_method_takeout'];
+        for (const key of keys) {
+          if (line.trim().startsWith(App.lang[key])) {
+            return true;
+          }
+        }
+        return false;
+      };
+      let previousLineIsFixed = false;
       App.showInModal(`
-        <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
-        <pre class="receipt-preview">${App.removeReceiptFormatting(receiptText)}</pre>
+        <div class="receipt-preview card">
+          <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
+          ${App.removeReceiptFormatting(unAlignedReceiptText).split('\n').map((line) => {
+            const isFixedWithLine = line.trim().startsWith(App.lang.receipt_summary_rates);
+            if (isFixedWithLine || previousLineIsFixed) {
+              line = line.replace('\t', ' ');
+            }
+            const lineContent = line.replace(/\\t/g, '\t').split('\t').map((part) => {
+              if (isFixedWithLine || previousLineIsFixed) {
+                return part.split(/\s+/).map((p, i) => `<span class="receipt-vat-column">${p}</span>`).join('');
+              }
+              return `<span>${part}</span>`;
+            }).join('');
+            previousLineIsFixed = isFixedWithLine; 
+            const isLargeFontLine = determineLargeFontLine(line);
+            return `<div class="rp-line${isLargeFontLine ? ' rp-large' : ''}">${lineContent}</div>`;
+          }).join('')}
+        </div>
       `, '', window.print);
       App.jModal.find('.cs-cancel').remove();
     }
@@ -134,7 +161,7 @@ App.printLabelReceipt = (transaction) => {
   });
 };
 
-App.renderKioskReceipt = (transaction, printer) => {
+App.renderKioskReceipt = (transaction, printer, useAlign) => {
   let transactionHasTax = false;
   const vatSummary = {};
   for (let i = 0; i < App.settings.vatRates.length; i++) {
@@ -213,7 +240,7 @@ App.renderKioskReceipt = (transaction, printer) => {
       const thisNet = vatSummary[vatRate].total - vatSummary[vatRate].vat;
       const thisVat = vatSummary[vatRate].vat.formatMoney();
       return (
-        `${App.vatMarks[vatRate]} ` +
+        `${App.vatMarks[vatRate]}` +
         `${App.addPadding(vatRate, 2)}%` +
         App.addPadding(thisNet.formatMoney(), 8 + extraPadding) +
         (receiptLargeEnough ? App.addPadding(thisVat, 8 + extraPadding) : `\t${thisVat}`) +
@@ -237,7 +264,7 @@ App.renderKioskReceipt = (transaction, printer) => {
 
   const text = `${header}\n${body}\n${payment ? `${payment}\n` : ''}${summary}\n${footer}\n\n\n.`;
   //const text = `${body}`;
-  const result = App.alignReceiptText(text, printer.columns);
+  const result = useAlign ? App.alignReceiptText(text, printer.columns) : text;
   return result;
 };
 

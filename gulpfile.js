@@ -23,9 +23,9 @@ const scss = () => {
         './src/scss/tabs.scss',
         './src/scss/products.scss',
         './src/scss/cart.scss',
-        './src/scss/mediaqueries.scss',
         './src/scss/admin.scss',
         './src/scss/registration.scss',
+        './src/scss/mediaqueries.scss',
     ])
         .pipe(plumber())
         .pipe(concat('styles.scss'))

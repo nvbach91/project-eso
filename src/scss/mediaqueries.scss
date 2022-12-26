@@ -122,5 +122,18 @@
       border: none;
       font-size: 12px;
     }
+    .receipt-preview {
+        padding: 0;
+        color: #000;
+        background-color: #fff;
+        line-height: 12px;
+    }
+    .receipt-vat-column {
+        text-align: right;
+    }
+    .receipt-preview .receipt-vat-column:nth-child(1) { width: 40px; }
+    .receipt-preview .receipt-vat-column:nth-child(2) { width: 80px; }
+    .receipt-preview .receipt-vat-column:nth-child(3) { width: 80px; }
+    .receipt-preview .receipt-vat-column:nth-child(4) { width: 80px; }
   }
   

@@ -142,9 +142,20 @@
 .receipt-preview {
     margin: 0 auto;
     width: fit-content;
-    line-height: 12px;
-    font-weight: bold;
-    color: #000;
+    line-height: 16px;
+    font-family: monospace;
+    font-size: 12px;
+    background-color: #fcfcfc;
+    padding: 10px;
+    width: 270px;
+}
+.rp-large {
+    font-size: 20px;
+    line-height: 16px;
+}
+.rp-line {
+    display: flex;
+    justify-content: space-between;
 }
 span.match {
     color: $primaryThemeColor;
