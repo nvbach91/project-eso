@@ -151,6 +151,8 @@ App.printLabelReceipt = (transaction) => {
           {
             content: printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
             printer: printer.name,
+            pageWidth: '40',
+            pageHeight: '46',
           }
         ));
       } else {
