@@ -151,8 +151,8 @@ App.printLabelReceipt = (transaction) => {
           {
             content: printer.diacritics ? App.removeVietnameseDiacritics(text) : App.removeDiacritics(text),
             printer: printer.name,
-            pageWidth: '40',
-            pageHeight: '46',
+            pageWidth: printer.pageWidth || '500',
+            pageHeight: printer.pageHeight || '300',
           }
         ));
       } else {
@@ -310,12 +310,12 @@ App.renderLabelReceiptText = (transaction, item, index, totalItems, labelPrinter
         `${orderLine}\t${deliveryMethod}` :
         `${App.ESCPOS.quadrupleSize(orderLine)}\n${App.ESCPOS.quadrupleSize(deliveryMethod)}`
     ) +
-    `\n${moment(transaction.date).format(App.formats.dateTime)}\t${index + 1}/${totalItems}` +
+    `\n${moment(transaction.date).format('DD.MM HH:mm:ss')}\t${index + 1}/${totalItems}` +
     `\n${(() => {
       const product = App.products[item.ean];
-      const itemName = App.shortenTextByColumns(product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`, labelPrinter.columns);
+      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       const modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
-      const itemLine = `${item.quantity} x ${itemName}`;
+      const itemLine = App.shortenTextByColumns(`${item.quantity} x ${itemName}`, labelPrinter.columns);
       return App.ESCPOS.quadrupleSize(itemLine, labelPrinter.style) + (modText ? `\n${modText}` : '');
     })()}\n`;
 
