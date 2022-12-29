@@ -64,6 +64,8 @@ const Registers = new Schema({
     //   left: Number,
     //   fontSize: Number,
     //   style: String,
+    //   pageWidth: Number,
+    //   pageHeight: Number,
     // }
   },
   terminal: {

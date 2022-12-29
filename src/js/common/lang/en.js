@@ -133,6 +133,8 @@ App.GLocaleEN = {
   "form_labelPrinter.left"                  : "Left padding",
   "form_labelPrinter.top"                   : "Top padding",
   "form_labelPrinter.fontSize"              : "Font size",
+  "form_labelPrinter.pageWidth"             : "Page width",
+  "form_labelPrinter.pageHeight"            : "Page height",
   "form_labelPrinter.style"                 : "Print style",
   "form_companyName"                        : "Company name",
   "form_subdomain"                          : "Subdomain",

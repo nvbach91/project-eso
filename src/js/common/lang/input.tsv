@@ -133,6 +133,8 @@ form_labelPrinter.columns	Print columns	Počet sloupců
 form_labelPrinter.left	Left padding	Levý okraj
 form_labelPrinter.top	Top padding	Horní okraj
 form_labelPrinter.fontSize	Font size	Velikost písmene
+form_labelPrinter.pageWidth	Page width	Šířka stránky
+form_labelPrinter.pageHeight	Page height	Výška stránky
 form_labelPrinter.style	Print style	Styl tisku
 form_companyName	Company name	Název firmy
 form_subdomain	Subdomain	Subdoména

@@ -67,7 +67,10 @@ const renderLabelPrinterSettings = (type, printer, id) => `
       ${App.generateFormInput({ name: `${type}.${id}.left`, value: printer.left, type: 'number', width: 80, min: 0, optional: true })}
       ${App.generateFormInput({ name: `${type}.${id}.fontSize`, value: printer.fontSize, type: 'number', width: 80, min: 8, optional: true })}
       ${App.generateFormSelect({ name: `${type}.${id}.style`, value: printer.style, width: 120, options: App.printerStyleOptions })}
-      ${generatePrinterSettingsDropdown(type, id)}
+    </div>
+    <div class="form-row">
+      ${App.generateFormInput({ name: `${type}.${id}.pageWidth`, value: printer.pageWidth, type: 'number', width: 80, min: 0, optional: true })}
+      ${App.generateFormInput({ name: `${type}.${id}.pageHeight`, value: printer.pageHeight, type: 'number', width: 80, min: 0, optional: true })}
     </div>
   </div>
 `;
