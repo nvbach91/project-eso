@@ -74,40 +74,45 @@ App.printKioskReceipt = (transaction, appendix) => {
         }
       ));
     } else {
-      const unAlignedReceiptText = App.renderKioskReceipt(transaction, printer, false) + (appendix ? `\n${appendix}` : '');
-      const determineLargeFontLine = (line) => {
-        const keys = ['receipt_payment_total', 'receipt_header_order', 'receipt_not_paid', 'delivery_method_eatin', 'delivery_method_takeout'];
-        for (const key of keys) {
-          if (line.trim().startsWith(App.lang[key])) {
-            return true;
-          }
-        }
-        return false;
-      };
-      let previousLineIsFixed = false;
-      App.showInModal(`
-        <div class="receipt-preview card">
-          <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
-          ${App.removeReceiptFormatting(unAlignedReceiptText).split('\n').map((line) => {
-            const isFixedWithLine = line.trim().startsWith(App.lang.receipt_summary_rates);
-            if (isFixedWithLine || previousLineIsFixed) {
-              line = line.replace('\t', ' ');
-            }
-            const lineContent = line.replace(/\\t/g, '\t').split('\t').map((part) => {
-              if (isFixedWithLine || previousLineIsFixed) {
-                return part.split(/\s+/).map((p, i) => `<span class="receipt-vat-column">${p}</span>`).join('');
-              }
-              return `<span>${part}</span>`;
-            }).join('');
-            previousLineIsFixed = isFixedWithLine; 
-            const isLargeFontLine = determineLargeFontLine(line);
-            return `<div class="rp-line${isLargeFontLine ? ' rp-large' : ''}">${lineContent}</div>`;
-          }).join('')}
-        </div>
-      `, '', window.print);
-      App.jModal.find('.cs-cancel').remove();
+      App.displayKioskReceipt(transaction, appendix, printer, window.print);
     }
   });
+};
+
+App.displayKioskReceipt = (transaction, appendix, printer, printFunction) => {
+  const unAlignedReceiptText = App.renderKioskReceipt(transaction, printer, false) + (appendix ? `\n${appendix}` : '');
+  const determineLargeFontLine = (line) => {
+    const keys = ['receipt_payment_total', 'receipt_header_order', 'receipt_not_paid', 'delivery_method_eatin', 'delivery_method_takeout'];
+    for (const key of keys) {
+      if (line.trim().startsWith(App.lang[key])) {
+        return true;
+      }
+    }
+    return false;
+  };
+  let previousLineIsFixed = false;
+  App.showInModal(`
+    <div class="receipt-preview card">
+      <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
+      ${App.removeReceiptFormatting(unAlignedReceiptText).split('\n').map((line) => {
+        const isFixedWithLine = line.trim().startsWith(App.lang.receipt_summary_rates);
+        if (isFixedWithLine || previousLineIsFixed) {
+          line = line.replace('\t', ' ');
+        }
+        const lineContent = line.replace(/^!/, '').replace(/\\t/g, '\t').split('\t').map((part) => {
+          if (isFixedWithLine || previousLineIsFixed) {
+            return part.split(/\s+/).map((p, i) => `<span class="receipt-vat-column">${p}</span>`).join('');
+          }
+          return `<span>${part}</span>`;
+        }).join('');
+        previousLineIsFixed = isFixedWithLine; 
+        const isLargeFontLine = determineLargeFontLine(line);
+        const isBoldFontLine = line.startsWith('!'); // the exclamation mark is present when priting via browser render (not direct print)
+        return `<div class="rp-line${isLargeFontLine ? ' rp-large' : ''}${isBoldFontLine ? ' rp-bold' : ''}">${lineContent}</div>`;
+      }).join('')}
+    </div>
+  `, '', printFunction);
+  App.jModal.find('.cs-cancel').remove();
 };
 
 App.printKitchenReceipt = (transaction) => {
@@ -205,7 +210,7 @@ App.renderKioskReceipt = (transaction, printer, useAlign) => {
       }).map((item) => {
       let itemPrice = parseFloat(item.price);
       item.mods.forEach((mod) => {
-        itemPrice += parseFloat(mod.price);
+        itemPrice += (mod.quantity || 1) * mod.price;
       });
       const itemTotal = item.quantity * itemPrice;
       subTotal += itemTotal;
@@ -215,8 +220,8 @@ App.renderKioskReceipt = (transaction, printer, useAlign) => {
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? product.name : `${App.lang.form_ean}: ${item.ean}`;
-      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}${parseFloat(mod.price) ? ` +${mod.price}` : ''}`).join('\n');
-      return `${App.ESCPOS.bold(itemName)}${modText ? `\n${modText}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
+      let modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x +${mod.price} ${App.settings.currency.code}` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      return `${useAlign ? '' : '!'}${App.ESCPOS.bold(itemName)}${modText ? `\n${modText}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
     //`\n${App.getReceiptHorizontalLine(printer)}`;
 
@@ -288,7 +293,7 @@ App.renderKitchenReceiptText = (transaction, printer) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
       const itemName = product ? `#${item.ean} ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
-      let modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      let modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${modText ? `\n${modText}` : ''}`;
     }).join('\n')}` +
     `\n\n.`;
@@ -314,7 +319,7 @@ App.renderLabelReceiptText = (transaction, item, index, totalItems, labelPrinter
     `\n${(() => {
       const product = App.products[item.ean];
       const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
-      const modText = item.mods.map((mod) => `  - ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
+      const modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       const itemLine = App.shortenTextByColumns(`${item.quantity} x ${itemName}`, labelPrinter.columns);
       return App.ESCPOS.quadrupleSize(itemLine, labelPrinter.style) + (modText ? `\n${modText}` : '');
     })()}\n`;

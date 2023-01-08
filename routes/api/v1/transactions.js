@@ -71,7 +71,7 @@ const updateAggregates = (t) => {
     let itemPrice = parseFloat(item.price);
     if (item.mods) {
       item.mods.forEach((mod) => {
-        itemPrice += parseFloat(mod.price);
+        itemPrice += (mod.quantity || 1) * mod.price;
       });
     }
     const itemTotal = item.quantity * itemPrice;

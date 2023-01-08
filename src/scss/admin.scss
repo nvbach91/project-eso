@@ -153,6 +153,10 @@
     font-size: 20px;
     line-height: 16px;
 }
+.rp-bold {
+    font-weight: bold;
+    text-decoration: underline;
+}
 .rp-line {
     display: flex;
     justify-content: space-between;
@@ -165,7 +169,7 @@ span.match {
     width: 60px;
     background-size: contain;
 }
-.sr-ean, .sr-price, .sr-number, .sr-order, .sr-position, .sr-products {
+.sr-ean, .sr-price, .sr-number, .sr-order, .sr-position, .sr-products, .sr-limit {
     text-align: right;
 }
 .sr-price {
@@ -183,7 +187,7 @@ span.match {
 .sr-vat, .sr-edit, .sr-display, .sr-active {
     text-align: center;
 }
-.sr-display, .sr-products, .sr-order, .sr-position, .sr-number {
+.sr-display, .sr-products, .sr-order, .sr-position, .sr-number, .sr-limit {
     width: 80px;
 }
 .sr-name, .sr-img, .sr-number {
@@ -237,7 +241,7 @@ form {
     /* border-radius: 20px; */
     white-space: initial;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     transition: background-color;
     margin-bottom: 5px;

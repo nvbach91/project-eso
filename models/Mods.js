@@ -10,6 +10,7 @@ const Mods = new Schema({
   type: String,
   img: String,
   eans: Object, // { 1: true, 2: true }
+  limit: Number, // max order quantity per order item
 }, { minimize: false });
 
 Mods.index({ regId: 1, number: 1 }, { unique: true }); // index from most recent

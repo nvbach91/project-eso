@@ -1,5 +1,5 @@
 App.generateFormInput = (args) => {
-  const { label, name, value, optional, disabled, type, step } = args;
+  const { label, name, value, optional, disabled, type, step, title } = args;
   const { width, min, max, hidden, accept, placeholder, autocomplete, pattern } = args;
   const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
   // some name values will include the index, such as 'labelPrinters.0.ip', 'labelPrinters.1.ip'
@@ -11,6 +11,7 @@ App.generateFormInput = (args) => {
     <div class="form-group"${style ? ` style="${style}"` : ''}>
       <label>${finalLabel}</label>
       <input
+        ${title ? ` title="${title}"` : ''}
         ${type ? ` type="${type}"` : ''}
         ${type === 'password' && !autocomplete ? ` autocomplete="new-password"` : ''}
         ${autocomplete ? ` autocomplete="${autocomplete}"` : ' autocomplete="off"'}
@@ -24,14 +25,15 @@ App.generateFormInput = (args) => {
         ${value !== undefined ? `value="${value}"` : ''}
         ${placeholder ? `placeholder="${placeholder}"` : ''}
         ${optional ? '' : ' required'}
-        ${disabled ? ' readonly' : ''}>
+        ${disabled ? ' readonly' : ''}
+      >
       ${optional ? '' : '<i>*</i>'}
     </div>
   `;
 };
 
 App.generateFormSelect = (args) => {
-  const { label, name, value, options, optional, type, width, multiple } = args;
+  const { label, name, value, options, optional, type, width, multiple, title } = args;
   const selected = value;
   const style = `${width ? `max-width: ${width}px;` : ''}`;
   // some name values will include the index, such as 'labelPrinters.0.ip', 'labelPrinters.1.ip'
@@ -42,7 +44,13 @@ App.generateFormSelect = (args) => {
   return `
     <div class="form-group"${style ? ` style="${style}"` : ''}>
       <label>${finalLabel}</label>
-      <select class="custom-select" name="${name}"${optional ? '' : ' required'}${type ? ` type="${type}"` : ''}${multiple ? ' multiple' : ''}>
+      <select
+        class="custom-select"
+        ${title ? ` title="${title}"` : ''}
+        name="${name}"${optional ? '' : ' required'}
+        ${type ? ` type="${type}"` : ''}
+        ${multiple ? ' multiple' : ''}
+      >
         ${options.map((o) => {
     const { label, value } = o;
     return `<option value="${value}"${selected == value ? ' selected' : ''}>${label}</option>`;

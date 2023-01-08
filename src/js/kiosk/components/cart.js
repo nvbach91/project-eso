@@ -173,7 +173,7 @@ App.calculateCartSummaryValues = () => {
     itemPrice = itemPrice - itemPrice * (product.discount || 0) / 100;
     if (mods) {
       mods.forEach((mod) => {
-        itemPrice += parseFloat(mod.price);
+        itemPrice += (mod.quantity || 1) * mod.price;
       });
     }
     totalPrice += quantity * itemPrice;
@@ -220,24 +220,32 @@ App.showCart = () => {
     const { price, name, img } = App.products[ean];
     let finalPrice = parseFloat(price);
     mods.forEach((mod) => {
-      finalPrice += parseFloat(mod.price);
+      finalPrice += (mod.quantity || 1) * mod.price;
     });
     let thisTotal = quantity * finalPrice;
     const el = $(`
-      <div class="cart-item">
+      <div class="card cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
-        <div class="ci-name">
-          ${name} 
-          ${mods.length ? 
-            `- ${mods.map((m) => 
-                `${App.mods[m.number] ? App.mods[m.number].name : `${m.number} - N/A`}${parseFloat(m.price) ? ` +${m.price} ${App.settings.currency.symbol}` : ''}`
-              ).join(', ')}`
-            : ''}
+        <div class="ci-info">
+          <div class="ci-name"><strong>${name}</strong> <span class="badge badge-pill badge-primary">${price} ${App.settings.currency.symbol}</span></div>
+          <div class="ci-mods">
+            ${mods.length ? mods.map((m) => `
+              <div class="ci-mod">
+                &bull; ${parseFloat(m.price) ? `<span class="badge badge-pill badge-primary">${m.quantity}&times;</span>` : ''}
+                ${parseFloat(m.price) ? `
+                  <span class="badge badge-pill badge-primary">
+                      +${m.price} ${App.settings.currency.symbol}
+                  </span>
+                ` : ''}
+                ${App.mods[m.number] ? App.mods[m.number].name : `${m.number} - N/A`}
+              </div>
+            `).join('') : ''}
+          </div>
         </div>
         <!--button class="btn btn-primary btn-dec"${ean === 'T' ? ' disabled' : ''}>-</button-->
-        <div class="ci-quantity" data-id="${id}" data-ean="${ean}">&times; ${quantity}</div>
+        <div class="ci-quantity h5 text-primary" data-id="${id}" data-ean="${ean}">${quantity}&times; </div>
         <!--button class="btn btn-primary btn-inc"${ean === 'T' ? ' disabled' : ''}>+</button-->
-        <div class="ci-price">${finalPrice.formatMoney()} ${App.settings.currency.symbol}</div>
+        <div class="ci-price h5 text-primary">${finalPrice.formatMoney()} ${App.settings.currency.symbol}</div>
         <!--div class="ci-total">${thisTotal.formatMoney()}</div-->
         <!--button class="btn btn-primary ci-remove"${ean === 'T' ? ' disabled' : ''}>&times;</button-->
       </div>

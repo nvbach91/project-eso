@@ -32,10 +32,8 @@ const renderTransactions = (transactions) => {
         </div>
       `);
       item.children('.ti-number').click(() => {
-        App.showInModal(`
-          <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
-          <pre class="receipt-preview">${App.removeReceiptFormatting(App.renderReceiptText(transaction))}</pre>
-        `);
+        const printer = App.settings.kioskPrinters[Object.keys(App.settings.kioskPrinters)[0]];
+        App.displayKioskReceipt(transaction, '', printer, () => {});
       });
       item.children('.ti-print').find('button').click(() => {
         App.printKioskReceipt(transaction);

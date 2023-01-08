@@ -183,14 +183,45 @@
         background-color: white;
         border-radius: 50%;
     }
-    span {
-        padding: 5px;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        background-color: $primaryThemeColorTransparent;
-        color: white;
-    }
+}
+.pm-control {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: $primaryThemeColorTransparent;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+.pm-price {
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    background-color: $primaryThemeColorTransparent;
+    font-weight: bold;
+}
+.pm-quantity {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.pm-quantity .mod-quantity {
+    width: 30px;
+    text-align: center;
+}
+.pm-quantity .mod-quantity:before {
+    content: '\00D7';
+}
+.pm-quantity .btn {
+    padding: 0;
+    width: 50px;
+    margin: 0;
+    height: 100%;
+    display: inline-block;
+    color: #fff;
+    font-size: xx-large;
 }
 .pd-name {
     text-transform: uppercase;

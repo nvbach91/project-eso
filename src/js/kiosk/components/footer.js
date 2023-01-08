@@ -12,7 +12,7 @@ App.renderFooter = () => {
           </li>
           <li id="locale-switcher"></li>
           <li class="nav-item">
-            <button id="checkout-button" class="btn btn-primary btn-icon">
+            <button id="checkout-button" class="btn btn-primary btn-icon btn-raised">
               <span>${App.lang.order_checkout_btn}</span>
               ${App.getIcon('arrow_forward')}
             </button>

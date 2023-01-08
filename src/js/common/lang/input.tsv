@@ -159,6 +159,7 @@ form_number	Number	Číslo
 form_currency	Currency	Měna
 form_order	Order	Objednávka
 form_position	Position	Pořadí
+form_limit	Limit	Limit
 form_display	Display	Zobrazit
 form_ors.vat	VAT	DIČ
 form_ors.store_id	Store ID	ID provozovny
@@ -227,12 +228,14 @@ settings_slides	Slide settings	Úvodní snímky
 settings_company	Company details	Firemní údaje
 settings_payment_methods	Payment methods	Platební metody
 		
+tip_modification_limit	Limit order quantity (0 = no limit)	Limit pro objednávání (0 = bez limitu)
 tip_tablesync_sync	Connect to OPS tablesync to enable sending orders to Gokasa Kitchen and Gokasa Quantum	Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum
 tip_tablesync_sync_url	Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. sync.vcap.me 127.0.0.1	Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1
 tip_enter_group_number	Enter group number	Zadejte číslo skupiny
 tip_groups_settings	Tip: Add or edit group by entering its number	Tip: Přidejte či editujte skupinu podle jejího čísla
 tip_enter_modification_number	Enter modification number	Zadejte číslo modifikace
-tip_modifications_settings	Tip: Add or edit modification by entering its number. Use a dot (.) at the end of the modification type name to make it mandatory. Use an exclamation mark (!) at the end of the modification type name to make it mandatory in takeout mode.	Tip: Přidejte či editujte modifikace podle jejího čísla. Použijte tečku (.) na konci názvu typu modifikace, aby se stala povinnou modifikací. Použijte výkřičník (!) na konci názvu typu modifikace, aby se stala povinnou modifikací při prodeji s sebou.
+tip_modifications_settings	Tip: Add or edit modification by entering its number.	Tip: Přidejte či editujte modifikace podle jejího čísla.
+tip_modifications_mandatory	Tip: Use a dot (.) at the end of the modification type name to make one of the modifications mandatory. Use an exclamation mark (!) at the end of the modification type name to make it mandatory in takeout mode only.	Tip: Použijte tečku (.) na konci názvu typu modifikace, aby se jedna modifikace tohoto typu stala povinnou. Použijte výkřičník (!) na konci názvu typu modifikace, aby se jedna modifikace tohoto typu stala povinnou modifikací jen při prodeji s sebou.
 tip_search_by_name_or_code	Search by name or code/EAN	Zadejte název nebo kód/EAN produktu
 tip_products_settings	Tip: Search for a product by its name or code	Tip: Vyhledejte produkt podle názvu či kódu/EAN
 tip_no_data_in_selected_period	There is no data in the selected time period	Ve vybraném časovém období nejsou žádná data

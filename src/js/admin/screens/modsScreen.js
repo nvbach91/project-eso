@@ -6,6 +6,7 @@ const tableHeader = () => `
     <div class="td sr-name">${App.lang.form_name}</div>
     <div class="td sr-price">${App.lang.form_price}</div>
     <div class="td sr-type">${App.lang.form_type}</div>
+    <div class="td sr-limit">${App.lang.form_limit}</div>
     <div class="td sr-edit">${App.lang.misc_edit}</div>
   </div>
 `;
@@ -64,7 +65,7 @@ const renderTable = () => {
   table.empty();
   table.append(tableHeader(), keys.map((key) => {
     const i = App.mods[key];
-    const { name, type, number, position, img, price } = i || {};
+    const { name, type, number, position, img, price, limit } = i || {};
     const item = $(`
       <div class="tr">
         <div class="td sr-img"${App.getBackgroundImage(img)}></div>
@@ -73,6 +74,7 @@ const renderTable = () => {
         <div class="td sr-name">${name}</div>
         <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
         <div class="td sr-type">${type}</div>
+        <div class="td sr-limit">${limit}</div>
         <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
       </div>
     `);
@@ -85,7 +87,7 @@ const renderTable = () => {
 
 const showEditForm = (number) => {
   const item = App.mods[number];
-  const { name, type, position, img, eans, price } = item || { };
+  const { name, type, position, img, eans, price, limit } = item || {};
   const imgStyle = App.getBackgroundImage(img);
   const modalTitle = `${item ? 'Edit' : 'Create'} modification - ${number}`;
   const form = $(`
@@ -102,7 +104,13 @@ const showEditForm = (number) => {
             ${App.generateFormInput({ name: 'number', value: number, disabled: true, type: 'number', min: 0 })}
             ${App.generateFormInput({ name: 'position', value: isNaN(position) ? 0 : position, type: 'number', min: 0 })}
           </div>
-          ${App.generateFormInput({ name: 'name', value: name || '' })}
+          <div class="form-row">
+            ${App.generateFormInput({ name: 'name', value: name || '' })}
+            ${App.generateFormInput({ name: 'limit', value: limit || 1, type: 'number', min: 0, title: App.lang.tip_modification_limit })}
+          </div>
+          <div class="form-row">
+            <em>${App.lang.tip_modifications_mandatory}</em>
+          </div>
           <div class="form-row">
             ${App.generateFormInput({ name: 'type', value: type || '' })}
             ${App.generateFormInput({ name: 'price', value: price || Number(0).formatMoney() })}

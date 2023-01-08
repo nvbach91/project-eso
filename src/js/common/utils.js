@@ -19,13 +19,19 @@ App.round = (value, decimals) => {
   return Number(Math.round(`${value}e${decimals}`) + `e-${decimals}`);
 };
 
-App.showInModal = (element, title, cb) => {
+App.showInModal = (element, title, cb, options) => {
   App.jModal.find('.modal-title').text(title || '');
   App.jModal.find('.modal-body').empty().append(element);
   App.jModal.modal();
   App.jModal.on('shown.bs.modal', () => {
     cb && cb();
     App.jModal.off('shown.bs.modal');
+  });
+  if (options && options.fullScreen) {
+    App.jModal.find('.modal-dialog').addClass('modal-fullscreen');
+  }
+  App.jModal.on('hidden.bs.modal', () => {
+    App.jModal.find('.modal-dialog').removeClass('modal-fullscreen');
   });
 };
 
@@ -119,6 +125,7 @@ App.checkActivity = () => {
     </div>
   `);
   App.showInModal(check, App.lang.modal_timeout_title);
+  App.jModal.find('.modal-dialog').removeClass('modal-fullscreen');
   App.jModal.find('.cs-cancel').remove();
   App.jModal.on('hidden.bs.modal', () => {
     App.isCheckingActivity = false;
@@ -525,9 +532,9 @@ App.createLocaleSwitcher = (options) => {
   return switcher;
 };
 
-App.getIcon = (url, size, color) => {
+App.getIcon = (url, size, color, classNames) => {
   if (/^(\/|http)/.test(url)) {
-    return `<i class="icon" style="background-image: url(${url}); width: ${size}px; height: ${size}px;"></i>`;
+    return `<i class="icon${classNames ? ` ${classNames.join(' ')}` : ''}" style="background-image: url(${url}); width: ${size}px; height: ${size}px;"></i>`;
   }
   const styles = [];
   if (size) {
@@ -536,7 +543,7 @@ App.getIcon = (url, size, color) => {
   if (color) {
     styles.push(`color: ${color};`);
   }
-  return `<i class="material-icons" style="${styles.join('')}">${url}</i>`;
+  return `<i class="material-icons${classNames ? ` ${classNames.join(' ')}` : ''}" style="${styles.join('')}">${url}</i>`;
 };
 
 
@@ -565,12 +572,14 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     if (active) {
       if (checkMarkContainerSelector) {
         t.siblings(checkMarkContainerSelector).find('i').remove();
+        t.parent().find('.pm-quantity').hide().find('.mod-quantity').text(1);
       } else {
         t.find('i').remove();
       }
     } else {
       if (checkMarkContainerSelector) {
-        t.siblings(checkMarkContainerSelector).append(App.getIcon('done', iconSize || 14));
+        t.siblings(checkMarkContainerSelector).append(App.getIcon('done', iconSize || 14, '#fff', ['bg-primary']));
+        t.parent().find('.pm-quantity').show();
       } else {
         t.append(App.getIcon('done', iconSize || 14));
       }

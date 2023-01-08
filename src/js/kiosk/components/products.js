@@ -88,7 +88,7 @@ App.showProductDetail = (id, ean) => {
           }).map((type) => {
             return (`
               <div class="product-mods">
-                <!--label class="bmd-label-static">${type}</label-->
+                <h5><strong>${/[!.]$/.test(type) ? type.slice(0, -1) : type}</strong></h5>
                 <div class="horizontal-scroll">
                   ${Object.keys(App.mods).filter((modNumber) => {
                     return App.modTypes[type].includes(Number(modNumber)) && !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
@@ -102,11 +102,28 @@ App.showProductDetail = (id, ean) => {
                     if (type.endsWith('!')) {
                       active = true;
                     }
+                    const modQuantity = active && App.cart[id] ? App.cart[id].mods.find((m) => m.number === Number(modNumber)).quantity : 1;
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (`
                       <div class="product-mod-wrapper">
                         <div class="pm-img"${imgStyle}>
-                          ${parseFloat(mod.price) ? `<span>+${mod.price} ${App.settings.currency.symbol}</span>` : ''} ${active ? App.getIcon('done', 24) : ''}
+                          ${parseFloat(mod.price) ? `
+                            <div class="pm-control">
+                              <div class="pm-price">+${mod.price} ${App.settings.currency.symbol}</div>
+                              ${mod.limit !== 1 ? (`
+                                <div class="pm-quantity"${active ? '' : ' style="display: none;"'}>
+                                  <button class="btn" data-action="decrement" data-mod="${modNumber}">
+                                    <span>-</span>
+                                  </button>
+                                  <div class="mod-quantity" title="Limit: ${mod.limit}">${modQuantity}</div>
+                                  <button class="btn" data-action="increment" data-mod="${modNumber}">
+                                    <span>+</span>
+                                  </button>
+                                </div>
+                              `) : ''}
+                            </div>
+                          ` : ''}
+                          ${active ? App.getIcon('done', 24, '#fff', ['bg-primary']) : ''}
                         </div>
                         <button type="button" class="product-mod btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-type="${type}" data-active="${active}" data-number="${modNumber}">
                           ${mod.name}
@@ -163,21 +180,42 @@ App.showProductDetail = (id, ean) => {
     App.closeModal();
     App.nextTab();
   });
-  if (!id) {
+  if (!id) { // if not in cart
     App.bindToggleButtons(element, '.product-mod', 24, '.pm-img');
+    element.find('.product-mod-wrapper').each(function () {
+      const t = $(this);
+      const modQuantityContainer = t.find('.pm-quantity .mod-quantity');
+      t.find('.pm-quantity .btn[data-action="decrement"], .pm-quantity .btn[data-action="increment"]').click(function (e) {
+        e.stopPropagation();
+        const button = $(this);
+        const action = button.data('action');
+        const newValue = Number(modQuantityContainer.text()) + (action === 'decrement' ? -1 : 1);
+        if (action === 'decrement') {
+          if (newValue > 0) {
+            modQuantityContainer.text(newValue);
+          }
+        } else {
+          const limit = App.mods[button.data('mod')].limit;
+          if (newValue <= limit) {
+            modQuantityContainer.text(newValue);
+          }
+        }
+      });
+    });
   }
-  App.showInModal(element, App.lang.modal_product_detail_title);
+  App.showInModal(element, App.lang.modal_product_detail_title, () => {}, { fullScreen: true });
   App.jModal.find('.cs-cancel').remove();
-  
 };
 
 const getMods = (container) => {
   const mods = [];
-  container.find('.product-mod').each(function () {
+  container.find('.product-mod-wrapper').each(function () {
     const t = $(this);
-    if (t.data('active')) {
-      const number = t.data('number');
-      mods.push({ number, price: App.mods[number].price });
+    const productMod = t.find('.product-mod');
+    if (productMod.data('active')) {
+      const number = productMod.data('number');
+      const quantity = Number(t.find('.mod-quantity').text()) || 1;
+      mods.push({ number, price: App.mods[number].price, quantity });
     }
   });
   return mods;

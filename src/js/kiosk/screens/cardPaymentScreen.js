@@ -111,7 +111,7 @@ App.payInCash = () => {
           group: item.group.toString(),
           printed: true,
           name2: '',
-          note: item.mods.map((m) => `- ${App.mods[m.number].name}`).join('<br>'),
+          note: item.mods.map((mod) => `*${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number].name}`).join('<br>'),
           mods: '',
         })),
         username: App.user.username,
