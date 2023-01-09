@@ -597,6 +597,7 @@ App.regex = {
   tin: { regex: /^\d{8}$/, desc: '7-8 digits' },
   ip: { regex: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, desc: 'A valid IPv4 address' },
   url: { regex: /^https:\/\/sync\.vcap\.me:2443$/, desc: 'A valid URL address' },
+  ean: { regex: /^[A-Z\d]+$/, desc: 'A valid item code value, e.g.: 1234 or A123' },
   price: { regex: /^\d+(\.\d{2})?$/, desc: 'A valid price value, e.g.: 42 or 42.00' },
 };
 

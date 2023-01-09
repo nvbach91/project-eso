@@ -46,7 +46,7 @@ App.renderProductsScreen = () => {
   form.submit((e) => {
     e.preventDefault();
     const searchValue = input.val();
-    if (/^[A-Z\d]+$/.test(searchValue)) {
+    if (App.regex.ean.regex.test(searchValue)) {
       showEditForm(searchValue, () => input.keyup());
     }
   });
@@ -85,7 +85,11 @@ App.renderProductsScreen = () => {
       searchResultsContainer.append(tableHeader());
       searchResultsContainer.append(searchResults);
     } else {
-      searchResultsContainer.append(`<div class="tr">No products found. ${/^\d+$/.test(searchValue) ? `Press Enter to create product <span class="match">${searchValue}</span>.` : ''}</div>`);
+      searchResultsContainer.append(`
+        <div class="tr">
+          No products found. ${App.regex.ean.regex.test(searchValue) ? `Press Enter to create product with this code: <span class="match">${searchValue}</span>.` : ''}
+        </div>
+      `);
     }
     searchResults = [];
     // }
