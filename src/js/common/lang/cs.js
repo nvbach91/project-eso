@@ -36,7 +36,7 @@ App.GLocaleCS = {
 
 
   "receipt_header_order"                    : "Objednávka",
-  "receipt_header_tin"                      : "IČO",
+  "receipt_header_tin"                      : "IČ",
   "receipt_header_vat"                      : "DIČ",
   "receipt_header_residence"                : "Adresa",
   "receipt_header_premise"                  : "Provozovna",
@@ -195,7 +195,7 @@ App.GLocaleCS = {
   "form_autoNextTab"                        : "Automaticky skočit na další záložku při objednávání",
   "form_tableMarkers.img"                   : "Obrázek pro značky stolů",
   "form_tableMarkers.active"                : "Používat značky stolů",
-  "form_tableMarkers.required"              : "Povinné table markers",
+  "form_tableMarkers.required"              : "Povinné značky stolů",
   "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
 
   "admin_dashboard"                         : "Úvodní přehled",

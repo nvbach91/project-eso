@@ -130,7 +130,7 @@ const showEditForm = (ean, cb) => {
         </div>
       </div>
       <div class="form-row">
-        ${App.generateFormInput({ name: 'price', value: price || '' })}
+        ${App.generateFormInput({ name: 'price', value: price || '', pattern: App.regex.price.regex, title: App.regex.price.desc })}
         ${App.generateFormSelect({ name: 'group', value: group === undefined ? '' : group.toString(), options: groupOptions, type: 'number' })}
         ${App.generateFormSelect({ name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
       </div>

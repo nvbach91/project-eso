@@ -103,13 +103,14 @@ App.showProductDetail = (id, ean) => {
                       active = true;
                     }
                     const modQuantity = active && App.cart[id] ? App.cart[id].mods.find((m) => m.number === Number(modNumber)).quantity : 1;
+                    const modPrice = (modQuantity * mod.price).formatMoney(mod.price.includes('.') ? 2 : 0);
                     const imgStyle = mod.img ? ` style="background-image: url(${App.imageUrlBase}${mod.img})"` : '';
                     return (`
                       <div class="product-mod-wrapper">
                         <div class="pm-img"${imgStyle}>
                           ${parseFloat(mod.price) ? `
                             <div class="pm-control">
-                              <div class="pm-price">+${mod.price} ${App.settings.currency.symbol}</div>
+                              <div class="pm-price" data-price="${mod.price}">+${modPrice} ${App.settings.currency.symbol}</div>
                               ${mod.limit !== 1 ? (`
                                 <div class="pm-quantity"${active ? '' : ' style="display: none;"'}>
                                   <button class="btn" data-action="decrement" data-mod="${modNumber}">
@@ -185,19 +186,24 @@ App.showProductDetail = (id, ean) => {
     element.find('.product-mod-wrapper').each(function () {
       const t = $(this);
       const modQuantityContainer = t.find('.pm-quantity .mod-quantity');
+      const pmPriceContainer = t.find('.pm-price');
       t.find('.pm-quantity .btn[data-action="decrement"], .pm-quantity .btn[data-action="increment"]').click(function (e) {
         e.stopPropagation();
         const button = $(this);
         const action = button.data('action');
-        const newValue = Number(modQuantityContainer.text()) + (action === 'decrement' ? -1 : 1);
+        const newQuantity = Number(modQuantityContainer.text()) + (action === 'decrement' ? -1 : 1);
+        const unitPrice = pmPriceContainer.data('price').toString();
+        const newPrice = (newQuantity * unitPrice).formatMoney(unitPrice.includes('.') ? 2 : 0);
         if (action === 'decrement') {
-          if (newValue > 0) {
-            modQuantityContainer.text(newValue);
+          if (newQuantity > 0) {
+            modQuantityContainer.text(newQuantity);
+            pmPriceContainer.text(`+${newPrice} ${App.settings.currency.symbol}`);
           }
         } else {
           const limit = App.mods[button.data('mod')].limit;
-          if (newValue <= limit) {
-            modQuantityContainer.text(newValue);
+          if (newQuantity <= limit) {
+            modQuantityContainer.text(newQuantity);
+            pmPriceContainer.text(`+${newPrice} ${App.settings.currency.symbol}`);
           }
         }
       });

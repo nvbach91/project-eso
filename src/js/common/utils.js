@@ -573,6 +573,7 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
       if (checkMarkContainerSelector) {
         t.siblings(checkMarkContainerSelector).find('i').remove();
         t.parent().find('.pm-quantity').hide().find('.mod-quantity').text(1);
+        t.parent().find('.pm-price').text(`+${t.parent().find('.pm-price').data('price')} ${App.settings.currency.symbol}`);
       } else {
         t.find('i').remove();
       }
@@ -596,6 +597,7 @@ App.regex = {
   tin: { regex: /^\d{8}$/, desc: '7-8 digits' },
   ip: { regex: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, desc: 'A valid IPv4 address' },
   url: { regex: /^https:\/\/sync\.vcap\.me:2443$/, desc: 'A valid URL address' },
+  price: { regex: /^\d+(\.\d{2})?$/, desc: 'A valid price value, e.g.: 42 or 42.00' },
 };
 
 App.generateRandomPassword = (passwordLength) => {

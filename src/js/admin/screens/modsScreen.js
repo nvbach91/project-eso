@@ -113,7 +113,7 @@ const showEditForm = (number) => {
           </div>
           <div class="form-row">
             ${App.generateFormInput({ name: 'type', value: type || '' })}
-            ${App.generateFormInput({ name: 'price', value: price || Number(0).formatMoney() })}
+            ${App.generateFormInput({ name: 'price', value: price || Number(0).formatMoney(), pattern: App.regex.price.regex, title: App.regex.price.desc })}
           </div>
           ${App.generateFormInput({ name: 'eans', value: eans ? Object.keys(eans) : '', optional: true })}
         </div>
