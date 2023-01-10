@@ -33,3 +33,6 @@
 .form-signin .input-group-prepend {
     max-width: 60px;
 }
+.form-signin input:disabled {
+    color: $primaryThemeColor !important;
+}

@@ -19,7 +19,7 @@ App.realm = realm;
 
 App.provider = 'Ethereals United';
 
-App.origin = `www.itake.cz`;
+App.origin = `https://itake.cz`;
 
 App.credits = `${new Date().getFullYear()} © ${App.origin}`;
 

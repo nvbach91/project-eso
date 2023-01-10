@@ -197,6 +197,7 @@ App.GLocaleEN = {
   "form_tableMarkers.active"                : "Use table markers",
   "form_tableMarkers.required"              : "Required table markers",
   "form_finishMessage"                      : "Finish message",
+  "form_autoLogin"                          : "Automatically log in after opening",
 
   "admin_dashboard"                         : "Dashboard",
   "admin_transactions"                      : "Transactions",

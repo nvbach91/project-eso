@@ -197,6 +197,7 @@ form_tableMarkers.img	Table markers image	Obrázek pro značky stolů
 form_tableMarkers.active	Use table markers	Používat značky stolů
 form_tableMarkers.required	Required table markers	Povinné značky stolů
 form_finishMessage	Finish message	Závěrečná zpráva po objednávání
+form_autoLogin	Automatically log in after opening	Automatické přihlášení po zapnutí
 		
 admin_dashboard	Dashboard	Úvodní přehled
 admin_transactions	Transactions	Transakce

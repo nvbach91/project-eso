@@ -130,7 +130,8 @@ const createInterfaceSettingsForm = () => {
           </div>
         </div>
         <div class="form-row">
-          ${App.generateFormInput({ name: 'finishMessage', value: App.settings.finishMessage })}
+          ${App.generateFormInput({ name: 'finishMessage', value: App.settings.finishMessage, optional: true })}
+          ${App.generateFormSelect({ name: 'autoLogin', value: App.settings.autoLogin, options: App.binarySelectOptions })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

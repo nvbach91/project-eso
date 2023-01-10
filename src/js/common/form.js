@@ -112,6 +112,16 @@ App.bindForm = (form, endpoint) => {
     }
     if (endpoint === '/settings') {
       data.paymentMethods = App.settings.paymentMethods;
+      if (typeof data.autoLogin === 'boolean') {
+        if (data.autoLogin) {
+          localStorage.setItem('autoLogin', JSON.stringify({
+            username: App.user.username.split(':')[1],
+            password: App.pasuwado,
+          }));
+        } else {
+          localStorage.removeItem('autoLogin');
+        }
+      }
     }
     $.post({
       url: `${endpoint !== '/registration' ? App.apiPrefix : ''}${endpoint}`,

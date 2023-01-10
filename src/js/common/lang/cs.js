@@ -197,6 +197,7 @@ App.GLocaleCS = {
   "form_tableMarkers.active"                : "Používat značky stolů",
   "form_tableMarkers.required"              : "Povinné značky stolů",
   "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
+  "form_autoLogin"                          : "Automatické přihlášení po zapnutí",
 
   "admin_dashboard"                         : "Úvodní přehled",
   "admin_transactions"                      : "Transakce",

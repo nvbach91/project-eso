@@ -1,5 +1,5 @@
 App.renderLoginForm = () => {
-  const dom = $(`
+  const loginScreen = $(`
     <div class="container-signin text-center">
       <div class="signin-aside"></div>
       <form class="card form-signin">
@@ -8,7 +8,7 @@ App.renderLoginForm = () => {
         <h2 class="h4 mb-3 font-weight-bold">${$('title').text().replace('|', '<br>')}</h2>
         <div class="input-group">
           <span class="input-group-addon">${App.getIcon('public')}</span>
-          <input name="subdomain" class="form-control" placeholder="Subdomain">
+          <input name="subdomain" class="form-control" placeholder="Subdomain" disabled>
         </div>
         <div class="input-group">
           <span class="input-group-addon">${App.getIcon('person')}</span>
@@ -24,13 +24,13 @@ App.renderLoginForm = () => {
       </form>
     <div>
   `);
-  const loginForm = dom.find('.form-signin');
+  const loginForm = loginScreen.find('.form-signin');
   loginForm.find('#launch').click(() => {
     loginForm.toggleClass('full-width');
   });
   const subdomainInput = loginForm.find('[name="subdomain"]').val(`${location.protocol}//${location.hostname}`);
-  const usernameInput = loginForm.find('[name="username"]');//.val('demo@gmail.com');
-  const passwordInput = loginForm.find('[name="password"]');//.val('demo@gmail.com');
+  const usernameInput = loginForm.find('[name="username"]');
+  const passwordInput = loginForm.find('[name="password"]');
   loginForm.submit((e) => {
     e.preventDefault();
     App.authenticate({
@@ -39,14 +39,30 @@ App.renderLoginForm = () => {
       password: passwordInput.val(),
     }).done((resp) => {
       localStorage.setItem('jwt', resp.token);
+      App.pasuwado = window.btoa(passwordInput.val());
       App.user = resp.user;
-      dom.remove();
+      loginScreen.remove();
       App.start();
     }).fail((err) => {
       App.showInModal('Access denied', 'Warning');
     });
   });
-  App.jContainer.append(dom);
+  App.jContainer.append(loginScreen);
+  try {
+    const autoLogin = JSON.parse(localStorage.getItem('autoLogin') || '{}');
+    if (autoLogin.username && autoLogin.password) {
+      setTimeout(() => {
+        if (!document.contains(loginForm[0])) {
+          return false;
+        }
+        loginForm.find('input[name="username"]').val(autoLogin.username);
+        loginForm.find('input[name="password"]').val(window.atob(autoLogin.password));
+        loginForm.submit();
+      }, 2000);
+    }
+  } catch (e) {
+    localStorage.removeItem('autoLogin');
+  }
 };
 
 App.authenticate = ({ subdomain, username, password }) => {

@@ -107,6 +107,7 @@ const Registers = new Schema({
     url: String,
   },
   finishMessage: '',
+  autoLogin: Boolean,
 });
 
 module.exports = mongoose.model('registers', Registers);

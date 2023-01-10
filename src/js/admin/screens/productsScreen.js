@@ -87,7 +87,7 @@ App.renderProductsScreen = () => {
     } else {
       searchResultsContainer.append(`
         <div class="tr">
-          No products found. ${App.regex.ean.regex.test(searchValue) ? `Press Enter to create product with this code: <span class="match">${searchValue}</span>.` : ''}
+          No products found. ${App.regex.ean.regex.test(searchValue) ? `Press Enter to create product with this code <span class="match">${searchValue}</span>.` : ''}
         </div>
       `);
     }
