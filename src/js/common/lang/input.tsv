@@ -198,6 +198,7 @@ form_tableMarkers.active	Use table markers	Používat značky stolů
 form_tableMarkers.required	Required table markers	Povinné značky stolů
 form_finishMessage	Finish message	Závěrečná zpráva po objednávání
 form_autoLogin	Automatically log in after opening	Automatické přihlášení po zapnutí
+form_newpassword	New password	Nové heslo
 		
 admin_dashboard	Dashboard	Úvodní přehled
 admin_transactions	Transactions	Transakce
@@ -227,6 +228,7 @@ settings_interface	Interface settings	Nastavení rozhraní
 settings_receipt	Receipt settings	Nastavení účtenky
 settings_slides	Slide settings	Úvodní snímky
 settings_company	Company details	Firemní údaje
+settings_employees	User settings	Nastavení uživatelů
 settings_payment_methods	Payment methods	Platební metody
 		
 tip_modification_limit	Limit order quantity (0 = no limit)	Limit pro objednávání (0 = bez limitu)

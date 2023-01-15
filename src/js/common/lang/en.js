@@ -198,6 +198,7 @@ App.GLocaleEN = {
   "form_tableMarkers.required"              : "Required table markers",
   "form_finishMessage"                      : "Finish message",
   "form_autoLogin"                          : "Automatically log in after opening",
+  "form_newpassword"                        : "New password",
 
   "admin_dashboard"                         : "Dashboard",
   "admin_transactions"                      : "Transactions",
@@ -224,6 +225,7 @@ App.GLocaleEN = {
   "settings_receipt"                        : "Receipt settings",
   "settings_slides"                         : "Slide settings",
   "settings_company"                        : "Company details",
+  "settings_employees"                      : "User settings",
   "settings_payment_methods"                : "Payment methods",
 
   "tip_modification_limit"                  : "Limit order quantity (0 = no limit)",

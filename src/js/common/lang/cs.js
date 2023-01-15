@@ -198,6 +198,7 @@ App.GLocaleCS = {
   "form_tableMarkers.required"              : "Povinné značky stolů",
   "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
   "form_autoLogin"                          : "Automatické přihlášení po zapnutí",
+  "form_newpassword"                        : "Nové heslo",
 
   "admin_dashboard"                         : "Úvodní přehled",
   "admin_transactions"                      : "Transakce",
@@ -224,6 +225,7 @@ App.GLocaleCS = {
   "settings_receipt"                        : "Nastavení účtenky",
   "settings_slides"                         : "Úvodní snímky",
   "settings_company"                        : "Firemní údaje",
+  "settings_employees"                      : "Nastavení uživatelů",
   "settings_payment_methods"                : "Platební metody",
 
   "tip_modification_limit"                  : "Limit pro objednávání (0 = bez limitu)",

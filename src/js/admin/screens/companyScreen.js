@@ -1,15 +1,23 @@
 
 App.renderCompanyScreen = () => {
-  const { img } = App.settings;
-  const imgStyle = App.getBackgroundImage(img);
   const header = $(`
     <div id="cp-header" class="card-header">
-    <div class="cp-name">${App.lang.admin_company}</div>
+      <div class="cp-name">${App.lang.admin_company}</div>
     </div>
   `);
   App.jControlPanelHeader.replaceWith(header);
   App.jControlPanelHeader = header;
   const cpBody = $(`<div class="card-body"></div>`);
+  createCompanySettingsForm().appendTo(cpBody);
+  createEmployeeSettingsForm().appendTo(cpBody);
+  App.jControlPanelBody.replaceWith(cpBody);
+  App.jControlPanelBody = cpBody;
+};
+
+
+const createCompanySettingsForm = () => {
+  const { img } = App.settings;
+  const imgStyle = App.getBackgroundImage(img);
   const form = $(`
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_company}</div>
@@ -46,20 +54,78 @@ App.renderCompanyScreen = () => {
         </div>
       </div>
     </form>
-  `).appendTo(cpBody);
+  `);
   form.find('select[name="theme"]').change(function () {
     const t = $(this);
     const selectedTheme = App.availableThemes[t.children('option:selected').val()];
     if (selectedTheme) {
       $('#theme').attr('href', selectedTheme);
     }
-  })
+  });
   App.bindCloudinaryFileUpload(
     form.find('input.cloudinary-fileupload[type=file]'), 
     form.find('input[name="img"]'), 
     form.find('.img-holder')
   );
   App.bindForm(form, '/company');
-  App.jControlPanelBody.replaceWith(cpBody);
-  App.jControlPanelBody = cpBody;
+  return form;
+};
+
+const createEmployeeSettingsForm = () => {
+  const card = $(`
+    <div class="mod-item card">
+      <div class="mi-header">
+        <span>${App.lang.settings_employees}</span>
+        <button class="btn btn-secondary btn-raised btn-add">${App.lang.misc_add}</button>
+      </div>
+      <div class="mi-body"></div>
+    </div>
+  `);
+  const miBody = card.find('.mi-body');
+  card.find('.btn-add').click(() => {
+    const formRow = createEmployeeFormRow({
+      email: '',
+      name: '',
+      newpassword: '',
+    });
+    miBody.prepend(formRow);
+  });
+  const employeeEmails = Object.keys(App.settings.employees);
+  employeeEmails.forEach((employeeEmail) => {
+    const name = App.settings.employees[employeeEmail];
+    const formRow = createEmployeeFormRow({
+      email: employeeEmail,
+      name,
+      newpassword: '',
+    });
+    miBody.append(formRow);
+  });
+  return card;
+};
+
+const createEmployeeFormRow = (employee) => {
+  const formRow = $(`
+    <form class="form-row">
+      <div class="form-row">
+        ${App.generateFormInput({ name: 'email', type: 'email', value: employee.email, disabled: !!employee.email })}
+        ${App.generateFormInput({ name: 'name', value: employee.name })}
+        ${App.generateFormInput({ name: 'newpassword', type: 'password', optional: !!employee.email, minlength: 8 })}
+      </div>
+      <div class="mi-control">
+        <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
+        <button type="button" class="btn btn-danger btn-delete">${App.lang.misc_delete} ${App.getIcon('close')}</button>
+      </div>
+    </form>
+  `);
+  App.bindForm(formRow, '/employee');
+  const btnDelete = formRow.find('.btn-delete');
+  btnDelete.click(() => {
+    // must confirm (click delete twice) to delete
+    if (!btnDelete.data('ready')) {
+      btnDelete.addClass('btn-raised').text('Confirm delete').data('ready', true);
+    } else {
+      App.deleteEmployee([App.subdomain, employee.email].join(':'), btnDelete);
+    }
+  });
+  return formRow;
 };

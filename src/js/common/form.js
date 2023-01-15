@@ -1,5 +1,5 @@
 App.generateFormInput = (args) => {
-  const { label, name, value, optional, disabled, type, step, title } = args;
+  const { label, name, value, optional, disabled, type, step, title, minlength } = args;
   const { width, min, max, hidden, accept, placeholder, autocomplete, pattern } = args;
   const style = `${width ? `max-width: ${width}px;` : ''}${hidden ? ` display: none;` : ''}`;
   // some name values will include the index, such as 'labelPrinters.0.ip', 'labelPrinters.1.ip'
@@ -17,6 +17,7 @@ App.generateFormInput = (args) => {
         ${autocomplete ? ` autocomplete="${autocomplete}"` : ' autocomplete="off"'}
         ${accept ? ` accept="${accept}"` : ''}
         ${step ? ` step="${step}"` : ''}
+        ${minlength ? ` minlength="${minlength}"` : ''}
         ${min !== undefined ? ` min="${min}"` : ''}
         ${max !== undefined ? ` max="${max}"` : ''}
         class="form-control"
@@ -144,6 +145,10 @@ App.bindForm = (form, endpoint) => {
       const changes = resp.msg === 'srv_success' ? data : resp.msg;
       if (endpoint === '/slides') {
         App.settings.slides[changes._id] = changes;
+        return;
+      }
+      if (endpoint === '/employee') {
+        App.settings.employees[data.email] = data.name;
         return;
       }
       if (endpoint === '/ors') {

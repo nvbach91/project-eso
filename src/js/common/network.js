@@ -253,3 +253,20 @@ App.deleteOrs = (btn) => {
     App.settings.ors = {};
   }).done(App.ajaxDeleteDone(btn)).fail(App.ajaxDeleteFail(btn));
 };
+
+App.deleteEmployee = (username, btn) => {
+  App.ajaxDeleting(btn);
+  return $.ajax({
+    type: 'DELETE',
+    url: `${App.apiPrefix}/employee`,
+    data: { username },
+    beforeSend: App.attachToken,
+  }).done((resp) => {
+    if (resp.msg !== 'srv_success') {
+      return App.ajaxDeleteFail(btn)();
+    }
+    delete App.settings.employees[username.split(':')[1]];
+    btn.parent().parent().remove();
+    App.ajaxDeleteDone(btn)();
+  }).fail(App.ajaxDeleteFail(btn));
+};

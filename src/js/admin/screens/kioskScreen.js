@@ -205,7 +205,7 @@ const createReceiptSettingsForm = () => {
 };
 
 const createSlidesSettingsForm = () => {
-  const form = $(`
+  const card = $(`
     <div class="mod-item card">
       <div class="mi-header">
         <span>${App.lang.settings_slides}</span>
@@ -214,8 +214,8 @@ const createSlidesSettingsForm = () => {
       <div class="mi-body"></div>
     </div>
   `);
-  const miBody = form.find('.mi-body');
-  form.find('.btn-add').click(() => {
+  const miBody = card.find('.mi-body');
+  card.find('.btn-add').click(() => {
     const formRow = createSlideFormRow({ position: 0, img: '', text: '' });
     miBody.prepend(formRow);
   });
@@ -226,7 +226,7 @@ const createSlidesSettingsForm = () => {
     const formRow = createSlideFormRow({ _id, text, img, position, video });
     miBody.append(formRow);
   });
-  return form;
+  return card;
 };
 
 const createSlideFormRow = (slide) => {

@@ -39,6 +39,7 @@ app.use(apiPrefix, require(`./routes/${apiPrefix}/groups`));
 app.use(apiPrefix, require(`./routes/${apiPrefix}/mods`));
 app.use(apiPrefix, require(`./routes/${apiPrefix}/aggregates`));
 app.use(apiPrefix, require(`./routes/${apiPrefix}/registers`));
+app.use(apiPrefix, require(`./routes/${apiPrefix}/employees`));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

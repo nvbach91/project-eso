@@ -70,7 +70,7 @@ router.post('/registration', (req, res) => {
     return new Registers(newRegister).save();
   }).then(() => {
     const newUser = JSON.parse(JSON.stringify(req.body));
-    newUser.name = 'Admin';
+    newUser.name = 'Kiosk 1';
     newUser.role = 'admin';
     newUser.username = `${req.body.subdomain}:${req.body.email}`;
     newUser.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
