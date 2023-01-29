@@ -35,7 +35,7 @@ const renderKitchenPrinterSettings = (type, printer, id) => {
   return `
     <div class="card printer">
       <div class="form-row">
-        ${App.generateFormSelect({ name: `${type}.${id}.name`, value: printer.name, options: printerOptions, optional: true })}
+        ${App.generateFormInput({ name: `${type}.${id}.name`, value: printer.name, optional: true })}
         ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
         ${App.generateFormInput({ name: `${type}.${id}.groups`, value: printer.groups, width: 140, optional: true, pattern: /^\d+(,\d+)*$/ })}
       </div>
