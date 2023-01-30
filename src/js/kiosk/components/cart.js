@@ -224,7 +224,7 @@ App.showCart = () => {
     });
     let thisTotal = quantity * finalPrice;
     const el = $(`
-      <div class="card cart-item">
+      <div class="cart-item">
         <div class="ci-img"${App.getBackgroundImage(img)}></div>
         <div class="ci-info">
           <div class="ci-name"><strong>${name}</strong> <span class="badge badge-pill badge-primary">${price} ${App.settings.currency.symbol}</span></div>

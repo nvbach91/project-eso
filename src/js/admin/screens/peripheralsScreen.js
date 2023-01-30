@@ -13,7 +13,7 @@ const generatePrinterSettingsDropdown = (type, id) => `
 const renderKioskPrinterSettings = (type, printer, id) => {
   const printerOptions = App.supportedPrinters.map((p) => ({ label: p, value: p }));
   return `
-    <div class="card printer">
+    <div class="printer">
       <div class="form-row">
         ${App.generateFormSelect({ name: `${type}.${id}.name`, value: printer.name, options: printerOptions, optional: true })}
         ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
@@ -33,7 +33,7 @@ const renderKioskPrinterSettings = (type, printer, id) => {
 const renderKitchenPrinterSettings = (type, printer, id) => {
   const printerOptions = App.supportedPrinters.map((p) => ({ label: p, value: p }));
   return `
-    <div class="card printer">
+    <div class="printer">
       <div class="form-row">
         ${App.generateFormInput({ name: `${type}.${id}.name`, value: printer.name, optional: true })}
         ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
@@ -51,7 +51,7 @@ const renderKitchenPrinterSettings = (type, printer, id) => {
 };
 
 const renderLabelPrinterSettings = (type, printer, id) => `
-  <div class="card printer">
+  <div class="printer">
     <div class="form-row">
       ${App.generateFormInput({ name: `${type}.${id}.name`, value: printer.name, optional: true })}
       ${App.generateFormInput({ name: `${type}.${id}.ip`, value: printer.ip, width: 140, optional: true, pattern: App.regex.ip.regex })}
