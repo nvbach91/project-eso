@@ -53,7 +53,7 @@ App.GLocaleCS = {
   "receipt_summary_pos"                     : "Pokl.",
   "receipt_summary_bkp"                     : "BKP",
   "receipt_summary_fik"                     : "FIK",
-  "receipt_footer_clerk"                    : "Vydal",
+  "receipt_footer_clerk"                    : "Vystavil",
   "receipt_not_paid"                        : "ZAPLAŤTE U POKLADNY",
 
   "modal_product_detail_title"              : "Podrobnosti produktu",
