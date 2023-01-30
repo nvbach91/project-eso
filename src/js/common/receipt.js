@@ -219,7 +219,7 @@ App.renderKioskReceipt = (transaction, printer, useAlign) => {
       vatSummary[item.vat].total += itemTotal;
       const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? product.name : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = `${product ? product.name : `${App.lang.form_ean}: ${item.ean}`} ${item.mods.length ? `(${item.price} ${App.settings.currency.code})` : ''}`;
       let modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x +${mod.price} ${App.settings.currency.code}` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       return `${useAlign ? '' : '!'}${App.ESCPOS.bold(itemName)}${modText ? `\n${modText}` : ''}\n${quantityPadded} x${App.addPadding(itemPrice.formatMoney(), 10 + App.settings.receipt.extraPadding)}\t${itemTotal.formatMoney()} ${App.vatMarks[item.vat]}`;
     }).join('\n')}`;// +
