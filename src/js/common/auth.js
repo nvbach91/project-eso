@@ -33,6 +33,9 @@ App.renderLoginForm = () => {
   const passwordInput = loginForm.find('[name="password"]');
   loginForm.submit((e) => {
     e.preventDefault();
+    if (App.autologinTimeout) {
+      clearTimeout(App.autologinTimeout);
+    }
     App.authenticate({
       subdomain: subdomainInput.val().replace(/http(s)?:\/\//, '').split('.')[0],
       username: usernameInput.val(),
@@ -51,7 +54,7 @@ App.renderLoginForm = () => {
   try {
     const autoLogin = JSON.parse(localStorage.getItem('autoLogin') || '{}');
     if (autoLogin.username && autoLogin.password) {
-      setTimeout(() => {
+      App.autologinTimeout = setTimeout(() => {
         if (!document.contains(loginForm[0])) {
           return false;
         }
