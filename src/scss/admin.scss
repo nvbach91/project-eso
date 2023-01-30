@@ -161,6 +161,12 @@
     display: flex;
     justify-content: space-between;
 }
+.rp-line:last-child {
+    margin-top: 20px;
+}
+.rp-line:last-child span {
+    color: #888;
+}
 span.match {
     color: $primaryThemeColor;
     font-weight: bold;
