@@ -230,7 +230,7 @@ App.GLocaleCS = {
 
   "tip_modification_limit"                  : "Limit pro objednávání (0 = bez limitu)",
   "tip_tablesync_sync"                      : "Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum",
-  "tip_tablesync_sync_url"                  : "Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. sync.vcap.me 127.0.0.1",
+  "tip_tablesync_sync_url"                  : "Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. 127.0.0.1 sync.vcap.me",
   "tip_enter_group_number"                  : "Zadejte číslo skupiny",
   "tip_groups_settings"                     : "Tip: Přidejte či editujte skupinu podle jejího čísla",
   "tip_enter_modification_number"           : "Zadejte číslo modifikace",

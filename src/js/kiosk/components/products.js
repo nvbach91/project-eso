@@ -15,7 +15,9 @@ App.renderProducts = (group) => {
   }).sort((a, b) => App.products[a].position - App.products[b].position);
   products.forEach((ean) => {
     const { highlight, img, name, price, position } = App.products[ean];
-    const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
+    const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => {
+      return App.mods[modNumber].type.endsWith('.') || (App.mods[modNumber].type.endsWith('!') && App.deliveryMethod === 'takeout');
+    }).length > 0;
     const element = $(`
       <div class="product-offer${highlight ? ' highlight' : ''}" title="#${ean} [${position || 0}]">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
@@ -99,7 +101,7 @@ App.showProductDetail = (id, ean) => {
                     if (index === 0 && type.endsWith('.') && !active && !App.cart[id]) {
                       active = true;
                     }
-                    if (type.endsWith('!')) {
+                    if (index === 0 && type.endsWith('!') && !active && !App.cart[id]) {
                       active = true;
                     }
                     const modQuantity = active && App.cart[id] ? App.cart[id].mods.find((m) => m.number === Number(modNumber)).quantity : 1;

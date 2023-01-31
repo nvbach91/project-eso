@@ -65,7 +65,9 @@ App.renderOrderPreview = () => {
 
 App.createOrderPreviewItem = (id, ean) => {
   const { img } = App.products[ean];
-  const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => App.mods[modNumber].type.endsWith('.')).length > 0;
+  const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => {
+    return App.mods[modNumber].type.endsWith('.') || (App.mods[modNumber].type.endsWith('!') || App.deliveryMethod === 'takeout');
+  }).length > 0;
   const itemHasMod = id && App.cart[id].mods.length;
   const el = $(`
     <div class="op-item">

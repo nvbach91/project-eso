@@ -552,13 +552,13 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     const t = $(this);
     const type = t.data('type');
     const active = t.data('active');
-    if (type && type.endsWith('!')) { // mandatory mod (for takeout box)
+    if (type && type.endsWith('!') && active) { // mandatory mod (for takeout mode only)
       return false;
     }
     if (type && type.endsWith('.') && active) { // mandatory mod
       return false;
     }
-    if (type && type.endsWith('.')) {
+    if (type && (type.endsWith('.') || type.endsWith('!'))) {
       const typeButtons = form.find(`${className}[data-type="${type}"]`).removeClass('btn-raised btn-primary').addClass('btn-secondary');
       if (checkMarkContainerSelector) {
         typeButtons.siblings(checkMarkContainerSelector).find('i').remove();

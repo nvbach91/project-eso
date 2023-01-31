@@ -230,7 +230,7 @@ App.GLocaleEN = {
 
   "tip_modification_limit"                  : "Limit order quantity (0 = no limit)",
   "tip_tablesync_sync"                      : "Connect to OPS tablesync to enable sending orders to Gokasa Kitchen and Gokasa Quantum",
-  "tip_tablesync_sync_url"                  : "Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. sync.vcap.me 127.0.0.1",
+  "tip_tablesync_sync_url"                  : "Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. 127.0.0.1 sync.vcap.me",
   "tip_enter_group_number"                  : "Enter group number",
   "tip_groups_settings"                     : "Tip: Add or edit group by entering its number",
   "tip_enter_modification_number"           : "Enter modification number",

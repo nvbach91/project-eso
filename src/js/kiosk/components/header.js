@@ -7,7 +7,7 @@ App.renderHeader = () => {
           <span>${App.settings.name}</span>
         </a>
         <ul id="delivery-method" class="navbar-nav">
-          <li class="nav-item active" id="payment-method">
+          <li class="nav-item active">
             <a class="nav-link" href="#">
               <span></span>&nbsp;
               ${App.getIcon('book')}
@@ -17,7 +17,6 @@ App.renderHeader = () => {
       </nav>
     </header>
   `);
-  App.jPaymentMethod = header.find('#payment-method');
   App.jDeliveryMethodIndicator = header.find('#delivery-method');
   App.jHeader.replaceWith(header);
   App.jHeader = header;
