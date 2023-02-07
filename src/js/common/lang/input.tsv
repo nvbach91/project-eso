@@ -57,6 +57,7 @@ receipt_footer_clerk	Clerk	Vystavil
 receipt_not_paid	PAY AT CHECKOUT	ZAPLAŤTE U POKLADNY
 		
 modal_product_detail_title	Product details	Podrobnosti produktu
+modal_product_unavailable	This product is currently unavailable	Tento produkt je momentálně nedostupný
 		
 modal_cart_title	Your order	Vaše objednávka
 modal_cart_cancel_btn	Cancel order	Zrušit objednávku
@@ -71,6 +72,7 @@ modal_info	Info	Info
 modal_payment_failed_p1	There was a problem in processing your request	Vyskytl se problém při zpracovávání vaší žádosti
 modal_payment_failed_p2	Please contact our staff	Prosíme zkontaktuje personál
 		
+misc_unavailable	unavailable	nedostupné
 misc_item	item	položka
 misc_items	items	položky
 misc_itemss	items	položek
@@ -155,6 +157,7 @@ form_image	Image	Obrázek
 form_description	Description	Popis
 form_name	Name	Název
 form_active	Active	Aktivní
+form_available	Available	Dostupné
 form_number	Number	Číslo
 form_currency	Currency	Měna
 form_order	Order	Objednávka

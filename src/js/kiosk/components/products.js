@@ -14,12 +14,12 @@ App.renderProducts = (group) => {
     return App.products[ean].active && group == App.products[ean].group;
   }).sort((a, b) => App.products[a].position - App.products[b].position);
   products.forEach((ean) => {
-    const { highlight, img, name, price, position } = App.products[ean];
+    const { highlight, img, name, price, position, available } = App.products[ean];
     const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => {
       return App.mods[modNumber].type.endsWith('.') || (App.mods[modNumber].type.endsWith('!') && App.deliveryMethod === 'takeout');
     }).length > 0;
     const element = $(`
-      <div class="product-offer${highlight ? ' highlight' : ''}" title="#${ean} [${position || 0}]">
+      <div class="product-offer${highlight ? ' highlight' : ''}${available ? '' : ' unavailable'}" title="#${ean} [${position || 0}]">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
           <!--button class="btn btn-primary btn-raised${App.cart[ean] ? '': ' hidden'} cart-quantity-indicator" data-id="${ean}">
             ${App.getIcon('shopping_cart')}
@@ -27,7 +27,9 @@ App.renderProducts = (group) => {
           </button-->
           ${App.productMods[ean] ? `<div class="po-ribbon${productHasMandatoryMod ? ' mandatory' : ''}">M</div>` : ''}
         </div>
-        <div class="po-name">${name}</div>
+        <div class="po-name">
+          <span>${name}</span><span>${available ? '' : `${App.getIcon('block', 24, '', ['text-danger'])}`}</span>
+        </div>
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
           <div class="po-control">
@@ -65,13 +67,15 @@ App.renderProducts = (group) => {
 };
 
 App.showProductDetail = (id, ean) => {
-  const { img, name, price, desc } = App.products[ean];
+  const { img, name, price, desc, available } = App.products[ean];
   const element = $(`
-    <div class="product-details">
+    <div class="product-details${available ? '' : ' unavailable'}">
       <div class="pd-img"${App.getBackgroundImage(img)}></div>
       <div class="pd-details">
         <div class="pd-info">
-          <div class="pd-name">${name}</div>
+          <div class="pd-name">
+            <span>${available ? '' : `${App.getIcon('block', 24, '', ['text-danger'])}`}</span><span>${name}</span>
+          </div>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
         ${desc ? `<div class="pd-info"><p class="pd-description">${desc.split(/[\r\n]+/).join('<br>')}</p></div>` : ''}
@@ -179,6 +183,9 @@ App.showProductDetail = (id, ean) => {
   //   element.find('.remove').removeClass('hidden');
   // });
   element.find('.order').click(() => {
+    if (!available) {
+      return App.showWarning(App.lang.modal_product_unavailable);
+    }
     App.addToCart(ean, getMods(element), 1, id);
     App.closeModal();
     App.nextTab();

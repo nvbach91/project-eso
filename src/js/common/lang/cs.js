@@ -57,6 +57,7 @@ App.GLocaleCS = {
   "receipt_not_paid"                        : "ZAPLAŤTE U POKLADNY",
 
   "modal_product_detail_title"              : "Podrobnosti produktu",
+  "modal_product_unavailable"               : "Tento produkt je momentálně nedostupný",
 
   "modal_cart_title"                        : "Vaše objednávka",
   "modal_cart_cancel_btn"                   : "Zrušit objednávku",
@@ -71,6 +72,7 @@ App.GLocaleCS = {
   "modal_payment_failed_p1"                 : "Vyskytl se problém při zpracovávání vaší žádosti",
   "modal_payment_failed_p2"                 : "Prosíme zkontaktuje personál",
 
+  "misc_unavailable"                        : "nedostupné",
   "misc_item"                               : "položka",
   "misc_items"                              : "položky",
   "misc_itemss"                             : "položek",
@@ -155,6 +157,7 @@ App.GLocaleCS = {
   "form_description"                        : "Popis",
   "form_name"                               : "Název",
   "form_active"                             : "Aktivní",
+  "form_available"                          : "Dostupné",
   "form_number"                             : "Číslo",
   "form_currency"                           : "Měna",
   "form_order"                              : "Objednávka",

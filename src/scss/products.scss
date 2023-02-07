@@ -41,6 +41,11 @@
     grid-column-start: 1;
     grid-column-end: 2;
 }
+.product-offer.unavailable {
+    .po-img, .po-control, .po-price {
+        filter: grayscale(1);
+    }
+}
 .product-details .remove.hidden {
     visibility: hidden;
 }
@@ -108,6 +113,9 @@
     text-overflow: ellipsis;
     font-weight: bold;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .po-price {
     font-weight: 500;
@@ -131,6 +139,9 @@
     button {
         padding: 20px 40px;
     }
+}
+.product-details.unavailable {
+    filter: grayscale(1);
 }
 .pd-info {
     display: flex;
@@ -228,6 +239,9 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .pd-price {
     font-size: 32px;

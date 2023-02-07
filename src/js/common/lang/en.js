@@ -57,6 +57,7 @@ App.GLocaleEN = {
   "receipt_not_paid"                        : "PAY AT CHECKOUT",
 
   "modal_product_detail_title"              : "Product details",
+  "modal_product_unavailable"               : "This product is currently unavailable",
 
   "modal_cart_title"                        : "Your order",
   "modal_cart_cancel_btn"                   : "Cancel order",
@@ -71,6 +72,7 @@ App.GLocaleEN = {
   "modal_payment_failed_p1"                 : "There was a problem in processing your request",
   "modal_payment_failed_p2"                 : "Please contact our staff",
 
+  "misc_unavailable"                        : "unavailable",
   "misc_item"                               : "item",
   "misc_items"                              : "items",
   "misc_itemss"                             : "items",
@@ -155,6 +157,7 @@ App.GLocaleEN = {
   "form_description"                        : "Description",
   "form_name"                               : "Name",
   "form_active"                             : "Active",
+  "form_available"                          : "Available",
   "form_number"                             : "Number",
   "form_currency"                           : "Currency",
   "form_order"                              : "Order",
