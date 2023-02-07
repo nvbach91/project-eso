@@ -100,7 +100,7 @@ App.showProductDetail = (id, ean) => {
                 <h5><strong>${/[!.]$/.test(type) ? type.slice(0, -1) : type}</strong></h5>
                 <div class="horizontal-scroll">
                   ${Object.keys(App.mods).filter((modNumber) => {
-                    return App.modTypes[type].includes(Number(modNumber)) && !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
+                    return App.mods[modNumber].active && App.modTypes[type].includes(Number(modNumber)) && !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));
                   }).map((modNumber, index) => {
                     const mod = App.mods[modNumber];
                     // const display = !!App.productMods[ean] && App.productMods[ean].includes(Number(modNumber));

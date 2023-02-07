@@ -104,7 +104,7 @@ App.renderProductsScreen = () => {
 const showEditForm = (ean, cb) => {
   if (!cb) cb = () => { };
   const product = App.products[ean];
-  const { name, price, group, img, vat, highlight, position, desc, active, available } = product || {};
+  const { name, price, group, img, vat, highlight, position, desc, active, available } = product || { active: true, available: true };
   const imgStyle = App.getBackgroundImage(img);
   const groupOptions = Object.keys(App.groups).map((group) => {
     return { label: `${group} - ${App.groups[group].name}`, value: group };

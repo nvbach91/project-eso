@@ -98,7 +98,9 @@ router.post('/registration', (req, res) => {
       vat: 15,
       desc: '',
       position: 0,
-      regId: newRegisterId
+      regId: newRegisterId,
+      active: true,
+      available: true,
     }).save();
   }).then(() => {
     return new Slides({

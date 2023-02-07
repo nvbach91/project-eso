@@ -90,9 +90,13 @@ App.fetchMods = () => {
       });
       const type = mod.type;
       if (!App.modTypes[type]) {
-        App.modTypes[type] = [mod.number];
+        if (mod.active) {
+          App.modTypes[type] = [mod.number];
+        }
       } else {
-        App.modTypes[type].push(mod.number);
+        if (mod.active) {
+          App.modTypes[type].push(mod.number);
+        }
       }
     });
   });
