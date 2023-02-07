@@ -33,9 +33,13 @@ App.renderLoginForm = () => {
   const passwordInput = loginForm.find('[name="password"]');
   loginForm.submit((e) => {
     e.preventDefault();
+    if (App.isAuthenticating) {
+      return false;
+    }
     if (App.autologinTimeout) {
       clearTimeout(App.autologinTimeout);
     }
+    App.isAuthenticating = true;
     App.authenticate({
       subdomain: subdomainInput.val().replace(/http(s)?:\/\//, '').split('.')[0],
       username: usernameInput.val(),
@@ -48,6 +52,8 @@ App.renderLoginForm = () => {
       App.start();
     }).fail((err) => {
       App.showInModal('Access denied', 'Warning');
+    }).always(() => {
+      delete App.isAuthenticating;
     });
   });
   App.jContainer.append(loginScreen);
