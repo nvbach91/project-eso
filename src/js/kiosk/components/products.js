@@ -28,7 +28,8 @@ App.renderProducts = (group) => {
           ${App.productMods[ean] ? `<div class="po-ribbon${productHasMandatoryMod ? ' mandatory' : ''}">M</div>` : ''}
         </div>
         <div class="po-name">
-          <span>${name}</span><span>${available ? '' : `${App.getIcon('block', 24, '', ['text-danger'])}`}</span>
+          <span>${name}</span>
+          ${available ? '' : `<span class="badge bg-danger text-light">${App.getIcon('block', 24, 'white')} ${App.lang.misc_unavailable}</span>`}
         </div>
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
@@ -74,7 +75,9 @@ App.showProductDetail = (id, ean) => {
       <div class="pd-details">
         <div class="pd-info">
           <div class="pd-name">
-            <span>${available ? '' : `${App.getIcon('block', 24, '', ['text-danger'])}`}</span><span>${name}</span>
+            <span>${name}</span>
+            &nbsp;
+            ${available ? '' : `<span class="badge bg-danger text-light">${App.getIcon('block', 24, 'white')} ${App.lang.misc_unavailable}</span>`}
           </div>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
         </div>
