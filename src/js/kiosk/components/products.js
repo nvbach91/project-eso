@@ -201,6 +201,9 @@ App.showProductDetail = (id, ean) => {
             modQuantityContainer.text(newQuantity);
             pmPriceContainer.text(`+${newPrice} ${App.settings.currency.symbol}`);
           }
+          if (newQuantity === 0) {
+            t.find('.product-mod').click();
+          }
         } else {
           const limit = App.mods[button.data('mod')].limit;
           if (newQuantity <= limit) {
