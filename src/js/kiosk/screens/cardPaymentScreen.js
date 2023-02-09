@@ -57,6 +57,9 @@ App.renderCardPaymentScreen = () => {
           App.printKioskReceipt(resp, appendix);
           App.printKitchenReceipt(resp);
           App.printLabelReceipt(resp);
+          if (App.settings.tablesync.url) {
+            App.sendOrderToTableSync(resp);
+          }
         }).fail((resp) => {
           App.showWarning(`
             <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
@@ -95,51 +98,55 @@ App.payInCash = () => {
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
     if (App.settings.tablesync.url) {
-      // console.log(resp.items);
-      const order = {
-        number: resp.number,
-        mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
-        date: resp.date,
-        data: resp.items.map((item) => ({
-          id: App.generateRandomPassword(),
-          _id: App.generateRandomPassword(),
-          ean: item.ean,
-          quantity: item.quantity,
-          price: item.price,
-          tax: item.vat,
-          name: App.products[item.ean].name,
-          group: item.group.toString(),
-          printed: true,
-          name2: '',
-          note: item.mods.map((mod) => `*${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number].name}`).join('<br>'),
-          mods: '',
-        })),
-        username: App.user.username,
-        status: 'pending',
-        paid: true,
-        receipt: resp.number,
-        tableId: App.generateRandomPassword(16),
-        tableName: 'KIOSK',
-        online: true,
-      };
-      order.data = JSON.stringify(order.data);
-      $.ajax({
-        method: 'POST',
-        url: `${App.settings.tablesync.url}/order`,
-        data: order,
-      }).done(() => {
-        // console.log('Your order was successfully placed');
-      }).fail(() => {
-        App.showWarning(`
-          <p>Your order <strong>#${order.mask}</strong> was not successfully placed, please contact staff</p>
-          <p>Vaše objednávka <strong>#${order.mask}</strong> nebyla úspěšně založena, prosím kontaktujte obsluhu</p>
-        `);
-      });
+      App.sendOrderToTableSync(resp);
     }
   }).fail((resp) => {
     App.showWarning(`
       <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
       <p>${App.lang.modal_payment_failed_p2}</p>
+    `);
+  });
+};
+
+App.sendOrderToTableSync = (resp) => {
+  // console.log(resp.items);
+  const order = {
+    number: resp.number,
+    mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
+    date: resp.date,
+    data: resp.items.map((item) => ({
+      id: App.generateRandomPassword(),
+      _id: App.generateRandomPassword(),
+      ean: item.ean,
+      quantity: item.quantity,
+      price: item.price,
+      tax: item.vat,
+      name: App.products[item.ean].name,
+      group: item.group.toString(),
+      printed: true,
+      name2: '',
+      note: item.mods.map((mod) => `*${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number].name}`).join('<br>'),
+      mods: '',
+    })),
+    username: App.user.username,
+    status: 'pending',
+    paid: true,
+    receipt: resp.number,
+    tableId: App.generateRandomPassword(16),
+    tableName: 'KIOSK',
+    online: true,
+  };
+  order.data = JSON.stringify(order.data);
+  $.ajax({
+    method: 'POST',
+    url: `${App.settings.tablesync.url}/order`,
+    data: order,
+  }).done(() => {
+    // console.log('Your order was successfully placed');
+  }).fail(() => {
+    App.showWarning(`
+      <p>Your order <strong>#${order.mask}</strong> was not successfully placed, please contact staff</p>
+      <p>Vaše objednávka <strong>#${order.mask}</strong> nebyla úspěšně založena, prosím kontaktujte obsluhu</p>
     `);
   });
 };
