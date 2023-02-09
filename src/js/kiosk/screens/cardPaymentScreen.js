@@ -53,13 +53,13 @@ App.renderCardPaymentScreen = () => {
         const appendix = resp.msg.dataFields.t;
         App.renderFinishScreen();
         App.createTransaction().done((resp) => {
+          if (App.settings.tablesync.url) {
+            App.sendOrderToTableSync(resp);
+          }
           App.transactions.push(resp);
           App.printKioskReceipt(resp, appendix);
           App.printKitchenReceipt(resp);
           App.printLabelReceipt(resp);
-          if (App.settings.tablesync.url) {
-            App.sendOrderToTableSync(resp);
-          }
         }).fail((resp) => {
           App.showWarning(`
             <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
@@ -92,14 +92,14 @@ App.renderCardPaymentScreen = () => {
 
 App.payInCash = () => {
   App.createTransaction().done((resp) => {
+    if (App.settings.tablesync.url) {
+      App.sendOrderToTableSync(resp);
+    }
     App.renderFinishScreen();
     App.transactions.push(resp);
     App.printKioskReceipt(resp);
     App.printKitchenReceipt(resp);
     App.printLabelReceipt(resp);
-    if (App.settings.tablesync.url) {
-      App.sendOrderToTableSync(resp);
-    }
   }).fail((resp) => {
     App.showWarning(`
       <p>${App.lang.modal_payment_failed_p1} (${resp.responseJSON ? resp.responseJSON.msg : resp.status})</p>
