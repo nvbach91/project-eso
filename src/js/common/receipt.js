@@ -292,7 +292,7 @@ App.renderKitchenReceiptText = (transaction, printer) => {
       }).map((item) => {
       // const quantityPadded = App.addPadding(item.quantity, 7);
       const product = App.products[item.ean];
-      const itemName = product ? `#${item.ean} ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = product ? `${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       let modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       return `${App.ESCPOS.quadrupleSize(`${item.quantity}x ${itemName}`)}${modText ? `\n${modText}` : ''}`;
     }).join('\n')}` +
@@ -318,7 +318,7 @@ App.renderLabelReceiptText = (transaction, item, index, totalItems, labelPrinter
     `\n${moment(transaction.date).format('DD.MM HH:mm:ss')}\t${index + 1}/${totalItems}` +
     `\n${(() => {
       const product = App.products[item.ean];
-      const itemName = product ? `${item.ean} - ${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
+      const itemName = product ? `${product.name}` : `${App.lang.form_ean}: ${item.ean}`;
       const modText = item.mods.map((mod) => ` *${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number] ? App.mods[mod.number].name : `${mod.number} - N/A`}`).join('\n');
       const itemLine = App.shortenTextByColumns(`${item.quantity} x ${itemName}`, labelPrinter.columns);
       return App.ESCPOS.quadrupleSize(itemLine, labelPrinter.style) + (modText ? `\n${modText}` : '');
