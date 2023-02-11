@@ -12212,5 +12212,5 @@ h6 {
     background-color: white;
 }
 .products-description {
-    color: white;
+    color: white !important;
 }
