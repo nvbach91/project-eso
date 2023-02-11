@@ -10,8 +10,10 @@ App.renderTabs = () => {
         <div class="tab-overlay"${App.getBackgroundImage(img)}></div>
         <div class="tab-name">
           <div class="ribbon-wrapper">
-            <div class="glow-flow">&nbsp;</div>
-            <div class="ribbon-front">${name}</div>
+            <div class="ribbon-front">
+              <div class="glow-flow">&nbsp;</div>
+              <span>${name}</span>
+            </div>
             <div class="ribbon-edge-topleft"></div>
             <div class="ribbon-edge-topright"></div>
             <div class="ribbon-edge-bottomleft"></div>

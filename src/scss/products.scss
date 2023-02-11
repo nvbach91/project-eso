@@ -98,6 +98,7 @@
     flex-grow: 1;
     position: relative;
     padding: 0;
+    background-size: contain;
 }
 .po-img .btn {
     height: 100%;
@@ -180,7 +181,7 @@
 .pd-img {
     height: 240px;
     width: 50%;
-    background-size: cover;
+    background-size: contain;
     background-position: bottom;
     position: relative;
     box-shadow: -5px 0px 10px rgb(0, 0, 0, 0.2);

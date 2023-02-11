@@ -34,7 +34,6 @@
     bottom: 0;
     position: absolute;
     transition: opacity ease .3s, background-color ease .3s;
-    padding: 5px 0;
 }
 .tab.selected {
     opacity: 1;
@@ -62,7 +61,14 @@
         font-size: 18px;
     }
 }
-
+.ribbon-front {
+    position: relative;
+    overflow: hidden;
+}
+.ribbon-front span {
+    padding: 5px 0;
+    display: inline-block;
+}
 .tab.selected .ribbon-wrapper {
     position: relative;
     z-index: 998;
@@ -132,14 +138,19 @@
         opacity: 0;
     }
 
+    25% {
+        left: 25%;
+        opacity: 0.2;
+    }
+
     50% {
         left: 50%;
-        opacity: 0.2;
+        opacity: 0.6;
     }
 
     75% {
         left: 75%;
-        opacity: 0.3;
+        opacity: 0.2;
     }
 
     100% {
