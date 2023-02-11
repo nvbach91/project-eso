@@ -113,13 +113,9 @@
 }
 .po-name {
     padding: 10px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     font-weight: bold;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    height: 60px;
 }
 .po-name .badge-pill {
     display: flex;
