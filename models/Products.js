@@ -5,6 +5,7 @@ const Products = new Schema({
   regId: Schema.ObjectId,
   position: Number,
   highlight: Boolean,
+  promotion: String,
   ean: String,
   name: String,
   price: String,

@@ -12214,3 +12214,23 @@ h6 {
 .products-description {
     color: white !important;
 }
+
+.tab.selected .ribbon-wrapper .ribbon-front {
+    background-color: #f44336 !important;
+}
+.tab.selected .ribbon-wrapper .ribbon-edge-topleft, .tab.selected .ribbon-wrapper .ribbon-edge-bottomleft {
+    border-color: transparent #9B1724 transparent transparent !important;
+}
+.tab.selected .ribbon-wrapper .ribbon-edge-topright, .tab.selected .ribbon-wrapper .ribbon-edge-bottomright {
+    border-color: transparent transparent transparent #9B1724 !important;
+}
+.po-ribbon.mandatory {
+    background-color: #f44336 !important;
+}
+.ribbon-corner .ribbon-corner-text {
+    background-color: #f44336 !important;
+}
+.ribbon-corner::before, .ribbon-corner::after {
+    border: 5px solid #9B1724 !important;
+    z-index: 0 !important;
+}

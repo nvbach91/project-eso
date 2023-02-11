@@ -72,6 +72,14 @@
         width: 180px;
         height: 180px;
     }
+    .tab.selected .ribbon-wrapper {
+        .ribbon-front {
+            width: 200px;
+        }
+        .ribbon-edge-bottomright {
+            left: 180px;
+        }
+    }
     .product-offer {
         height: 340px;
     }

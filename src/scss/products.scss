@@ -6,7 +6,7 @@
     overflow: auto;
     grid-gap: 20px;
     grid-auto-rows: min-content;
-    padding: 20px 20px 0 0;
+    padding: 10px;
     &:after {
         content: "";
         display: block;
@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: auto;
+    position: relative;
 }
 .product-offer.highlight {
     grid-column-start: 1;
@@ -120,10 +120,12 @@
     align-items: center;
     justify-content: space-between;
 }
-.po-name .badge {
+.po-name .badge-pill {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 5px 0.6em;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 .po-price {
     font-weight: 500;
@@ -178,8 +180,10 @@
 .pd-img {
     height: 240px;
     width: 50%;
-    background-size: contain;
+    background-size: cover;
     background-position: bottom;
+    position: relative;
+    box-shadow: -5px 0px 10px rgb(0, 0, 0, 0.2);
 }
 .pd-details {
     padding: 20px 0;
@@ -290,4 +294,145 @@
 }
 .pd-control .btn {
     margin: 0;
+}
+
+/* common */
+.ribbon-corner {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.ribbon-corner::before, .ribbon-corner::after {
+    position: absolute;
+    z-index: 1;
+    content: '';
+    display: block;
+    border: 5px solid var(--primary-darker);
+}
+
+.ribbon-corner .ribbon-corner-text {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 14px 0;
+    background-color: var(--primary);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    color: #f8f8f8;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+/* top left*/
+.ribbon-corner-top-left {
+    top: -10px;
+    left: -10px;
+}
+
+.ribbon-corner-top-left::before, .ribbon-corner-top-left::after {
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+
+.ribbon-corner-top-left::before {
+    top: 0;
+    right: 0;
+}
+
+.ribbon-corner-top-left::after {
+    bottom: 0;
+    left: 0;
+}
+
+.ribbon-corner-top-left .ribbon-corner-text {
+    right: -22px;
+    top: 30px;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+/* top right*/
+.ribbon-corner-top-right {
+    top: -10px;
+    right: -10px;
+}
+
+.ribbon-corner-top-right::before,
+.ribbon-corner-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+
+.ribbon-corner-top-right::before {
+    top: 0;
+    left: 0;
+}
+
+.ribbon-corner-top-right::after {
+    bottom: 0;
+    right: 0;
+}
+
+.ribbon-corner-top-right .ribbon-corner-text {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+}
+
+/* bottom left*/
+.ribbon-corner-bottom-left {
+    bottom: -10px;
+    left: -10px;
+}
+
+.ribbon-corner-bottom-left::before, .ribbon-corner-bottom-left::after {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+
+.ribbon-corner-bottom-left::before {
+    bottom: 0;
+    right: 0;
+}
+
+.ribbon-corner-bottom-left::after {
+    top: 0;
+    left: 0;
+}
+
+.ribbon-corner-bottom-left .ribbon-corner-text {
+    right: -25px;
+    bottom: 30px;
+    transform: rotate(225deg);
+}
+
+/* bottom right*/
+.ribbon-corner-bottom-right {
+    bottom: -10px;
+    right: -10px;
+}
+
+.ribbon-corner-bottom-right::before, .ribbon-corner-bottom-right::after {
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+
+.ribbon-corner-bottom-right::before {
+    bottom: 0;
+    left: 0;
+}
+
+.ribbon-corner-bottom-right::after {
+    top: 0;
+    right: 0;
+}
+
+.ribbon-corner-bottom-right .ribbon-corner-text {
+    left: -25px;
+    bottom: 30px;
+    transform: rotate(-225deg);
 }

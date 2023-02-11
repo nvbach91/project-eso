@@ -6,13 +6,11 @@
     min-width: 140px;
 }
 .tab {
-    border-radius: $borderRadius;
     display: flex;
     color: white;
     width: 100px;
     height: 100px;
     margin-bottom: 20px;
-    /* opacity: 0.5; */
     padding: 0;
     background-color: white !important;
 }
@@ -29,7 +27,8 @@
     background-size: cover;
 }
 .tab-name {
-    background-color: #686868be;
+    background-color: rgba(105, 105, 105, 0.5);
+    text-shadow: 0px 0px 5px rgb(0, 0, 0, 0.9);
     color: white;
     width: 100%;
     bottom: 0;
@@ -41,7 +40,7 @@
     opacity: 1;
     .tab-name {
         opacity: 1;
-        background-color: $primaryThemeColorDarkerTransparent;
+        background-color: transparent;
     }
 }
 .tab-overlay {
@@ -62,4 +61,114 @@
     .material-icons {
         font-size: 18px;
     }
+}
+
+.tab.selected .ribbon-wrapper {
+    position: relative;
+    z-index: 998;
+    .ribbon-front {
+        background-color: rgba(204, 51, 51, 0.9);
+        min-height: 30px;
+        width: 160px;
+        position: relative;
+        left: -10px;
+        z-index: 2;
+        color: #f8f8f8;
+        text-align: center;
+        text-shadow: 0px 1px 2px #cc6666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ribbon-front, .ribbon-back-left, .ribbon-back-right {
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.55);
+    }
+
+    .ribbon-edge-topleft, .ribbon-edge-topright, .ribbon-edge-bottomleft, .ribbon-edge-bottomright {
+        position: absolute;
+        z-index: 1;
+        border-style: solid;
+        height: 0px;
+        width: 0px;
+    }
+
+    .ribbon-edge-bottomleft, .ribbon-edge-bottomright {
+        bottom: -5px;
+    }
+
+    .ribbon-edge-topleft, .ribbon-edge-bottomleft {
+        left: -10px;
+        border-color: transparent #9B1724 transparent transparent;
+    }
+
+    .ribbon-edge-topleft {
+        top: -4px;
+        border-width: 5px 10px 0 0;
+    }
+
+    .ribbon-edge-bottomleft {
+        border-width: 0 10px 0px 0;
+    }
+
+    .ribbon-edge-topright, .ribbon-edge-bottomright {
+        left: 140px;
+        border-color: transparent transparent transparent #9B1724;
+    }
+
+    .ribbon-edge-topright {
+        top: 0px;
+        border-width: 0px 0 0 10px;
+    }
+
+    .ribbon-edge-bottomright {
+        border-width: 0 0 5px 10px;
+    }
+}
+
+@keyframes flow {
+    0% {
+        left: 0%;
+        opacity: 0;
+    }
+
+    50% {
+        left: 50%;
+        opacity: 0.2;
+    }
+
+    75% {
+        left: 75%;
+        opacity: 0.3;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+.glow-flow {
+    top: 0;
+    background-color: rgb(255, 255, 255, 0.8);
+    width: 40px;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+    animation: flow 1.5s linear infinite;
+    transform: skew(20deg);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 1%, rgba(255, 255, 255, 1) 100%);
+    border-left: 1px solid #fff;
+}
+
+.tab.selected .ribbon-wrapper .ribbon-front {
+    background-color: var(--primary);
+}
+
+.tab.selected .ribbon-wrapper .ribbon-edge-topleft, .tab.selected .ribbon-wrapper .ribbon-edge-bottomleft {
+    border-color: transparent var(--primary-darker) transparent transparent;
+}
+
+.tab.selected .ribbon-wrapper .ribbon-edge-topright, .tab.selected .ribbon-wrapper .ribbon-edge-bottomright {
+    border-color: transparent transparent transparent var(--primary-darker);
 }

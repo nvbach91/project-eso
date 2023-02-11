@@ -8,7 +8,16 @@ App.renderTabs = () => {
     const element = $(`
       <div class="btn btn-primary${App.settings.theme === 'dark' ? ' btn-raised' : ''} tab">
         <div class="tab-overlay"${App.getBackgroundImage(img)}></div>
-        <div class="tab-name">${name}</div>
+        <div class="tab-name">
+          <div class="ribbon-wrapper">
+            <div class="glow-flow">&nbsp;</div>
+            <div class="ribbon-front">${name}</div>
+            <div class="ribbon-edge-topleft"></div>
+            <div class="ribbon-edge-topright"></div>
+            <div class="ribbon-edge-bottomleft"></div>
+            <div class="ribbon-edge-bottomright"></div>
+          </div>
+        </div>
         <!--div class="btn btn-primary btn-raised${App.cartCategoryQuantities[groupNumber] ? '': ' hidden'} cart-quantity-indicator" data-id="${groupNumber}">
           ${App.getIcon('shopping_cart')}
           <span>${App.cartCategoryQuantities[groupNumber] || 0}</span>

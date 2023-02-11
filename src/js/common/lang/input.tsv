@@ -186,6 +186,7 @@ form_price	Price	Cena
 form_eans	Codes/EANs	Kódy/EAN
 form_ean	Code/EAN	Kód/EAN
 form_highlight	Highlight	Zvýraznit
+form_promotion	Promotion text	Text akce
 form_group	Group	Skupina
 form_vat	VAT	DPH
 form_email	Email	E-mail

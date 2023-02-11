@@ -186,6 +186,7 @@ App.GLocaleEN = {
   "form_eans"                               : "Codes/EANs",
   "form_ean"                                : "Code/EAN",
   "form_highlight"                          : "Highlight",
+  "form_promotion"                          : "Promotion text",
   "form_group"                              : "Group",
   "form_vat"                                : "VAT",
   "form_email"                              : "Email",

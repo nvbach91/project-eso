@@ -104,7 +104,7 @@ App.renderProductsScreen = () => {
 const showEditForm = (ean, cb) => {
   if (!cb) cb = () => { };
   const product = App.products[ean];
-  const { name, price, group, img, vat, highlight, position, desc, active, available } = product || { active: true, available: true };
+  const { name, price, group, img, vat, highlight, position, desc, active, available, promotion } = product || { active: true, available: true };
   const imgStyle = App.getBackgroundImage(img);
   const groupOptions = Object.keys(App.groups).map((group) => {
     return { label: `${group} - ${App.groups[group].name}`, value: group };
@@ -128,6 +128,7 @@ const showEditForm = (ean, cb) => {
             ${App.generateFormInput({ name: 'ean', value: ean || '', disabled: true })}
             ${App.generateFormInput({ name: 'position', value: isNaN(position) ? 0 : position, type: 'number', min: 0, width: 50 })}
             ${App.generateFormSelect({ name: 'highlight', value: highlight || false, options: App.binarySelectOptions })}
+            ${App.generateFormInput({ name: 'promotion', value: promotion || '', optional: true })}
           </div>
           <div class="form-row">
             ${App.generateFormInput({ name: 'name', value: name || '' })}

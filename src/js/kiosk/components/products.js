@@ -14,13 +14,21 @@ App.renderProducts = (group) => {
     return App.products[ean].active && group == App.products[ean].group;
   }).sort((a, b) => App.products[a].position - App.products[b].position);
   products.forEach((ean) => {
-    const { highlight, img, name, price, position, available } = App.products[ean];
+    const { highlight, img, name, price, position, available, promotion } = App.products[ean];
     const productHasMandatoryMod = App.productMods[ean] && App.productMods[ean].filter((modNumber) => {
       return App.mods[modNumber].type.endsWith('.') || (App.mods[modNumber].type.endsWith('!') && App.deliveryMethod === 'takeout');
     }).length > 0;
     const element = $(`
       <div class="product-offer${highlight ? ' highlight' : ''}${available ? '' : ' unavailable'}" title="#${ean} [${position || 0}]">
         <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
+          ${promotion ? (`
+            <div class="ribbon-corner ribbon-corner-top-left">
+              <div class="ribbon-corner-text">
+                <span>${promotion}</span>
+                <div class="glow-flow">&nbsp;</div>
+              </div>
+            </div>
+          `) : ''}
           <!--button class="btn btn-primary btn-raised${App.cart[ean] ? '': ' hidden'} cart-quantity-indicator" data-id="${ean}">
             ${App.getIcon('shopping_cart')}
             <span>${App.cart[ean] ? App.cart[ean].quantity : 0}</span>
@@ -29,7 +37,12 @@ App.renderProducts = (group) => {
         </div>
         <div class="po-name">
           <span>${name}</span>
-          ${available ? '' : `<span class="badge bg-danger text-light">${App.getIcon('block', 24, 'white')} ${App.lang.misc_unavailable}</span>`}
+          ${available ? '' : (`
+            <span class="badge-pill bg-danger text-light">
+              ${App.getIcon('block', 24, 'white')}&nbsp;
+              <span>${App.lang.misc_unavailable}</span>
+            </span>
+          `)}
         </div>
         <div class="po-row">
           <div class="po-price">${price} ${App.settings.currency.symbol}</div>
@@ -68,11 +81,20 @@ App.renderProducts = (group) => {
 };
 
 App.showProductDetail = (id, ean) => {
-  const { img, name, price, desc, available } = App.products[ean];
+  const { img, name, price, desc, available, promotion } = App.products[ean];
   const element = $(`
     <div class="product-details${available ? '' : ' unavailable'}">
       <div class="pd-intro">
-        <div class="pd-img"${App.getBackgroundImage(img)}></div>
+        <div class="pd-img"${App.getBackgroundImage(img)}>
+          ${promotion ? (`
+            <div class="ribbon-corner ribbon-corner-top-left">
+              <div class="ribbon-corner-text">
+                <span>${promotion}</span>
+                <div class="glow-flow">&nbsp;</div>
+              </div>
+            </div>
+          `) : ''}
+        </div>
         <div class="pd-info">
           <div class="pd-name">
             <span>${name}</span>
@@ -226,7 +248,7 @@ App.showProductDetail = (id, ean) => {
       });
     });
   }
-  App.showInModal(element, App.lang.modal_product_detail_title, () => {}, { fullScreen: true });
+  App.showInModal(element, '', () => {}, { fullScreen: true });
   App.jModal.find('.cs-cancel').remove();
 };
 

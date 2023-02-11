@@ -186,6 +186,7 @@ App.GLocaleCS = {
   "form_eans"                               : "Kódy/EAN",
   "form_ean"                                : "Kód/EAN",
   "form_highlight"                          : "Zvýraznit",
+  "form_promotion"                          : "Text akce",
   "form_group"                              : "Skupina",
   "form_vat"                                : "DPH",
   "form_email"                              : "E-mail",
