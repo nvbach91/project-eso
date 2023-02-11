@@ -71,8 +71,8 @@ App.showProductDetail = (id, ean) => {
   const { img, name, price, desc, available } = App.products[ean];
   const element = $(`
     <div class="product-details${available ? '' : ' unavailable'}">
-      <div class="pd-img"${App.getBackgroundImage(img)}></div>
-      <div class="pd-details">
+      <div class="pd-intro">
+        <div class="pd-img"${App.getBackgroundImage(img)}></div>
         <div class="pd-info">
           <div class="pd-name">
             <span>${name}</span>
@@ -80,8 +80,10 @@ App.showProductDetail = (id, ean) => {
             ${available ? '' : `<span class="badge bg-danger text-light">${App.getIcon('block', 24, 'white')} ${App.lang.misc_unavailable}</span>`}
           </div>
           <div class="pd-price">${price} ${App.settings.currency.symbol}</div>
+          ${desc ? `<div class="pd-description">${desc.split(/[\r\n]+/).join('<br>')}</div>` : ''}
         </div>
-        ${desc ? `<div class="pd-info"><p class="pd-description">${desc.split(/[\r\n]+/).join('<br>')}</p></div>` : ''}
+      </div>
+      <div class="pd-details">
         <div class="pd-mod">
           ${Object.keys(App.modTypes).filter((type) => {
             return Object.keys(App.mods).filter((modNumber) => {
@@ -146,22 +148,22 @@ App.showProductDetail = (id, ean) => {
             `)
           }).join('<hr>')}
         </div>
-        <div class="pd-control">
-          <div class="pd-row justify-content-center">
-            <!--button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove">${App.getIcon('remove')}</button-->
-            <!--button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
-              ${App.getIcon('shopping_cart')}
-              <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
-            </button-->
-            <!--button class="btn btn-primary add">${App.getIcon('add')}</button-->
-          </div>
-          ${App.cart[id] ? '' : 
-            `<button class="btn btn-raised btn-primary order">
-              <span>${App.lang.order_products_order_btn}</span>&nbsp;
-              ${App.getIcon('playlist_add')}
-            </button>`
-          }
+      </div>
+      <div class="pd-control">
+        <div class="pd-row justify-content-center">
+          <!--button class="btn btn-primary${App.cart[id] ? '': ' hidden'} remove">${App.getIcon('remove')}</button-->
+          <!--button class="btn btn-primary cart-quantity-indicator" data-id="${id}">
+            ${App.getIcon('shopping_cart')}
+            <span>${App.cart[id] ? App.cart[id].quantity : 0}</span>
+          </button-->
+          <!--button class="btn btn-primary add">${App.getIcon('add')}</button-->
         </div>
+        ${App.cart[id] ? '' : (`
+          <button class="btn btn-raised btn-primary order">
+            <span>${App.lang.order_products_order_btn}</span>&nbsp;
+            ${App.getIcon('playlist_add')}
+          </button>
+        `)}
       </div>
     </div>
   `);

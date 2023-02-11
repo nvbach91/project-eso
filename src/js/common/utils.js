@@ -561,7 +561,10 @@ App.bindToggleButtons = (form, className, iconSize, checkMarkContainerSelector) 
     if (type && (type.endsWith('.') || type.endsWith('!'))) {
       const typeButtons = form.find(`${className}[data-type="${type}"]`).removeClass('btn-raised btn-primary').addClass('btn-secondary');
       if (checkMarkContainerSelector) {
-        typeButtons.siblings(checkMarkContainerSelector).find('i').remove();
+        const siblings = typeButtons.siblings(checkMarkContainerSelector);
+        siblings.find('i').remove();
+        siblings.find('.pm-quantity').hide();
+        siblings.find('.mod-quantity').text(1);
       } else {
         typeButtons.find('i').remove();
       }
