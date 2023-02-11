@@ -20,7 +20,7 @@ App.renderProducts = (group) => {
     }).length > 0;
     const element = $(`
       <div class="product-offer${highlight ? ' highlight' : ''}${available ? '' : ' unavailable'}" title="#${ean} [${position || 0}]">
-        <div class="btn btn-raised po-img"${App.getBackgroundImage(img)}>
+        <div class="po-img"${App.getBackgroundImage(img)}>
           ${promotion ? (`
             <div class="ribbon-corner ribbon-corner-top-left">
               <div class="ribbon-corner-text">

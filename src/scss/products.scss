@@ -98,7 +98,6 @@
     flex-grow: 1;
     position: relative;
     padding: 0;
-    background-size: contain;
 }
 .po-img .btn {
     height: 100%;
@@ -116,6 +115,9 @@
     font-weight: bold;
     width: 100%;
     height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .po-name .badge-pill {
     display: flex;
