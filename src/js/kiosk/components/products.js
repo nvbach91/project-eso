@@ -85,7 +85,7 @@ App.showProductDetail = (id, ean) => {
   const element = $(`
     <div class="product-details${available ? '' : ' unavailable'}">
       <div class="pd-intro">
-        <div class="pd-img"${App.getBackgroundImage(img)}>
+        <div class="pd-img${promotion ? ' pd-img-raised' : ''}"${App.getBackgroundImage(img)}>
           ${promotion ? (`
             <div class="ribbon-corner ribbon-corner-top-left">
               <div class="ribbon-corner-text">
