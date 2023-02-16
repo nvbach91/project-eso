@@ -18,6 +18,7 @@ App.render = () => {
 };
 
 App.init = () => {
+  App.initErrorHandling();
   App.loadLocalStorage();
   App.loadLocale();
   App.jContainer = $('#app');

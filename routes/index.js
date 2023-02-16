@@ -15,6 +15,11 @@ router.get('/themes', (req, res) => {
   res.json(themes);
 });
 
+router.post('/secret/errors', (req, res) => {
+  console.error(req.body.err_msg, '\nuser:', req.body.user);
+  res.json({ success: true });
+});
+
 /* GET home page. */
 router.get('/', (req, res) => {
   const subdomain = req.get('host').split('.')[0];

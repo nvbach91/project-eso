@@ -645,3 +645,33 @@ App.randomIntegerBetween = (min, max) => {
 App.getRandomPollingTime = (min, max) => {
   return App.randomIntegerBetween(min || 1500, max || 2500);
 };
+
+App.initErrorHandling = () => {
+  window.onerror = (msg, url, line, col, error) => {
+    // Note that col & error are new to the HTML 5 spec and may not be 
+    // supported in every browser.  It worked for me in Chrome.
+    let extra = !col ? '' : `\ncolumn: ${col}`;
+    extra += !error ? '' : `\nerror: ${error}`;
+    extra += !error ? '' : `\nstack: ${error.stack}`;
+    extra += `\n    userAgent: ${navigator.userAgent}`;
+    extra += `\n  appCodeName: ${navigator.appCodeName}`;
+    extra += `\n      appName: ${navigator.appName}`;
+    extra += `\n   appVersion: ${navigator.appVersion}`;
+    extra += `\ncookieEnabled: ${navigator.cookieEnabled}`;
+    extra += `\n     language: ${navigator.language}`;
+    extra += `\n     platform: ${navigator.platform}`;
+
+    // You can view the information in an alert to see things working like this:
+    const err = [`Error: ${msg}`, `url: ${url}`, `line: ${line}${extra}`].join('\n');
+    // console.error(err);
+    $.ajax({
+      url: '/secret/errors',
+      method: 'POST',
+      data: { err_msg: err, user: App.user ? App.user.username : 'undefined' },
+    });
+    return false;
+  };
+  $.Deferred.exceptionHook = (err, stackTrace) => {
+    window.dispatchEvent(new ErrorEvent('error', { error: err, message: err }));
+  };
+};

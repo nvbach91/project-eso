@@ -93,7 +93,7 @@ App.displayKioskReceipt = (transaction, appendix, printer, printFunction) => {
   let previousLineIsFixed = false;
   App.showInModal(`
     <div class="receipt-preview card">
-      <div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>
+      ${App.settings.receipt.img ? `<div class="receipt-image" style="background-image: url(${App.imageUrlBase}${App.settings.receipt.img});"></div>` : ''}
       ${App.removeReceiptFormatting(unAlignedReceiptText).split('\n').map((line) => {
         const isFixedWithLine = line.trim().startsWith(App.lang.receipt_summary_rates);
         if (isFixedWithLine || previousLineIsFixed) {
