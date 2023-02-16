@@ -380,6 +380,9 @@ App.calculateTransactionTotal = (items) => {
   let totalPrice = 0;
   items.forEach((item) => {
     let itemPrice = item.quantity * item.price;
+    item.mods.forEach((mod) => {
+      itemPrice += mod.quantity * mod.price;
+    });
     itemPrice = itemPrice - itemPrice * (item.discount || 0) / 100;
     totalPrice += itemPrice;
   });
