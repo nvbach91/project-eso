@@ -40,6 +40,7 @@ router.post('/transactions', (req, res) => {
   }).then(() => {
     return new Transactions(newTransaction).save();
   }).then((transaction) => {
+    console.log('new_transaction', newTransaction.date, req.user.regId, req.user.username, newTransaction.number);
     const { _id, __v, ...t } = transaction._doc;
     updateAggregates(t);
     res.json(t);
