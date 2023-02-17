@@ -669,7 +669,13 @@ App.initErrorHandling = () => {
     extra += `\n     platform: ${navigator.platform}`;
 
     // You can view the information in an alert to see things working like this:
-    const err = [`Error: ${msg} ${msgStringified || '.'}`, `url: ${url}`, `line: ${line}${extra}`].join('\n');
+    const err = [
+      `Error: ${msg} ${msgStringified || '.'}`,
+      `url: ${url}`,
+      `origin: ${location.origin}`,
+      `href: ${location.href}`,
+      `line: ${line}${extra}`,
+    ].join('\n');
     // console.error(err);
     $.ajax({
       url: '/secret/errors',
