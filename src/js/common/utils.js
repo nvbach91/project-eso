@@ -651,10 +651,14 @@ App.getRandomPollingTime = (min, max) => {
 
 App.initErrorHandling = () => {
   window.onerror = (msg, url, line, col, error) => {
+    let msgStringified;
+    let errorStringified;
+    try { msgStringified = JSON.stringify(msg); } catch (e) {};
+    try { errorStringified = JSON.stringify(error); } catch (e) {};
     // Note that col & error are new to the HTML 5 spec and may not be 
     // supported in every browser.  It worked for me in Chrome.
     let extra = !col ? '' : `\ncolumn: ${col}`;
-    extra += !error ? '' : `\nerror: ${error}`;
+    extra += !error ? '' : `\nerror: ${error} ${errorStringified || '.'}`;
     extra += !error ? '' : `\nstack: ${error.stack}`;
     extra += `\n    userAgent: ${navigator.userAgent}`;
     extra += `\n  appCodeName: ${navigator.appCodeName}`;
@@ -665,16 +669,21 @@ App.initErrorHandling = () => {
     extra += `\n     platform: ${navigator.platform}`;
 
     // You can view the information in an alert to see things working like this:
-    const err = [`Error: ${msg}`, `url: ${url}`, `line: ${line}${extra}`].join('\n');
+    const err = [`Error: ${msg} ${msgStringified || '.'}`, `url: ${url}`, `line: ${line}${extra}`].join('\n');
     // console.error(err);
     $.ajax({
       url: '/secret/errors',
       method: 'POST',
-      data: { err_msg: err, user: App.user ? App.user.username : 'undefined' },
+      data: { err_msg: err, user: `${App.user ? App.user.username : 'undefined'} caught in window.onerror` },
     });
     return false;
   };
   $.Deferred.exceptionHook = (err, stackTrace) => {
+    $.ajax({
+      url: '/secret/errors',
+      method: 'POST',
+      data: { err_msg: 'dispatching error event in Deferred.exceptionHook', user: `${App.user ? App.user.username : 'undefined'}` },
+    });
     window.dispatchEvent(new ErrorEvent('error', { error: err, message: err }));
   };
 };

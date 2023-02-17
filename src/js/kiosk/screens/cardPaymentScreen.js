@@ -111,24 +111,24 @@ App.payInCash = () => {
 App.sendOrderToTableSync = (resp) => {
   // console.log(resp.items);
   try {
+    const orderData = resp.items.map((item) => ({
+      id: App.generateRandomPassword(),
+      _id: App.generateRandomPassword(),
+      ean: item.ean,
+      quantity: item.quantity,
+      price: item.price,
+      tax: item.vat,
+      name: App.products[item.ean].name,
+      group: item.group.toString(),
+      printed: true,
+      name2: '',
+      note: item.mods.map((mod) => `*${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number].name}`).join('<br>'),
+      mods: '',
+    }));
     const order = {
       number: resp.number,
       mask: `${App.settings.receipt.orderPrefix}${resp.order}`,
       date: resp.date,
-      data: resp.items.map((item) => ({
-        id: App.generateRandomPassword(),
-        _id: App.generateRandomPassword(),
-        ean: item.ean,
-        quantity: item.quantity,
-        price: item.price,
-        tax: item.vat,
-        name: App.products[item.ean].name,
-        group: item.group.toString(),
-        printed: true,
-        name2: '',
-        note: item.mods.map((mod) => `*${parseFloat(mod.price) ? ` ${mod.quantity}x` : ''} ${App.mods[mod.number].name}`).join('<br>'),
-        mods: '',
-      })),
       username: App.user.username,
       status: 'pending',
       paid: true,
@@ -137,7 +137,7 @@ App.sendOrderToTableSync = (resp) => {
       tableName: 'KIOSK',
       online: true,
     };
-    order.data = JSON.stringify(order.data);
+    order.data = JSON.stringify(orderData);
     $.ajax({
       method: 'POST',
       url: `${App.settings.tablesync.url}/order`,
@@ -151,6 +151,16 @@ App.sendOrderToTableSync = (resp) => {
       `);
     });
   } catch (e) {
+    $.ajax({
+      url: '/secret/errors',
+      method: 'POST',
+      data: { err_msg: e, err_stack: e ? e.stack : '', user: `${App.user ? App.user.username : 'undefined'} caught in sendOrderToTableSync` },
+    });
+    $.ajax({
+      url: '/secret/errors',
+      method: 'POST',
+      data: { err_msg: 'dispatching error event in sendOrderToTableSync', user: `${App.user ? App.user.username : 'undefined'}` },
+    });
     window.dispatchEvent(new ErrorEvent('error', { error: e, message: e }));
   }
 };
