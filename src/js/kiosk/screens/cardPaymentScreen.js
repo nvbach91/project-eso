@@ -117,7 +117,7 @@ App.warnPaymentFailed = (resp) => {
   console.log(resp);
   App.showWarning(`
     <h4 class="text-center">${App.lang.modal_payment_failed_p1}</h4>
-    <div class="text-center">${resp.statusText}: ${resp.responseJSON ? (resp.responseJSON.msg || JSON.stringify(resp.responseJSON)) : ''}</div>
+    <div class="text-center">${resp.statusText}: ${resp.statusCode} ${resp.responseJSON ? `, ${resp.responseJSON.msg || JSON.stringify(resp.responseJSON)}` : ''}</div>
     <h5 class="text-center">${App.lang.modal_payment_failed_p2}</h5>
   `);
 };
