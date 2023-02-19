@@ -13,43 +13,40 @@ App.createNewTransactionNumber = (lastTransaction) => {
   return newTransactionNumber;
 };
 
-App.createTransaction = () => {
-  return App.fetchTransactions(0, 1).then((transactions) => {
-    if (transactions.length) {
-      return transactions[0];
-    }
-    return App.getLastTransaction();
-  }).then((lastTransaction) => {
-    const newTransactionNumber = App.createNewTransactionNumber(lastTransaction);
-    const cartKeys = Object.keys(App.cart);
-    if (cartKeys.includes('T')) {
-      cartKeys.push(cartKeys.splice(cartKeys.indexOf('T'), 1)[0]);
-    }
-    const transaction = {
-      number: newTransactionNumber,
-      order: App.maskOrderNumber(newTransactionNumber),
-      date: new Date().toISOString(),
-      items: cartKeys.map((id) => {
-        const { ean } = App.cart[id];
-        const { group, price, vat } = App.products[ean];
-        const { quantity, discount, mods } = App.cart[id];
-        const item = { quantity, ean, price, group, vat, mods };
-        if (discount) {
-          item.discount = discount;
-        }
-        return item;
-      }),
-      delivery: App.deliveryMethod,
-      payment: App.paymentMethod,
-      discount: 0,
-      clerk: App.user.username.split(':')[1],
-    };
-    return $.post({
-      url: `${App.apiPrefix}/transactions`,
-      beforeSend: App.attachToken,
-      contentType: 'application/json',
-      data: JSON.stringify(transaction),
-    });
+App.createTransaction = (transactionNumber, isCreatingOfflineOrder) => {
+  const cartKeys = Object.keys(App.cart);
+  if (cartKeys.includes('T')) {
+    cartKeys.push(cartKeys.splice(cartKeys.indexOf('T'), 1)[0]);
+  }
+  const transaction = {
+    number: transactionNumber,
+    order: App.maskOrderNumber(transactionNumber),
+    date: new Date().toISOString(),
+    items: cartKeys.map((id) => {
+      const { ean } = App.cart[id];
+      const { group, price, vat } = App.products[ean];
+      const { quantity, discount, mods } = App.cart[id];
+      const item = { quantity, ean, price, group, vat, mods };
+      if (discount) {
+        item.discount = discount;
+      }
+      return item;
+    }),
+    delivery: App.deliveryMethod,
+    payment: App.paymentMethod,
+    discount: 0,
+    clerk: App.user.username.split(':')[1],
+  };
+  if (isCreatingOfflineOrder) {
+    App.offlineTransactions.push(transaction);
+    localStorage.setItem('offlineTransactions', JSON.stringify(App.offlineTransactions));
+    return $.when(transaction);
+  };
+  return $.post({
+    url: `${App.apiPrefix}/transactions`,
+    beforeSend: App.attachToken,
+    contentType: 'application/json',
+    data: JSON.stringify(transaction),
   });
 };
 

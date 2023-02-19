@@ -83,6 +83,17 @@ main {
     justify-content: center;
     align-items: center;
 }
+.finish-screen .receipt-icon {
+    position: relative;
+}
+.finish-screen .order-number {
+    font-size: 76px;
+    font-weight: bold;
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    width: 156px;
+}
 .finish-screen .card-header {
     display: flex;
     justify-content: space-between;

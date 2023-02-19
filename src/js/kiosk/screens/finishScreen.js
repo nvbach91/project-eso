@@ -1,12 +1,12 @@
 const createFinishMessage = () => {
   return !App.settings.finishMessage ? '' : `
-    <div class="card-body">
-      <h2 class="text-center">${App.settings.finishMessage}</h2>
+    <div class="card-footer">
+      <h4 class="text-center">${App.settings.finishMessage}</h4>
     </div>
   `;
 };
 
-App.renderFinishScreen = () => {
+App.renderFinishScreen = (newTransaction) => {
   const screen = $(`
     <main id="main">
       <div class="screen finish-screen">
@@ -16,9 +16,17 @@ App.renderFinishScreen = () => {
             <button class="btn btn-primary btn-raised start-new">${App.lang.finish_header_btn}</button>
           </h5>
           <div class="card-body">
-            <p class="text-center">
-              ${App.getIcon(`${App.imageUrlBase}${App.settings.theme === 'dark' ? 'rec_irraiu' : 'receipt_rkkwuo'}`, 200)} ${App.lang.finish_body_title}
-            </p>
+            <div class="text-center">
+              <div class="row justify-content-md-center align-items-md-center">
+                <span class="receipt-icon">
+                  ${App.getIcon(`${App.imageUrlBase}${App.settings.theme === 'dark' ? 'receipt-dark_zkkrws' : 'receipt-white_y8xmiy'}`, 200)}
+                  <strong class="order-number">${App.settings.receipt.orderPrefix}${newTransaction.order}</strong>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="text-center">${App.lang.finish_body_title}</h4>
           </div>
           ${createFinishMessage()}
         </div>
@@ -30,6 +38,10 @@ App.renderFinishScreen = () => {
   // App.fetchJoke().done((resp) => {
   //   screen.find('.dyk-text').html(resp);
   // });
+  
+  App.cart = {};
+  App.cartCategoryQuantities = {};
+  App.saveLocalCart();
   const resetTimeout = setTimeout(() => startNewButton.click(), 20000);
   const startNewButton = screen.find('.start-new').click(() => {
     clearTimeout(resetTimeout);

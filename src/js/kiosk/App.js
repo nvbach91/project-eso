@@ -20,6 +20,43 @@ require('./components/cart.js');
 require('./components/tabs.js');
 require('./components/products.js');
 
+App.initOfflineTransactionSync = () => {
+  let isSyncing = false;
+  const onAfterSync = (syncedTransactionsNumbers) => {
+    if (syncedTransactionsNumbers.length) {
+      App.offlineTransactions = App.offlineTransactions.filter((offlineTransaction) => {
+        return !syncedTransactionsNumbers.includes(offlineTransaction.number);
+      });
+      localStorage.setItem('offlineTransactions', JSON.stringify(App.offlineTransactions));
+    }
+    isSyncing = false;
+  };
+  setInterval(() => {
+    if (Offline.state === 'down' || isSyncing || !App.offlineTransactions.length) {
+      return false;
+    }
+    isSyncing = true;
+    const syncedTransactionsNumbers = [];
+    Promise.each(App.offlineTransactions, (transaction) => {
+      return $.post({
+        url: `${App.apiPrefix}/transactions`,
+        beforeSend: App.attachToken,
+        contentType: 'application/json',
+        data: JSON.stringify(transaction),
+      }).done(() => {
+        syncedTransactionsNumbers.push(transaction.number);
+      }).fail((resp) => {
+        if (resp.responseJSON && resp.responseJSON.msg === 'srv_transaction_number_already_exists') {
+          syncedTransactionsNumbers.push(transaction.number);
+        }
+      });
+    }).then(() => {
+      onAfterSync(syncedTransactionsNumbers);
+    }).catch(() => {
+      onAfterSync(syncedTransactionsNumbers);
+    });
+  }, 10000);
+};
 
 App.render = () => {
   App.renderHeader();
@@ -28,6 +65,7 @@ App.render = () => {
 };
 
 App.init = () => {
+  Offline.options = { requests: false, checks: { xhr: {url: '/ping' } } };
   App.initErrorHandling();
   App.loadLocalStorage();
   App.loadLocale();
@@ -56,6 +94,7 @@ App.start = () => {
     App.loadLocale();
     App.render();
     moment.locale(App.locale);
+    App.initOfflineTransactionSync();
   });
 };
 

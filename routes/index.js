@@ -16,7 +16,11 @@ router.get('/themes', (req, res) => {
 });
 
 router.post('/secret/errors', (req, res) => {
-  console.error(req.body.err_msg, `\nerr_stack:`, req.body.err_stack, '\nuser:', req.body.user, '\n');
+  console.error(new Date().toISOString(), req.body.err_msg, `\nerr_stack:`, req.body.err_stack, '\nuser:', req.body.user, '\n');
+  res.json({ success: true });
+});
+
+router.get('/ping', (req, res) => {
   res.json({ success: true });
 });
 

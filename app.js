@@ -10,6 +10,7 @@ mongoose.connect('mongodb://127.0.0.1/eso', {
     useNewUrlParser: true,
     useFindAndModify: true,
     useCreateIndex: true,
+    useUnifiedTopology: true,
 });
 
 require('./security/passport');

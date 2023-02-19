@@ -98,7 +98,7 @@ App.GLocaleEN = {
   "misc_deleting"                           : "Deleting...",
   "misc_deleted"                            : "Deleted",
   "misc_delete_failed"                      : "Failed to delete",
-  "misc_device_is_offline"                  : "Device is offline",
+  "misc_device_is_offline"                  : "Device is offline, please try again momentarily",
   "misc_skip"                               : "Skip",
   "misc_create"                             : "Create",
 

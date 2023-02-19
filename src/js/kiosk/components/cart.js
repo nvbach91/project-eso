@@ -291,7 +291,7 @@ App.showCart = () => {
   `);
   cartSummary.find('.cs-price').click(() => {
     if (Offline.state === 'down') {
-      return App.showWarning(App.lang.misc_device_is_offline);
+      return App.showWarning(`<h4 class="text-center">${App.lang.misc_device_is_offline}</h4>`);
     }
     App.closeModal();
     if (App.deliveryMethod === 'eatin' && App.settings.tableMarkers.active) {

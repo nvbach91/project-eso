@@ -30,8 +30,8 @@ payment_method_cash	Cash	Hotově
 payment_method_card	Card	Kartou
 		
 finish_header_title	Thank you very much!	Děkujeme Vám mnohokrát!
-finish_header_btn	Start a new order	Začněte novou objednávku
-finish_body_title	Please take your receipt and wait for your number to be called	Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno
+finish_header_btn	Start a new order	Začít novou objednávku
+finish_body_title	Please take your receipt and wait for your number to be called	Vezměte si prosím číslo své objednávky a počkejte až bude Vaše číslo zavoláno
 finish_body_question	Did you know?	Věděli jste?
 		
 		
@@ -70,7 +70,7 @@ modal_timeout_leave_btn	No, I'll leave	Ne, odejdu
 		
 modal_info	Info	Info
 modal_payment_failed_p1	There was a problem in processing your request	Vyskytl se problém při zpracovávání vaší žádosti
-modal_payment_failed_p2	Please contact our staff	Prosíme zkontaktuje personál
+modal_payment_failed_p2	Please contact our staff	Prosíme kontaktuje obsluhu
 		
 misc_unavailable	unavailable	nedostupné
 misc_item	item	položka
@@ -98,7 +98,7 @@ misc_save_failed	Failed to save	Nepodařilo se uložit
 misc_deleting	Deleting...	Odstraňuje se...
 misc_deleted	Deleted	Odstraněno
 misc_delete_failed	Failed to delete	Nepodařilo se odstranit
-misc_device_is_offline	Device is offline	Zařízení je offline
+misc_device_is_offline	Device is offline, please try again momentarily	Zařízení je offline, prosím zkuste za okamžik
 misc_skip	Skip	Přeskočit
 misc_create	Create	Vytvořit
 		

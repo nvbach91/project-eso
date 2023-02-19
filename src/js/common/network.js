@@ -102,7 +102,7 @@ App.fetchMods = () => {
   });
 };
 
-App.fetchTransactions = (offset, limit) => {
+App.fetchTransactions = ({ offset, limit }) => {
   return $.get({
     url: `${App.apiPrefix}/transactions/page/${offset || 0}/${limit || 100}`,
     beforeSend: App.attachToken,

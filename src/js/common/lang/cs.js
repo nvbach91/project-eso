@@ -30,8 +30,8 @@ App.GLocaleCS = {
   "payment_method_card"                     : "Kartou",
 
   "finish_header_title"                     : "Děkujeme Vám mnohokrát!",
-  "finish_header_btn"                       : "Začněte novou objednávku",
-  "finish_body_title"                       : "Vezměte si prosím číslo své objednávky a počkejte až bude vaše číslo zavoláno",
+  "finish_header_btn"                       : "Začít novou objednávku",
+  "finish_body_title"                       : "Vezměte si prosím číslo své objednávky a počkejte až bude Vaše číslo zavoláno",
   "finish_body_question"                    : "Věděli jste?",
 
 
@@ -70,7 +70,7 @@ App.GLocaleCS = {
 
   "modal_info"                              : "Info",
   "modal_payment_failed_p1"                 : "Vyskytl se problém při zpracovávání vaší žádosti",
-  "modal_payment_failed_p2"                 : "Prosíme zkontaktuje personál",
+  "modal_payment_failed_p2"                 : "Prosíme kontaktuje obsluhu",
 
   "misc_unavailable"                        : "nedostupné",
   "misc_item"                               : "položka",
@@ -98,7 +98,7 @@ App.GLocaleCS = {
   "misc_deleting"                           : "Odstraňuje se...",
   "misc_deleted"                            : "Odstraněno",
   "misc_delete_failed"                      : "Nepodařilo se odstranit",
-  "misc_device_is_offline"                  : "Zařízení je offline",
+  "misc_device_is_offline"                  : "Zařízení je offline, prosím zkuste za okamžik",
   "misc_skip"                               : "Přeskočit",
   "misc_create"                             : "Vytvořit",
 

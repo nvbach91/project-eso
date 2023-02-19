@@ -1,6 +1,6 @@
 App.saveLocalCart = () => {
-  localStorage.cart = JSON.stringify(App.cart || {});
-  localStorage.cartCategoryQuantities = JSON.stringify(App.cartCategoryQuantities || {});
+  localStorage.setItem('cart', JSON.stringify(App.cart || {}));
+  localStorage.setItem('cartCategoryQuantities', JSON.stringify(App.cartCategoryQuantities || {}));
 };
 
 App.saveLocalPreference = (key, value) => {
@@ -9,7 +9,8 @@ App.saveLocalPreference = (key, value) => {
 };
 
 App.loadLocalStorage = () => {
-  App.cart = JSON.parse(localStorage.cart || '{}');
-  App.cartCategoryQuantities = JSON.parse(localStorage.cartCategoryQuantities || '{}');
-  App.locale = localStorage.locale || App.detectBrowserLanguage();
+  App.cart = JSON.parse(localStorage.getItem('cart') || '{}');
+  App.cartCategoryQuantities = JSON.parse(localStorage.getItem('cartCategoryQuantities') || '{}');
+  App.locale = localStorage.getItem('locale') || App.detectBrowserLanguage();
+  App.offlineTransactions = JSON.parse(localStorage.getItem('offlineTransactions') || '[]');
 };

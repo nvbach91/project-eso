@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
+const moment = require('moment');
 const utils = require('../../../utils');
 const config = require('../../../config');
 const Transactions = require('../../../models/Transactions');
@@ -31,16 +32,27 @@ router.post('/transactions', (req, res) => {
   const regId = req.user.regId;
   const number = req.body.number;
   let newTransaction;
-  Transactions.findOne({ regId, number }).select('_id').then((transaction) => {
-    if (transaction) {
+  // console.log('creating new transaction', number);
+  Transactions.findOne({ regId, number }).select('_id number regId').then((existingTransaction) => {
+    if (existingTransaction) {
+      console.error(new Date().toISOString(), 'existingTransaction', existingTransaction.regId, existingTransaction.number, req.user.username);
       throw { code: 400, msg: 'srv_transaction_number_already_exists' };
     }
-    newTransaction = { ...req.body, regId, d: req.body.date.slice(0, 10).replace(/-/g, '') };
-    return orsAuthorizeTransaction(newTransaction, req);
+    // throw { code: 400, msg: 'srv_transaction_number_already_exists' };
+    newTransaction = { ...req.body, regId, d: moment(req.body.date).format('YYYYMMDD') };
+    // if (existingTransaction) {
+    //   // get the last number in the transaction list and increment it for the new transaction
+    //   return Transactions.find({ regId: req.user.regId }).skip(0).limit(1).select('-_id -__v -regId').then((transactions) => {
+    //     newTransaction.number = transactions[0].number + 1;
+    //     // console.log('newTransactionNumber', newTransaction.number);
+    //   });
+    // }
+    // return orsAuthorizeTransaction(newTransaction, req);
   }).then(() => {
+    // console.log('inserting new transaction', newTransaction);
     return new Transactions(newTransaction).save();
   }).then((transaction) => {
-    console.log('new_transaction', newTransaction.date, req.user.regId, req.user.username, newTransaction.number);
+    console.log(new Date().toISOString(), 'new_transaction', newTransaction.date, req.user.regId, newTransaction.number, req.user.username);
     const { _id, __v, ...t } = transaction._doc;
     updateAggregates(t);
     res.json(t);

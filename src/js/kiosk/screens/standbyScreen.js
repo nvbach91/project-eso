@@ -37,7 +37,7 @@ App.renderStandbyScreen = () => {
   `);
   screen.find('.carousel-item').click(() => {
     if (Offline.state === 'down') {
-      return App.showWarning(App.lang.misc_device_is_offline);
+      return App.showWarning(`<h4 class="text-center">${App.lang.misc_device_is_offline}</h4>`);
     }
     App.renderDeliveryMethodScreen();
   });

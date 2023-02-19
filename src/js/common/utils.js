@@ -15,6 +15,16 @@ Number.prototype.formatMoney = function (c, d, t) {
   return retval;
 };
 
+Promise.each = (arr, fn) => { // take an array and a function
+  // invalid input
+  if (!Array.isArray(arr)) return Promise.reject(new Error('Non array passed to each'));
+  // empty case
+  if (arr.length === 0) return Promise.resolve();
+  return arr.reduce((prev, cur) => {
+    return prev.then(() => fn(cur));
+  }, Promise.resolve());
+};
+
 App.round = (value, decimals) => {
   return Number(Math.round(`${value}e${decimals}`) + `e-${decimals}`);
 };
@@ -653,8 +663,8 @@ App.initErrorHandling = () => {
   window.onerror = (msg, url, line, col, error) => {
     let msgStringified;
     let errorStringified;
-    try { msgStringified = JSON.stringify(msg); } catch (e) {};
-    try { errorStringified = JSON.stringify(error); } catch (e) {};
+    try { msgStringified = JSON.stringify(msg); } catch (e) { };
+    try { errorStringified = JSON.stringify(error); } catch (e) { };
     // Note that col & error are new to the HTML 5 spec and may not be 
     // supported in every browser.  It worked for me in Chrome.
     let extra = !col ? '' : `\ncolumn: ${col}`;
