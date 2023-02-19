@@ -66,6 +66,9 @@ App.render = () => {
 
 App.init = () => {
   Offline.options = { requests: false, checks: { xhr: {url: '/ping' } } };
+  navigator.connection.onchange = () => {
+    Offline.check();
+  };
   App.initErrorHandling();
   App.loadLocalStorage();
   App.loadLocale();
