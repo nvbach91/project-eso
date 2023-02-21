@@ -1,61 +1,73 @@
-const createTransactiontable = () => $(`
-  <div class="table card-body transactions">
-    <div class="tr transaction-item">
-      <div class="td ti-number">Receipt number</div>
-      <div class="td ti-date">Date</div>
-      <div class="td ti-order">${App.lang.form_order}</div>
-      <div class="td ti-payment">Payment</div>
-      <div class="td ti-delivery">Delivery</div>
-      <div class="td ti-total">Total price</div>
-      <div class="td ti-print">Print</div>
-    </div>
-  </div>
+const createTable = () => $(`
+  <table class="table">
+    <thead>
+      <tr class="transaction-item">
+        <th class="ti-number">Receipt number</th>
+        <th class="ti-date">Date</th>
+        <th class="ti-order">${App.lang.form_order}</th>
+        <th class="ti-payment">Payment</th>
+        <th class="ti-delivery">Delivery</th>
+        <th class="ti-total">Total price</th>
+        <th class="ti-print">Print</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 `);
 
-const renderTransactions = (transactions) => {
-  let table;
-  if (transactions.length) {
-    table = createTransactiontable();
-    transactions.forEach((transaction) => {
-      const { number, date, order, payment, delivery, items } = transaction;
-      const item = $(`
-        <div class="tr transaction-item">
-          <div class="td ti-number">${number}</div>
-          <div class="td ti-date">${moment(date).format(App.formats.dateTime)}</div>
-          <div class="td ti-order">#${App.settings.receipt.orderPrefix || ''}${order}</div>
-          <div class="td ti-payment">${App.getPaymentMethod(payment)}</div>
-          <div class="td ti-delivery">${App.getDeliveryMethod(delivery)}</div>
-          <div class="td ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currency.symbol}</div>
-          <div class="td ti-print">
-            <button class="btn btn-primary">${App.getIcon('print')}</button>
-          </div>
-        </div>
-      `);
-      item.children('.ti-number').click(() => {
-        const printer = App.settings.kioskPrinters[Object.keys(App.settings.kioskPrinters)[0]];
-        App.displayKioskReceipt(transaction, '', printer, () => {});
-      });
-      item.children('.ti-print').find('button').click(() => {
-        App.printKioskReceipt(transaction);
-      });
-      table.append(item);
-    });
-  } else {
-    table = $(`<button class="btn">${App.lang.tip_no_data_in_selected_period}</div>`);
+const renderTable = (transactions) => {
+  if (!transactions.length) { 
+    const content = $(`<button class="btn">${App.lang.tip_no_data_in_selected_period}</div>`);
+    return App.jControlPanelBody.empty().append(content);
   }
-  App.jControlPanelBody.replaceWith(table);
-  App.jControlPanelBody = table;
+  const newTable = createTable();
+  transactions.forEach((transaction) => {
+    const { number, date, order, payment, delivery, items } = transaction;
+    const item = $(`
+      <tr class="transaction-item">
+        <td class="ti-number">${number}</td>
+        <td class="ti-date">${moment(date).format(App.formats.dateTime)}</td>
+        <td class="ti-order">#${App.settings.receipt.orderPrefix || ''}${order}</td>
+        <td class="ti-payment">${App.getPaymentMethod(payment)}</td>
+        <td class="ti-delivery">${App.getDeliveryMethod(delivery)}</td>
+        <td class="ti-total">${App.calculateTransactionTotal(items).formatMoney()} ${App.settings.currency.symbol}</td>
+        <td class="ti-print">
+          <button class="btn btn-primary">${App.getIcon('print')}</button>
+        </td>
+      </tr>
+    `);
+    item.children('.ti-number').click(() => {
+      const printer = App.settings.kioskPrinters[Object.keys(App.settings.kioskPrinters)[0]];
+      App.displayKioskReceipt(transaction, '', printer, () => {});
+    });
+    item.children('.ti-print').find('button').click(() => {
+      App.printKioskReceipt(transaction);
+    });
+    newTable.children('tbody').append(item);
+  });
+  const dataTable = newTable.DataTable({
+    paging: false,
+    searching: false,
+    order: [[0, 'desc']],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [6],
+      },
+    ],
+  });
+  App.jControlPanelBody.empty().append($(dataTable.table().container()));
 };
 
-const clearTransactions = () => {
-  const table = createTransactiontable();
+const clearTable = () => {
+  const table = createTable();
   table.append(`<div>Something went wrong</div>`);
   App.jControlPanelBody.replaceWith(table);
   App.jControlPanelBody = table;
 };
 
 const onDateSelect = (date) => {
-  App.fetchTransactionsByDatePrefix(date).done(renderTransactions).fail(clearTransactions);
+  App.fetchTransactionsByDatePrefix(date).done(renderTable).fail(clearTable);
 };
 
 App.renderTransactionScreen = () => {
@@ -86,5 +98,8 @@ App.renderTransactionScreen = () => {
       datePicker.setDate(currentDate);
     }
   });
-  App.fetchTransactionsByDatePrefix().done(renderTransactions).fail(clearTransactions);
+  const cpBody = $(`<div class="card-body">`);
+  App.jControlPanelBody.replaceWith(cpBody);
+  App.jControlPanelBody = cpBody;
+  App.fetchTransactionsByDatePrefix().done(renderTable).fail(clearTable);
 };

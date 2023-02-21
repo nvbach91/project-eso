@@ -59,10 +59,12 @@ App.renderCardPaymentScreen = () => {
             App.printKitchenReceipt(resp);
             App.printLabelReceipt(resp);
             if (App.settings.tablesync.url) {
-              App.sendOrderToTableSync(resp);
+              App.showSpinner();
+              App.sendOrderToTableSync(resp).done(() => {
+                App.hideSpinner();
+              });
             }
             App.printKioskReceipt(resp, appendix);
-            inlineSpinner.hide();
           }).always(() => {
             nTries++;
           }).fail((resp) => {
@@ -87,12 +89,10 @@ App.renderCardPaymentScreen = () => {
       App.warnPaymentFailed(resp);
       App.renderCheckoutScreen();
     });
-    App.hideSpinner();
   }).fail((resp) => {
     App.warnPaymentFailed(resp);
     App.renderCheckoutScreen();
   });
-
   App.hideSpinner();
 };
 
@@ -152,10 +152,11 @@ App.sendOrderToTableSync = (resp) => {
       online: true,
     };
     order.data = JSON.stringify(orderData);
-    $.ajax({
+    return $.ajax({
       method: 'POST',
       url: `${App.settings.tablesync.url}/order`,
       data: order,
+      timeout: 5000,
     }).done(() => {
       // console.log('Your order was successfully placed');
     }).fail(() => {

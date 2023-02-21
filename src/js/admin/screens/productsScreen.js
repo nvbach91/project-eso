@@ -1,16 +1,21 @@
-const tableHeader = () => `
-  <div class="tr table-header">
-    <div class="td sr-img">${App.lang.form_image}</div>
-    <div class="td sr-number">${App.lang.form_ean}</div>
-    <div class="td sr-name">${App.lang.form_name}</div>
-    <div class="td sr-price">${App.lang.form_price}</div>
-    <div class="td sr-group">${App.lang.form_group}</div>
-    <div class="td sr-vat">${App.lang.form_vat}</div>
-    <div class="td sr-active">${App.lang.form_active}</div>
-    <div class="td sr-available">${App.lang.form_available}</div>
-    <div class="td sr-edit">${App.lang.misc_edit}</div>
-  </div>
-`;
+const createTable = () => $(`
+  <table class="table">
+    <thead>
+      <tr class="table-header search-result">
+        <th class="sr-img">${App.lang.form_image}</th>
+        <th class="sr-number">${App.lang.form_ean}</th>
+        <th class="sr-name">${App.lang.form_name}</th>
+        <th class="sr-price">${App.lang.form_price}</th>
+        <th class="sr-group">${App.lang.form_group}</th>
+        <th class="sr-vat">${App.lang.form_vat}</th>
+        <th class="sr-active">${App.lang.form_active}</th>
+        <th class="sr-available">${App.lang.form_available}</th>
+        <th class="sr-edit">${App.lang.misc_edit}</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+`);
 
 App.renderProductsScreen = () => {
   const productKeys = Object.keys(App.products);
@@ -36,14 +41,11 @@ App.renderProductsScreen = () => {
           </div>
         </form>
       </div>
-      <div class="table"></div>
     </div>
   `);
   const maxSearchResults = 100;
-  let searchResults = [];
   const form = cpBody.find('.search-form');
   const input = form.find('input');
-  const searchResultsContainer = cpBody.find('.table');
   form.submit((e) => {
     e.preventDefault();
     const searchValue = input.val();
@@ -51,29 +53,34 @@ App.renderProductsScreen = () => {
       showEditForm(searchValue, () => input.keyup());
     }
   });
+  let table = createTable();
+  cpBody.append(table);
   input.keyup(App.debounce(() => {
-    searchResultsContainer.empty();
-    const searchValue = input.val();
+    const searchResults = [];
+    const inputValue = input.val();
+    const searchValue = App.removeDiacritics(inputValue).toLowerCase();
     // if (searchValue.trim()) {
     const productKeys = Object.keys(App.products);
     for (let i = 0; i < productKeys.length; i++) {
       const ean = productKeys[i];
       const { name, price, group, vat, img, active, available } = App.products[ean];
-      if (!searchValue || name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0 || ean.indexOf(searchValue) >= 0) {
+      if (!searchValue || App.removeDiacritics(name).toLowerCase().indexOf(searchValue) >= 0 || ean.toLowerCase().indexOf(searchValue) >= 0) {
         const groupName = App.groups[group] ? App.groups[group].name : '';
         const item = $(`
-            <div class="tr">
-              <div class="td sr-img"${App.getBackgroundImage(img)}></div>
-              <div class="td sr-number">${App.highlightMatchedText(ean, searchValue)}</div>
-              <div class="td sr-name">${App.highlightMatchedText(name, searchValue)}</div>
-              <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
-              <div class="td sr-group${groupName ? '' : ' text-danger'}">${group} - ${groupName ? groupName : 'N/A'}</div>
-              <div class="td sr-vat">${vat} %</div>
-              <div class="td sr-active" title="${active ? App.lang.misc_yes : App.lang.misc_no}">${active ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}</div>
-              <div class="td sr-available" title="${available ? App.lang.misc_yes : App.lang.misc_no}">${available ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}</div>
-              <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
-            </div>
-          `);
+          <tr>
+            <td class="sr-img"${App.getBackgroundImage(img)}></td>
+            <td class="sr-number">${App.highlightMatchedText(ean, inputValue)}</td>
+            <td class="sr-name">${App.highlightMatchedText(name, inputValue)}</td>
+            <td class="sr-price">${price} ${App.settings.currency.symbol}</td>
+            <td class="sr-group${groupName ? '' : ' text-danger'}">${group} - ${groupName ? groupName : 'N/A'}</td>
+            <td class="sr-vat">${vat} %</td>
+            <td class="sr-active" title="${active ? App.lang.misc_yes : App.lang.misc_no}">${active ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}</td>
+            <td class="sr-available" title="${available ? App.lang.misc_yes : App.lang.misc_no}">${available ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}</td>
+            <td class="sr-edit">
+              <button class="btn btn-primary">${App.getIcon('edit')}</button>
+            </td>
+          </tr>
+        `);
         item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => {
           showEditForm(ean, () => input.keyup());
         });
@@ -83,18 +90,32 @@ App.renderProductsScreen = () => {
         }
       }
     }
-    if (searchResults.length) {
-      searchResultsContainer.append(tableHeader());
-      searchResultsContainer.append(searchResults);
-    } else {
-      searchResultsContainer.append(`
-        <div class="tr">
-          No products found. ${App.regex.ean.regex.test(searchValue) ? `Press Enter to create product with this code <span class="match">${searchValue}</span>.` : ''}
-        </div>
+    if (!searchResults.length) {
+      const noResultsButton = $(`
+        <button class="btn">
+            No products found. ${App.regex.ean.regex.test(inputValue) ? `Press Enter to create product with this code <span class="match">${inputValue}</span>.` : ''}
+        </button>
       `);
+      table.replaceWith(noResultsButton);
+      table = noResultsButton;
+    } else {
+      const newTable = createTable();
+      newTable.find('tbody').append(searchResults);
+      const dataTable = newTable.DataTable({
+        paging: false,
+        searching: false,
+        order: [[4, 'asc']],
+        columnDefs: [
+          {
+            orderable: false,
+            targets: [0, 8],
+          },
+        ],
+      });
+      const t = $(dataTable.table().container());
+      table.replaceWith(t);
+      table = t;
     }
-    searchResults = [];
-    // }
   }, App.debounceTime)).keyup();
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;

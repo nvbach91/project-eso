@@ -1,18 +1,21 @@
-const tableHeader = () => `
-  <div class="tr table-header">
-    <div class="td sr-img">${App.lang.form_image}</div>
-    <div class="td sr-number">${App.lang.form_number}</div>
-    <div class="td sr-position">${App.lang.form_position}</div>
-    <div class="td sr-name">${App.lang.form_name}</div>
-    <div class="td sr-price">${App.lang.form_price}</div>
-    <div class="td sr-type">${App.lang.form_type}</div>
-    <div class="td sr-limit">${App.lang.form_limit}</div>
-    <div class="td sr-active">${App.lang.form_active}</div>
-    <div class="td sr-edit">${App.lang.misc_edit}</div>
-  </div>
-`;
-
-let table;
+const createTable = () => $(`
+  <table class="table">
+    <thead>
+      <tr class="table-header search-result">
+        <th class="sr-img">${App.lang.form_image}</th>
+        <th class="sr-number">${App.lang.form_number}</th>
+        <th class="sr-position">${App.lang.form_position}</th>
+        <th class="sr-name">${App.lang.form_name}</th>
+        <th class="sr-price">${App.lang.form_price}</th>
+        <th class="sr-type">${App.lang.form_type}</th>
+        <th class="sr-limit">${App.lang.form_limit}</th>
+        <th class="sr-active">${App.lang.form_active}</th>
+        <th class="sr-edit">${App.lang.misc_edit}</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+`);
 
 App.renderModsScreen = () => {
   const keys = Object.keys(App.mods);
@@ -38,10 +41,9 @@ App.renderModsScreen = () => {
           </div>
         </form>
       </div>
-      <div class="table"></div>
+      <table class="table"></table>
     </div>
   `);
-  table = cpBody.find('.table');
   const form = cpBody.find('.search-form');
   const input = form.find('input');
   
@@ -52,41 +54,54 @@ App.renderModsScreen = () => {
       showEditForm(number);
     } 
   });
-  
-  renderTable();
+
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
+  renderTable();
   setTimeout(() => input.focus(), 100);
 };
 
 const renderTable = () => {
   const keys = Object.keys(App.mods);
-  keys.sort((a, b) => App.mods[a].position - App.mods[b].position); // Ascending position
 
-  table.empty();
-  table.append(tableHeader(), keys.map((key) => {
-    const i = App.mods[key];
-    const { name, type, number, position, img, price, limit, active } = i || {};
+  const newTable = createTable();
+  newTable.find('tbody').append(keys.map((key) => {
+    const mod = App.mods[key];
+    const { name, type, number, position, img, price, limit, active } = mod || {};
     const item = $(`
-      <div class="tr">
-        <div class="td sr-img"${App.getBackgroundImage(img)}></div>
-        <div class="td sr-number">${number}</div>
-        <div class="td sr-position">${position}</div>
-        <div class="td sr-name">${name}</div>
-        <div class="td sr-price">${price} ${App.settings.currency.symbol}</div>
-        <div class="td sr-type">${type}</div>
-        <div class="td sr-limit">${limit}</div>
-        <div class="td sr-active" title="${active ? App.lang.misc_yes : App.lang.misc_no}">
+      <tr>
+        <td class="sr-img"${App.getBackgroundImage(img)}></td>
+        <td class="sr-number">${number}</td>
+        <td class="sr-position">${position}</td>
+        <td class="sr-name">${name}</td>
+        <td class="sr-price">${price} ${App.settings.currency.symbol}</td>
+        <td class="sr-type">${type}</td>
+        <td class="sr-limit">${limit}</td>
+        <td class="sr-active" title="${active ? App.lang.misc_yes : App.lang.misc_no}">
           ${active ? App.getIcon('check_circle', '', '#28a745') : App.getIcon('cancel', '', '#dc3545')}
-        </div>
-        <button class="td sr-edit btn btn-primary">${App.getIcon('edit')}</button>
-      </div>
+        </td>
+        <td class="sr-edit">
+          <button class="btn btn-primary">${App.getIcon('edit')}</button>
+        </td>
+      </tr>
     `);
     item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => {
       showEditForm(number);
     });
     return item;
   }));
+  const dataTable = newTable.DataTable({
+    paging: false,
+    searching: false,
+    order: [[2, 'asc']],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [0, 8],
+      },
+    ],
+  });
+  App.jControlPanelBody.children('.card-header').siblings().replaceWith($(dataTable.table().container()));
 };
 
 const showEditForm = (number) => {

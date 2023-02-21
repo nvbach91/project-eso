@@ -82,32 +82,12 @@
     }
 }
 
-.table {
-    display: table;
-    .btn {
-        margin: 0;
-        width: 100%;
-    }
+.table th, .table td {
+    vertical-align: initial;
 }
-.tr {
-    display: table-row;
-}
-.td {
-    display: table-cell;
-    padding: 10px;
-}
-.tr:first-child {
-    font-weight: bold;
-}
-.tr:nth-child(even) {
-    background: #f9f9f9;
-}
-.tr:hover {
-    background-color: #f1f1f1;
-}
-.card-body.table.transactions {
-    flex: initial;
-    display: table;
+
+.table td {
+    padding: 0.25rem 0.75rem;
 }
 .transaction-item {
     width: 100%;
@@ -130,6 +110,9 @@
 }
 .ti-print, .ti-payment, .ti-delivery {
     text-align: center;
+}
+.ti-print button {
+    width: 100%;
 }
 .ti-number {
     color: $primaryThemeColor;
@@ -168,8 +151,11 @@
     color: #888;
 }
 span.match {
-    color: $primaryThemeColor;
+    color: var(--blue) !important;
     font-weight: bold;
+}
+.search-result {
+    
 }
 .sr-img {
     width: 60px;
@@ -204,6 +190,9 @@ span.match {
 }
 .sr-name:hover, .sr-number:hover {
     text-decoration: underline;
+}
+.sr-edit button {
+    width: 100%;
 }
 .navbar .btn-group {
     margin: 0;

@@ -52,6 +52,9 @@ App.renderDashboardScreen = () => {
       App.datePickerInstances[1].setDate(newDate);
     }
   });
+  const cpBody = $(`<div class="card-body">`);
+  App.jControlPanelBody.replaceWith(cpBody);
+  App.jControlPanelBody = cpBody;
   App.fetchAggregates().done(renderDashboard).fail(clearDashboard);
 };
 
@@ -82,15 +85,13 @@ const renderDashboard = () => {
       ${generateTopSoldCard()}
     </div>
   `);
-  App.jControlPanelBody.replaceWith(dashboard);
-  App.jControlPanelBody = dashboard;
+  App.jControlPanelBody.empty().append(dashboard);
   generateHourChart(dashboard.find('#db-hour-chart canvas'));
 };
 
 const clearDashboard = () => {
   const dashboard = $(`<button class="btn">${App.lang.tip_no_data_in_selected_period}</button>`);
-  App.jControlPanelBody.replaceWith(dashboard);
-  App.jControlPanelBody = dashboard;
+  App.jControlPanelBody.empty().append(dashboard);
 };
 
 const generateHourChart = (container) => {

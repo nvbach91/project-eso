@@ -106,7 +106,10 @@ App.start = () => {
     // console.log('Functionality to run before printing.');
   };
   const afterPrint = () => {
-    App.closeModal();
+    // problem when not using direct print... it will close errors in modal too
+    if (App.jModal.find('.receipt-preview').length) {
+      App.closeModal();
+    }
   };
   if (window.matchMedia) {
     const mediaQueryList = window.matchMedia('print');

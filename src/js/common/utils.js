@@ -405,7 +405,7 @@ App.destroyDatePickers = () => {
 };
 
 App.highlightMatchedText = (text, search) => {
-  const startMatchIndex = text.toLowerCase().indexOf(search.toLowerCase());
+  const startMatchIndex = App.removeDiacritics(text).toLowerCase().indexOf(App.removeDiacritics(search).toLowerCase());
   const displayContent = startMatchIndex >= 0 ? (
     text.slice(0, startMatchIndex) +
     `<span class="match">${text.slice(startMatchIndex, startMatchIndex + search.length)}</span>` +
