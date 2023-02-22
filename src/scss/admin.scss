@@ -81,13 +81,16 @@
         top: 19px;
     }
 }
-
 .table th, .table td {
     vertical-align: initial;
 }
 
 .table td {
     padding: 0.25rem 0.75rem;
+    // border: none;
+}
+.table tr:hover {
+    background-color: #f1f1f1;
 }
 .transaction-item {
     width: 100%;
@@ -153,6 +156,12 @@
 span.match {
     color: var(--blue) !important;
     font-weight: bold;
+}
+.search-form .custom-select {
+    height: 38px;
+    border: none;
+    flex-grow: 0;
+    width: 200px;
 }
 .search-result {
     

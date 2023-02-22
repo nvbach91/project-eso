@@ -17,6 +17,20 @@ const createTable = () => $(`
   </table>
 `);
 
+App.createGroupFilter = () => {
+  const groupNumbers = Object.keys(App.groups);
+  const options = groupNumbers.map((groupNumber) => {
+    const nProducts = Object.keys(App.products).filter((key) => App.products[key].group.toString() === groupNumber).length;
+    return `<option value="${groupNumber}">${groupNumber} - ${App.groups[groupNumber].name} (${nProducts})</option>`;
+  }).join('');
+  return (`
+    <select class="custom-select custom-select-lg" name="group">
+      <option value="">All groups</option>
+      ${options}
+    </select>
+  `);
+};
+
 App.renderProductsScreen = () => {
   const productKeys = Object.keys(App.products);
   const header = $(`
@@ -37,6 +51,7 @@ App.renderProductsScreen = () => {
         <form class="search-form">
           <div class="input-group">
             <input class="form-control" placeholder="${App.lang.tip_search_by_name_or_code}" title="PLU EAN code 1-20 digits" required>
+            ${App.createGroupFilter()}
             <button class="btn btn-primary btn-raised">${App.getIcon('search')}&nbsp;${App.lang.misc_search} / ${App.lang.misc_create}</button>
           </div>
         </form>
@@ -50,7 +65,7 @@ App.renderProductsScreen = () => {
     e.preventDefault();
     const searchValue = input.val();
     if (App.regex.ean.regex.test(searchValue)) {
-      showEditForm(searchValue, () => input.keyup());
+      showEditForm(searchValue, groupFilterValue, () => input.keyup());
     }
   });
   let table = createTable();
@@ -60,7 +75,9 @@ App.renderProductsScreen = () => {
     const inputValue = input.val();
     const searchValue = App.removeDiacritics(inputValue).toLowerCase();
     // if (searchValue.trim()) {
-    const productKeys = Object.keys(App.products);
+    const productKeys = !groupFilterValue ? Object.keys(App.products) : Object.keys(App.products).filter((ean) => {
+      return App.products[ean].group.toString() === groupFilterValue;
+    });
     for (let i = 0; i < productKeys.length; i++) {
       const ean = productKeys[i];
       const { name, price, group, vat, img, active, available } = App.products[ean];
@@ -82,7 +99,7 @@ App.renderProductsScreen = () => {
           </tr>
         `);
         item.children('.sr-edit, .sr-name, .sr-img, .sr-number').click(() => {
-          showEditForm(ean, () => input.keyup());
+          showEditForm(ean, group, () => input.keyup());
         });
         searchResults.push(item);
         if (searchResults.length >= maxSearchResults) {
@@ -117,18 +134,23 @@ App.renderProductsScreen = () => {
       table = t;
     }
   }, App.debounceTime)).keyup();
+  let groupFilterValue = '';
+  cpBody.find('select[name="group"]').change((e) => {
+    groupFilterValue = e.target.value;
+    input.keyup();
+  });
   App.jControlPanelBody.replaceWith(cpBody);
   App.jControlPanelBody = cpBody;
   setTimeout(() => input.focus(), 100);
 };
 
-const showEditForm = (ean, cb) => {
+const showEditForm = (ean, groupValue, cb) => {
   if (!cb) cb = () => { };
   const product = App.products[ean];
   const { name, price, group, img, vat, highlight, position, desc, active, available, promotion } = product || { active: true, available: true };
   const imgStyle = App.getBackgroundImage(img);
-  const groupOptions = Object.keys(App.groups).map((group) => {
-    return { label: `${group} - ${App.groups[group].name}`, value: group };
+  const groupOptions = Object.keys(App.groups).map((gn) => {
+    return { label: `${gn} - ${App.groups[gn].name}`, value: gn };
   });
   groupOptions.unshift({ label: '', value: '' });
   const vatOptions = App.settings.vatRates.map((rate) => {
@@ -160,7 +182,7 @@ const showEditForm = (ean, cb) => {
       </div>
       <div class="form-row">
         ${App.generateFormInput({ name: 'price', value: price || '', pattern: App.regex.price.regex, title: App.regex.price.desc })}
-        ${App.generateFormSelect({ name: 'group', value: group === undefined ? '' : group.toString(), options: groupOptions, type: 'number' })}
+        ${App.generateFormSelect({ name: 'group', value: (group !== undefined ? group : groupValue).toString(), options: groupOptions, type: 'number' })}
         ${App.generateFormSelect({ name: 'vat', value: vat || 0, options: vatOptions, type: 'number' })}
       </div>
         ${Object.keys(App.modTypes).map((type) => {
