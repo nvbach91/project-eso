@@ -203,6 +203,7 @@ form_tableMarkers.required	Required table markers	Povinné značky stolů
 form_finishMessage	Finish message	Závěrečná zpráva po objednávání
 form_autoLogin	Automatically log in after opening	Automatické přihlášení po zapnutí
 form_newpassword	New password	Nové heslo
+form_regId	Kiosk	Kiosk
 		
 admin_dashboard	Dashboard	Úvodní přehled
 admin_transactions	Transactions	Transakce

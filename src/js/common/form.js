@@ -148,7 +148,7 @@ App.bindForm = (form, endpoint) => {
         return;
       }
       if (endpoint === '/employee') {
-        App.settings.employees[data.email] = data.name;
+        App.settings.employees[data.email] = { name: data.name, regId: data.regId };
         return;
       }
       if (endpoint === '/ors') {

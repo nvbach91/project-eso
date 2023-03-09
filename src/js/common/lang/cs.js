@@ -203,6 +203,7 @@ App.GLocaleCS = {
   "form_finishMessage"                      : "Závěrečná zpráva po objednávání",
   "form_autoLogin"                          : "Automatické přihlášení po zapnutí",
   "form_newpassword"                        : "Nové heslo",
+  "form_regId"                              : "Kiosk",
 
   "admin_dashboard"                         : "Úvodní přehled",
   "admin_transactions"                      : "Transakce",

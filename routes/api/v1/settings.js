@@ -23,10 +23,14 @@ router.get('/settings', (req, res) => {
     const { residence, tin, vat, vatRegistered, companyName, bank, theme, img } = company._doc;
     settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank, theme, img };
 
-    return Users.find({ companyId: req.user.companyId }).select('username name');
+    return Users.find({ companyId: req.user.companyId }).select('username name regId');
   }).then((users) => {
     settings.employees = {};
-    users.forEach((user) => settings.employees[user.username.split(':')[1]] = user.name);
+    users.forEach((user) => settings.employees[user.username.split(':')[1]] = { name: user.name, regId: user.regId });
+
+    return Registers.find({ subdomain: req.user.subdomain }).select('_id name number');
+  }).then((registers) => {
+    settings.registers = registers;
 
     return Slides.find({ regId: req.user.regId }).select('-__v -regId');
   }).then((slides) => {

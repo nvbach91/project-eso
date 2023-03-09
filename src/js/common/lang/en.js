@@ -203,6 +203,7 @@ App.GLocaleEN = {
   "form_finishMessage"                      : "Finish message",
   "form_autoLogin"                          : "Automatically log in after opening",
   "form_newpassword"                        : "New password",
+  "form_regId"                              : "Kiosk",
 
   "admin_dashboard"                         : "Dashboard",
   "admin_transactions"                      : "Transactions",

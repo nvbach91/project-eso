@@ -87,16 +87,18 @@ const createEmployeeSettingsForm = () => {
       email: '',
       name: '',
       newpassword: '',
+      regId: '',
     });
     miBody.prepend(formRow);
   });
   const employeeEmails = Object.keys(App.settings.employees);
   employeeEmails.forEach((employeeEmail) => {
-    const name = App.settings.employees[employeeEmail];
+    const { name, regId } = App.settings.employees[employeeEmail];
     const formRow = createEmployeeFormRow({
       email: employeeEmail,
       name,
       newpassword: '',
+      regId,
     });
     miBody.append(formRow);
   });
@@ -110,6 +112,7 @@ const createEmployeeFormRow = (employee) => {
         ${App.generateFormInput({ name: 'email', type: 'email', value: employee.email, disabled: !!employee.email })}
         ${App.generateFormInput({ name: 'name', value: employee.name })}
         ${App.generateFormInput({ name: 'newpassword', type: 'password', optional: !!employee.email, minlength: 8 })}
+        ${App.generateFormSelect({ name: 'regId', value: employee.regId, options: App.settings.registers.map((r) => ({ label: `${r.number} - ${r.name}`, value: r._id })) })}
       </div>
       <div class="mi-control">
         <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>

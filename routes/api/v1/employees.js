@@ -15,8 +15,8 @@ router.delete('/employee', (req, res) => {
 });
 
 router.post('/employee', (req, res) => {
-  const { email, name, newpassword } = req.body;
-  const { companyId, regId, subdomain } = req.user;
+  const { email, name, newpassword, regId } = req.body;
+  const { companyId, subdomain } = req.user;
   const toSet = { subdomain, email, token: '', name, role: 'admin', companyId, regId };
   const password = newpassword ? bcrypt.hashSync(newpassword, bcrypt.genSaltSync(10)) : '';
   if (password) {
