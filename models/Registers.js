@@ -108,6 +108,7 @@ const Registers = new Schema({
   },
   finishMessage: '',
   autoLogin: Boolean,
+  syncRegId: Schema.ObjectId,
 });
 
 module.exports = mongoose.model('registers', Registers);

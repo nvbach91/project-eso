@@ -15,8 +15,10 @@ const readCertificateInfo = bluebird.promisify(pem.readCertificateInfo);
 
 router.get('/settings', (req, res) => {
   let settings = {};
+  let _register;
   Registers.findOne({ _id: req.user.regId }).select('-__v').then((register) => {
     settings = { ...register._doc };
+    _register = register;
 
     return Companies.findOne({ _id: req.user.companyId }).select('tin vat vatRegistered residence companyName bank theme img');
   }).then((company) => {
@@ -32,7 +34,7 @@ router.get('/settings', (req, res) => {
   }).then((registers) => {
     settings.registers = registers;
 
-    return Slides.find({ regId: req.user.regId }).select('-__v -regId');
+    return Slides.find({ regId: _register.syncRegId || req.user.regId }).select('-__v -regId');
   }).then((slides) => {
     settings.slides = {};
     slides.forEach(({ _id, text, img, position, video }) => {
@@ -81,10 +83,15 @@ router.post('/ors', (req, res) => {
   }).catch(utils.handleError(res));
 });
 
-router.post('/slides', (req, res) => {
+router.post('/slides', async (req, res) => {
+  const register = await Registers.findOne({ _id: req.user.regId }).select('syncRegId');
+  if (register.syncRegId) {
+    return res.status(409).json({ success: false, msg: 'srv_cannot_modify_synced_reg' });
+  }
+
   const { _id, ...slide } = req.body;
   if (_id) {
-    return Slides.update({ _id }, { $set: slide }).then(() => {
+    return Slides.updateOne({ _id }, { $set: slide }).then(() => {
       res.json({ msg: 'srv_success' });
     }).catch(utils.handleError(res));
   } else {
@@ -94,7 +101,12 @@ router.post('/slides', (req, res) => {
   }
 });
 
-router.delete('/slides/:_id', (req, res) => {
+router.delete('/slides/:_id', async (req, res) => {
+  const register = await Registers.findOne({ _id: req.user.regId }).select('syncRegId');
+  if (register.syncRegId) {
+    return res.status(403).json({ success: false, msg: 'srv_cannot_modify_synced_reg' });
+  }
+
   Slides.deleteOne({ _id: req.params._id }).then(() => {
     res.json({ msg: 'srv_success' });
   }).catch(utils.handleError(res));

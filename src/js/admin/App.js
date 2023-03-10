@@ -47,6 +47,13 @@ App.start = () => {
     App.jHeader = $('<header id="header">').appendTo(App.jContainer);
     App.jMain = $('<main id="main">').appendTo(App.jContainer);
     App.jFooter = $('<footer id="footer">').appendTo(App.jContainer);
+    App.jAlert = $(`
+      <div class="alert alert-dismissible">
+        <button class="close">&times;</button>
+        <span></span>
+      </div>
+    `).hide().appendTo(App.jContainer);
+    App.jAlert.find('button.close').click(() => App.jAlert.hide());
     App.loadLocale();
     App.render();
     moment.locale(App.locale);

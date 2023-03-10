@@ -414,6 +414,12 @@ input.hidden {
 #db-hour-chart {
     display: none;
 }
+.alert {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10000;
+}
 @media screen and (min-width: 720px) {
     #cp-header {
         display: flex;

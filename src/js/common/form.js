@@ -271,8 +271,11 @@ App.ajaxSaveDone = (btn) => () => {
   btn.prop('disabled', false).text(App.lang.misc_saved).addClass('btn-success');
 };
 
-App.ajaxSaveFail = (btn) => () => {
+App.ajaxSaveFail = (btn) => (err) => {
   btn.prop('disabled', false).text(App.lang.misc_save_failed).addClass('btn-danger');
+  if (err && err.responseJSON) {
+    App.showAlert(err.responseJSON.msg, 'alert-danger');
+  }
 };
 
 App.ajaxDeleting = (btn) => {
@@ -284,8 +287,11 @@ App.ajaxDeleteDone = (btn) => () => {
   App.closeModal();
 };
 
-App.ajaxDeleteFail = (btn) => () => {
+App.ajaxDeleteFail = (btn) => (err) => {
   btn.prop('disabled', false).text(App.lang.misc_delete_failed).addClass('btn-danger');
+  if (err && err.responseJSON) {
+    App.showAlert(err.responseJSON.msg, 'alert-danger');
+  }
 };
 
 App.resetFileInput = (input) => {

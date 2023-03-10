@@ -704,3 +704,11 @@ App.initErrorHandling = () => {
     window.dispatchEvent(new ErrorEvent('error', { error: err, message: err }));
   };
 };
+
+App.showAlert = (msg, type) => {
+  App.jAlert.removeClass('alert-success alert-danger').addClass(type).slideDown().find('span').text(msg);
+  clearTimeout(App.jAlertHideTimeout || 0);
+  App.jAlertHideTimeout = setTimeout(() => {
+    App.jAlert.slideUp();
+  }, 5 * 1000);
+};
