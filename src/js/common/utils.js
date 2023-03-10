@@ -195,7 +195,8 @@ App.calculateTaxFromPrice = (price, vatRate) => {
 };
 
 App.getClerk = (username) => {
-  return App.settings.employees[username];
+  const user = App.settings.employees[username];
+  return user ? user.name : '-';
 };
 
 App.addPadding = (value, maxLength) => {

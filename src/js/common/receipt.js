@@ -260,7 +260,7 @@ App.renderKioskReceipt = (transaction, printer, useAlign) => {
     }`;
 
   const footer =
-    `${App.lang.receipt_footer_clerk}: ${App.getClerk(transaction.clerk)}` + `\t` + `${moment(transaction.date).format(App.formats.dateTime)}` +
+    `${App.lang.receipt_footer_clerk}: ${App.getClerk(transaction.clerk)}` + `\n` + `${moment(transaction.date).format(App.formats.dateTime)}` +
     //`\n${App.getReceiptHorizontalLine(printer)}` +
     `\n${App.settings.receipt.footer ? `${App.settings.receipt.footer}` : ''}` +
     //`\n${App.getReceiptHorizontalLine(printer)}` +
