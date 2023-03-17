@@ -36,7 +36,22 @@ App.fetchSettings = () => {
     App.settings.vatRates.forEach((vatRate, index) => {
       App.vatMarks[vatRate] = String.fromCharCode(index + 65);
     });
-    
+    App.deliveryMethods = {
+      'eatin': {
+        title: App.lang.delivery_method_eatin,
+        text: App.lang.delivery_method_eatin_text,
+        btn: { text: App.lang.delivery_method_eatin_btn, class: 'btn-primary' },
+        // img: `${App.imageUrlBase}eatin_zd3gg0`,
+        img: `${App.imageUrlBase}${App.settings.deliveryEatinImg}`,
+      },
+      'takeout': {
+        title: App.lang.delivery_method_takeout,
+        text: App.lang.delivery_method_takeout_text,
+        btn: { text: App.lang.delivery_method_takeout_btn, class: 'btn-warning' },
+        // img: `${App.imageUrlBase}takeout_v1ldmt`,
+        img: `${App.imageUrlBase}${App.settings.deliveryTakeoutImg}`,
+      },
+    };
     App.availableThemes[App.settings.theme] = $('#theme').attr('href');
     $.get('/themes').done((res) => {
       App.availableThemes = res;

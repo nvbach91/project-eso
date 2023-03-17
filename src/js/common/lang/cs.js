@@ -102,6 +102,8 @@ App.GLocaleCS = {
   "misc_skip"                               : "Přeskočit",
   "misc_create"                             : "Vytvořit",
 
+  "form_deliveryEatinImg"                   : "Obrázek pro možnost tady",
+  "form_deliveryTakeoutImg"                 : "Obrázek pro možnost s sebou",
   "form_tablesync.url"                      : "URL adresa OPS synchronizace stolů",
   "form_tablesync.ip"                       : "IP adresa OPS synchronizace stolů",
   "form_terminal.endpoint"                  : "Endpoint",

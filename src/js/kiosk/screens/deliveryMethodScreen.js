@@ -2,20 +2,6 @@ App.renderDeliveryMethodScreen = () => {
   App.jOrderPreview.remove();
   App.jDeliveryMethodIndicator.fadeOut();
   App.jCheckoutButton.fadeOut();
-  App.deliveryMethods = {
-    'eatin': { 
-      title: App.lang.delivery_method_eatin,
-      text: App.lang.delivery_method_eatin_text,
-      btn: { text: App.lang.delivery_method_eatin_btn, class: 'btn-primary' },
-      img: `${App.imageUrlBase}eatin_zd3gg0`,
-    },
-    'takeout': { 
-      title: App.lang.delivery_method_takeout,
-      text: App.lang.delivery_method_takeout_text,
-      btn: { text: App.lang.delivery_method_takeout_btn, class: 'btn-warning' },
-      img: `${App.imageUrlBase}takeout_v1ldmt`,
-    },
-  };
   const screen = $(`
     <main id="main">
       <div class="screen delivery-methods">

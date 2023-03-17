@@ -102,6 +102,8 @@ App.GLocaleEN = {
   "misc_skip"                               : "Skip",
   "misc_create"                             : "Create",
 
+  "form_deliveryEatinImg"                   : "Delivery eat-in image",
+  "form_deliveryTakeoutImg"                 : "Delivery take-out image",
   "form_tablesync.url"                      : "OPS tablesync URL address",
   "form_tablesync.ip"                       : "OPS tablesync IP address",
   "form_terminal.endpoint"                  : "Endpoint",

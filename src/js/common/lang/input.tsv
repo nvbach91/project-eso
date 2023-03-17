@@ -102,6 +102,8 @@ misc_device_is_offline	Device is offline, please try again momentarily	Zařízen
 misc_skip	Skip	Přeskočit
 misc_create	Create	Vytvořit
 		
+form_deliveryEatinImg	Delivery eat-in image	Obrázek pro možnost tady
+form_deliveryTakeoutImg	Delivery take-out image	Obrázek pro možnost s sebou
 form_tablesync.url	OPS tablesync URL address	URL adresa OPS synchronizace stolů
 form_tablesync.ip	OPS tablesync IP address	IP adresa OPS synchronizace stolů
 form_terminal.endpoint	Endpoint	Endpoint

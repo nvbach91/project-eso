@@ -53,6 +53,8 @@ router.post('/registration', (req, res) => {
     newRegister.activityTimeout = 60000;
     newRegister.activityCheckTimeout = 25000;
     newRegister.autoNextTab = false;
+    newRegister.deliveryTakeoutImg = 'takeout_v1ldmt';
+    newRegister.deliveryEatinImg = 'eatin_zd3gg0';
     newRegister.kioskPrinters = {
       'ei3scji3': { name: '', ip: '', diacritics: true, direct: true, columns: 42, groups: '', style: 'plain' },
     };

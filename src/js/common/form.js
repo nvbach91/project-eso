@@ -198,6 +198,9 @@ App.serializeForm = (form) => {
   const data = {};
   const serialized = form.serializeArray();
   serialized.forEach((input) => {
+    if (input.name.startsWith('__')) {
+      return false;
+    }
     let value = input.value.trim();
     const inputType = form.find(`[name="${input.name}"]`).attr('type');
     if (inputType === 'number' && /\d+/.test(value)) {
@@ -223,7 +226,7 @@ App.serializeForm = (form) => {
   return data;
 };
 
-App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder, originalSize) => {
+App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder, originalSize, callback) => {
   imgHolder.off('click').click(() => {
     cloudinaryFileUploadInput.click();
   });
@@ -239,13 +242,16 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
   }
   cloudinaryFileUploadInput.cloudinary_fileupload(uploadOptions);
   cloudinaryFileUploadInput.bind('cloudinarydone', (e, data) => {
+    if (typeof callback === 'function') {
+      callback(data.result.public_id);
+    }
     cloudinaryPublicIdHolder.val(data.result.public_id);
     imgHolder.empty().attr('style', App.getBackgroundImage(data.result.public_id).slice(8, -1));
     //uncomment to allow reupload of the same file in the same fileupload instance
     //App.resetFileInput(cloudinaryFileUploadInput);
 
     // bind again to allow change of file
-    App.bindCloudinaryFileUpload(cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder);
+    App.bindCloudinaryFileUpload(cloudinaryFileUploadInput, cloudinaryPublicIdHolder, imgHolder, originalSize, callback);
     return true;
   });
 };

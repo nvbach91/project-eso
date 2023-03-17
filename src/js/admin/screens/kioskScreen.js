@@ -41,16 +41,43 @@ const createGeneralSettingsForm = () => {
           <div class="form-group bmd-form-group is-filled">
             <label class="bmd-label-static">${App.lang.settings_payment_methods}</label>
             <div class="form-control">
-              ${Object.keys(App.settings.paymentMethods).map((key) => {
-                const active = App.settings.paymentMethods[key].enabled;
-                return (`
-                  <button type="button" class="payment-method-toggle btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
-                    ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
-                  </button>
-                `);
-              }).join('')}
+              <div class="form-row">
+                ${Object.keys(App.settings.paymentMethods).map((key) => {
+                  const pm = App.settings.paymentMethods[key];
+                  const active = pm.enabled;
+                  const imgStyle = App.getBackgroundImage(pm.img);
+                  return (`
+                    <div class="form-col d-flex flex-column" style="flex-grow: 0">
+                      <button type="button" class="payment-method-toggle btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
+                        ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
+                      </button>
+                      <div class="img-upload">
+                        <label class="bmd-label-static">${App.lang.form_image}</label>
+                        <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+                        <input class="hidden" name="__paymentMethods.${key}.img" value="${pm.img || ''}">
+                        ${App.getCloudinaryUploadTag({ tags: [`paymentMethods.${key}.img`] })}
+                      </div>
+                    </div>
+                  `);
+                }).join('')}
+              </div>
             </div>
           </div>
+        </div>
+        <div class="form-row">
+          ${['deliveryEatinImg', 'deliveryTakeoutImg'].map((key) => {
+            const imgStyle = App.getBackgroundImage(App.settings[key]);
+            return (`
+              <div class="form-col d-flex flex-column" style="flex-grow: 0">
+                <div class="img-upload">
+                  <label class="bmd-label-static">${App.lang[`form_${key}`]}</label>
+                  <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+                  <input class="hidden" name="${key}" value="${App.settings[key] || ''}">
+                  ${App.getCloudinaryUploadTag({ tags: [key] })}
+                </div>
+              </div>
+            `);
+          })}
         </div>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
@@ -58,6 +85,26 @@ const createGeneralSettingsForm = () => {
       </div>
     </form>
   `);
+  Object.keys(App.settings.paymentMethods).forEach((method) => {
+    const input = form.find(`input[name="__paymentMethods.${method}.img"]`);
+    App.bindCloudinaryFileUpload(
+      input.siblings('input.cloudinary-fileupload[type=file]'),
+      input,
+      input.siblings('.img-holder'),
+      null,
+      (publicId) => {
+        App.settings.paymentMethods[method].img = publicId;
+      }
+    );
+  });
+  ['deliveryEatinImg', 'deliveryTakeoutImg'].forEach((key) => {
+    const input = form.find(`input[name="${key}"]`);
+    App.bindCloudinaryFileUpload(
+      input.siblings('input.cloudinary-fileupload[type=file]'),
+      input,
+      input.siblings('.img-holder')
+    );
+  });
   App.bindForm(form, '/settings');
   App.bindToggleButtons(form, '.payment-method-toggle');
   form.find('.payment-method-toggle').click(function () {

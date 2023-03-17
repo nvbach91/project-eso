@@ -109,6 +109,8 @@ const Registers = new Schema({
   finishMessage: '',
   autoLogin: Boolean,
   syncRegId: Schema.ObjectId,
+  deliveryEatinImg: String,
+  deliveryTakeoutImg: String,
 });
 
 module.exports = mongoose.model('registers', Registers);
