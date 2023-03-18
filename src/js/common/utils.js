@@ -535,6 +535,7 @@ App.createLocaleSwitcher = (options) => {
       const selectedLocale = t.data('locale');
       App.saveLocalPreference('locale', selectedLocale);
       App.loadLocale();
+      App.deliveryMethods = App.createDeliveryMethods();
       App.render();
     }
     const currentLocaleButton = dropdown.children('.locale-button').removeAttr('data-toggle');
@@ -711,4 +712,24 @@ App.showAlert = (msg, type) => {
   App.jAlertHideTimeout = setTimeout(() => {
     App.jAlert.slideUp();
   }, 5 * 1000);
+};
+
+
+App.createDeliveryMethods = () => {
+  return {
+    'eatin': {
+      title: App.lang.delivery_method_eatin,
+      text: App.lang.delivery_method_eatin_text,
+      btn: { text: App.lang.delivery_method_eatin_btn, class: 'btn-primary' },
+      // img: `${App.imageUrlBase}eatin_zd3gg0`,
+      img: `${App.imageUrlBase}${App.settings.deliveryEatinImg}`,
+    },
+    'takeout': {
+      title: App.lang.delivery_method_takeout,
+      text: App.lang.delivery_method_takeout_text,
+      btn: { text: App.lang.delivery_method_takeout_btn, class: 'btn-warning' },
+      // img: `${App.imageUrlBase}takeout_v1ldmt`,
+      img: `${App.imageUrlBase}${App.settings.deliveryTakeoutImg}`,
+    },
+  }
 };

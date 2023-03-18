@@ -2,10 +2,10 @@ text_id	en	cs
 delivery_method_welcome_title	Welcome!	Vítejte!
 delivery_method_special_offer_btn	Show me!	Přejít k nabídce!
 delivery_method_eatin	Eat in	Na místě
-delivery_method_eatin_text	Let's enjoy the atmosphere in our restaurant	Chtěl bych jíst v pohodlí restaurace
-delivery_method_eatin_btn	I'll eat here	Budu jíst v restauraci
+delivery_method_eatin_text	Enjoy the atmosphere at our place	Užijte si pohodlí našeho prostoru
+delivery_method_eatin_btn	I'll stay here	Zůstanu tady
 delivery_method_takeout	Take out	S sebou
-delivery_method_takeout_text	I want to pack my meal	Chtěl bych si své jídlo vzít s sebou
+delivery_method_takeout_text	I want to pack my meal	Chtěl bych svou objednávku vzít s sebou
 delivery_method_takeout_btn	I'll take it home	Zabalit s sebou
 		
 order_products_order_btn	Order	Vybrat
@@ -18,7 +18,7 @@ checkout_card_pay_title	Pay by card	Platba kartou
 checkout_card_pay_desc	Simply use your credit card to pay	Chci zaplatit přes kreditní kartu
 checkout_card_pay_btn	I'll pay by card	Zaplatím kartou
 checkout_cash_pay_title	Pay in cash	Platba hotově
-checkout_cash_pay_desc	Even up in person at checkout	Zaplatím to osobně u pultu
+checkout_cash_pay_desc	Pay at the counter	Zaplatím to osobně u pultu
 checkout_cash_pay_btn	I'd like to pay in cash	Budu platit hotově
 checkout_return_title	Forgot something?	Zapomněli jste něco?
 checkout_return_btn	Go back	Vrátit se

@@ -38,29 +38,27 @@ const createGeneralSettingsForm = () => {
         </div>
         ${App.generateFormSelect({ name: 'currency', value: App.settings.currency.code, options: currencyOptions })}
         <div class="form-row">
-          <div class="form-group bmd-form-group is-filled">
-            <label class="bmd-label-static">${App.lang.settings_payment_methods}</label>
-            <div class="form-control">
-              <div class="form-row">
-                ${Object.keys(App.settings.paymentMethods).map((key) => {
-                  const pm = App.settings.paymentMethods[key];
-                  const active = pm.enabled;
-                  const imgStyle = App.getBackgroundImage(pm.img);
-                  return (`
-                    <div class="form-col d-flex flex-column" style="flex-grow: 0">
-                      <button type="button" class="payment-method-toggle btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
-                        ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
-                      </button>
-                      <div class="img-upload">
-                        <label class="bmd-label-static">${App.lang.form_image}</label>
-                        <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
-                        <input class="hidden" name="__paymentMethods.${key}.img" value="${pm.img || ''}">
-                        ${App.getCloudinaryUploadTag({ tags: [`paymentMethods.${key}.img`] })}
-                      </div>
+          <label class="bmd-label-static">${App.lang.settings_payment_methods}</label>
+          <div class="form-control">
+            <div class="form-row">
+              ${Object.keys(App.settings.paymentMethods).map((key) => {
+                const pm = App.settings.paymentMethods[key];
+                const active = pm.enabled;
+                const imgStyle = App.getBackgroundImage(pm.img);
+                return (`
+                  <div class="form-col d-flex flex-column" style="flex-grow: 0">
+                    <button type="button" class="payment-method-toggle btn-toggle btn${active ? ' btn-raised' : ''} btn-${active ? 'primary' : 'secondary'}" data-active="${active}" data-key="${key}">
+                      ${App.lang[`checkout_${key}_pay_title`]} ${active ? App.getIcon('done', 14) : ''}
+                    </button>
+                    <div class="img-upload">
+                      <label class="bmd-label-static">${App.lang.form_image}</label>
+                      <div class="btn img-holder"${imgStyle}>${imgStyle ? '' : App.getIcon('file_upload')}</div>
+                      <input class="hidden" name="__paymentMethods.${key}.img" value="${pm.img || ''}">
+                      ${App.getCloudinaryUploadTag({ tags: [`paymentMethods.${key}.img`] })}
                     </div>
-                  `);
-                }).join('')}
-              </div>
+                  </div>
+                `);
+              }).join('')}
             </div>
           </div>
         </div>

@@ -2,10 +2,10 @@ App.GLocaleCS = {
   "delivery_method_welcome_title"           : "Vítejte!",
   "delivery_method_special_offer_btn"       : "Přejít k nabídce!",
   "delivery_method_eatin"                   : "Na místě",
-  "delivery_method_eatin_text"              : "Chtěl bych jíst v pohodlí restaurace",
-  "delivery_method_eatin_btn"               : "Budu jíst v restauraci",
+  "delivery_method_eatin_text"              : "Užijte si pohodlí našeho prostoru",
+  "delivery_method_eatin_btn"               : "Zůstanu tady",
   "delivery_method_takeout"                 : "S sebou",
-  "delivery_method_takeout_text"            : "Chtěl bych si své jídlo vzít s sebou",
+  "delivery_method_takeout_text"            : "Chtěl bych svou objednávku vzít s sebou",
   "delivery_method_takeout_btn"             : "Zabalit s sebou",
 
   "order_products_order_btn"                : "Vybrat",
