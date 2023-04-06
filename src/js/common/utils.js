@@ -76,6 +76,9 @@ App.hideSpinner = () => {
 };
 
 App.reset = () => {
+  if (App.isProcessingCardPayment && App.settings.terminal.type === 'payment-terminal-pax-csob') {
+    App.ptPassivate().always(() => App.isProcessingCardPayment = false);
+  }
   App.cart = {};
   App.cartCategoryQuantities = {};
   App.activeTabPosition = 0;
@@ -103,6 +106,9 @@ App.startActivitySession = () => {
   }
   //console.log('Activity session started');
   App.activityCheckInterval = setInterval(() => {
+    if (App.isProcessingCardPayment) {
+      App.lastActivityTime = new Date();
+    }
     const idleTime = new Date() - App.lastActivityTime;
     //console.log('idle time = ', idleTime);
     if (idleTime > App.settings.activityTimeout && !App.isCheckingActivity) {
@@ -128,6 +134,10 @@ App.checkActivity = () => {
   const check = $(`
     <div class="activity-check">
       <p>${App.lang.modal_timeout_text}</p>
+      <div class="progress" style="height: 20px; transition: opacity .5s ease">
+        <div class="progress-bar" role="progressbar"></div>
+      </div>
+      <br>
       <div class="ac-control">
         <button class="btn btn-danger">${App.lang.modal_timeout_leave_btn}</button>
         <button class="btn btn-primary btn-raised">${App.lang.modal_timeout_stay_btn}</button>
@@ -150,6 +160,24 @@ App.checkActivity = () => {
   check.find('.btn-primary').click(() => {
     App.closeModal();
   });
+  const progressBar = check.find('.progress-bar');
+  let progressTimeElapsed = 1;
+  const progressTime = App.settings.activityCheckTimeout / 1000 - progressTimeElapsed;
+  progressBar.css({ width: '0%', transition: `width ${progressTime}s linear` });
+  setTimeout(() => {
+    const progressBarTextInterval = setInterval(() => {
+      progressTimeElapsed++;
+      if (progressTimeElapsed / progressTime >= 0.2) {
+        progressBar.html(`<span>${App.getIcon('timer', 15)} <span>${progressTime - progressTimeElapsed}s</span></span>`);
+        if (progressTimeElapsed >= progressTime) {
+          console.log('interval', progressBarTextInterval, 'cleared');
+          clearInterval(progressBarTextInterval);
+          setTimeout(() => progressBar.parent().css({ opacity: 0 }), 1000);
+        }
+      }
+    }, 1000);
+    progressBar.css({ width: '100%' });
+  }, 1000);
 };
 
 App.closeModal = () => {

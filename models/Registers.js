@@ -23,7 +23,6 @@ const Registers = new Schema({
     deliveryMethodPosition: String,
     orderPrefix: String,
   },
-  carouselInterval: Number,
   currency: {
     code: String,
     locale: String,
@@ -69,6 +68,8 @@ const Registers = new Schema({
     // }
   },
   terminal: {
+    type: { type: String },
+    partial_approval: Boolean,
     ip: String,
     port: Number,
     password: String,
@@ -94,8 +95,9 @@ const Registers = new Schema({
     //    enabled: true
     // }
   },
-  activityTimeout: Number, // if the app is idle for this amount of time, an activity check dialog will appear
-  activityCheckTimeout: Number, // if the app is idle for this amount of time after the check appeared, the app will reset
+  carouselInterval: Number, // min: 5000, max: 300000, default: 20000,
+  activityTimeout: Number, // min: 60000, max: 24000, default: 120000 // if the app is idle for this amount of time, an activity check dialog will appear
+  activityCheckTimeout: Number, // min: 10000, max: 60000, default: 30000 // if the app is idle for this amount of time after the activity check dialog appeared, the app will reset
   autoNextTab: Boolean,
   tableMarkers: {
     active: Boolean,

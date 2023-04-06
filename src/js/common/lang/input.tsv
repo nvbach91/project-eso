@@ -106,9 +106,11 @@ form_deliveryEatinImg	Delivery eat-in image	Obrázek pro možnost tady
 form_deliveryTakeoutImg	Delivery take-out image	Obrázek pro možnost s sebou
 form_tablesync.url	OPS tablesync URL address	URL adresa OPS synchronizace stolů
 form_tablesync.ip	OPS tablesync IP address	IP adresa OPS synchronizace stolů
-form_terminal.endpoint	Endpoint	Endpoint
+form_terminal.endpoint	Endpoint	Přístupový bod
 form_terminal.id	Terminal ID	ID Terminálu
 form_terminal.ip	IP address	IP adresa
+form_terminal.type	Type	Typ
+form_terminal.partial_approval	Partial approval (ČSOB)	Částečná autorizace (ČSOB)
 form_terminal.port	Port	Port
 form_terminal.password	Password	Heslo
 form_kioskPrinters	Kiosk printer	Tiskárny na kiosku

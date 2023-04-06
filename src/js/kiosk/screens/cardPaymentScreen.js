@@ -6,6 +6,16 @@ App.ptSend = (ptRequest) => {
   });
 };
 
+App.ptPassivate = () => {
+  const ptRequest = {
+    transactionType: 'passivate',
+    ip: App.settings.terminal.ip,
+    port: App.settings.terminal.port,
+    password: App.settings.terminal.password,
+  };
+  return App.ptSend(ptRequest);
+};
+
 App.ptPay = (amount, currency, customerLanguage, receiptNumber) => {
   const ptRequest = {
     transactionType: 'sale',
@@ -15,7 +25,7 @@ App.ptPay = (amount, currency, customerLanguage, receiptNumber) => {
     currency: currency,
     customerLanguage: customerLanguage,
     referenceNumber: receiptNumber.toString(),
-    password: App.settings.terminal.password
+    password: App.settings.terminal.password,
   };
   return App.ptSend(ptRequest);
 };
@@ -44,6 +54,7 @@ App.renderCardPaymentScreen = () => {
   App.fetchTransactions({ offset: 0, limit: 1 }).done((transactions) => {
     const lastTransaction = transactions.length ? transactions[0] : App.getLastTransaction();
     const newTransactionNumber = App.createNewTransactionNumber(lastTransaction);
+    App.isProcessingCardPayment = true;
     App.ptPay(totalPrice.formatMoney(), App.settings.currency.code, App.locale, newTransactionNumber).done((resp) => {
       if (resp.msg && /^(R00\d|R010)$/.test(resp.msg.responseCode)) {
         const appendix = resp.msg.dataFields.t;
@@ -88,6 +99,8 @@ App.renderCardPaymentScreen = () => {
     }).fail((resp) => {
       App.warnPaymentFailed(resp);
       App.renderCheckoutScreen();
+    }).always(() => {
+      App.isProcessingCardPayment = false;
     });
   }).fail((resp) => {
     App.warnPaymentFailed(resp);

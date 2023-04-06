@@ -36,6 +36,7 @@ App.init = () => {
   App.renderModal();
   App.renderLoginForm();
   $.getJSON(`${App.localhostServerURL}/activeprinters`).done((resp) => App.supportedPrinters = ['', ...resp.msg]);
+  $.getJSON(`${App.localhostServerURL}/supported-payment-terminals`).done((resp) => App.supportedPaymentTerminals = resp.msg);
   $.cloudinary.config({ cloud_name: App.cloudinaryCloudName, secure: true });
 
   //$('.form-signin').submit();

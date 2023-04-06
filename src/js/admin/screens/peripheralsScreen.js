@@ -152,20 +152,31 @@ App.renderPeripheralsScreen = () => {
   printerForm.find('button[data-action="duplicate-printer"]').click(duplicatePrinter);
   printerForm.find('button[data-action="delete-printer"]').click(deletePrinter);
 
+  const paymentTerminalOptions = [];
+  const paymentTerminalKeys = Object.keys(App.supportedPaymentTerminals);
+  if (!paymentTerminalKeys.length) {
+    paymentTerminalOptions.push({ label: 'You need to install OPS v9.1.2 or later', value: '' });
+  }
+  paymentTerminalKeys.forEach((type) => {
+    paymentTerminalOptions.push({ label: App.supportedPaymentTerminals[type].name, value: type });
+  });
+
   const paymentTerminalForm = $(`
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_payment_terminal}</div>
       <div class="mi-body">
         <div class="form-row"> 
-          ${App.generateFormInput({ name: 'terminal.endpoint', value: App.settings.terminal.endpoint, disabled: true })}
+          ${App.generateFormSelect({ name: 'terminal.type', options: paymentTerminalOptions, value: App.settings.terminal.type })}
           ${App.generateFormInput({ name: 'terminal.id', value: App.settings.terminal.id })}
         </div>
         <div class="form-row">
           ${App.generateFormInput({ name: 'terminal.ip', value: App.settings.terminal.ip })}
-          ${App.generateFormInput({ name: 'terminal.port', value: App.settings.terminal.port, type: 'number' })}
+          ${App.generateFormInput({ name: 'terminal.port', min: 1024, max: 65535, value: App.settings.terminal.port, type: 'number', disabled: true })}
+          ${App.generateFormSelect({ name: 'terminal.partial_approval', options: App.binarySelectOptions, value: App.settings.terminal.partial_approval })}
         </div>
         <div class="form-row">
-          ${App.generateFormInput({ name: 'terminal.password', value: App.settings.terminal.password })}
+          ${App.generateFormInput({ name: 'terminal.endpoint', value: App.settings.terminal.endpoint, disabled: true })}
+          ${App.generateFormInput({ name: 'terminal.password', value: App.settings.terminal.password, type: 'password' })}
         </div>
         <div class="mi-control">
           <a class="btn btn-info" target="_blank" href="${App.paymentTerminalServerURL}/transactions?auth=${App.settings.terminal.password}">Transactions ${App.getIcon('open_in_new')}</a>
@@ -175,6 +186,11 @@ App.renderPeripheralsScreen = () => {
     </form>
   `).appendTo(cpBody);
   App.bindForm(paymentTerminalForm, '/settings');
+  const portInput = paymentTerminalForm.find('input[name="terminal.port"]');
+  paymentTerminalForm.find('select[name="terminal.type"]').change(function () {
+    const t = $(this);
+    portInput.val(App.supportedPaymentTerminals[t.val()].port);
+  });
 
   const tablesyncSettingsForm = $(`
     <form class="mod-item card">

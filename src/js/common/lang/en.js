@@ -109,6 +109,8 @@ App.GLocaleEN = {
   "form_terminal.endpoint"                  : "Endpoint",
   "form_terminal.id"                        : "Terminal ID",
   "form_terminal.ip"                        : "IP address",
+  "form_terminal.type"                      : "Type",
+  "form_terminal.partial_approval"          : "Partial approval (ČSOB)",
   "form_terminal.port"                      : "Port",
   "form_terminal.password"                  : "Password",
   "form_kioskPrinters"                      : "Kiosk printer",

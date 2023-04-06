@@ -7,11 +7,6 @@ App.imageUrlBase = `https://res.cloudinary.com/${App.cloudinaryCloudName}/image/
 App.paymentTerminalServerURL = `${window.location.protocol}//localhost:3443`;
 App.localhostServerURL = `${window.location.protocol}//localhost:2443`;
 
-App.paymentTerminalTypesByPort = {
-  '2050': 'payment-terminal-ingenico',
-  '20008': 'payment-terminal-pax',
-};
-
 const [ subdomain, domain, realm ] = window.location.hostname.split('.');
 App.subdomain = subdomain;
 App.domain = domain;
@@ -65,6 +60,8 @@ App.supportedPrinters = [ // will change after call to local api for active prin
   'XP-80',
   'XP-80',
 ];
+
+App.supportedPaymentTerminals = {}; // will change after call to local api for supported payment terminals
 
 App.debounceTime = 300;
 

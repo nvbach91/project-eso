@@ -159,9 +159,9 @@ const createInterfaceSettingsForm = () => {
       <div class="mi-header">${App.lang.settings_interface}</div>
       <div class="mi-body">
         <div class="form-row"> 
-          ${App.generateFormInput({ type: 'number', step: 1000, name: 'activityCheckTimeout', value: App.settings.activityCheckTimeout })}
-          ${App.generateFormInput({ type: 'number', step: 1000, name: 'activityTimeout', value: App.settings.activityTimeout })}
-          ${App.generateFormInput({ type: 'number', step: 1000, name: 'carouselInterval', value: App.settings.carouselInterval })}
+          ${App.generateFormInput({ type: 'number', step: 1000, min: 10000, max: 60000, name: 'activityCheckTimeout', value: App.settings.activityCheckTimeout })}
+          ${App.generateFormInput({ type: 'number', step: 1000, min: 60000, max: 240000, name: 'activityTimeout', value: App.settings.activityTimeout })}
+          ${App.generateFormInput({ type: 'number', step: 1000, min: 5000, max: 300000, name: 'carouselInterval', value: App.settings.carouselInterval })}
         </div>
         <div class="form-row">
           ${App.generateFormSelect({ name: 'autoNextTab', value: App.settings.autoNextTab, options: App.binarySelectOptions })}
