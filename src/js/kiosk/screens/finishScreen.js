@@ -11,10 +11,10 @@ App.renderFinishScreen = (newTransaction) => {
     <main id="main">
       <div class="screen finish-screen">
         <div class="card full-width-card">
-          <h5 class="card-header">
-            <span>${App.lang.finish_header_title}</span>
+          <div class="card-header">
+            <h5>${App.lang.finish_header_title}</h5>
             <button class="btn btn-primary btn-raised start-new">${App.lang.finish_header_btn}</button>
-          </h5>
+          </div>
           <div class="card-body">
             <div class="text-center">
               <div class="row justify-content-md-center align-items-md-center">

@@ -94,7 +94,7 @@ main {
     left: 22px;
     width: 156px;
 }
-.finish-screen .card-header {
+.finish-screen .card-header, .payment-methods .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;

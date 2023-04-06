@@ -35,7 +35,10 @@ App.renderCardPaymentScreen = () => {
     <main id="main">
       <div class="screen payment-methods">
         <div class="card full-width-card">
-          <h5 class="card-header">${App.lang.card_payment_title}</h5>
+          <div class="card-header">
+            <h5>${App.lang.card_payment_title}</h5>
+            <button class="btn btn-danger cancel-card-payment">${App.lang.modal_cart_cancel_btn}</button>
+          </div>
           <div class="card-body">
             <h4 class="text-center">${App.lang.card_payment_desc}</h4>
           </div>
@@ -105,6 +108,9 @@ App.renderCardPaymentScreen = () => {
   }).fail((resp) => {
     App.warnPaymentFailed(resp);
     App.renderCheckoutScreen();
+  });
+  screen.find('.cancel-card-payment').click(() => {
+    App.ptPassivate();
   });
   App.hideSpinner();
 };
