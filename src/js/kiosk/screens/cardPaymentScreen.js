@@ -37,7 +37,7 @@ App.renderCardPaymentScreen = () => {
         <div class="card full-width-card">
           <div class="card-header">
             <h5>${App.lang.card_payment_title}</h5>
-            <button class="btn btn-danger cancel-card-payment">${App.lang.modal_cart_cancel_btn}</button>
+            <button class="btn btn-danger cancel-card-payment" style="display: none">${App.lang.modal_cart_cancel_btn}</button>
           </div>
           <div class="card-body">
             <h4 class="text-center">${App.lang.card_payment_desc}</h4>
@@ -94,7 +94,7 @@ App.renderCardPaymentScreen = () => {
       } else {
         App.showWarning(`
           <h4 class="text-center">${App.lang.modal_payment_failed_p1}</h4>
-          ${resp.msg ? `<h5 class="text-center"><strong class="badge badge-danger">${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></h5>` : ''}
+          ${resp.msg && resp.msg.responseCode ? `<h5 class="text-center"><strong class="badge badge-danger">${`${resp.msg.responseCode || ''} ${resp.msg.responseMessage || ''}`}</strong></h5>` : ''}
           <h5 class="text-center">${App.lang.modal_payment_failed_p2}</h5>
         `);
         App.renderCheckoutScreen();
@@ -109,9 +109,12 @@ App.renderCardPaymentScreen = () => {
     App.warnPaymentFailed(resp);
     App.renderCheckoutScreen();
   });
-  screen.find('.cancel-card-payment').click(() => {
+  const cancelCardPaymentButton = screen.find('.cancel-card-payment').click(() => {
     App.ptPassivate();
   });
+  setTimeout(() => {
+    cancelCardPaymentButton.show();
+  }, 60000);
   App.hideSpinner();
 };
 
