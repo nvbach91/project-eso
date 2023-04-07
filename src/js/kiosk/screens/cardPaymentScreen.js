@@ -37,7 +37,11 @@ App.renderCardPaymentScreen = () => {
         <div class="card full-width-card">
           <div class="card-header">
             <h5>${App.lang.card_payment_title}</h5>
-            <button class="btn btn-danger cancel-card-payment" style="display: none">${App.lang.modal_cart_cancel_btn}</button>
+            ${App.settings.terminal.type === 'payment-terminal-pax-csob' ? (`
+              <button class="btn btn-danger cancel-card-payment" style="display: none">
+                ${App.lang.modal_cart_cancel_btn}
+              </button>
+            `) : ''}
           </div>
           <div class="card-body">
             <h4 class="text-center">${App.lang.card_payment_desc}</h4>
@@ -109,12 +113,16 @@ App.renderCardPaymentScreen = () => {
     App.warnPaymentFailed(resp);
     App.renderCheckoutScreen();
   });
-  const cancelCardPaymentButton = screen.find('.cancel-card-payment').click(() => {
-    App.ptPassivate();
-  });
-  setTimeout(() => {
-    cancelCardPaymentButton.show();
-  }, 60000);
+  const cancelCardPaymentButton = screen.find('.cancel-card-payment');
+  if (cancelCardPaymentButton.length) {
+    cancelCardPaymentButton.click(() => {
+      App.ptPassivate();
+    });
+    // show cancel card payment button
+    // setTimeout(() => {
+    //   cancelCardPaymentButton.show();
+    // }, 10000);
+  }
   App.hideSpinner();
 };
 
