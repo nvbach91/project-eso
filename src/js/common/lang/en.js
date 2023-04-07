@@ -25,6 +25,7 @@ App.GLocaleEN = {
 
   "card_payment_title"                      : "Information",
   "card_payment_desc"                       : "Please follow instructions on the payment terminal screen",
+  "card_payment_cancel"                     : "Cancel card payment",
 
   "payment_method_cash"                     : "Cash",
   "payment_method_card"                     : "Card",

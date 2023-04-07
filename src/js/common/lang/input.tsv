@@ -25,6 +25,7 @@ checkout_return_btn	Go back	Vrátit se
 		
 card_payment_title	Information	Informace
 card_payment_desc	Please follow instructions on the payment terminal screen	Prosíme následujte instrukce na platebním terminálu
+card_payment_cancel	Cancel card payment	Zrušit karetní platbu
 		
 payment_method_cash	Cash	Hotově
 payment_method_card	Card	Kartou

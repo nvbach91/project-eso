@@ -39,7 +39,7 @@ App.renderCardPaymentScreen = () => {
             <h5>${App.lang.card_payment_title}</h5>
             ${App.settings.terminal.type === 'payment-terminal-pax-csob' ? (`
               <button class="btn btn-danger cancel-card-payment" style="display: none">
-                ${App.lang.modal_cart_cancel_btn}
+                ${App.lang.card_payment_cancel}
               </button>
             `) : ''}
           </div>

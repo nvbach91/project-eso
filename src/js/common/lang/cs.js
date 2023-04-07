@@ -25,6 +25,7 @@ App.GLocaleCS = {
 
   "card_payment_title"                      : "Informace",
   "card_payment_desc"                       : "Prosíme následujte instrukce na platebním terminálu",
+  "card_payment_cancel"                     : "Zrušit karetní platbu",
 
   "payment_method_cash"                     : "Hotově",
   "payment_method_card"                     : "Kartou",
