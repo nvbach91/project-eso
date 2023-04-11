@@ -73,6 +73,9 @@ modal_info	Info	Info
 modal_payment_failed_p1	There was a problem in processing your request	Vyskytl se problém při zpracovávání vaší žádosti
 modal_payment_failed_p2	Please contact our staff	Prosíme kontaktuje obsluhu
 		
+misc_inactive	Inactive	Neaktivní
+misc_instructions	Instructions	Návod
+misc_promotion	Promotion	Akce
 misc_unavailable	unavailable	nedostupné
 misc_item	item	položka
 misc_items	items	položky
@@ -244,6 +247,7 @@ settings_payment_methods	Payment methods	Platební metody
 tip_modification_limit	Limit order quantity (0 = no limit)	Limit pro objednávání (0 = bez limitu)
 tip_tablesync_sync	Connect to OPS tablesync to enable sending orders to Gokasa Kitchen and Gokasa Quantum	Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum
 tip_tablesync_sync_url	Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. 127.0.0.1 sync.vcap.me	Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. 127.0.0.1 sync.vcap.me
+tip_tablesync_sync_url_2	Also, if you use Gokasa Quantum, turn off OPS version on OPS settings page https://localhost:2443	Dále pokud používáte Gokasa Quantum, vypněte verzi OPS v nastavení OPS https://localhost:2443
 tip_enter_group_number	Enter group number	Zadejte číslo skupiny
 tip_groups_settings	Tip: Add or edit group by entering its number	Tip: Přidejte či editujte skupinu podle jejího čísla
 tip_enter_modification_number	Enter modification number	Zadejte číslo modifikace

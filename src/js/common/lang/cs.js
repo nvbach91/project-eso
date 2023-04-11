@@ -73,6 +73,9 @@ App.GLocaleCS = {
   "modal_payment_failed_p1"                 : "Vyskytl se problém při zpracovávání vaší žádosti",
   "modal_payment_failed_p2"                 : "Prosíme kontaktuje obsluhu",
 
+  "misc_inactive"                           : "Neaktivní",
+  "misc_instructions"                       : "Návod",
+  "misc_promotion"                          : "Akce",
   "misc_unavailable"                        : "nedostupné",
   "misc_item"                               : "položka",
   "misc_items"                              : "položky",
@@ -241,6 +244,7 @@ App.GLocaleCS = {
   "tip_modification_limit"                  : "Limit pro objednávání (0 = bez limitu)",
   "tip_tablesync_sync"                      : "Možnost připojení k OPS pro synchronizaci objednávek na Gokasa Kitchen a Gokasa Quantum",
   "tip_tablesync_sync_url"                  : "Použijte toto URL tím, že nastavíte 127.0.0.1 k němu v souboru C:/Windows/System32/drivers/etc/hosts, např. 127.0.0.1 sync.vcap.me",
+  "tip_tablesync_sync_url_2"                : "Dále pokud používáte Gokasa Quantum, vypněte verzi OPS v nastavení OPS https://localhost:2443",
   "tip_enter_group_number"                  : "Zadejte číslo skupiny",
   "tip_groups_settings"                     : "Tip: Přidejte či editujte skupinu podle jejího čísla",
   "tip_enter_modification_number"           : "Zadejte číslo modifikace",

@@ -179,7 +179,9 @@ App.renderPeripheralsScreen = () => {
           ${App.generateFormInput({ name: 'terminal.password', value: App.settings.terminal.password, type: 'password' })}
         </div>
         <div class="mi-control">
-          <a class="btn btn-info" target="_blank" href="${App.paymentTerminalServerURL}/transactions?auth=${App.settings.terminal.password}">Transactions ${App.getIcon('open_in_new')}</a>
+          <a class="btn btn-info" target="_blank" href="${App.paymentTerminalServerURL}/transactions?auth=${App.settings.terminal.password}">
+            Transactions ${App.getIcon('open_in_new')}
+          </a>
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
         </div>
       </div>
@@ -191,18 +193,33 @@ App.renderPeripheralsScreen = () => {
     const t = $(this);
     portInput.val(App.supportedPaymentTerminals[t.val()].port);
   });
-
+  const tablesyncUrlOptions = [
+    { label: App.lang.misc_inactive, value: '' },
+    { label: 'https://sync.vcap.me:2443', value: 'https://sync.vcap.me:2443' },
+  ];
   const tablesyncSettingsForm = $(`
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_tablesync}</div>
       <div class="mi-body">
         <div class="form-row">
-          <p>${App.lang.tip_tablesync_sync}.<br><br>URL: <abbr title="${App.lang.tip_tablesync_sync_url}">https://sync.vcap.me:2443</abbr>
+          <p>
+            ${App.lang.tip_tablesync_sync}
+          </p>
+          <p>
+            <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-table-sync">
+              ${App.lang.misc_instructions}: Gokasa Table Sync ${App.getIcon('open_in_new')}
+            </a>
+            <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-quantum">
+              ${App.lang.misc_instructions}: Gokasa Quantum ${App.getIcon('open_in_new')}
+            </a>
+          </p>
         </div>
         <div class="form-row">
-          ${App.generateFormInput({ name: 'tablesync.url', value: App.settings.tablesync.url, optional: true, pattern: App.regex.url.regex })}
-          ${App.generateFormInput({ name: 'tablesync.ip', value: App.settings.tablesync.ip, optional: true, pattern: App.regex.ip.regex })}
+          ${App.generateFormSelect({ name: 'tablesync.url', value: App.settings.tablesync.url, optional: true, options: tablesyncUrlOptions })}
+          ${App.generateFormInput({ name: 'tablesync.ip', value: App.settings.tablesync.ip, optional: true, pattern: App.regex.ip.regex, disabled: true })}
         </div>
+        <small class="form-text">${App.lang.tip_tablesync_sync_url}</small>
+        <small class="form-text">${App.lang.tip_tablesync_sync_url_2}</small>
         <div class="mi-control">
           <button class="btn btn-primary btn-raised btn-save">${App.lang.misc_save} ${App.getIcon('save')}</button>
         </div>

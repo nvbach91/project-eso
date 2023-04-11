@@ -73,6 +73,9 @@ App.GLocaleEN = {
   "modal_payment_failed_p1"                 : "There was a problem in processing your request",
   "modal_payment_failed_p2"                 : "Please contact our staff",
 
+  "misc_inactive"                           : "Inactive",
+  "misc_instructions"                       : "Instructions",
+  "misc_promotion"                          : "Promotion",
   "misc_unavailable"                        : "unavailable",
   "misc_item"                               : "item",
   "misc_items"                              : "items",
@@ -241,6 +244,7 @@ App.GLocaleEN = {
   "tip_modification_limit"                  : "Limit order quantity (0 = no limit)",
   "tip_tablesync_sync"                      : "Connect to OPS tablesync to enable sending orders to Gokasa Kitchen and Gokasa Quantum",
   "tip_tablesync_sync_url"                  : "Use this URL address by binding 127.0.0.1 to it in the C:/Windows/System32/drivers/etc/hosts file, e.g. 127.0.0.1 sync.vcap.me",
+  "tip_tablesync_sync_url_2"                : "Also, if you use Gokasa Quantum, turn off OPS version on OPS settings page https://localhost:2443",
   "tip_enter_group_number"                  : "Enter group number",
   "tip_groups_settings"                     : "Tip: Add or edit group by entering its number",
   "tip_enter_modification_number"           : "Enter modification number",
