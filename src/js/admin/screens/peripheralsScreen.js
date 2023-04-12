@@ -201,19 +201,17 @@ App.renderPeripheralsScreen = () => {
     <form class="mod-item card">
       <div class="mi-header">${App.lang.settings_tablesync}</div>
       <div class="mi-body">
-        <div class="form-row">
-          <p>
-            ${App.lang.tip_tablesync_sync}
-          </p>
-          <p>
-            <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-table-sync">
-              ${App.lang.misc_instructions}: Gokasa Table Sync ${App.getIcon('open_in_new')}
-            </a>
-            <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-quantum">
-              ${App.lang.misc_instructions}: Gokasa Quantum ${App.getIcon('open_in_new')}
-            </a>
-          </p>
-        </div>
+        <p>
+          ${App.lang.tip_tablesync_sync}
+        </p>
+        <p>
+          <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-table-sync">
+            ${App.lang.misc_instructions}: Gokasa Table Sync ${App.getIcon('open_in_new')}
+          </a>
+          <a class="btn btn-info" target="_blank" href="https://bit.ly/gokasa-quantum">
+            ${App.lang.misc_instructions}: Gokasa Quantum ${App.getIcon('open_in_new')}
+          </a>
+        </p>
         <div class="form-row">
           ${App.generateFormSelect({ name: 'tablesync.url', value: App.settings.tablesync.url, optional: true, options: tablesyncUrlOptions })}
           ${App.generateFormInput({ name: 'tablesync.ip', value: App.settings.tablesync.ip, optional: true, pattern: App.regex.ip.regex, disabled: true })}
