@@ -25,7 +25,7 @@ router.get('/settings', (req, res) => {
     const { residence, tin, vat, vatRegistered, companyName, bank, theme, img } = company._doc;
     settings = { ...settings, residence, tin, vat, vatRegistered, companyName, bank, theme, img };
 
-    return Users.find({ companyId: req.user.companyId }).select('username name regId');
+    return Users.find({ subdomain: req.user.subdomain }).select('username name regId');
   }).then((users) => {
     settings.employees = {};
     users.forEach((user) => settings.employees[user.username.split(':')[1]] = { name: user.name, regId: user.regId });
