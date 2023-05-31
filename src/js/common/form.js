@@ -234,7 +234,7 @@ App.bindCloudinaryFileUpload = (cloudinaryFileUploadInput, cloudinaryPublicIdHol
   const uploadOptions = {
     disableImageResize: false,
     maxFileSize: 3000000,                 // 20MB is an example value - no default
-    loadImageMaxFileSize: 10000000,       // default is 10MB
+    loadImageMaxFileSize: 20000000,       // default is 10MB
     acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i
   };
   if (!originalSize) {

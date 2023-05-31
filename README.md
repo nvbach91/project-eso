@@ -34,18 +34,18 @@ https://eso.itake.cz
     - https://certbot.eff.org/lets-encrypt/windows-other
     - https://dl.eff.org/certbot-beta-installer-win32.exe
 2. Run CMD with admin privileges
-   ```
-   certbot certonly --manual --preferred-challenges=dns --email nvbach91@gmail.com --server https://acme-v02.api.letsencrypt.org/directory -d *.itake.cz -d itake.cz
-   ```
-   - accept all questions
-   - deploy DNS TXT records in hosting provider management console.
-   - verify TXT records by running nslookup -type=txt _acme-challenge.itake.cz and then continue
+    ```
+    certbot certonly --manual --preferred-challenges=dns --email nvbach91@gmail.com --server https://acme-v02.api.letsencrypt.org/directory -d *.itake.cz -d itake.cz
+    ```
+    - accept all questions
+    - deploy DNS TXT records in hosting provider management console.
+    - verify TXT records by running nslookup -type=txt _acme-challenge.itake.cz and then continue
 3. The certs will be generated at `C:\Certbot\live\itake.cz\`
 4. Create a `.pfx` file by running 
-   ```
-   type fullchain.pem privkey.pem > bundle.pem
-   openssl pkcs12 -export -out "certificate_combined.pfx" -inkey "privkey.pem" -in "cert.pem" -certfile bundle.pem
-   ```
+    ```
+    type fullchain.pem privkey.pem > bundle.pem
+    openssl pkcs12 -export -out "certificate_combined.pfx" -inkey "privkey.pem" -in "cert.pem" -certfile bundle.pem
+    ```
 5. In IIS Manager import the new `certificate_combined.pfx` file
 6. Go to your sites and bind the certificate to your port 443 bindings
 7. Test it in your browser

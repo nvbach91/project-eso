@@ -691,6 +691,11 @@ App.getRandomPollingTime = (min, max) => {
 
 App.initErrorHandling = () => {
   window.onerror = (msg, url, line, col, error) => {
+    console.error('msg', msg);
+    console.error('url', url);
+    console.error('line', line);
+    console.error('col', col);
+    console.error('error', error);
     let msgStringified;
     let errorStringified;
     try { msgStringified = JSON.stringify(msg); } catch (e) { };
@@ -725,6 +730,8 @@ App.initErrorHandling = () => {
     return false;
   };
   $.Deferred.exceptionHook = (err, stackTrace) => {
+    console.error(err);
+    console.error(stackTrace);
     $.ajax({
       url: '/secret/errors',
       method: 'POST',
