@@ -6,7 +6,7 @@ A cross-platform self-ordering system for browsers
 - MongoDB (4.0.28)
 
 ## Quickstart
-#### 1) MongoDB local database setup
+#### 1. MongoDB local database setup
 - [Install](https://www.mongodb.com/download-center/community) MongoDB Server  
 - Create path `C:\data\db`
 - Run with **cmd** at MongoDB Server **bin folder**
@@ -14,14 +14,14 @@ A cross-platform self-ordering system for browsers
     mongod
     mongorestore --gzip --archive=[path to eso.gzip]
 ```
-#### 2) Npm repository setup
+#### 2. Npm repository setup
 - Run with **cmd** at **project folder**
 ```bash
     npm install / yarn
     npm run dev / yarn dev
 ``` 
 
-#### 3) Open the website 
+#### 3. Open the website 
 - Open https://eso.vcap.me:9000 in a browser (The hosts file `C:\Windows\System32\drivers\etc\hosts` must include line `127.0.0.1 eso.vcap.me`)
 
 ## Preview
